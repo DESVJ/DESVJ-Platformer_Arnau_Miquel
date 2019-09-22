@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+  
+  <app>
+    
+    <title>Joc de desenvolupament</title>
+    <organization>UPC</organization>
+    
+  </app>
+
+  <modules>
+
+    <window>
+      
+      <Module NAME ="Window Name // Miquel" 
+              FULLSCREEN="false"
+              BORDERLESS="false"
+              RESIZABLE="true"
+              FULLSCREEN_WINDOW="false"
+              WIDTH="1024"
+              HEIGHT="768"             
+              SCALE="1"/>
+ 
+    </window>
+
+    <audio>
+      <Module NAME ="Audio // Miquel"/>
+    </audio>
+    
+    <input>
+      <Module NAME ="Input // Miquel"/>
+    </input>
+
+    <renderer>
+      <Module NAME ="Render // Miquel"/>
+      <vsync value="false"/>
+    </renderer>
+    
+    <textures>
+      <Module NAME ="Textures // Miquel"/>
+    </textures>
+    
+    <window>
+      <Module NAME ="Window // Miquel"/>
+    </window>
+    
+    
+  </modules>
+  
+  
+</config>
