@@ -33,23 +33,35 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to iterate all the tiles in a layer
 	bool ret = false;
+	int number_of_layers = data.layers.count();
 	p2List_item<MapLayer*>* coord_layer = data.layers.start;
-	for (int i = 0; i < coord_layer->data->height && ret == false; i++) {
-		for (int j = 0; j < coord_layer->data->width && ret == false; j++) {
-			int n = coord_layer->data->Get(j, i);
-			if (coord_layer->data->gid[n] != 0) {//bool zero = true;
-				SDL_Rect rect = data.tilesets.start->data->GetRect(coord_layer->data->gid[n]);
-				int x = j;
-				int y = i;
-				Translate_Coord(&x, &y);
-				App->render->Blit(data.tilesets.start->data->texture, x, y, &rect);
-				//LOG("%u: %u, %u", n, x, y);
+	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
+	//for of every layer
+
+	for(int layer_counter=0;layer_counter<number_of_layers;layer_counter++){
+
+		//for of every x in one layer
+
+		for (int i = 0; i < coord_layer->data->height && ret == false; i++) {
+
+			//for of every y in one layer
+
+			for (int j = 0; j < coord_layer->data->width && ret == false; j++) {
+				int n = coord_layer->data->Get(j, i);
+				if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= n) coord_tileset = coord_tileset->next;
+				if (coord_layer->data->gid[n] != 0) {
+					SDL_Rect rect = coord_tileset->data->GetRect(coord_layer->data->gid[n]);
+					int x = j;
+					int y = i;
+					Translate_Coord(&x, &y);
+					App->render->Blit(data.tilesets.start->data->texture, x, y, &rect);
+				}
 			}
 		}
+		coord_layer = coord_layer->next;
 	}
-
 	// TODO 9: Complete the draw function
-
+	int i;
 }
 
 
