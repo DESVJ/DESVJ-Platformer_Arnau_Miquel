@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="24" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="26" nextobjectid="1">
+ <tileset firstgid="1" name="Taiga_Tileset" tilewidth="16" tileheight="16" tilecount="128" columns="16">
+  <image source="Taiga-Asset-Pack_vnitti/PNG/Taiga_Tileset.png" width="256" height="128"/>
+  <terraintypes>
+   <terrain name="floor_Cover" tile="41"/>
+  </terraintypes>
+  <tile id="23" terrain=",,,0"/>
+  <tile id="24" terrain=",,0,0"/>
+  <tile id="25" terrain=",,0,0"/>
+  <tile id="26" terrain=",,0,"/>
+  <tile id="39" terrain=",0,,0"/>
+  <tile id="40" terrain="0,0,0,0"/>
+  <tile id="41" terrain="0,0,0,0"/>
+  <tile id="42" terrain="0,,0,"/>
+  <tile id="55" terrain=",0,,0"/>
+  <tile id="56" terrain="0,0,0,0"/>
+  <tile id="57" terrain="0,0,0,0"/>
+  <tile id="58" terrain="0,,0,"/>
+  <tile id="71" terrain=",0,,"/>
+  <tile id="72" terrain="0,0,,"/>
+  <tile id="73" terrain="0,0,,"/>
+  <tile id="74" terrain="0,,,"/>
+ </tileset>
+ <tileset firstgid="129" name="Props" tilewidth="16" tileheight="16" tilecount="160" columns="16">
+  <image source="Taiga-Asset-Pack_vnitti/PNG/Props.png" width="256" height="160"/>
+ </tileset>
+ <imagelayer id="7" name="background">
+  <image source="Taiga-Asset-Pack_vnitti/PNG/Background_Parallax_1.png" width="384" height="216"/>
+ </imagelayer>
+ <imagelayer id="25" name="background2">
+  <image source="Taiga-Asset-Pack_vnitti/PNG/Background_Parallax_2.png" width="384" height="216"/>
+ </imagelayer>
+ <layer id="22" name="houses" width="24" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztzDl2gWEAQNFfJ0G0Me9/B4agNWslptYUWjN3Dz4V75zbvih694zKVKhS44c6DZoB/i3adOjSo8+AYYD/iF/+GDNhyox5gP+CJSvWbPhnyy7Af8+BIyfOXLhyC/CPx6Log08SJEnxRTr2+P/bI0OWHHkKFCkF+L9Kd2CzI5U=
+  </data>
+ </layer>
+ <layer id="23" name="trees" width="24" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzVy8cNAlEQBNG/uABwAWM2AFwAuABwAcBCALgAcAHgztSdGalB4kBL71Ydwm9XQRU11BF/2XhdA0200EbH+CmN13XRQx8DDI2f0njdCGNMMMXM+CmN182xQIIlVsZPabxujQ222GFv/JTG6w444oQzLsZPabzuihvueOBp/JTG61JRCGlkkEUuev8pjdflUUARJZSNr9J80v3TXiOmWac=
+  </data>
+ </layer>
+ <layer id="24" name="floor" width="24" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDFUgCcVSWLAkEi2Jxscmj65WGoitoNgSiDWhNAxbIYlpIbGt0GhLJP0w80DqrYHYE4q9sNBeSPK41GDTA+N7AzEAfE4OTQ==
+  </data>
+ </layer>
+</map>
