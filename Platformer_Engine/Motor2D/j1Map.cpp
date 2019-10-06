@@ -42,19 +42,25 @@ void j1Map::Draw()
 
 		//for of every x in one layer
 
-		for (int i = 0; i < coord_layer->data->height && ret == false; i++) {
+		for (int i = 0; i < coord_layer->data->height; i++) {
 
 			//for of every y in one layer
 
-			for (int j = 0; j < coord_layer->data->width && ret == false; j++) {
+			for (int j = 0; j < coord_layer->data->width; j++) {
 				int n = coord_layer->data->Get(j, i);
-				if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= n) coord_tileset = coord_tileset->next;
-				if (coord_layer->data->gid[n] != 0) {
+				int gid = coord_layer->data->gid[n];
+				if (gid != 0) {
+					while (ret == false) {
+						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+						else if(coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+						else ret = true;
+					}
+					ret = false;
 					SDL_Rect rect = coord_tileset->data->GetRect(coord_layer->data->gid[n]);
 					int x = j;
 					int y = i;
 					Translate_Coord(&x, &y);
-					App->render->Blit(data.tilesets.start->data->texture, x, y, &rect);
+					App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 				}
 			}
 		}
