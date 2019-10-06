@@ -69,6 +69,7 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	LOG("%i, %i", camera.x, camera.y);
 	return true;
 }
 
@@ -244,4 +245,43 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	}
 
 	return ret;
+}
+
+void j1Render::MoveCameraInsideLimits(int x, int y) 
+{
+
+	if (x >= 0) 
+	{
+		if (camera.x + x >= limitNegX)
+		{
+			camera.x = limitNegX;
+		}
+		else
+		{
+			camera.x += x;
+		}
+	}
+	else
+	{
+
+
+	}
+
+	if (y >= 0) 
+	{
+		if (camera.y + y >= limitPosY)
+		{
+			camera.y = limitPosY;
+		}
+		else
+		{
+			camera.y += y;
+		}
+	}
+	else
+	{
+
+	}
+
+
 }

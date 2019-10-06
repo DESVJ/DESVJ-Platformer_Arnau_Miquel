@@ -49,6 +49,12 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
+
+public:
+	//camera limits
+	int limitPosX, limitNegX, limitPosY, limitNegY;
+	void MoveCameraInsideLimits(int, int);
+
 };
 
 #endif // __j1RENDER_H__
