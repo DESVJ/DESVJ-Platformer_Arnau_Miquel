@@ -211,11 +211,13 @@ bool j1Map::LoadMap()
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 
-		App->render->limitNegX = 0; App->render->limitPosX = data.width * App->win->GetScale();
-		App->render->limitPosY = 0;  App->render->limitNegY = data.height * App->win->GetScale();
 
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
+
+		App->render->limitNegX = 0; App->render->limitPosX = ((data.width * data.tile_width) * App->win->GetScale()) - App->render->camera.w;
+		App->render->limitPosY = 0;  App->render->limitNegY = ((data.height * data.tile_height) * App->win->GetScale()) - App->render->camera.h;
+
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;

@@ -252,6 +252,7 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 
 	if (x >= 0) 
 	{
+		//X left limit
 		if (camera.x + x >= limitNegX)
 		{
 			camera.x = limitNegX;
@@ -263,12 +264,21 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 	}
 	else
 	{
-
+		//X right limit
+		if (camera.x + x <= -limitPosX) 
+		{
+			camera.x = -limitPosX;
+		}
+		else
+		{
+			camera.x += x;
+		}
 
 	}
 
 	if (y >= 0) 
 	{
+		//Y up limit
 		if (camera.y + y >= limitPosY)
 		{
 			camera.y = limitPosY;
@@ -280,7 +290,15 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 	}
 	else
 	{
-
+		//Y down limit
+		if (camera.y + y <= -limitNegY) 
+		{
+			camera.y = -limitNegY;
+		}
+		else
+		{
+			camera.y += y;
+		}
 	}
 
 
