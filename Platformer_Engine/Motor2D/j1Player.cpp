@@ -2,10 +2,12 @@
 #include"j1App.h"
 #include"j1Render.h"
 #include"j1Map.h"
+#include"j1Input.h"
+#include"j1Textures.h"
 
 j1Player::j1Player() : j1Module()
 {
-	name.create("input");
+	name.create("player");
 
 }
 
@@ -25,7 +27,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start()
 {
-
+	player.player_position.x = App->map->data.tile_width * 2;
+	player.player_position.y = App->map->data.tile_width * 8;
 	return true;
 }
 
@@ -33,7 +36,11 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 
-	App->render->DrawQuad({ App->map->data.tile_width, 50, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
+
+
+
+
+	App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
 
 	return true;
 }
@@ -41,6 +48,6 @@ bool j1Player::Update(float dt)
 // Called before quitting
 bool j1Player::CleanUp()
 {
-
+	App->tex->UnLoad(player.player_spritesheet);
 	return true;
 }

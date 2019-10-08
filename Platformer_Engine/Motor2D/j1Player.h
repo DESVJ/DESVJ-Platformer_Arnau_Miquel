@@ -2,6 +2,17 @@
 #define __j1PLAYER_H__
 
 #include "j1Module.h"
+#include"p2Point.h"
+
+struct Player_Info
+{
+
+	p2Point<int> player_position;
+	SDL_Texture* player_spritesheet;
+
+
+};
+
 
 class j1Player : public j1Module
 {
@@ -24,6 +35,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+public:
+	Player_Info player;
+	
 
 
 };

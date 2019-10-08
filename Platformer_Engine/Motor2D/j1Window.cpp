@@ -3,8 +3,6 @@
 #include "j1App.h"
 #include "j1Window.h"
 
-#include "SDL/include/SDL.h"
-
 
 j1Window::j1Window() : j1Module()
 {
@@ -41,6 +39,12 @@ bool j1Window::Awake(pugi::xml_node& config)
 		width = config.child("resolution").attribute("width").as_int(640);
 		height = config.child("resolution").attribute("height").as_int(480);
 		scale = config.child("resolution").attribute("scale").as_int(1);
+
+		if (fullscreen_window == true)
+		{
+			scale *= 1.6f;
+		}
+
 
 		if(fullscreen == true)
 		{
