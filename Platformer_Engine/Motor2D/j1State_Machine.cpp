@@ -7,7 +7,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
-void Preupdate(int& jump_timer, int& punch_timer, int& kick_timer, int& specialattack_timer, int& hitted_timer, int& inputsouts, iPoint position, bool flip, state actual, inputin input_in, inputout input_out[3], Module* Player, Animation& current) {
+void Preupdate(int& jump_timer, int& punch_timer, int& kick_timer, int& specialattack_timer, int& hitted_timer, int& inputsouts, iPoint position, bool flip, state actual, inputin input_in, inputout input_out[3], j1Module* Player, Animation& current) {
 	if (actual != S_HITTED) {
 		bool left = false;
 		bool right = false;
