@@ -14,6 +14,33 @@ struct Player_Info
 
 };
 
+enum state {
+	S_NONE = 0,
+	S_IDLE,
+	S_RUN_RIGHT,
+	S_RUN_LEFT,
+	S_JUMP,
+	S_JUMP_RIGHT,
+	S_JUMP_LEFT,
+	S_HITTED
+};
+
+enum inputin {
+	I_NONE = 0,
+	I_RIGHT,
+	I_LEFT,
+	I_RIGHT_AND_LEFT,
+	I_JUMP_RIGHT,
+	I_JUMP_LEFT,
+	I_JUMP
+};
+
+enum inputout {
+	O_NONE = 0,
+	O_RIGHT,
+	O_LEFT,
+	O_JUMP_FINISH
+};
 
 class j1Player : public j1Module
 {
@@ -42,9 +69,9 @@ public:
 	Animation idle;
 	Animation run;
 	Animation jump;
-	
-
-
+	state actual_state;
+	inputin input_in;
+	inputout input_out[3];
 };
 
 #endif // __j1PLAYER_H__

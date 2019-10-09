@@ -37,6 +37,9 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1State_Machine.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Game Core\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="j1State_Machine.h">
+      <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
