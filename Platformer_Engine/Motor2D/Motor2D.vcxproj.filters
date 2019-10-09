@@ -105,6 +105,9 @@
     <ClInclude Include="Collision_Manager.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="MemLeaks.h">
+      <Filter>Game Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Core">

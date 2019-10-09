@@ -16,6 +16,28 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 j1Map::~j1Map()
 {}
 
+void j1Map::LoadColliders()
+{
+	int colliderCounter = 0;
+
+	for (int i = 0; i < App->colliders.collider_layer->height; i++)
+	{
+		for (int j = 0; j < App->colliders.collider_layer->width; j++)
+		{
+
+			if (App->colliders.collider_layer->gid[App->colliders.collider_layer->Get(j, i)] != 0) 
+			{
+				int x = j;
+				int y = i;
+				Translate_Coord(&x, &y);
+
+				App->colliders.collider_list[colliderCounter].collider_rect = { x, y, (int)App->colliders.collider_layer->width, (int)App->colliders.collider_layer->height };
+				colliderCounter++;
+			}
+		}
+	}
+}
+
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
 {
@@ -39,10 +61,10 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
 	//for of every layer
 
+	int colliderCounter = 0;
 	for(int layer_counter=0;layer_counter<number_of_layers;layer_counter++){
 
 		//for of every x in one layer
-
 		for (int i = 0; i < coord_layer->data->height; i++) {
 
 			//for of every y in one layer
@@ -61,7 +83,16 @@ void j1Map::Draw()
 					int x = j;
 					int y = i;
 					Translate_Coord(&x, &y);
+
+					//if (coord_layer->data == App->colliders.collider_layer) 
+					//{
+					//	App->colliders.collider_list[colliderCounter].collider_rect = {x, y, App->colliders.collider_layer->width, App->colliders.collider_layer->height};
+					//	colliderCounter++;
+					//}
+
 					App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+
+
 				}
 			}
 		}
@@ -352,18 +383,31 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	uint total_gid = layer->width * layer->height;
 	layer->gid = new uint[total_gid];
 	memset(layer->gid, 0, total_gid*sizeof(uint));
-	pugi::xml_node tile = node.child("data").child("tile");
-	int i = 0;
-	while (tile && strcmp(tile.name(),"tile")==0) {
-		layer->gid[i] = tile.attribute("gid").as_uint();
-		i++;
-		tile = tile.next_sibling("tile");
-	}
 
+	//Set collider layer
 	if (node.child("properties").child("property").attribute("value").as_bool() == true)
 	{
 		App->colliders.collider_layer = layer;
+		App->colliders.collider_list.add(Collider({ 0, 0, 0, 0 }));
 	}
+
+	pugi::xml_node tile = node.child("data").child("tile");
+	int i = 0;
+	while (tile && strcmp(tile.name(),"tile")==0) 
+	{
+
+
+		layer->gid[i] = tile.attribute("gid").as_uint();
+		i++;
+		tile = tile.next_sibling("tile");
+		if(layer == App->colliders.collider_layer && tile.attribute("gid").as_uint() != 0)
+		{
+			App->colliders.collider_list.add(Collider({0, 0, 0, 0}));
+			LOG("%i", App->colliders.collider_list.count());
+			LOG("%i", tile.attribute("gid").as_uint());
+		}
+	}
+
 
 	return ret;
 }

@@ -99,6 +99,8 @@ public:
 		*y *= data.tile_height;
 	}
 
+	void LoadColliders();
+
 private:
 
 	bool LoadMap();

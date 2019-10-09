@@ -32,6 +32,9 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("map_1_final.tmx");
+
+	App->map->LoadColliders();
+
 	return true;
 }
 

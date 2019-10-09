@@ -10,7 +10,7 @@
 
 struct Collider 
 {
-	SDL_Rect collider_rect;
+	SDL_Rect collider_rect = {0, 0, 0, 0};
 	p2SString collider_type;
 };
 
@@ -22,10 +22,45 @@ struct Collider_Manager
 
 	void MoveObject(p2Point<int>* currentPoint, p2Point<int> increment) 
 	{
-		LOG("Moving");
+
+		currentPoint->x += increment.x;
+
+
+		//LOG("Moving");
 		//for itinerate all Colliders of the layer
 		//look up collider type
 		//currentpos + increment == colision?
+
+		//for (int i = 0; i < collider_list.count(); i++)
+		//{
+		//	//if (increment.x != 0)
+		//	//{
+
+		//	//}
+
+		//	//if (increment.y != 0)
+		//	//{
+
+
+		//	//}
+		//	//Is collider aligned with the object in X?
+		//	if(currentPoint->x >= collider_list[i].collider_rect.x && currentPoint->x <= collider_list[i].collider_rect.x + collider_list[i].collider_rect.w
+		//		&&
+		//		currentPoint->y <= collider_list[i].collider_rect.y)
+		//	{
+		//		if (increment.y != 0)
+		//		{
+		//			if (currentPoint->y + increment.y < collider_list[i].collider_rect.y)
+		//			{
+		//				currentPoint->y += increment.y;
+		//			}
+		//		}
+		//	}
+
+
+		//}
+
+
 
 
 	}
