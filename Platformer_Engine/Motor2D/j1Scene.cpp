@@ -62,6 +62,12 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->MoveCameraInsideLimits((-3 * App->win->GetScale()), 0);
 
+	if (App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_DOWN)//|| App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_REPEAT)
+		App->audio->ChangeVolume(true);
+
+	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)// || App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_REPEAT)
+		App->audio->ChangeVolume(false);
+
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 

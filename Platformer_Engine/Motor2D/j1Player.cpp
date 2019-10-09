@@ -22,7 +22,7 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({ 262,11,16,20 });
 	idle.PushBack({ 294,11,16,20 });
 	idle.PushBack({ 326,11,16,20 });
-	idle.speed = 0.5f;
+	idle.speed = 0.2f;
 
 	//Run animation
 	run.PushBack({ 5,42,18,19 });
@@ -33,7 +33,7 @@ j1Player::j1Player() : j1Module()
 	run.PushBack({ 168,41,12,20 });
 	run.PushBack({ 200,42,12,20 });
 	run.PushBack({ 231,43,14,20 });
-	run.speed = 0.3f;
+	run.speed = 0.2f;
 
 	//Jump animation
 	jump.PushBack({ 6,171,16,20 });
@@ -42,7 +42,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 102,167,18,19 });
 	jump.PushBack({ 133,167,18,20 });
 	jump.PushBack({ 164,172,19,19 });
-	jump.speed = 0.25f;
+	jump.speed = 0.1f;
 
 }
 
@@ -72,13 +72,13 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 
-	Animation* current_animation = &jump;
+	Animation* current_animation = &idle;
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
 
 
 		//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
 		App->render->Blit(player.player_spritesheet, player.player_position.x, player.player_position.y, &current_frame);
-		SDL_RenderPresent(App->render->renderer);
+		App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height }, 255, 255, 255, 55);
 
 
 	return true;

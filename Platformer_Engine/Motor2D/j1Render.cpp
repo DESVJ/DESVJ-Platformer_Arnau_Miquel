@@ -69,7 +69,7 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-	LOG("%i, %i", camera.x, camera.y);
+	//LOG("%i, %i", camera.x, camera.y);
 	return true;
 }
 

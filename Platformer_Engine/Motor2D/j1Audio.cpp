@@ -170,3 +170,27 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+
+bool j1Audio::Save(pugi::xml_node& node_sent) {
+	pugi::xml_node cam = node_sent.append_child("music");
+	cam.append_attribute("volume").set_value(Mix_VolumeMusic(-1));
+	return true;
+}
+
+
+//Change volume with +/-
+void j1Audio::ChangeVolume(bool plus) {
+	int volume = Mix_VolumeMusic(-1);
+	if (plus == true) {
+		if (volume < 128)volume++;
+	}
+	else if (volume > 0)volume--;
+	Mix_VolumeMusic(volume);
+	pugi::xml_document document_save;
+	pugi::xml_parse_result result = document_save.load_file("save_game.xml");
+	if (!result)
+		LOG("Error in loading xml: %s.", result.description());
+	document_save.child("game_state").child("audio").child("music").attribute("volume").set_value(volume);
+	document_save.save_file("save_game.xml");
+}
