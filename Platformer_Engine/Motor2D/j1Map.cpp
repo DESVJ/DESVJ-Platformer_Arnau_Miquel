@@ -157,6 +157,7 @@ bool j1Map::Load(const char* file_name)
 			ret = LoadLayer(layer, set);
 		}
 		data.layers.add(set);
+
 	}
 
 	if(ret == true)
@@ -333,6 +334,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 	layer->name = node.attribute("name").as_string();
+
 	if (strcmp(layer->name.GetString(), "Name_Null") == 0) {
 		LOG("Error geting layer name");
 		return false;
@@ -357,5 +359,11 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		i++;
 		tile = tile.next_sibling("tile");
 	}
+
+	if (node.child("properties").child("property").attribute("value").as_bool() == true)
+	{
+		App->colliders.collider_layer = layer;
+	}
+
 	return ret;
 }

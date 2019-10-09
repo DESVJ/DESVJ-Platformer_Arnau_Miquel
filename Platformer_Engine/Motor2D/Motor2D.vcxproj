@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="j1Map.h" />
+    <ClInclude Include="Collision_Manager.h" />
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1State_Machine.h" />

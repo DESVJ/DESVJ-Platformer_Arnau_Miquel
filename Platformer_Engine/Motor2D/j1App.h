@@ -3,6 +3,7 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include"Collision_Manager.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -85,6 +86,9 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Player*			player;
+
+
+	Collider_Manager colliders;
 
 private:
 

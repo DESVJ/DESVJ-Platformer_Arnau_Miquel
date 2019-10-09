@@ -5,6 +5,7 @@
 #include"j1Input.h"
 #include"j1Textures.h"
 #include "Animation.h"
+#include"j1Window.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -64,6 +65,8 @@ bool j1Player::Start()
 {
 	player.player_position.x = App->map->data.tile_width * 2;
 	player.player_position.y = App->map->data.tile_width * 8;
+	player.player_debug_size = {0, 0};
+
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
 	return true;
 }
@@ -72,13 +75,15 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 
-	Animation* current_animation = &jump;
+	Animation* current_animation = &idle;
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
+	player.player_debug_size = {current_frame.w, -current_frame.h};
 
+	//player.player_position.x += 1;
 
-		//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
-		App->render->Blit(player.player_spritesheet, player.player_position.x, player.player_position.y, &current_frame);
-		App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height }, 255, 255, 255, 55);
+	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
+	App->render->Blit(player.player_spritesheet, player.player_position.x, player.player_position.y - current_frame.h, &current_frame);
+	App->render->DrawQuad({ player.player_position.x, player.player_position.y, player.player_debug_size.x, player.player_debug_size.y }, 255, 255, 255, 55);
 
 
 	return true;

@@ -9,6 +9,7 @@ struct Player_Info
 {
 
 	p2Point<int> player_position;
+	p2Point<int> player_debug_size;
 	SDL_Texture* player_spritesheet;
 
 

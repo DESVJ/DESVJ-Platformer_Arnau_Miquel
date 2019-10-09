@@ -102,6 +102,9 @@
     <ClInclude Include="j1State_Machine.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Collision_Manager.h">
+      <Filter>Game Core\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Core">
