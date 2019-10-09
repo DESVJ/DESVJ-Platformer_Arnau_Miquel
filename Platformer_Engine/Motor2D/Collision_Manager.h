@@ -20,49 +20,47 @@ struct Collider_Manager
 	MapLayer* collider_layer = nullptr;
 	p2List<Collider> collider_list;
 
-	void MoveObject(p2Point<int>* currentPoint, p2Point<int> increment) 
+	void MoveObject(SDL_Rect* currentPoint, p2Point<int> increment) 
 	{
-
-		currentPoint->x += increment.x;
-
-
-		//LOG("Moving");
+		//currentPoint->y += increment.y;
 		//for itinerate all Colliders of the layer
 		//look up collider type
 		//currentpos + increment == colision?
 
-		//for (int i = 0; i < collider_list.count(); i++)
-		//{
-		//	//if (increment.x != 0)
-		//	//{
+		currentPoint->x += increment.x;
+		currentPoint->y += increment.y;
 
-		//	//}
-
-		//	//if (increment.y != 0)
-		//	//{
-
-
-		//	//}
-		//	//Is collider aligned with the object in X?
-		//	if(currentPoint->x >= collider_list[i].collider_rect.x && currentPoint->x <= collider_list[i].collider_rect.x + collider_list[i].collider_rect.w
-		//		&&
-		//		currentPoint->y <= collider_list[i].collider_rect.y)
-		//	{
-		//		if (increment.y != 0)
-		//		{
-		//			if (currentPoint->y + increment.y < collider_list[i].collider_rect.y)
-		//			{
-		//				currentPoint->y += increment.y;
-		//			}
-		//		}
-		//	}
+		SDL_Rect prediction = *currentPoint;
+		prediction.x += increment.x;
+		prediction.y += increment.y;
+		for (int i = 0; i < collider_list.count(); i++)
+		{
 
 
-		//}
+			if (prediction.x >= collider_list[i].collider_rect.x && prediction.x <= collider_list[i].collider_rect.x + collider_list[i].collider_rect.w
+				&& prediction.y >= collider_list[i].collider_rect.y && prediction.y <= collider_list[i].collider_rect.y + collider_list[i].collider_rect.h)
+				LOG("Collision");
 
 
+			//if (increment.x > 0)
+			//{
+			//	//Moving right
+			//}
+			//else
+			//{
+			//	//Moving left
+			//}
 
+			//if (increment.y > 0) 
+			//{
+			//	//Moving down
+			//}
+			//else
+			//{
+			//	//Moving up
+			//}
 
+		}
 	}
 
 };

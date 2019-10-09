@@ -8,8 +8,7 @@
 struct Player_Info
 {
 
-	p2Point<int> player_position;
-	p2Point<int> player_debug_size;
+	SDL_Rect player_rect = { 0, 0, 0, 0 };
 	p2Point<int> player_speed;
 	bool player_flip;
 	SDL_Texture* player_spritesheet;
