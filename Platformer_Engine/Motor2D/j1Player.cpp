@@ -93,5 +93,6 @@ bool j1Player::Update(float dt)
 bool j1Player::CleanUp()
 {
 	App->tex->UnLoad(player.player_spritesheet);
+	App->colliders.collider_list.clear();
 	return true;
 }
