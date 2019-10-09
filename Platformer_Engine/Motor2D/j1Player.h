@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include"p2Point.h"
+#include "Animation.h"
 
 struct Player_Info
 {
@@ -38,6 +39,9 @@ public:
 
 public:
 	Player_Info player;
+	Animation idle;
+	Animation run;
+	Animation jump;
 	
 
 
