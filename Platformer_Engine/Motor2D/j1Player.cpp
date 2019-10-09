@@ -64,7 +64,7 @@ bool j1Player::Start()
 {
 	player.player_position.x = App->map->data.tile_width * 2;
 	player.player_position.y = App->map->data.tile_width * 8;
-	player.player_spritesheet = App->tex->Load("textures/Adventurer Sprite Sheet v1.1.png");
+	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
 	return true;
 }
 
@@ -72,7 +72,7 @@ bool j1Player::Start()
 bool j1Player::Update(float dt)
 {
 
-	Animation* current_animation = &idle;
+	Animation* current_animation = &jump;
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
 
 
