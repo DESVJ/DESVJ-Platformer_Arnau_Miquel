@@ -5,6 +5,9 @@
 #include "j1Player.h"
 #include "j1Module.h"
 
-void Preupdate(int& jumptimer, int& hitted_timer, int& inputsouts, iPoint position, bool flip, state actual, inputin inputstate[60], inputout inputstateout[3], Animation& current);
+void CheckInputs(int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[3]);
+Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation);
+bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout input_out[3]);
+
 
 #endif

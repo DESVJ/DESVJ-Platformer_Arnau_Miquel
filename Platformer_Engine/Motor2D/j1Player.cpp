@@ -6,6 +6,7 @@
 #include"j1Textures.h"
 #include "Animation.h"
 #include"j1Window.h"
+#include "j1State_Machine.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -63,36 +64,52 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start()
 {
+	inputs_out = 0;
+	actual_state = S_IDLE;
+
 	player.player_position.x = App->map->data.tile_width * 2;
 	player.player_position.y = App->map->data.tile_width * 8;
-	player.player_debug_size = {0, 0};
+	player.player_debug_size = player.player_speed = { 0, 0 };
+	player.player_flip = false;
 
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
+	return true;
+}
+
+bool j1Player::PreUpdate() {
+	CheckInputs(inputs_out, player.player_speed.y, actual_state, input_in, input_out);
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
-
-	Animation* current_animation = &idle;
+	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
+	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation);
+	if (reset_animation == true)current_animation->Reset();
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
 	player.player_debug_size = {current_frame.w, -current_frame.h};
+	player.player_position += player.player_speed;
+	if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;
 
 	//This must be debug mode only
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	/*if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->colliders.MoveObject(&player.player_position, {2, 0});
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		App->colliders.MoveObject(&player.player_position, { -2, 0 });
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		App->colliders.MoveObject(&player.player_position, { 0, -2 });
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->colliders.MoveObject(&player.player_position, { 0, 2 });
+		App->colliders.MoveObject(&player.player_position, { 0, 2 });*/
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
-	App->render->Blit(player.player_spritesheet, player.player_position.x, player.player_position.y - current_frame.h, &current_frame);
+	if (player.player_flip == false && player.player_speed.x < 0)player.player_flip = true;
+	else if (player.player_flip == true && player.player_speed.x > 0)player.player_flip = false;
+	App->render->Blit(player.player_spritesheet, player.player_position.x, player.player_position.y - current_frame.h, &current_frame, player.player_flip);
 	App->render->DrawQuad({ player.player_position.x, player.player_position.y, player.player_debug_size.x, player.player_debug_size.y }, 255, 255, 255, 55);
-
+	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
+	inputs_out = 0;
+	input_in = I_NONE;
 
 	return true;
 }

@@ -10,6 +10,8 @@ struct Player_Info
 
 	p2Point<int> player_position;
 	p2Point<int> player_debug_size;
+	p2Point<int> player_speed;
+	bool player_flip;
 	SDL_Texture* player_spritesheet;
 
 
@@ -60,6 +62,7 @@ public:
 	bool Start();
 
 	// Called each loop iteration
+	bool PreUpdate();
 	bool Update(float dt);
 
 	// Called before quitting
@@ -70,6 +73,10 @@ public:
 	Animation idle;
 	Animation run;
 	Animation jump;
+
+private:
+	int gravity = 1;
+	int inputs_out;
 	state actual_state;
 	inputin input_in;
 	inputout input_out[3];
