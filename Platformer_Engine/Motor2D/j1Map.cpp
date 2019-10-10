@@ -12,31 +12,94 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 	name.create("map");
 }
 
-// Destructor
-j1Map::~j1Map()
-{}
-
-void j1Map::LoadColliders()
+void j1Map::Test(SDL_Rect& prediction, SDL_Rect& player, int dir)
 {
-	int colliderCounter = 0;
-
+	bool colisionDetectedX = false;
+	bool colisionDetectedY = false;
 	for (int i = 0; i < App->colliders.collider_layer->height; i++)
 	{
+
 		for (int j = 0; j < App->colliders.collider_layer->width; j++)
 		{
-
-			if (App->colliders.collider_layer->gid[App->colliders.collider_layer->Get(j, i)] != 0) 
+			int n = App->colliders.collider_layer->Get(j, i);
+			int gid = App->colliders.collider_layer->gid[n];
+			if (gid != 0)
 			{
 				int x = j;
 				int y = i;
-				Translate_Coord(&x, &y);
+				App->map->Translate_Coord(&x, &y);
 
-				App->colliders.collider_list[colliderCounter].collider_rect = { x, y, (int)App->colliders.collider_layer->width, (int)App->colliders.collider_layer->height };
-				colliderCounter++;
+				SDL_Rect block = { x, y, App->map->data.tile_width, App->map->data.tile_height };
+			
+				//App->render->DrawQuad(block, 255, 255, 255, 255);
+				//App->render->DrawQuad(prediction, 255, 0, 255, 255);
+
+
+				if (App->colliders.CheckCollision(prediction, block))
+				{
+					LOG("aa");
+					//Maybe going too fast can cause clipping
+					if (prediction.x + prediction.w >= block.x && prediction.x <= block.x + block.w)
+					{
+						colisionDetectedY = true;
+
+						if (prediction.y >= block.y && prediction.y <= block.y + (block.h / 2))
+						{
+							if (dir == DOWN)
+							{
+								player.y = block.y;
+							}
+						}
+						else if(prediction.y + prediction.h < block.y +  block.h && prediction.y > block.y + (block.h / 2))
+						{
+							if (dir == UP)
+							{
+								player.y = block.y + block.h - player.h;
+							}
+
+						}
+					}
+					if (prediction.y > block.y && prediction.y + prediction.h < block.y + block.h)
+					{
+						colisionDetectedX = true;
+						////Coliding with the sides of an object
+						if (prediction.x > block.x + block.w)
+						{
+							if (dir == LEFT)
+							{
+								player.x = block.x + block.w;
+							}
+						}
+						else if (prediction.x + prediction.w < block.x)
+						{
+							if (dir == RIGHT)
+							{
+								player.x = block.x - player.w;
+							}
+						}
+
+					}
+
+					//LOG("%i", dir);
+
+				}
 			}
 		}
 	}
+
+	if (!colisionDetectedX) 
+	{
+		player.x = prediction.x;
+	}	
+	if (!colisionDetectedY) 
+	{
+		player.y = prediction.y;
+	}
 }
+
+// Destructor
+j1Map::~j1Map()
+{}
 
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
@@ -388,7 +451,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	if (node.child("properties").child("property").attribute("value").as_bool() == true)
 	{
 		App->colliders.collider_layer = layer;
-		App->colliders.collider_list.add(Collider({ 0, 0, 0, 0 }));
 	}
 
 	pugi::xml_node tile = node.child("data").child("tile");
@@ -400,12 +462,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->gid[i] = tile.attribute("gid").as_uint();
 		i++;
 		tile = tile.next_sibling("tile");
-		if(layer == App->colliders.collider_layer && tile.attribute("gid").as_uint() != 0)
-		{
-			App->colliders.collider_list.add(Collider({0, 0, 0, 0}));
-			LOG("%i", App->colliders.collider_list.count());
-			LOG("%i", tile.attribute("gid").as_uint());
-		}
 	}
 
 

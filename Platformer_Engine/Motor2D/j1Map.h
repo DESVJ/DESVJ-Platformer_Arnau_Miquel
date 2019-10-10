@@ -99,8 +99,6 @@ public:
 		*y *= data.tile_height;
 	}
 
-	void LoadColliders();
-
 private:
 
 	bool LoadMap();
@@ -112,6 +110,8 @@ private:
 public:
 
 	MapData data;
+
+	static void Test(SDL_Rect& prediction, SDL_Rect& player, int dir);
 
 private:
 

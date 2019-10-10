@@ -67,7 +67,7 @@ bool j1Player::Start()
 	inputs_out = 0;
 	actual_state = S_IDLE;
 
-	player.player_rect.x = App->map->data.tile_width * 2;
+	player.player_rect.x = App->map->data.tile_width * 5;
 	player.player_rect.y = App->map->data.tile_width * 8;
 	player.player_rect.w = 0;
 	player.player_rect.h = 0;
@@ -87,10 +87,21 @@ bool j1Player::Update(float dt)
 {
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
 	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation);
-	if (reset_animation == true)current_animation->Reset();
-		SDL_Rect current_frame = current_animation->GetCurrentFrame();
-	//player.player_rect.w = current_frame.w;
-	//player.player_rect.h = -current_frame.h;
+	if (reset_animation == true) {
+		current_animation->Reset();
+	}
+	SDL_Rect current_frame = current_animation->GetCurrentFrame();
+
+	if (player.player_rect.w != 0) {
+
+		int a = player.player_rect.w - current_frame.w;
+		if(a != 0)  
+			App->colliders.MoveObject(&player.player_rect, {a, 0});
+	}
+	player.player_rect.w = current_frame.w;
+	player.player_rect.h = -current_frame.h;
+
+
 	//player.player_rect.x += player.player_speed.x;
 	//player.player_rect.y += player.player_speed.y;
 	//if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;
@@ -104,6 +115,14 @@ bool j1Player::Update(float dt)
 		App->colliders.MoveObject(&player.player_rect, { 0, -2 });
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		App->colliders.MoveObject(&player.player_rect, { 0, 2 });
+
+
+	//for (int i = 0; i < App->colliders.collider_list.count(); i++)
+	//{
+	//	App->render->DrawQuad(App->colliders.collider_list[i].collider_rect, 255, 255, 255, 255);
+	//}
+
+
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
 	if (player.player_flip == false && player.player_speed.x < 0)player.player_flip = true;
@@ -121,6 +140,5 @@ bool j1Player::Update(float dt)
 bool j1Player::CleanUp()
 {
 	App->tex->UnLoad(player.player_spritesheet);
-	App->colliders.collider_list.clear();
 	return true;
 }

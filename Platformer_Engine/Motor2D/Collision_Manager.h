@@ -7,6 +7,8 @@
 #include"p2Log.h"
 #include"p2SString.h"
 #include"p2List.h"
+#include"j1Render.h"
+#include"j1App.h"
 
 struct Collider 
 {
@@ -14,11 +16,14 @@ struct Collider
 	p2SString collider_type;
 };
 
+enum Direction {
+	UP, DOWN, RIGHT, LEFT
+};
+
 struct Collider_Manager
 {
 
 	MapLayer* collider_layer = nullptr;
-	p2List<Collider> collider_list;
 
 	void MoveObject(SDL_Rect* currentPoint, p2Point<int> increment) 
 	{
@@ -27,40 +32,55 @@ struct Collider_Manager
 		//look up collider type
 		//currentpos + increment == colision?
 
-		currentPoint->x += increment.x;
-		currentPoint->y += increment.y;
-
 		SDL_Rect prediction = *currentPoint;
 		prediction.x += increment.x;
 		prediction.y += increment.y;
-		for (int i = 0; i < collider_list.count(); i++)
+
+		Direction dir;
+
+		if (increment.x > 0) 
 		{
-
-
-			if (prediction.x >= collider_list[i].collider_rect.x && prediction.x <= collider_list[i].collider_rect.x + collider_list[i].collider_rect.w
-				&& prediction.y >= collider_list[i].collider_rect.y && prediction.y <= collider_list[i].collider_rect.y + collider_list[i].collider_rect.h)
-				LOG("Collision");
-
-
-			//if (increment.x > 0)
-			//{
-			//	//Moving right
-			//}
-			//else
-			//{
-			//	//Moving left
-			//}
-
-			//if (increment.y > 0) 
-			//{
-			//	//Moving down
-			//}
-			//else
-			//{
-			//	//Moving up
-			//}
-
+			dir = RIGHT;
 		}
+		else if(increment.x < 0)
+		{
+			dir = LEFT;
+		}
+		if (increment.y > 0) 
+		{
+			dir = DOWN;
+		}
+		else if(increment.y < 0)
+		{
+			dir = UP;
+		}
+
+
+
+		j1Map::Test(prediction, *currentPoint, dir);
+
+
+		
+	}
+
+	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
+	{
+		bool detectedX = true;
+		bool detectedY = true;
+		// TODO 0: Return true if there is an overlap
+		// between argument "r" and property "rect"
+
+		if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x) 
+		{
+			detectedX = false;
+		}
+
+		if (rect.y < r.y || (rect.y + rect.h) > r.y + r.h)
+		{
+			detectedY = false;
+		}
+
+		return detectedX && detectedY;
 	}
 
 };
