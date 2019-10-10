@@ -94,34 +94,37 @@ bool j1Player::Update(float dt)
 
 	if (player.player_rect.w != 0) {
 
-		int a = player.player_rect.w - current_frame.w;
-		if(a != 0)  
-			App->colliders.MoveObject(&player.player_rect, {a, 0});
+		int animation_created_mov = player.player_rect.w - current_frame.w;
+		if(animation_created_mov != 0)  
+			App->colliders.MoveObject(&player.player_rect, {animation_created_mov, 0});
 	}
+
+	//TODO: Smooth camera follow
 	player.player_rect.w = current_frame.w;
 	player.player_rect.h = -current_frame.h;
 
 
-	//player.player_rect.x += player.player_speed.x;
-	//player.player_rect.y += player.player_speed.y;
-	//if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;
+
+
+	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0});
+	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
+	if (current_animation != &jump) 
+	{
+		App->colliders.MoveObject(&player.player_rect, { 0, 3});
+	}
+
+
+	if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;
 
 	//This must be debug mode only
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		App->colliders.MoveObject(&player.player_rect, {2, 0});
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		App->colliders.MoveObject(&player.player_rect, { -2, 0 });
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		App->colliders.MoveObject(&player.player_rect, { 0, -2 });
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->colliders.MoveObject(&player.player_rect, { 0, 2 });
-
-
-	//for (int i = 0; i < App->colliders.collider_list.count(); i++)
-	//{
-	//	App->render->DrawQuad(App->colliders.collider_list[i].collider_rect, 255, 255, 255, 255);
-	//}
-
+	//if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, {1, 0});
+	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { -1, 0 });
+	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { 0, -1 });
+	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { 0, 1 });
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);

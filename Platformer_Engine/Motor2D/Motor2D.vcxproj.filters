@@ -40,6 +40,9 @@
     <ClCompile Include="j1State_Machine.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Collision_Manager.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

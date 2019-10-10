@@ -20,48 +20,16 @@ enum Direction {
 	UP, DOWN, RIGHT, LEFT
 };
 
-struct Collider_Manager
+class Collider_Manager
 {
+
+public:
+	Collider_Manager();
+	~Collider_Manager();
 
 	MapLayer* collider_layer = nullptr;
 
-	void MoveObject(SDL_Rect* currentPoint, p2Point<int> increment) 
-	{
-		//currentPoint->y += increment.y;
-		//for itinerate all Colliders of the layer
-		//look up collider type
-		//currentpos + increment == colision?
-
-		SDL_Rect prediction = *currentPoint;
-		prediction.x += increment.x;
-		prediction.y += increment.y;
-
-		Direction dir;
-
-		if (increment.x > 0) 
-		{
-			dir = RIGHT;
-		}
-		else if(increment.x < 0)
-		{
-			dir = LEFT;
-		}
-		if (increment.y > 0) 
-		{
-			dir = DOWN;
-		}
-		else if(increment.y < 0)
-		{
-			dir = UP;
-		}
-
-
-
-		j1Map::Test(prediction, *currentPoint, dir);
-
-
-		
-	}
+	void MoveObject(SDL_Rect*, p2Point<int>);
 
 	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
 	{
@@ -84,6 +52,7 @@ struct Collider_Manager
 	}
 
 };
+
 
 
 #endif // __j1COLLISION_H__

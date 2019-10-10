@@ -111,8 +111,6 @@ public:
 
 	MapData data;
 
-	static void Test(SDL_Rect& prediction, SDL_Rect& player, int dir);
-
 private:
 
 	pugi::xml_document	map_file;

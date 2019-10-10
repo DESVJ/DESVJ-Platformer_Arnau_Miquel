@@ -12,91 +12,6 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 	name.create("map");
 }
 
-void j1Map::Test(SDL_Rect& prediction, SDL_Rect& player, int dir)
-{
-	bool colisionDetectedX = false;
-	bool colisionDetectedY = false;
-	for (int i = 0; i < App->colliders.collider_layer->height; i++)
-	{
-
-		for (int j = 0; j < App->colliders.collider_layer->width; j++)
-		{
-			int n = App->colliders.collider_layer->Get(j, i);
-			int gid = App->colliders.collider_layer->gid[n];
-			if (gid != 0)
-			{
-				int x = j;
-				int y = i;
-				App->map->Translate_Coord(&x, &y);
-
-				SDL_Rect block = { x, y, App->map->data.tile_width, App->map->data.tile_height };
-			
-				//App->render->DrawQuad(block, 255, 255, 255, 255);
-				//App->render->DrawQuad(prediction, 255, 0, 255, 255);
-
-
-				if (App->colliders.CheckCollision(prediction, block))
-				{
-					LOG("aa");
-					//Maybe going too fast can cause clipping
-					if (prediction.x + prediction.w >= block.x && prediction.x <= block.x + block.w)
-					{
-						colisionDetectedY = true;
-
-						if (prediction.y >= block.y && prediction.y <= block.y + (block.h / 2))
-						{
-							if (dir == DOWN)
-							{
-								player.y = block.y;
-							}
-						}
-						else if(prediction.y + prediction.h < block.y +  block.h && prediction.y > block.y + (block.h / 2))
-						{
-							if (dir == UP)
-							{
-								player.y = block.y + block.h - player.h;
-							}
-
-						}
-					}
-					if (prediction.y > block.y && prediction.y + prediction.h < block.y + block.h)
-					{
-						colisionDetectedX = true;
-						////Coliding with the sides of an object
-						if (prediction.x > block.x + block.w)
-						{
-							if (dir == LEFT)
-							{
-								player.x = block.x + block.w;
-							}
-						}
-						else if (prediction.x + prediction.w < block.x)
-						{
-							if (dir == RIGHT)
-							{
-								player.x = block.x - player.w;
-							}
-						}
-
-					}
-
-					//LOG("%i", dir);
-
-				}
-			}
-		}
-	}
-
-	if (!colisionDetectedX) 
-	{
-		player.x = prediction.x;
-	}	
-	if (!colisionDetectedY) 
-	{
-		player.y = prediction.y;
-	}
-}
-
 // Destructor
 j1Map::~j1Map()
 {}
@@ -153,7 +68,9 @@ void j1Map::Draw()
 					//	colliderCounter++;
 					//}
 
-					App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+					//Convert this to only debug mode
+					if(coord_layer->data != App->colliders.collider_layer)
+						App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 
 
 				}
