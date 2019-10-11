@@ -31,12 +31,16 @@ struct object_property
 };
 struct object_struct {
 
+
+	~object_struct();
+
 	int id;
 	SDL_Rect rect;
 	p2DynArray<object_property> properties;
 };
 
 struct MapLayer {
+
 	p2SString name = "Name_Null";
 	uint width = 0u;
 	uint height = 0u;

@@ -433,12 +433,12 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 		return false;
 	}
 
-	for (node = map_file.child("map").child("objectgroup").child("properties"); node && ret; node = node.next_sibling("properties"))
+	for (node = map_file.child("map").child("objectgroup").child("properties").child("property"); node && ret; node = node.next_sibling("property"))
 	{
 		object_property* set;
 
-		set->name = node.child("property").attribute("name").value();
-		set->prop_value.value_bool = node.child("property").attribute("isColliderLayer").value();
+		set->name = node.attribute("name").value();
+		set->prop_value.value_bool = node.attribute("value").as_bool();
 
 		object->properties.PushBack(*set);
 	}
@@ -447,38 +447,22 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 	{
 		object_struct* set;
 
-		set->id = (int)node.attribute("id").value();
-		SDL_Rect rect;
-		p2DynArray<object_property> properties;
+		set->id = node.attribute("id").as_int();
+		set->rect = {node.attribute("x").as_int(), node.attribute("y").as_int() , node.attribute("width").as_int() , node.attribute("height").as_int() };
+		for (pugi::xml_node subNode = node.child("properties").child("property"); node && ret; node = node.next_sibling("property"))
+		{
+			object_property *set2;
+
+			set2->name = node.attribute("name").value();
+			set2->prop_value.value_bool = node.attribute("value").as_bool();
+
+
+			set->properties.PushBack(*set2);
+		}
 
 
 		object->objects.PushBack(*set);
 	}
-
-
-
-
-	uint total_gid = layer->width * layer->height;
-	layer->gid = new uint[total_gid];
-	memset(layer->gid, 0, total_gid * sizeof(uint));
-
-	//Set collider layer
-	if (node.child("properties").child("property").attribute("isColliderLayer").value())
-	{
-		App->colliders.collider_layer = layer;
-	}
-
-	pugi::xml_node tile = node.child("data").child("tile");
-	int i = 0;
-	while (tile && strcmp(tile.name(), "tile") == 0)
-	{
-
-
-		layer->gid[i] = tile.attribute("gid").as_uint();
-		i++;
-		tile = tile.next_sibling("tile");
-	}
-
 
 	return ret;
 }
