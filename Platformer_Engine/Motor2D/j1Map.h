@@ -12,31 +12,22 @@
 
 struct object_property
 {
-
-	~object_property();
-
-	p2SString name;
-
+	p2SString name = "Name_Null";
 	union value
 	{
-
-		~value();
-
-		bool value_bool;
+		bool value_bool = false;
 		int value_int;
 		float value_float;
-		p2SString value_string;
+		const char* value_string;
 
 	}prop_value;
+
 };
 struct object_struct {
 
-
-	~object_struct();
-
-	int id;
-	SDL_Rect rect;
-	p2DynArray<object_property> properties;
+	int id = 0;
+	SDL_Rect rect = {0, 0, 0, 0};
+	p2List<object_property*> properties;
 };
 
 struct MapLayer {
@@ -55,8 +46,8 @@ struct MapObjectGroup
 {
 	p2SString name = "Name_Null";
 
-	p2DynArray<object_property> properties;
-	p2DynArray<object_struct> objects;
+	p2List<object_property*> properties;
+	p2List<object_struct*> objects;
 	
 };
 

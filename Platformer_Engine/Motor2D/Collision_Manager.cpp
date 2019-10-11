@@ -1,6 +1,7 @@
 #include"j1App.h"
 #include"Collision_Manager.h"
 #include"j1Window.h"
+#include"j1Map.h"
 
 
 Collider_Manager::Collider_Manager() {
@@ -12,32 +13,97 @@ Collider_Manager::~Collider_Manager() {
 
 void Collider_Manager::LoadColliders() 
 {
-	for (int i = 0; i < collider_layer->height; i++)
+	//for (int i = 0; i < collider_layer->height; i++)
+	//{
+
+	//	for (int j = 0; j < collider_layer->width; j++)
+	//	{
+	//		int n = collider_layer->Get(j, i);
+	//		int gid = collider_layer->gid[n];
+	//		if (gid != 0)
+	//		{
+	//			int x = j;
+	//			int y = i;
+	//			App->map->Translate_Coord(&x, &y);
+
+	//			Collider newCollider;
+
+	//			newCollider.collider_rect = {x, y, App->map->data.tile_width , App->map->data.tile_height };
+	//			//Load collide type
+	//			newCollider.enabled = true;
+
+	//			collider_list.add(newCollider);
+
+	//			
+	//		}
+	//	}
+	//}
+	//		LOG("%i", collider_list.count());
+
+
+	p2List_item<MapObjectGroup*>* itemA;
+	itemA = App->map->data.object_layers.start;
+	while (itemA != NULL)
 	{
 
-		for (int j = 0; j < collider_layer->width; j++)
+		p2List_item<object_property*>* isCollider;
+		isCollider = itemA->data->properties.start;
+		while (isCollider != NULL)
 		{
-			int n = collider_layer->Get(j, i);
-			int gid = collider_layer->gid[n];
-			if (gid != 0)
+
+			if (isCollider->data->name == "isColliderLayer" && isCollider->data->prop_value.value_bool == true) 
 			{
-				int x = j;
-				int y = i;
-				App->map->Translate_Coord(&x, &y);
+				//Load rects and types
+				p2List_item<object_struct*>* objects;
+				objects = itemA->data->objects.start;
+				while (objects != NULL)
+				{
 
-				Collider newCollider;
+					Collider clr;
 
-				newCollider.collider_rect = {x, y, App->map->data.tile_width , App->map->data.tile_height };
-				//Load collide type
-				newCollider.enabled = true;
+					clr.collider_rect = objects->data->rect;
+					clr.enabled = true;
+					
+					p2List_item<object_property*>* clr_type;
+					clr_type = objects->data->properties.start;
+					while (clr_type !=NULL)
+					{
 
-				collider_list.add(newCollider);
+						if (clr_type->data->name == "colliderType") 
+						{
+							if ((p2SString)clr_type->data->prop_value.value_string == "Walkeable")
+							{
+								clr.collider_type = WALKEABLE;
+							}
+							else if((p2SString)clr_type->data->prop_value.value_string == "Kill")
+							{
+								clr.collider_type = KILL;
+							}
+							else if((p2SString)clr_type->data->prop_value.value_string == "Climb")
+							{
+								clr.collider_type = CLIMB;
+							}
+							LOG("%s", clr_type->data->prop_value.value_string);
+						}
 
-				
+						clr_type = clr_type->next;
+					}
+
+
+					collider_list.add(clr);
+
+
+					objects = objects->next;
+				}
 			}
+			isCollider = isCollider->next;
 		}
+		itemA = itemA->next;
 	}
-			LOG("%i", collider_list.count());
+
+
+
+
 
 }
 
@@ -81,48 +147,56 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 			{
 				if (CheckCollision(prediction, *block))
 				{
-					//LOG("aa");
+					if (collider_list[i].collider_type == WALKEABLE) 
+					{
+						//LOG("aa");
 					//Maybe going too fast can cause clipping
-					if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
-					{
-						colisionDetectedY = true;
-
-						if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2))
+						if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
 						{
-							if (dir == DOWN)
+							colisionDetectedY = true;
+
+							if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2))
 							{
-								currentPoint->y = block->y;
+								if (dir == DOWN)
+								{
+									currentPoint->y = block->y;
+								}
+							}
+							else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+							{
+								if (dir == UP)
+								{
+									currentPoint->y = block->y + block->h - currentPoint->h;
+								}
+
 							}
 						}
-						else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+						if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
 						{
-							if (dir == UP)
+							colisionDetectedX = true;
+							////Coliding with the sides of an object
+							if (prediction.x > block->x + block->w)
 							{
-								currentPoint->y = block->y + block->h - currentPoint->h;
+								if (dir == LEFT)
+								{
+									currentPoint->x = block->x + block->w;
+								}
+							}
+							else if (prediction.x + prediction.w < block->x)
+							{
+								if (dir == RIGHT)
+								{
+									currentPoint->x = block->x - currentPoint->w;
+								}
 							}
 
 						}
 					}
-					if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
+					else if(collider_list[i].collider_type == KILL)
 					{
-						colisionDetectedX = true;
-						////Coliding with the sides of an object
-						if (prediction.x > block->x + block->w)
-						{
-							if (dir == LEFT)
-							{
-								currentPoint->x = block->x + block->w;
-							}
-						}
-						else if (prediction.x + prediction.w < block->x)
-						{
-							if (dir == RIGHT)
-							{
-								currentPoint->x = block->x - currentPoint->w;
-							}
-						}
-
+						LOG("KILL");
 					}
+					
 				}
 
 			}

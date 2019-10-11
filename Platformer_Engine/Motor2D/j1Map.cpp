@@ -75,21 +75,42 @@ void j1Map::Draw()
 					if ((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
 						&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset) 
 					{
-
-
-						if (App->input->is_Debug_Mode && coord_layer->data == App->colliders.collider_layer)
-						{
-							App->render->Blit(coord_tileset->data->texture, x, y, &rect);
-						}
-						if(coord_layer->data != App->colliders.collider_layer)
-						{
-							App->render->Blit(coord_tileset->data->texture, x, y, &rect);
-						}
+						App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 					}
 				}
 			}
 		}
 		coord_layer = coord_layer->next;
+	}
+
+	if (App->input->is_Debug_Mode)
+	{
+		for (int i = 0; i < App->colliders.collider_list.count(); i++)
+		{
+			Collider *col = &App->colliders.collider_list[i];
+			SDL_Rect *rect = &col->collider_rect;
+			if ((rect->x + rect->w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && rect->x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
+				&& (rect->y + rect->h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && rect->y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+			{
+				SDL_Color color;
+				switch (col->collider_type)
+				{
+
+				case WALKEABLE:
+					color = {0, 255, 0, 100};
+					break;
+				case KILL:
+					color = { 255, 0, 0, 100};
+					break;
+				case CLIMB:
+					color = { 0, 0, 255, 100};
+					break;
+
+
+				}
+				App->render->DrawQuad(*rect, color.r, color.g, color.b, color.a);
+			}
+		}
 	}
 	// TODO 9: Complete the draw function
 	int i;
@@ -129,12 +150,12 @@ bool j1Map::CleanUp()
 	itemO = data.object_layers.start;
 	while (itemO != NULL)
 	{
-		itemO->data->properties.Clear();
-		for (int i = 0; i < itemO->data->objects.Count(); i++)
+		itemO->data->properties.clear();
+		for (int i = 0; i < itemO->data->objects.count(); i++)
 		{
-			itemO->data->objects[i].properties.Clear();
+			itemO->data->objects[i]->properties.clear();
 		}
-		itemO->data->objects.Clear();
+		itemO->data->objects.clear();
 		itemO = itemO->next;
 	}
 	data.object_layers.clear();
@@ -401,12 +422,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->gid = new uint[total_gid];
 	memset(layer->gid, 0, total_gid*sizeof(uint));
 
-	//Set collider layer
-	if (node.child("properties").child("property").attribute("isColliderLayer").value())
-	{
-		App->colliders.collider_layer = layer;
-	}
-
 	pugi::xml_node tile = node.child("data").child("tile");
 	int i = 0;
 	while (tile && strcmp(tile.name(),"tile")==0) 
@@ -433,35 +448,37 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 		return false;
 	}
 
-	for (node = map_file.child("map").child("objectgroup").child("properties").child("property"); node && ret; node = node.next_sibling("property"))
+	pugi::xml_node props1;
+	for (props1 = node.child("properties").child("property"); props1 && ret; props1 = props1.next_sibling("property"))
 	{
-		object_property* set;
+		object_property* set = new object_property();
 
-		set->name = node.attribute("name").value();
-		set->prop_value.value_bool = node.attribute("value").as_bool();
+		set->name = props1.attribute("name").value();
+		set->prop_value.value_bool = props1.attribute("value").as_bool();
 
-		object->properties.PushBack(*set);
+		object->properties.add(set);
 	}
 
-	for (node = map_file.child("map").child("objectgroup").child("object"); node && ret; node = node.next_sibling("object"))
+	pugi::xml_node objs;
+	for (objs = node.child("object"); objs && ret; objs = objs.next_sibling("object"))
 	{
-		object_struct* set;
+		object_struct* set = new object_struct();
 
-		set->id = node.attribute("id").as_int();
-		set->rect = {node.attribute("x").as_int(), node.attribute("y").as_int() , node.attribute("width").as_int() , node.attribute("height").as_int() };
-		for (pugi::xml_node subNode = node.child("properties").child("property"); node && ret; node = node.next_sibling("property"))
+		set->id = objs.attribute("id").as_int();
+		set->rect = { objs.attribute("x").as_int(), objs.attribute("y").as_int() , objs.attribute("width").as_int() , objs.attribute("height").as_int() };
+		for (pugi::xml_node subNode = objs.child("properties").child("property"); subNode && ret; subNode = subNode.next_sibling("property"))
 		{
-			object_property *set2;
+			object_property *set2 = new object_property();
 
-			set2->name = node.attribute("name").value();
-			set2->prop_value.value_bool = node.attribute("value").as_bool();
+			set2->name = subNode.attribute("name").value();
+			set2->prop_value.value_string = subNode.attribute("value").as_string();
 
 
-			set->properties.PushBack(*set2);
+			set->properties.add(set2);
 		}
 
 
-		object->objects.PushBack(*set);
+		object->objects.add(set);
 	}
 
 	return ret;

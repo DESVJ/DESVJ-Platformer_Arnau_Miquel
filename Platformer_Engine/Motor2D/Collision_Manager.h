@@ -10,11 +10,17 @@
 #include"j1Render.h"
 #include"j1App.h"
 
+
+enum Collider_Types
+{
+	WALKEABLE, KILL, CLIMB
+};
+
 struct Collider 
 {
 	SDL_Rect collider_rect = {0, 0, 0, 0};
 	bool enabled = true;
-	p2SString collider_type;
+	Collider_Types collider_type;
 };
 
 enum Direction {
@@ -28,7 +34,6 @@ public:
 	Collider_Manager();
 	~Collider_Manager();
 
-	MapLayer* collider_layer = nullptr;
 	p2List<Collider> collider_list;
 
 	void MoveObject(SDL_Rect*, p2Point<int>);
