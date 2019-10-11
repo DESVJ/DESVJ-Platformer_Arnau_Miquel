@@ -131,14 +131,6 @@ bool j1Input::PreUpdate()
 	return true;
 }
 
-//bool j1Input::Update(float dt)
-//{
-//	if (keyboard[SDL_SCANCODE_F1] == KEY_DOWN) 
-//	{
-//		debugMode = !debugMode;
-//	}
-//}
-
 // Called before quitting
 bool j1Input::CleanUp()
 {

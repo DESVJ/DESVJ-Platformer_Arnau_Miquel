@@ -113,6 +113,10 @@ bool j1Player::Update(float dt)
 		//TODO: Falling looks wird on high falls
 		App->colliders.MoveObject(&player.player_rect, { 0, 4});
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	{
+		App->input->is_Debug_Mode = !App->input->is_Debug_Mode;
+	}
 
 
 	if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;

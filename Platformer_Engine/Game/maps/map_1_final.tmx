@@ -87,15 +87,20 @@
   <tile id="123" terrain="4,4,4,4"/>
   <tile id="125">
    <properties>
-    <property name="Colider_Type" value="Red"/>
+    <property name="Colider_Type" value="Green"/>
    </properties>
    <objectgroup draworder="index">
     <object id="4" x="0" y="0" width="16" height="16"/>
    </objectgroup>
   </tile>
+  <tile id="126">
+   <properties>
+    <property name="Colider_Type" value="Blue"/>
+   </properties>
+  </tile>
   <tile id="127">
    <properties>
-    <property name="Colider_Type" value="Green"/>
+    <property name="Colider_Type" value="Red"/>
    </properties>
   </tile>
  </tileset>
@@ -28264,7 +28269,7 @@
    <tile gid="750"/>
    <tile gid="750"/>
    <tile gid="750"/>
-   <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -28348,7 +28353,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -28381,7 +28386,6 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -28433,6 +28437,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -28516,7 +28521,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -29525,7 +29530,7 @@
    <tile gid="750"/>
    <tile gid="750"/>
    <tile gid="750"/>
-   <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile gid="750"/>
    <tile gid="750"/>
@@ -29609,7 +29614,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
-   <tile/>
+   <tile gid="751"/>
    <tile gid="750"/>
    <tile gid="750"/>
    <tile gid="750"/>
@@ -29693,6 +29698,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29708,7 +29714,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="750"/>
    <tile/>
    <tile gid="750"/>
@@ -29777,6 +29782,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29792,7 +29798,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="750"/>
    <tile/>
    <tile gid="750"/>
@@ -29838,14 +29843,14 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -29861,6 +29866,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29876,7 +29882,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="750"/>
    <tile/>
    <tile gid="750"/>
@@ -29945,6 +29950,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29960,7 +29966,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="750"/>
    <tile/>
    <tile gid="750"/>
@@ -30029,7 +30034,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
-   <tile/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30113,6 +30118,7 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30128,7 +30134,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="750"/>
    <tile/>
    <tile/>
@@ -30197,19 +30202,19 @@
    <tile/>
    <tile/>
    <tile gid="750"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="751"/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="752"/>
+   <tile gid="752"/>
+   <tile gid="752"/>
    <tile/>
    <tile/>
+   <tile gid="752"/>
    <tile/>
    <tile/>
+   <tile gid="752"/>
    <tile/>
    <tile/>
    <tile/>
