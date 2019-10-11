@@ -7,8 +7,6 @@
 #include "j1Module.h"
 #include"p2DynArray.h"
 
-// TODO 1: Create a struct for the map layer
-// ----------------------------------------------------
 
 struct object_property
 {
@@ -36,7 +34,6 @@ struct MapLayer {
 	uint width = 0u;
 	uint height = 0u;
 	uint* gid = nullptr;
-	// TODO 6: Short function to get the value of x,y
 	inline uint Get(int x, int y) const 
 	{
 		return (y * width) + x;
@@ -55,7 +52,6 @@ struct MapObjectGroup
 // ----------------------------------------------------
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rect
 
 	p2SString			name;
 	int					firstgid;
@@ -99,7 +95,6 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<MapObjectGroup*> object_layers;
-	// TODO 2: Add a list/array of layers to the map!
 };
 
 // ----------------------------------------------------
@@ -124,7 +119,6 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	void Translate_Coord(int* x, int* y) {
 		*x *= data.tile_width;
 		*y *= data.tile_height;
@@ -135,7 +129,6 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object);
 

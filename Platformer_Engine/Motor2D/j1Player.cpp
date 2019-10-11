@@ -46,6 +46,19 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 164,172,19,19 });
 	jump.speed = 0.1f;
 
+
+	//Idle ladder animation
+	idle_ladder.PushBack({ 262,42,15,20 });
+
+
+	//Movement ladder animation
+	movement_ladder.PushBack({ 293,42,14,20 });
+	movement_ladder.PushBack({ 328,42,14,20 });
+	movement_ladder.speed = 0.1f;
+
+
+	///////TEMPORAL
+	difference_y = 256;
 }
 
 // Destructor

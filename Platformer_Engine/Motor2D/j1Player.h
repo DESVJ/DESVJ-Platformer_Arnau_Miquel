@@ -72,9 +72,13 @@ public:
 	Animation idle;
 	Animation run;
 	Animation jump;
+	Animation idle_ladder;
+	Animation movement_ladder;
 
 private:
 	int gravity = 1;
+	///////TEMPORAL
+	int difference_y;
 	int inputs_out;
 	state actual_state;
 	inputin input_in;
