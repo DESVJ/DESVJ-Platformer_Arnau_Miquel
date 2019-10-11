@@ -22,7 +22,6 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
-	bool Update(float dt);
 	bool PostUpdate();
 
 	// Called before quitting
@@ -54,6 +53,7 @@ public:
 	//camera limits
 	int limitPosX, limitNegX, limitPosY, limitNegY;
 	void MoveCameraInsideLimits(int, int);
+	void MoveCameraToPointInsideLimits(p2Point<int> point);
 
 };
 

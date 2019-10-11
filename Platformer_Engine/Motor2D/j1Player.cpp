@@ -104,8 +104,6 @@ bool j1Player::Update(float dt)
 	player.player_rect.h = -current_frame.h;
 
 
-
-
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0});
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
 	if (current_animation != &jump) 
@@ -130,6 +128,10 @@ bool j1Player::Update(float dt)
 	//	App->colliders.MoveObject(&player.player_rect, { 0, -1 });
 	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	//	App->colliders.MoveObject(&player.player_rect, { 0, 1 });
+
+
+	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
+	App->render->MoveCameraToPointInsideLimits({player.player_rect.x, player.player_rect.y});
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);

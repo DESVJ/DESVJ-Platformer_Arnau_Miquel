@@ -67,13 +67,6 @@ bool j1Render::PreUpdate()
 	return true;
 }
 
-bool j1Render::Update(float dt)
-{
-	//LOG("%i, %i", camera.x, camera.y);
-	//MoveCameraToPointInsideLimits();
-	return true;
-}
-
 bool j1Render::PostUpdate()
 {
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
@@ -302,6 +295,70 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 			camera.y += y;
 		}
 	}
+
+
+}
+
+
+void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point) 
+{
+
+	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
+	int x = -(point.x* (int)App->win->GetScale()) + (App->win->width / 2);
+	int y = -(point.y* (int)App->win->GetScale()) + (App->win->height / 2);
+
+	if (x >= 0)
+	{
+		//X left limit
+		if (x >= limitNegX)
+		{
+			camera.x = limitNegX;
+		}
+		else
+		{
+			camera.x = x;
+		}
+	}
+	else
+	{
+		//X right limit
+		if (x <= -limitPosX)
+		{
+			camera.x = -limitPosX;
+		}
+		else
+		{
+			camera.x = x;
+		}
+
+	}
+
+	if (y >= 0)
+	{
+		//Y up limit
+		if (y >= limitPosY)
+		{
+			camera.y = limitPosY;
+		}
+		else
+		{
+			camera.y = y;
+		}
+	}
+	else
+	{
+		//Y down limit
+		if (y <= -limitNegY)
+		{
+			camera.y = -limitNegY;
+		}
+		else
+		{
+			camera.y = y;
+		}
+	}
+
+
 
 
 }
