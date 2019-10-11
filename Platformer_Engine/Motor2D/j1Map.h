@@ -5,9 +5,36 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include"p2DynArray.h"
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
+
+struct object_property
+{
+
+	~object_property();
+
+	p2SString name;
+
+	union value
+	{
+
+		~value();
+
+		bool value_bool;
+		int value_int;
+		float value_float;
+		p2SString value_string;
+
+	}prop_value;
+};
+struct object_struct {
+
+	int id;
+	SDL_Rect rect;
+	p2DynArray<object_property> properties;
+};
 
 struct MapLayer {
 	p2SString name = "Name_Null";
@@ -19,6 +46,14 @@ struct MapLayer {
 	{
 		return (y * width) + x;
 	}
+};
+struct MapObjectGroup 
+{
+	p2SString name = "Name_Null";
+
+	p2DynArray<object_property> properties;
+	p2DynArray<object_struct> objects;
+	
 };
 
 
@@ -68,6 +103,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<MapObjectGroup*> object_layers;
 	// TODO 2: Add a list/array of layers to the map!
 };
 
@@ -106,6 +142,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object);
 
 public:
 

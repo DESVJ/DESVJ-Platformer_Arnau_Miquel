@@ -77,53 +77,55 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		if ((block->x + block->w) * App->win->GetScale() >= -App->render->camera.x && block->x * App->win->GetScale() <= -App->render->camera.x + App->win->width
 			&& (block->y + block->h) * App->win->GetScale() >= -App->render->camera.y && block->y * App->win->GetScale() <= -App->render->camera.y + App->win->height)
 		{
-			if (CheckCollision(prediction, *block))
+			if (collider_list[i].enabled) 
 			{
-				//LOG("aa");
-				//Maybe going too fast can cause clipping
-				if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
+				if (CheckCollision(prediction, *block))
 				{
-					colisionDetectedY = true;
-
-					if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2))
+					//LOG("aa");
+					//Maybe going too fast can cause clipping
+					if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
 					{
-						if (dir == DOWN)
+						colisionDetectedY = true;
+
+						if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2))
 						{
-							currentPoint->y = block->y;
+							if (dir == DOWN)
+							{
+								currentPoint->y = block->y;
+							}
+						}
+						else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+						{
+							if (dir == UP)
+							{
+								currentPoint->y = block->y + block->h - currentPoint->h;
+							}
+
 						}
 					}
-					else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+					if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
 					{
-						if (dir == UP)
+						colisionDetectedX = true;
+						////Coliding with the sides of an object
+						if (prediction.x > block->x + block->w)
 						{
-							currentPoint->y = block->y + block->h - currentPoint->h;
+							if (dir == LEFT)
+							{
+								currentPoint->x = block->x + block->w;
+							}
+						}
+						else if (prediction.x + prediction.w < block->x)
+						{
+							if (dir == RIGHT)
+							{
+								currentPoint->x = block->x - currentPoint->w;
+							}
 						}
 
 					}
 				}
-				if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
-				{
-					colisionDetectedX = true;
-					////Coliding with the sides of an object
-					if (prediction.x > block->x + block->w)
-					{
-						if (dir == LEFT)
-						{
-							currentPoint->x = block->x + block->w;
-						}
-					}
-					else if (prediction.x + prediction.w < block->x)
-					{
-						if (dir == RIGHT)
-						{
-							currentPoint->x = block->x - currentPoint->w;
-						}
-					}
 
-				}
 			}
-
-			//LOG("%i", dir);
 		}
 	}
 

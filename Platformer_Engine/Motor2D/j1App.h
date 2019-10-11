@@ -15,6 +15,7 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1Player;
+class Collider_Manager;
 
 class j1App
 {

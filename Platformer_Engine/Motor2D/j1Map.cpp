@@ -116,13 +116,28 @@ bool j1Map::CleanUp()
 	// Remove all layers
 	p2List_item<MapLayer*>* iteml;
 	iteml = data.layers.start;
-	while (item != NULL)
+	while (iteml != NULL)
 	{
 		RELEASE(iteml->data->gid);
 		RELEASE(iteml->data);
 		iteml = iteml->next;
 	}
 	data.layers.clear();
+
+
+	p2List_item<MapObjectGroup*>* itemO;
+	itemO = data.object_layers.start;
+	while (itemO != NULL)
+	{
+		itemO->data->properties.Clear();
+		for (int i = 0; i < itemO->data->objects.Count(); i++)
+		{
+			itemO->data->objects[i].properties.Clear();
+		}
+		itemO->data->objects.Clear();
+		itemO = itemO->next;
+	}
+	data.object_layers.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -181,7 +196,16 @@ bool j1Map::Load(const char* file_name)
 			ret = LoadLayer(layer, set);
 		}
 		data.layers.add(set);
+	}
+	for (layer = map_file.child("map").child("objectgroup"); layer && ret; layer = layer.next_sibling("objectgroup"))
+	{
+		MapObjectGroup* set = new MapObjectGroup();
 
+		if (ret == true)
+		{
+			ret = LoadObjectGroup(layer, set);
+		}
+		data.object_layers.add(set);
 	}
 
 	if(ret == true)
@@ -378,7 +402,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	memset(layer->gid, 0, total_gid*sizeof(uint));
 
 	//Set collider layer
-	if (node.child("properties").child("property").attribute("value").as_bool() == true)
+	if (node.child("properties").child("property").attribute("isColliderLayer").value())
 	{
 		App->colliders.collider_layer = layer;
 	}
@@ -386,6 +410,67 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	pugi::xml_node tile = node.child("data").child("tile");
 	int i = 0;
 	while (tile && strcmp(tile.name(),"tile")==0) 
+	{
+
+
+		layer->gid[i] = tile.attribute("gid").as_uint();
+		i++;
+		tile = tile.next_sibling("tile");
+	}
+
+
+	return ret;
+}
+
+// TODO 3: Create the definition for a function that loads a single layer
+bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
+{
+	bool ret = true;
+	object->name = node.attribute("name").as_string();
+
+	if (strcmp(object->name.GetString(), "Name_Null") == 0) {
+		LOG("Error geting layer name");
+		return false;
+	}
+
+	for (node = map_file.child("map").child("objectgroup").child("properties"); node && ret; node = node.next_sibling("properties"))
+	{
+		object_property* set;
+
+		set->name = node.child("property").attribute("name").value();
+		set->prop_value.value_bool = node.child("property").attribute("isColliderLayer").value();
+
+		object->properties.PushBack(*set);
+	}
+
+	for (node = map_file.child("map").child("objectgroup").child("object"); node && ret; node = node.next_sibling("object"))
+	{
+		object_struct* set;
+
+		set->id = (int)node.attribute("id").value();
+		SDL_Rect rect;
+		p2DynArray<object_property> properties;
+
+
+		object->objects.PushBack(*set);
+	}
+
+
+
+
+	uint total_gid = layer->width * layer->height;
+	layer->gid = new uint[total_gid];
+	memset(layer->gid, 0, total_gid * sizeof(uint));
+
+	//Set collider layer
+	if (node.child("properties").child("property").attribute("isColliderLayer").value())
+	{
+		App->colliders.collider_layer = layer;
+	}
+
+	pugi::xml_node tile = node.child("data").child("tile");
+	int i = 0;
+	while (tile && strcmp(tile.name(), "tile") == 0)
 	{
 
 
