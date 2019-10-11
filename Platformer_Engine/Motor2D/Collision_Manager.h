@@ -13,6 +13,7 @@
 struct Collider 
 {
 	SDL_Rect collider_rect = {0, 0, 0, 0};
+	bool enabled = true;
 	p2SString collider_type;
 };
 
@@ -28,8 +29,11 @@ public:
 	~Collider_Manager();
 
 	MapLayer* collider_layer = nullptr;
+	p2List<Collider> collider_list;
 
 	void MoveObject(SDL_Rect*, p2Point<int>);
+
+	void LoadColliders();
 
 	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
 	{
