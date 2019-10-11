@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include"j1Window.h"
+#include"j1Input.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -69,7 +70,10 @@ void j1Map::Draw()
 					//}
 
 					//Convert this to only debug mode
-					if(coord_layer->data != App->colliders.collider_layer)
+					//if(coord_layer->data != App->colliders.collider_layer)
+
+					if((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x  * App->win->GetScale() <= -App->render->camera.x + App->win->width  - culling_offset
+						&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
 						App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 
 

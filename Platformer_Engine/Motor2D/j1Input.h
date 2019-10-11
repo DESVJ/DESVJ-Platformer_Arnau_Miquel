@@ -44,6 +44,8 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 
+	//bool Update(float dt);
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -76,6 +78,9 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+//
+//public:
+//	//bool debugMode = false;
 };
 
 #endif // __j1INPUT_H__

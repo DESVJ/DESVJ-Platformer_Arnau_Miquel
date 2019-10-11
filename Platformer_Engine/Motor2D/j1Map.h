@@ -110,6 +110,7 @@ private:
 public:
 
 	MapData data;
+	int culling_offset = 0;
 
 private:
 
