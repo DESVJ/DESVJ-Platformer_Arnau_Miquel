@@ -110,7 +110,8 @@ bool j1Player::Update(float dt)
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
 	if (current_animation != &jump) 
 	{
-		App->colliders.MoveObject(&player.player_rect, { 0, 3});
+		//TODO: Falling looks wird on high falls
+		App->colliders.MoveObject(&player.player_rect, { 0, 4});
 	}
 
 

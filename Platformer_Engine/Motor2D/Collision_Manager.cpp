@@ -55,7 +55,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 				SDL_Rect block = { x, y, App->map->data.tile_width, App->map->data.tile_height };
 
 				//App->render->DrawQuad(block, 255, 255, 255, 255);
-				App->render->DrawQuad(prediction, 255, 0, 255, 100);
+				//App->render->DrawQuad(prediction, 255, 0, 255, 100);
 
 				if ((x + block.w) * App->win->GetScale() >= -App->render->camera.x && x * App->win->GetScale() <= -App->render->camera.x + App->win->width
 					&& (y + block.h) * App->win->GetScale() >= -App->render->camera.y && y * App->win->GetScale() <= -App->render->camera.y + App->win->height) 
