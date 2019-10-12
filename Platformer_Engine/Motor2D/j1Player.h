@@ -13,6 +13,8 @@ struct Player_Info
 	SDL_Rect player_rect = { 0, 0, 0, 0 };
 	p2Point<int> player_speed;
 	bool player_flip;
+	bool player_not_jumping;
+	bool player_god_mode;
 	SDL_Texture* player_spritesheet;
 
 
@@ -26,6 +28,12 @@ enum state {
 	S_JUMP,
 	S_JUMP_RIGHT,
 	S_JUMP_LEFT,
+	S_UP,
+	S_UP_RIGHT,
+	S_UP_LEFT,
+	S_DOWN,
+	S_DOWN_RIGHT,
+	S_DOWN_LEFT,
 	S_HITTED
 };
 
@@ -36,13 +44,27 @@ enum inputin {
 	I_RIGHT_AND_LEFT,
 	I_JUMP_RIGHT,
 	I_JUMP_LEFT,
-	I_JUMP
+	I_JUMP,
+	I_UP,
+	I_UP_RIGHT,
+	I_UP_LEFT,
+	I_UP_RIGHT_LEFT,
+	I_DOWN,
+	I_DOWN_RIGHT,
+	I_DOWN_LEFT,
+	I_DOWN_RIGHT_LEFT,
+	I_DOWN_UP,
+	I_DOWN_UP_RIGHT,
+	I_DOWN_UP_LEFT,
+	I_DOWN_UP_RIGHT_LEFT
 };
 
 enum inputout {
 	O_NONE = 0,
 	O_RIGHT,
 	O_LEFT,
+	O_UP,
+	O_DOWN,
 	O_JUMP_FINISH
 };
 
@@ -76,6 +98,7 @@ public:
 	Animation jump;
 	Animation idle_ladder;
 	Animation movement_ladder;
+	Animation death;
 
 private:
 	int gravity = 1;
@@ -84,7 +107,7 @@ private:
 	int inputs_out;
 	state actual_state;
 	inputin input_in;
-	inputout input_out[3];
+	inputout input_out[5];
 };
 
 #endif // __j1PLAYER_H__

@@ -59,6 +59,18 @@ j1Player::j1Player() : j1Module()
 	movement_ladder.speed = 0.1f;
 
 
+	//Death animation
+	death.PushBack({ 6,235,16,20 });
+	death.PushBack({ 36,236,20,19 });
+	death.PushBack({ 65,233,25,22 });
+	death.PushBack({ 100,241,20,14 });
+	death.PushBack({ 133,246,21,10 });
+	death.PushBack({ 166,245,21,11 });
+	death.PushBack({ 198,246,21,10 });
+	death.speed = 0.05f;
+
+
+
 	///////TEMPORAL
 	difference_y = 256;
 }
@@ -87,13 +99,15 @@ bool j1Player::Start()
 	player.player_rect.w = 0;
 	player.player_rect.h = 0;
 	player.player_flip = false;
+	player.player_not_jumping = false;
+	player.player_god_mode = false;
 
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
 	return true;
 }
 
 bool j1Player::PreUpdate() {
-	CheckInputs(inputs_out, player.player_speed.y, actual_state, input_in, input_out);
+	CheckInputs(player.player_god_mode, player.player_not_jumping, inputs_out, player.player_speed.y, actual_state, input_in, input_out);
 	return true;
 }
 
@@ -121,18 +135,28 @@ bool j1Player::Update(float dt)
 
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0});
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
-	if (current_animation != &jump) 
+	if (current_animation != &jump&&player.player_god_mode == false)
 	{
 		//TODO: Falling looks wird on high falls
 		App->colliders.MoveObject(&player.player_rect, { 0, 4});
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 	{
 		App->input->is_Debug_Mode = !App->input->is_Debug_Mode;
 	}
+	//GOD MODE
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		player.player_god_mode = !player.player_god_mode;
+		player.player_not_jumping = true;
+	}
 
 
-	if (current_animation == &jump && player.player_speed.y < 12)player.player_speed.y += gravity;
+	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
+
+	///////////////////TEMPORAL!!!!!!!!!!!!!
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)player.player_not_jumping = true;
+
 
 	//This must be debug mode only
 	//if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
