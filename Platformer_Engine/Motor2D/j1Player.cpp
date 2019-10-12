@@ -99,7 +99,7 @@ bool j1Player::Start()
 	player.player_rect.w = 0;
 	player.player_rect.h = 0;
 	player.player_flip = false;
-	player.player_not_jumping = false;
+	player.player_not_jumping = true;
 	player.player_god_mode = false;
 
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
@@ -154,8 +154,6 @@ bool j1Player::Update(float dt)
 
 	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
 
-	///////////////////TEMPORAL!!!!!!!!!!!!!
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)player.player_not_jumping = true;
 
 
 	//This must be debug mode only

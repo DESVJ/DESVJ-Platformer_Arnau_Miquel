@@ -4,6 +4,8 @@
 #include"Collision_Manager.h"
 #include"j1Window.h"
 #include"j1Map.h"
+///////////TEMPORAL
+#include "j1Player.h"
 
 
 Collider_Manager::Collider_Manager() {
@@ -150,7 +152,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 								{
 									if (dir == DOWN)
 									{
-										currentPoint->y = block->y;
+ 										currentPoint->y = block->y;
+										//TEMPORAL!!!!!!!!!!!!!!!!
+										App->player->player.player_not_jumping = true;
 									}
 								}
 								else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
