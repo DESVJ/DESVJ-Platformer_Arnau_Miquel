@@ -15,6 +15,7 @@ struct Player_Info
 	bool player_flip;
 	bool player_not_jumping;
 	bool player_god_mode;
+	bool player_tang_mode;
 	SDL_Texture* player_spritesheet;
 
 

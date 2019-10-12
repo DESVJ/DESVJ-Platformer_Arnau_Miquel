@@ -152,6 +152,8 @@ bool j1Player::Update(float dt)
 	}
 
 
+
+
 	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
 
 
