@@ -101,6 +101,7 @@ bool j1Player::Start()
 	player.player_flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
+	player.player_tang_mode = false;
 
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
 	return true;
@@ -120,6 +121,8 @@ bool j1Player::Update(float dt)
 		current_animation->Reset();
 	}
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
+	// Change the sprite if intangible
+	if (player.player_tang_mode == true)current_frame.y += difference_y;
 
 	if (player.player_rect.w != 0) {
 
@@ -133,6 +136,7 @@ bool j1Player::Update(float dt)
 	player.player_rect.h = -current_frame.h;
 
 
+
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0});
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
 	if (current_animation != &jump&&player.player_god_mode == false)
@@ -140,6 +144,20 @@ bool j1Player::Update(float dt)
 		//TODO: Falling looks wird on high falls
 		App->colliders.MoveObject(&player.player_rect, { 0, 4});
 	}
+	//RETURN START FIRST LEVEL
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		inputs_out = 0;
+		actual_state = S_IDLE;
+		player.player_rect.x = App->map->data.tile_width * 5;
+		player.player_rect.y = App->map->data.tile_width * 8;
+		player.player_rect.w = 0;
+		player.player_rect.h = 0;
+		player.player_flip = false;
+		player.player_not_jumping = true;
+		player.player_god_mode = false;
+		player.player_tang_mode = false;
+	}
+	//SHOW COLLIDERS
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 	{
 		App->input->is_Debug_Mode = !App->input->is_Debug_Mode;
