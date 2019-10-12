@@ -1,3 +1,5 @@
+//Code by Miquel Suau && Arnau Falagueras
+
 #include "p2Defs.h"
 #include "j1App.h"
 #include "j1State_Machine.h"

@@ -1,3 +1,5 @@
+//Code by Miquel Suau && Arnau Falagueras
+
 #ifndef __j1PLAYER_H__
 #define __j1PLAYER_H__
 

@@ -1,3 +1,5 @@
+//Code by Miquel Suau && Arnau Falagueras
+
 #ifndef __j1COLLISION_H__
 #define __j1COLLISION_H__
 
@@ -35,6 +37,8 @@ public:
 	~Collider_Manager();
 
 	p2List<Collider> collider_list;
+
+	Collider* allowClippingCollider = nullptr;
 
 	void MoveObject(SDL_Rect*, p2Point<int>);
 

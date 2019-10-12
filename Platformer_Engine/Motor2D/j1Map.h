@@ -1,3 +1,5 @@
+//Code by Miquel Suau && Arnau Falagueras
+
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
