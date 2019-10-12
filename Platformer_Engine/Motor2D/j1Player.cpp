@@ -94,10 +94,23 @@ bool j1Player::Start()
 	inputs_out = 0;
 	actual_state = S_IDLE;
 
-	player.player_rect.x = App->map->data.tile_width * 5;
-	player.player_rect.y = App->map->data.tile_width * 8;
-	player.player_rect.w = 0;
-	player.player_rect.h = 0;
+	p2List_item<MapObjectGroup*>* objects_map;
+	objects_map = App->map->data.object_layers.start;
+	while (objects_map != NULL)
+	{
+
+		if (objects_map->data->name == "SpawnPoint"&& objects_map->data->properties.start->data->prop_value.value_bool == true) {
+			player.player_rect.x = objects_map->data->objects.start->data->rect.x;
+			player.player_rect.y = objects_map->data->objects.start->data->rect.y;
+			player.player_rect.w = objects_map->data->objects.start->data->rect.w;
+			player.player_rect.h = objects_map->data->objects.start->data->rect.h;
+		}
+		objects_map = objects_map->next;
+	}
+	//player.player_rect.x = App->map->data.tile_width * 5;
+	//player.player_rect.y = App->map->data.tile_width * 8;
+	//player.player_rect.w = 0;
+	//player.player_rect.h = 0;
 	player.player_flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
@@ -144,19 +157,7 @@ bool j1Player::Update(float dt)
 		//TODO: Falling looks wird on high falls
 		App->colliders.MoveObject(&player.player_rect, { 0, 4});
 	}
-	//RETURN START FIRST LEVEL
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		inputs_out = 0;
-		actual_state = S_IDLE;
-		player.player_rect.x = App->map->data.tile_width * 5;
-		player.player_rect.y = App->map->data.tile_width * 8;
-		player.player_rect.w = 0;
-		player.player_rect.h = 0;
-		player.player_flip = false;
-		player.player_not_jumping = true;
-		player.player_god_mode = false;
-		player.player_tang_mode = false;
-	}
+
 	//SHOW COLLIDERS
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 	{
@@ -209,4 +210,34 @@ bool j1Player::CleanUp()
 	App->tex->UnLoad(player.player_spritesheet);
 	App->colliders.collider_list.clear();
 	return true;
+}
+
+void j1Player::Start_F1() {
+	p2List_item<MapObjectGroup*>* objects_map;
+	objects_map = App->map->data.object_layers.start;
+	while (objects_map != NULL) 
+	{
+		if (objects_map->data->name == "SpawnPoint"){
+			p2List_item<object_property*>* isSpawn;
+			isSpawn = objects_map->data->properties.start;
+			while (isSpawn != NULL)
+			{
+				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
+				{
+					player.player_rect.x = objects_map->data->objects.start->data->rect.x;
+					player.player_rect.y = objects_map->data->objects.start->data->rect.y;
+					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
+					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
+					player.player_flip = false;
+					player.player_not_jumping = true;
+					player.player_god_mode = false;
+					player.player_tang_mode = false;
+					inputs_out = 0;
+					actual_state = S_IDLE;
+				}
+				isSpawn = isSpawn->next;
+			}
+		}
+		objects_map=objects_map->next;
+	}
 }

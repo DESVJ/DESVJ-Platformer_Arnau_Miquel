@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -69,6 +70,10 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)// || App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_REPEAT)
 		App->audio->ChangeVolume(false);
+	
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->player->Start_F1();
+		
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

@@ -92,6 +92,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Start level again
+	void Start_F1();
+
 public:
 	Player_Info player;
 	Animation idle;
