@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="94" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="73" nextobjectid="62">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="94" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="74" nextobjectid="63">
  <tileset firstgid="1" name="Background_Parallax_1" tilewidth="16" tileheight="16" tilecount="312" columns="24">
   <image source="Background_Parallax_1.png" width="384" height="216"/>
  </tileset>
@@ -40972,5 +40972,11 @@
     <property name="colliderType" value="Climb"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="73" name="SpawnPoint">
+  <properties>
+   <property name="isSpawn" type="bool" value="true"/>
+  </properties>
+  <object id="62" x="32" y="368" width="16" height="32"/>
  </objectgroup>
 </map>
