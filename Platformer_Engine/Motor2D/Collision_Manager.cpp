@@ -4,6 +4,7 @@
 #include"Collision_Manager.h"
 #include"j1Window.h"
 #include"j1Map.h"
+#include"j1Input.h"
 ///////////TEMPORAL
 #include "j1Player.h"
 
@@ -136,7 +137,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					if (collider_list[i].collider_type == WALKEABLE) 
 					{
 						//Allow the object to ignore down collisions (player jumping in topo of platform)
-						if (allowClippingCollider != nullptr && currentPoint->y < allowClippingCollider->collider_rect.y) 
+						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
 						{
 							allowClippingCollider = nullptr;
 						}
@@ -148,7 +149,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							{
 								colisionDetectedY = true;
 								//Correct movement or move object in a normal way
-								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2))
+								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2) - prediction.h)
 								{
 									if (dir == DOWN)
 									{
@@ -202,6 +203,8 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		}
 	}
 
+	if(App->input->is_Debug_Mode)
+		App->render->DrawQuad({prediction.x, prediction.y, currentPoint->w, currentPoint->h}, 255, 255, 255, 255);
 
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (!colisionDetectedX)
