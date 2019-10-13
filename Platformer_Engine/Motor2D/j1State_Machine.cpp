@@ -70,7 +70,7 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 
 
 		//CHECK IF CHANGE TANGIBILITY//
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)App->player->player.player_tang_mode = !App->player->player.player_tang_mode;
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)App->player->player.player_tang_mode = !App->player->player.player_tang_mode;
 
 		///////////////////TEMPORAL!!!!!!!!!!!!!!!!!///////////////
 		if (not_jumping == true) {
