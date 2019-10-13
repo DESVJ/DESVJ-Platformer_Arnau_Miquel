@@ -5,6 +5,7 @@
 
 #include "j1Module.h"
 #include"p2Point.h"
+#include"p2SString.h"
 #include "Animation.h"
 
 struct Player_Info
@@ -94,6 +95,9 @@ public:
 
 	//Start level again
 	void Start_F1();
+
+	//Load animation pushbacks by name
+	void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 
 public:
 	Player_Info player;

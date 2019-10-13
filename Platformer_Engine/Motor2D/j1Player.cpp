@@ -14,20 +14,6 @@ j1Player::j1Player() : j1Module()
 {
 	name.create("player");
 
-	//Idle animation
-	idle.PushBack({ 6,11,16,20 });
-	idle.PushBack({ 37,10,19,21 });
-	idle.PushBack({ 69,10,19,21 });
-	idle.PushBack({ 101,10,19,21 });
-	idle.PushBack({ 134,11,16,20 });
-	idle.PushBack({ 166,11,16,20 });
-	idle.PushBack({ 198,11,16,20 });
-	idle.PushBack({ 230,11,16,20 });
-	idle.PushBack({ 262,11,16,20 });
-	idle.PushBack({ 294,11,16,20 });
-	idle.PushBack({ 326,11,16,20 });
-	idle.speed = 0.2f;
-
 	//Run animation
 	run.PushBack({ 5,42,18,19 });
 	run.PushBack({ 37,41,18,18 });
@@ -84,7 +70,11 @@ j1Player::~j1Player()
 // Called before render is available
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	
+
+	LoadAnimation(&config.child("animations"), &idle, "idle");
+
+
+
 	return true;
 }
 
@@ -240,4 +230,21 @@ void j1Player::Start_F1() {
 		}
 		objects_map=objects_map->next;
 	}
+}
+
+void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)
+{
+
+
+	pugi::xml_node animation_set = animation_node->child(name);
+
+	for (pugi::xml_node subNode = animation_set.child("frame"); subNode; subNode = subNode.next_sibling("frame"))
+	{
+		SDL_Rect sect = { subNode .attribute("x").as_int(), subNode.attribute("y").as_int()
+		,subNode.attribute("w").as_int() , subNode.attribute("h").as_int() };
+		anim->PushBack(sect);
+	}
+
+	anim->speed = animation_set.child("speed").attribute("value").as_float();
+
 }

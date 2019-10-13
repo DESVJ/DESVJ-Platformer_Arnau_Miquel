@@ -26,4 +26,35 @@
     <folder>maps/</folder>
   </map>
 
+
+  <player>
+    
+    <!--Everything reletad to player movement-->    
+    <movement gravity="1" />
+
+    <animations>
+
+      <idle>
+        <frame x="6" y="11" w="16" h="20"/>
+        <frame x="37" y="10" w="19" h="21"/>
+        <frame x="69" y="10" w="19" h="21"/>
+        <frame x="101" y="10" w="19" h="21"/>
+        <frame x="134" y="11" w="16" h="20"/>
+        <frame x="166" y="11" w="16" h="20"/>
+        <frame x="198" y="11" w="16" h="20"/>
+        <frame x="230" y="11" w="16" h="20"/>
+        <frame x="262" y="11" w="16" h="20"/>
+        <frame x="294" y="11" w="16" h="20"/>
+        <frame x="326" y="11" w="16" h="20"/>
+        
+        <speed value="0.2"/>
+      </idle>  
+      
+      
+    </animations>
+    
+  </player>
+  
+  
+  
 </config>
