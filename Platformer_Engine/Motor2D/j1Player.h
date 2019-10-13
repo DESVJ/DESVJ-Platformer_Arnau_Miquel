@@ -94,7 +94,7 @@ public:
 	bool CleanUp();
 
 	//Start level again
-	void Start_F1();
+	void Start_F3();
 
 	//Load animation pushbacks by name
 	void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);

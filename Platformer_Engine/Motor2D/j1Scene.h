@@ -32,6 +32,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Load map 1
+	void LoadMap1();
+
+	//Load map 2
+	void LoadMap2();
+
 private:
 };
 

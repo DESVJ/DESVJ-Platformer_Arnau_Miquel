@@ -70,9 +70,15 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN)// || App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_REPEAT)
 		App->audio->ChangeVolume(false);
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->player->Start_F1();
+		LoadMap1();
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		LoadMap2();
+	
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		App->player->Start_F3();
 		
 
 	//App->render->Blit(img, 0, 0);
@@ -104,4 +110,25 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+
+//Load map 1
+void j1Scene::LoadMap1()
+{
+	App->colliders.collider_list.clear();
+	App->map->CleanUp();
+	App->map->Load("map_1_final.tmx");
+	App->colliders.LoadColliders();
+	App->player->Start_F3();
+}
+
+//Load map 2
+void j1Scene::LoadMap2()
+{
+	App->colliders.collider_list.clear();
+	App->map->CleanUp();
+	App->map->Load("map_2_final.tmx");
+	App->colliders.LoadColliders();
+	App->player->Start_F3();
 }

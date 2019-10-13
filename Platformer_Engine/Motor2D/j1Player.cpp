@@ -164,7 +164,7 @@ bool j1Player::CleanUp()
 	return true;
 }
 
-void j1Player::Start_F1() {
+void j1Player::Start_F3() {
 	p2List_item<MapObjectGroup*>* objects_map;
 	objects_map = App->map->data.object_layers.start;
 	while (objects_map != NULL) 
