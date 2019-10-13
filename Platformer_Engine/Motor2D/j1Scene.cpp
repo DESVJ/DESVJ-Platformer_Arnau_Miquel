@@ -72,10 +72,10 @@ bool j1Scene::Update(float dt)
 		App->audio->ChangeVolume(false);
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		LoadMap1();
+		Load_Map_By_Name("map_1_final.tmx");
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		LoadMap2();
+		Load_Map_By_Name("map_2_final.tmx");
 	
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->player->Start_F3();
@@ -114,21 +114,11 @@ bool j1Scene::CleanUp()
 
 
 //Load map 1
-void j1Scene::LoadMap1()
+void j1Scene::Load_Map_By_Name(const char* name)
 {
 	App->colliders.collider_list.clear();
 	App->map->CleanUp();
-	App->map->Load("map_1_final.tmx");
-	App->colliders.LoadColliders();
-	App->player->Start_F3();
-}
-
-//Load map 2
-void j1Scene::LoadMap2()
-{
-	App->colliders.collider_list.clear();
-	App->map->CleanUp();
-	App->map->Load("map_2_final.tmx");
+	App->map->Load(name);
 	App->colliders.LoadColliders();
 	App->player->Start_F3();
 }
