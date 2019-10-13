@@ -14,49 +14,6 @@ j1Player::j1Player() : j1Module()
 {
 	name.create("player");
 
-	//Run animation
-	run.PushBack({ 5,42,18,19 });
-	run.PushBack({ 37,41,18,18 });
-	run.PushBack({ 69,42,18,19 });
-	run.PushBack({ 103,43,14,20 });
-	run.PushBack({ 136,42,12,20 });
-	run.PushBack({ 168,41,12,20 });
-	run.PushBack({ 200,42,12,20 });
-	run.PushBack({ 231,43,14,20 });
-	run.speed = 0.2f;
-
-	//Jump animation
-	jump.PushBack({ 6,171,16,20 });
-	jump.PushBack({ 36,172,19,19 });
-	jump.PushBack({ 69,169,18,20 });
-	jump.PushBack({ 102,167,18,19 });
-	jump.PushBack({ 133,167,18,20 });
-	jump.PushBack({ 164,172,19,19 });
-	jump.speed = 0.1f;
-
-
-	//Idle ladder animation
-	idle_ladder.PushBack({ 262,42,15,20 });
-
-
-	//Movement ladder animation
-	movement_ladder.PushBack({ 293,42,14,20 });
-	movement_ladder.PushBack({ 328,42,14,20 });
-	movement_ladder.speed = 0.1f;
-
-
-	//Death animation
-	death.PushBack({ 6,235,16,20 });
-	death.PushBack({ 36,236,20,19 });
-	death.PushBack({ 65,233,25,22 });
-	death.PushBack({ 100,241,20,14 });
-	death.PushBack({ 133,246,21,10 });
-	death.PushBack({ 166,245,21,11 });
-	death.PushBack({ 198,246,21,10 });
-	death.speed = 0.05f;
-
-
-
 	///////TEMPORAL
 	difference_y = 256;
 }
@@ -72,6 +29,11 @@ bool j1Player::Awake(pugi::xml_node& config)
 {
 
 	LoadAnimation(&config.child("animations"), &idle, "idle");
+	LoadAnimation(&config.child("animations"), &run, "run");
+	LoadAnimation(&config.child("animations"), &jump, "jump");
+	LoadAnimation(&config.child("animations"), &idle_ladder, "idle_ladder");
+	LoadAnimation(&config.child("animations"), &movement_ladder, "movement_ladder");
+	LoadAnimation(&config.child("animations"), &death, "death");
 
 
 
