@@ -15,7 +15,7 @@
 
 enum Collider_Types
 {
-	WALKEABLE, KILL, CLIMB
+	WALKEABLE, KILL, CLIMB, TANG
 };
 
 struct Collider 

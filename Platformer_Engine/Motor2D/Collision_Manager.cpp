@@ -62,6 +62,10 @@ void Collider_Manager::LoadColliders()
 							{
 								clr.collider_type = CLIMB;
 							}
+							else if ((p2SString)clr_type->data->prop_value.value_string == "Tang")
+							{
+								clr.collider_type = TANG;
+							}
 							LOG("%s", clr_type->data->prop_value.value_string);
 						}
 

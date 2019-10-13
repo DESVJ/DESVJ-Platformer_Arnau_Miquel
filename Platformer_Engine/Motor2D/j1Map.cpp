@@ -107,6 +107,9 @@ void j1Map::Draw()
 					color = { 0, 0, 255, 100};
 					break;
 
+				case TANG:
+					color = { 0, 100, 200, 100 };
+					break;
 
 				}
 				App->render->DrawQuad(*rect, color.r, color.g, color.b, color.a);
