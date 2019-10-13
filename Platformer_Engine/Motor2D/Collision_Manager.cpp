@@ -66,7 +66,7 @@ void Collider_Manager::LoadColliders()
 							{
 								clr.collider_type = TANG;
 							}
-							LOG("%s", clr_type->data->prop_value.value_string);
+							//LOG("%s", clr_type->data->prop_value.value_string);
 						}
 
 						clr_type = clr_type->next;

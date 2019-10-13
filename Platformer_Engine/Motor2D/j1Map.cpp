@@ -131,6 +131,7 @@ bool j1Map::CleanUp()
 
 	while(item != NULL)
 	{
+		item->data->name.Clear();
 		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
@@ -142,6 +143,7 @@ bool j1Map::CleanUp()
 	iteml = data.layers.start;
 	while (iteml != NULL)
 	{
+		iteml->data->name.Clear();
 		RELEASE(iteml->data->gid);
 		RELEASE(iteml->data);
 		iteml = iteml->next;
@@ -153,12 +155,15 @@ bool j1Map::CleanUp()
 	itemO = data.object_layers.start;
 	while (itemO != NULL)
 	{
+		itemO->data->name.Clear();
 		itemO->data->properties.clear();
 		for (int i = 0; i < itemO->data->objects.count(); i++)
 		{
 			itemO->data->objects[i]->properties.clear();
+			RELEASE(itemO->data->objects[i]);
 		}
 		itemO->data->objects.clear();
+		RELEASE(itemO->data);
 		itemO = itemO->next;
 	}
 	data.object_layers.clear();
