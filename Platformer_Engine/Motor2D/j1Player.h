@@ -12,6 +12,7 @@ struct Player_Info
 {
 
 	SDL_Rect player_rect = { 0, 0, 0, 0 };
+	SDL_Rect player_collider_rect = { 0, 0, 0, 0 };
 	p2Point<int> player_speed;
 	bool player_flip;
 	bool player_not_jumping;
@@ -116,6 +117,8 @@ private:
 	state actual_state;
 	inputin input_in;
 	inputout input_out[5];
+
+	pugi::xml_document	player_info_file;
 };
 
 #endif // __j1PLAYER_H__

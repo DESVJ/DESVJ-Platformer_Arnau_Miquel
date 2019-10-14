@@ -28,6 +28,12 @@ j1Player::~j1Player()
 bool j1Player::Awake(pugi::xml_node& config)
 {
 
+
+	player_info_file.load_file("textures/player.tmx");
+	pugi::xml_node player_node = player_info_file.child("map");
+
+	player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
+
 	LoadAnimation(&config.child("animations"), &idle, "idle");
 	LoadAnimation(&config.child("animations"), &run, "run");
 	LoadAnimation(&config.child("animations"), &jump, "jump");
@@ -68,7 +74,8 @@ bool j1Player::Start()
 	player.player_god_mode = false;
 	player.player_tang_mode = false;
 
-	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
+	player.player_spritesheet =  App->tex->Load("textures/Player_SpriteSheet.png");
+
 	return true;
 }
 
