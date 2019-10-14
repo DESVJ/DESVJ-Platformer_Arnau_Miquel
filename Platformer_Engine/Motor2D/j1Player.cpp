@@ -37,14 +37,18 @@ bool j1Player::Awake(pugi::xml_node& config)
 	
 
 	//LoadAnimationFromTMX(&player_node, &idle, "idle");
-	LoadAnimation(&config.child("animations"), &idle, "idle");
-	LoadAnimation(&config.child("animations"), &run, "run");
-	LoadAnimation(&config.child("animations"), &jump, "jump");
-	LoadAnimation(&config.child("animations"), &idle_ladder, "idle_ladder");
-	LoadAnimation(&config.child("animations"), &movement_ladder, "movement_ladder");
-	LoadAnimation(&config.child("animations"), &death, "death");
+	LoadAnimationFromTMX(&player_node, &idle, "idle");
+	LoadAnimationFromTMX(&player_node, &run, "run");
+	LoadAnimationFromTMX(&player_node, &jump, "jump");
+	LoadAnimationFromTMX(&player_node, &idle_ladder, "idle_ladder");
+	LoadAnimationFromTMX(&player_node, &movement_ladder, "movement_ladder");
+	LoadAnimationFromTMX(&player_node, &death, "death");
 
-
+	//LoadAnimation(&config.child("animations"), &run, "run");
+	//LoadAnimation(&config.child("animations"), &jump, "jump");
+	//LoadAnimation(&config.child("animations"), &idle_ladder, "idle_ladder");
+	//LoadAnimation(&config.child("animations"), &movement_ladder, "movement_ladder");
+	//LoadAnimation(&config.child("animations"), &death, "death");
 
 	return true;
 }
@@ -204,22 +208,22 @@ void j1Player::Start_F3() {
 	}
 }
 
-void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)
-{
-
-
-	pugi::xml_node animation_set = animation_node->child(name);
-
-	for (pugi::xml_node subNode = animation_set.child("frame"); subNode; subNode = subNode.next_sibling("frame"))
-	{
-		SDL_Rect sect = { subNode .attribute("x").as_int(), subNode.attribute("y").as_int()
-		,subNode.attribute("w").as_int() , subNode.attribute("h").as_int() };
-		anim->PushBack(sect);
-	}
-
-	anim->speed = animation_set.child("speed").attribute("value").as_float();
-
-}
+//void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)
+//{
+//
+//
+//	pugi::xml_node animation_set = animation_node->child(name);
+//
+//	for (pugi::xml_node subNode = animation_set.child("frame"); subNode; subNode = subNode.next_sibling("frame"))
+//	{
+//		SDL_Rect sect = { subNode .attribute("x").as_int(), subNode.attribute("y").as_int()
+//		,subNode.attribute("w").as_int() , subNode.attribute("h").as_int() };
+//		anim->PushBack(sect);
+//	}
+//
+//	anim->speed = animation_set.child("speed").attribute("value").as_float();
+//
+//}
 
 void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
 {
@@ -229,17 +233,17 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 	for (objectgroup = animation_node->child("objectgroup"); objectgroup; objectgroup = objectgroup.next_sibling("objectgroup"))
 	{
 
-		for (pugi::xml_node obj_prop = objectgroup.child("properties").child("property"); obj_prop; obj_prop = obj_prop.next_sibling("property"))
+		for (pugi::xml_node obj_prop = objectgroup.child("properties").first_child(); obj_prop; obj_prop = obj_prop.next_sibling("property"))
 		{
-			if (obj_prop.root().attribute("value").as_string() == "idle") 
+			if ((p2SString)obj_prop.attribute("value").value() == (p2SString)name)
 			{
 				correctNodeGroup = &objectgroup;
-				if (obj_prop.next_sibling().attribute("name").as_string() == "speed")
+				if ((p2SString)obj_prop.next_sibling().attribute("name").as_string() == (p2SString)"speed")
 					anim->speed = obj_prop.next_sibling().attribute("value").as_float();
 				break;
 			}
 		}
-		if (correctNodeGroup)
+		if (correctNodeGroup != nullptr)
 			break;
 
 	}
@@ -249,15 +253,14 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 	{
 		for (pugi::xml_node obj = correctNodeGroup->child("object"); obj; obj = obj.next_sibling("object"))
 		{
-
-			anim->PushBack({ obj.attribute("x").as_int(),
+			if (obj.child("properties").child("property").attribute("value").as_bool() == true) 
+			{
+				anim->PushBack({ obj.attribute("x").as_int(),
 				obj.attribute("y").as_int(),
 				obj.attribute("width").as_int(),
 				obj.attribute("height").as_int() });
 
+			}
 		}
 	}
-
-
-
 }

@@ -98,7 +98,7 @@ public:
 	void Start_F3();
 
 	//Load animation pushbacks by name
-	void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
+	//void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);
 
 public:
