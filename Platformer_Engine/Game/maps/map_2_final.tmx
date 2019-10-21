@@ -28758,8 +28758,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="633"/>
-   <tile gid="633"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile gid="632"/>
@@ -33703,7 +33703,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="648"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -33999,6 +33999,9 @@
   </data>
  </layer>
  <layer id="71" name="TangLayer" width="94" height="36">
+  <properties>
+   <property name="isTangLayer" type="bool" value="true"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -35534,8 +35537,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="633"/>
+   <tile gid="634"/>
    <tile/>
    <tile/>
    <tile/>

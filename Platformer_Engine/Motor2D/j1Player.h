@@ -7,6 +7,11 @@
 #include"p2Point.h"
 #include"p2SString.h"
 #include "Animation.h"
+enum player_colision_state {
+
+	NONE, CLIMBING, DYING
+
+};
 
 struct Player_Info
 {
@@ -19,6 +24,7 @@ struct Player_Info
 	bool player_god_mode;
 	bool player_tang_mode;
 	SDL_Texture* player_spritesheet;
+	player_colision_state col_state;
 
 
 };
@@ -100,6 +106,8 @@ public:
 	//Load animation pushbacks by name
 	//void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);
+
+	void Change_Col_State(player_colision_state state);
 
 public:
 	Player_Info player;

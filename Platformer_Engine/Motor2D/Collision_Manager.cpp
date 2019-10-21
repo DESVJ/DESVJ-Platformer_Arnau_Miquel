@@ -91,7 +91,7 @@ void Collider_Manager::LoadColliders()
 }
 
 //Move an object by movement prediction
-void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment) 
+void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment, bool isPlayer) 
 {
 
 	//Set movement prediction
@@ -132,14 +132,18 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 			&& (block->y + block->h) * App->win->GetScale() >= -App->render->camera.y && block->y * App->win->GetScale() <= -App->render->camera.y + App->win->height)
 		{
 			//Is the collider enabled?
-			if (collider_list[i].enabled)
+			if (collider_list[i].enabled) //&& is not tang colider
 			{
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
 				{
 					//If there is a colision, look collider type
-					if (collider_list[i].collider_type == WALKEABLE) 
+					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
 					{
+						if (isPlayer)
+						{
+							App->player->Change_Col_State(player_colision_state::NONE);
+						}
 						//Allow the object to ignore down collisions (player jumping in topo of platform)
 						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
 						{
@@ -198,7 +202,20 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					//If collider is type KILL, kill player
 					else if(collider_list[i].collider_type == KILL)
 					{
+						if (isPlayer) 
+						{
+							App->player->Change_Col_State(player_colision_state::DYING);
+						}
 						LOG("KILL");
+
+					}
+					else if(collider_list[i].collider_type == CLIMB)
+					{
+						if (isPlayer)
+						{
+							App->player->Change_Col_State(player_colision_state::CLIMBING);
+						}
+						LOG("CLIMB");
 					}
 					
 				}

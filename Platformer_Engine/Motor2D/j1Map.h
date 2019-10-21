@@ -36,6 +36,7 @@ struct MapLayer {
 	uint width = 0u;
 	uint height = 0u;
 	uint* gid = nullptr;
+	bool isTang = false;
 	inline uint Get(int x, int y) const 
 	{
 		return (y * width) + x;
@@ -96,6 +97,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<MapLayer*>	tang_layers;
 	p2List<MapObjectGroup*> object_layers;
 };
 

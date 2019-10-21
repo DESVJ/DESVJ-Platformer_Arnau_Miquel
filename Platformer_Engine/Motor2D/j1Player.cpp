@@ -107,7 +107,7 @@ bool j1Player::Update(float dt)
 
 		int animation_created_mov = player.player_rect.w - current_frame.w;
 		if(animation_created_mov != 0)  
-			App->colliders.MoveObject(&player.player_rect, {animation_created_mov, 0});
+			App->colliders.MoveObject(&player.player_rect, {animation_created_mov, 0}, true);
 	}
 
 	//TODO: Smooth camera follow
@@ -116,12 +116,12 @@ bool j1Player::Update(float dt)
 
 
 
-	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0});
-	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y });
+	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
+	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
 	if (current_animation != &jump&&player.player_god_mode == false)
 	{
 		//TODO: Falling looks wird on high falls
-		App->colliders.MoveObject(&player.player_rect, { 0, 4});
+		App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
 	}
 
 	//SHOW COLLIDERS
@@ -263,4 +263,26 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 			}
 		}
 	}
+}
+
+void j1Player::Change_Col_State(player_colision_state state)
+{
+
+	player.col_state = state;
+
+	switch (player.col_state)
+	{
+	case NONE:
+		break;
+	case CLIMBING:
+
+		break;
+	case DYING:
+
+		break;
+	}
+
+
+
+
 }

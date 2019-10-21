@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include"j1Player.h"
 #include"j1Window.h"
 #include"j1Input.h"
 #include <math.h>
@@ -38,51 +39,95 @@ void j1Map::Draw()
 	bool ret = false;
 	int number_of_layers = data.layers.count();
 	p2List_item<MapLayer*>* coord_layer = data.layers.start;
+	p2List_item<MapLayer*>* tang_coord_layer = data.tang_layers.start;
 	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
 	//for of every layer
 
-	int colliderCounter = 0;
-	for(int layer_counter=0;layer_counter<number_of_layers;layer_counter++){
+	if (!App->player->player.player_tang_mode) 
+	{
+		int colliderCounter = 0;
+		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
 
-		//for of every x in one layer
-		for (int i = 0; i < coord_layer->data->height; i++) {
+			//for of every x in one layer
+			for (int i = 0; i < coord_layer->data->height; i++) {
 
-			//for of every y in one layer
+				//for of every y in one layer
 
-			for (int j = 0; j < coord_layer->data->width; j++) {
-				int n = coord_layer->data->Get(j, i);
-				int gid = coord_layer->data->gid[n];
-				if (gid != 0) {
-					while (ret == false) {
-						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
-						else if(coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
-						else ret = true;
-					}
-					ret = false;
-					SDL_Rect rect = coord_tileset->data->GetRect(coord_layer->data->gid[n]);
-					int x = j;
-					int y = i;
-					Translate_Coord(&x, &y);
+				for (int j = 0; j < coord_layer->data->width; j++) {
+					int n = coord_layer->data->Get(j, i);
+					int gid = coord_layer->data->gid[n];
+					if (gid != 0) {
+						while (ret == false) {
+							if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+							else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+							else ret = true;
+						}
+						ret = false;
+						SDL_Rect rect = coord_tileset->data->GetRect(coord_layer->data->gid[n]);
+						int x = j;
+						int y = i;
+						Translate_Coord(&x, &y);
 
-					//if (coord_layer->data == App->colliders.collider_layer) 
-					//{
-					//	App->colliders.collider_list[colliderCounter].collider_rect = {x, y, App->colliders.collider_layer->width, App->colliders.collider_layer->height};
-					//	colliderCounter++;
-					//}
+						//if (coord_layer->data == App->colliders.collider_layer) 
+						//{
+						//	App->colliders.collider_list[colliderCounter].collider_rect = {x, y, App->colliders.collider_layer->width, App->colliders.collider_layer->height};
+						//	colliderCounter++;
+						//}
 
-					//Convert this to only debug mode
-					//if(coord_layer->data != App->colliders.collider_layer)
-
-					if ((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
-						&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset) 
-					{
-						App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+						if ((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
+							&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+						{
+							//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
+							App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+						}
 					}
 				}
 			}
+			coord_layer = coord_layer->next;
 		}
-		coord_layer = coord_layer->next;
 	}
+	else
+	{
+		int colliderCounter = 0;
+		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
+
+			//for of every x in one layer
+			if (tang_coord_layer != nullptr)
+			{
+				for (int i = 0; i < tang_coord_layer->data->height; i++) {
+
+					//for of every y in one layer
+
+					for (int j = 0; j < tang_coord_layer->data->width; j++) {
+						int n = tang_coord_layer->data->Get(j, i);
+						int gid = tang_coord_layer->data->gid[n];
+						if (gid != 0) {
+							while (ret == false) {
+								if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+								else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+								else ret = true;
+							}
+							ret = false;
+							SDL_Rect rect = coord_tileset->data->GetRect(tang_coord_layer->data->gid[n]);
+							int x = j;
+							int y = i;
+							Translate_Coord(&x, &y);
+
+							if ((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
+								&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+							{
+								//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
+								App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+							}
+						}
+					}
+				}
+				tang_coord_layer = tang_coord_layer->next;
+			}
+		}
+	}
+
+
 
 	if (App->input->is_Debug_Mode)
 	{
@@ -149,6 +194,17 @@ bool j1Map::CleanUp()
 		iteml = iteml->next;
 	}
 	data.layers.clear();
+
+	p2List_item<MapLayer*>* itemT;
+	itemT = data.tang_layers.start;
+	while (itemT != NULL)
+	{
+		itemT->data->name.Clear();
+		RELEASE(itemT->data->gid);
+		RELEASE(itemT->data);
+		itemT = itemT->next;
+	}
+	data.tang_layers.clear();
 
 
 	p2List_item<MapObjectGroup*>* itemO;
@@ -223,7 +279,14 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadLayer(layer, set);
 		}
-		data.layers.add(set);
+		if (!set->isTang) 
+		{
+			data.layers.add(set);
+		}
+		else
+		{
+			data.tang_layers.add(set);
+		}
 	}
 	for (layer = map_file.child("map").child("objectgroup"); layer && ret; layer = layer.next_sibling("objectgroup"))
 	{
@@ -437,6 +500,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		tile = tile.next_sibling("tile");
 	}
 
+	if ((p2SString)node.child("properties").child("property").attribute("name").as_string() == (p2SString)"isTangLayer" && node.child("properties").child("property").attribute("value").as_bool() == true)
+		layer->isTang = true;
 
 	return ret;
 }

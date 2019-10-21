@@ -40,7 +40,7 @@ public:
 
 	Collider* allowClippingCollider = nullptr;
 
-	void MoveObject(SDL_Rect*, p2Point<int>);
+	void MoveObject(SDL_Rect*, p2Point<int>, bool isPlayer = false);
 
 	void LoadColliders();
 
