@@ -200,7 +200,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						}
 					}
 					//If collider is type KILL, kill player
-					else if(collider_list[i].collider_type == KILL)
+					else if(collider_list[i].collider_type == KILL/*TEMPORAL!!!!!!!!!!!!!!!!*/&&App->player->player.player_god_mode==false)
 					{
 						if (isPlayer) 
 						{

@@ -9,8 +9,8 @@
 //#include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
-void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[5]) {
-	if (actual != S_HITTED) {
+void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[5], player_colision_state collision_state) {
+	if (actual != S_DEAD && (collision_state != DYING || god_mode == true)) {
 		input_in = I_NONE;
 		//LEFT AND RIGHT MOVEMENT
 		bool left = false;
@@ -36,6 +36,17 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			else if (input_in == I_LEFT)input_in = I_JUMP_LEFT;
 			else input_in = I_JUMP;
 		}
+		//CHECK LADDER MOVEMENT/IDLE//
+		if (collision_state == CLIMBING && god_mode == false && (jump == false && left == false && right == false)) {
+			bool up = false;
+			bool down = false;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) up = true;
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) down = true;
+			if (down == true && up == false)input_in = I_LADDER_DOWN;
+			else if (down == false && up == true)input_in = I_LADDER_UP;
+			else if (actual == S_LADDER_DOWN || actual == S_LADDER_UP || actual == S_LADDER_IDLE) input_in = I_LADDER;
+		}
+
 		//CHECK FLYING IN GOD MODE//
 		bool up = false;
 		bool down = false;
@@ -80,6 +91,9 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			not_jumping = false;
 		}
 	}
+	else if (collision_state == DYING) {
+		input_in = I_DEAD;
+	}
 }
 Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	Animation* current_animation;
@@ -122,6 +136,21 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 		current_animation = &App->player->run;
 	case S_DOWN:
 		down = true;
+		break;
+	case S_LADDER_IDLE:
+		App->player->player.player_climbing = true;
+		current_animation = &App->player->idle_ladder;
+		break;
+	case S_LADDER_DOWN:
+		down = true;
+	case S_LADDER_UP:
+		if (down == false)up = true;
+		App->player->player.player_climbing = true;
+		current_animation = &App->player->movement_ladder;
+		break;
+	case S_DEAD:
+		App->player->player.player_alive = false;
+		current_animation = &App->player->death;
 		break;
 	}
 	/////////////////
@@ -167,6 +196,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN:actual = S_DOWN; break;
 		case I_DOWN_LEFT:actual = S_DOWN_LEFT; break;
 		case I_DOWN_RIGHT:actual = S_DOWN_RIGHT; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		break;
 	case S_RUN_RIGHT:
@@ -187,6 +219,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN_LEFT:
 		case I_DOWN:actual = S_DOWN; break;
 		case I_DOWN_RIGHT:actual = S_DOWN_RIGHT; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_RIGHT && actual == S_RUN_RIGHT)actual = S_IDLE;
 		break;
@@ -208,6 +243,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN_RIGHT:
 		case I_DOWN:actual = S_DOWN; break;
 		case I_DOWN_LEFT:actual = S_DOWN_LEFT; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_LEFT && actual == S_RUN_LEFT)actual = S_IDLE;
 		break;
@@ -217,6 +255,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_RIGHT: actual = S_JUMP_RIGHT; break;
 		case I_JUMP_LEFT:
 		case I_LEFT: actual = S_JUMP_LEFT; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_JUMP_FINISH)actual = S_IDLE;
 		break;
@@ -225,6 +266,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_JUMP_LEFT:
 		case I_LEFT: actual = S_JUMP_LEFT; break;
 		case I_JUMP: actual = S_JUMP; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_JUMP_FINISH)actual = S_IDLE;
 		break;
@@ -233,6 +277,9 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_JUMP_RIGHT:
 		case I_RIGHT: actual = S_JUMP_RIGHT; break;
 		case I_JUMP: actual = S_JUMP; break;
+		case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+		case I_LADDER_UP:actual = S_LADDER_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_JUMP_FINISH)actual = S_IDLE;
 		break;
@@ -251,6 +298,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN_LEFT:actual = S_RUN_LEFT; break;
 		case I_UP_LEFT:actual = S_UP_LEFT; break;
 		case I_UP_RIGHT:actual = S_UP_RIGHT; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_UP && actual == S_UP)actual = S_IDLE;
 		break;
@@ -270,6 +318,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_UP:
 		case I_UP_RIGHT_LEFT:
 		case I_UP_LEFT:actual = S_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++) {
 			switch (input_out[i]) {
@@ -300,6 +349,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_UP:
 		case I_UP_RIGHT_LEFT:
 		case I_UP_RIGHT:actual = S_UP; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++) {
 			switch (input_out[i]) {
@@ -329,6 +379,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_UP_LEFT:actual = S_RUN_LEFT; break;
 		case I_DOWN_LEFT:actual = S_DOWN_LEFT; break;
 		case I_DOWN_RIGHT:actual = S_DOWN_RIGHT; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_DOWN && actual == S_DOWN)actual = S_IDLE;
 		break;
@@ -348,6 +399,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN:
 		case I_DOWN_RIGHT_LEFT:
 		case I_DOWN_LEFT:actual = S_DOWN; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++) {
 			switch (input_out[i]) {
@@ -378,6 +430,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DOWN:
 		case I_DOWN_RIGHT_LEFT:
 		case I_DOWN_RIGHT:actual = S_DOWN; break;
+		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++) {
 			switch (input_out[i]) {
@@ -392,6 +445,55 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 			}
 		}
 		break;
+	case S_LADDER_IDLE:
+		if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)actual = S_IDLE;
+		else {
+			switch (input_in) {
+			case I_LADDER_DOWN:actual = S_LADDER_DOWN; break;
+			case I_LADDER_UP:actual = S_LADDER_UP; break;
+			case I_LEFT:
+			case I_RIGHT:actual = S_IDLE; break;
+				//TEMPORAL
+		//	case I_JUMP:actual = S_JUMP; break;
+		//	case I_JUMP_LEFT:actual = S_JUMP_LEFT; break;
+		//	case I_JUMP_RIGHT:actual = S_JUMP_RIGHT; break;
+			case I_DEAD:actual = S_DEAD; break;
+			}
+		}
+		break;
+	case S_LADDER_DOWN:
+		if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)actual = S_IDLE;
+		else {
+			switch (input_in) {
+			case I_LADDER_UP:
+			case I_LADDER:actual = S_LADDER_IDLE; break;
+			case I_LEFT:
+			case I_RIGHT:actual = S_IDLE; break;
+				//TEMPORAL
+		//	case I_JUMP:actual = S_JUMP; break;
+		//	case I_JUMP_LEFT:actual = S_JUMP_LEFT; break;
+		//	case I_JUMP_RIGHT:actual = S_JUMP_RIGHT; break;
+			case I_DEAD:actual = S_DEAD; break;
+			}
+			for (int i = 0; i < inputsouts; i++)if (input_out[i] == O_DOWN)actual = S_LADDER_IDLE;
+		}
+		break;
+	case S_LADDER_UP:
+		if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)actual = S_IDLE;
+		else {
+			switch (input_in) {
+			case I_LADDER_DOWN:
+			case I_LADDER:actual = S_LADDER_IDLE; break;
+			case I_LEFT:
+			case I_RIGHT:actual = S_IDLE; break;
+				//TEMPORAL
+		//	case I_JUMP:actual = S_JUMP; break;
+		//	case I_JUMP_LEFT:actual = S_JUMP_LEFT; break;
+		//	case I_JUMP_RIGHT:actual = S_JUMP_RIGHT; break;
+			case I_DEAD:actual = S_DEAD; break;
+			}
+			for (int i = 0; i < inputsouts; i++)if (input_out[i] == O_UP)actual = S_LADDER_IDLE;
+		}
 	}
 	if (before_check != actual) {
 		switch (before_check)

@@ -80,6 +80,9 @@ bool j1Player::Start()
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
 	player.player_tang_mode = false;
+	player.player_alive = true;
+	player.player_respawn = false;
+	player.player_climbing = false;
 
 	player.player_spritesheet =  App->tex->Load("textures/Player_SpriteSheet.png");
 
@@ -87,19 +90,28 @@ bool j1Player::Start()
 }
 
 bool j1Player::PreUpdate() {
-	CheckInputs(player.player_god_mode, player.player_not_jumping, inputs_out, player.player_speed.y, actual_state, input_in, input_out);
+	CheckInputs(player.player_god_mode, player.player_not_jumping, inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state);
+	if (player.player_respawn == true)Start_F3();
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
 	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation);
 	if (reset_animation == true) {
 		current_animation->Reset();
 	}
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
+	// Check if player is dead and dead animation is finished
+	if (player.player_alive == false) {
+		if (current_animation->GetFinished() == 1) {
+			current_animation->Reset();
+			player.player_respawn = true;
+		}
+	}
 	// Change the sprite if intangible
 	if (player.player_tang_mode == true)current_frame.y += difference_y;
 
@@ -118,7 +130,7 @@ bool j1Player::Update(float dt)
 
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
-	if (current_animation != &jump&&player.player_god_mode == false)
+	if (current_animation != &jump&&player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{
 		//TODO: Falling looks wird on high falls
 		App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
@@ -194,10 +206,15 @@ void j1Player::Start_F3() {
 					player.player_rect.y = objects_map->data->objects.start->data->rect.y;
 					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
 					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
+					if (input_in == I_DEAD)input_in = I_NONE;
+					App->player->Change_Col_State(player_colision_state::NONE);
 					player.player_flip = false;
 					player.player_not_jumping = true;
 					player.player_god_mode = false;
 					player.player_tang_mode = false;
+					player.player_alive = true;
+					player.player_respawn = false;
+					player.player_climbing = false;
 					inputs_out = 0;
 					actual_state = S_IDLE;
 				}

@@ -23,6 +23,9 @@ struct Player_Info
 	bool player_not_jumping;
 	bool player_god_mode;
 	bool player_tang_mode;
+	bool player_alive;
+	bool player_respawn;
+	bool player_climbing;
 	SDL_Texture* player_spritesheet;
 	player_colision_state col_state;
 
@@ -43,7 +46,10 @@ enum state {
 	S_DOWN,
 	S_DOWN_RIGHT,
 	S_DOWN_LEFT,
-	S_HITTED
+	S_LADDER_DOWN,
+	S_LADDER_UP,
+	S_LADDER_IDLE,
+	S_DEAD
 };
 
 enum inputin {
@@ -65,7 +71,11 @@ enum inputin {
 	I_DOWN_UP,
 	I_DOWN_UP_RIGHT,
 	I_DOWN_UP_LEFT,
-	I_DOWN_UP_RIGHT_LEFT
+	I_DOWN_UP_RIGHT_LEFT,
+	I_LADDER,
+	I_LADDER_UP,
+	I_LADDER_DOWN,
+	I_DEAD
 };
 
 enum inputout {
@@ -74,7 +84,8 @@ enum inputout {
 	O_LEFT,
 	O_UP,
 	O_DOWN,
-	O_JUMP_FINISH
+	O_JUMP_FINISH,
+	O_DEAD_FINISH
 };
 
 class j1Player : public j1Module
