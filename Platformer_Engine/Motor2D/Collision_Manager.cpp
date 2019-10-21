@@ -200,25 +200,28 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						}
 					}
 					//If collider is type KILL, kill player
-					else if(collider_list[i].collider_type == KILL/*TEMPORAL!!!!!!!!!!!!!!!!*/&&App->player->player.player_god_mode==false)
+					if(collider_list[i].collider_type == KILL/*TEMPORAL!!!!!!!!!!!!!!!!*/&&App->player->player.player_god_mode==false && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
 					{
-						if (isPlayer) 
+						if (isPlayer && !App->player->player.player_tang_mode)
 						{
 							App->player->Change_Col_State(player_colision_state::DYING);
 						}
 						LOG("KILL");
 
 					}
-					else if(collider_list[i].collider_type == CLIMB)
+					if(collider_list[i].collider_type == CLIMB)
 					{
-						if (isPlayer)
+						if (isPlayer && !App->player->player.player_tang_mode)
 						{
 							App->player->Change_Col_State(player_colision_state::CLIMBING);
 						}
 						LOG("CLIMB");
 					}
 					
+					
+
 				}
+
 
 			}
 		}
@@ -231,9 +234,13 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	if (!colisionDetectedX)
 	{
 		currentPoint->x = prediction.x;
+		//if(isPlayer)
+		//	App->player->Change_Col_State(player_colision_state::NONE);
 	}
 	if (!colisionDetectedY)
 	{
 		currentPoint->y = prediction.y;
+		//if(isPlayer)
+		//	App->player->Change_Col_State(player_colision_state::NONE);
 	}
 }

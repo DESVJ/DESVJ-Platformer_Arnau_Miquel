@@ -284,22 +284,5 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 
 void j1Player::Change_Col_State(player_colision_state state)
 {
-
 	player.col_state = state;
-
-	switch (player.col_state)
-	{
-	case NONE:
-		break;
-	case CLIMBING:
-
-		break;
-	case DYING:
-
-		break;
-	}
-
-
-
-
 }
