@@ -337,7 +337,6 @@ bool j1App::LoadGameNow()
 bool j1App::SavegameNow() const
 {
 	bool ret = true;
-
 	LOG("Saving Game State to %s...", save_game.GetString());
 
 	// xml object were we will store all data
