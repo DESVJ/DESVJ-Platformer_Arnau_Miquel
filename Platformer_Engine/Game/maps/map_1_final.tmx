@@ -9659,16 +9659,19 @@
   </object>
   <object id="67" x="432" y="448" width="96" height="16">
    <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
   <object id="79" x="688" y="336" width="96" height="16">
    <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
   <object id="81" x="656" y="256" width="96" height="16">
    <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>

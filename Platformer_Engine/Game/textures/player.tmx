@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="89">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="98">
  <imagelayer id="2" name="spritesheet">
   <image source="Player_SpriteSheet.png" width="416" height="512"/>
  </imagelayer>
@@ -141,7 +141,7 @@
     <property name="collider" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="69" x="328" y="42" width="14" height="20">
+  <object id="97" x="328" y="42" width="14" height="20">
    <properties>
     <property name="collider" type="bool" value="true"/>
    </properties>

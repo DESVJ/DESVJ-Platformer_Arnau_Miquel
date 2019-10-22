@@ -68,13 +68,17 @@ void Collider_Manager::LoadColliders()
 							}
 							//LOG("%s", clr_type->data->prop_value.value_string);
 						}
+						if (clr_type->data->name == "canBeJumpThrough")
+						{
+							clr.canBeJumped = clr_type->data->prop_value.value_bool;
+							LOG("AA");
+						}
 
 						clr_type = clr_type->next;
 					}
 
 
 					collider_list.add(clr);
-
 
 					objects = objects->next;
 				}
@@ -168,7 +172,8 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									if (dir == UP)
 									{
 										//currentPoint->y = block->y + block->h - currentPoint->h;
-										allowClippingCollider = &collider_list[i];
+										if(collider_list[i].canBeJumped)
+											allowClippingCollider = &collider_list[i];
 									}
 
 								}
