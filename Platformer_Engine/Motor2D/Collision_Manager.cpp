@@ -122,6 +122,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 
 	bool colisionDetectedX = false;
 	bool colisionDetectedY = false;
+	typeColDetected = false;
 
 	//Itinerate all collider objects
 	for (int i = 0; i < collider_list.count(); i++)
@@ -140,10 +141,6 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					//If there is a colision, look collider type
 					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
 					{
-						if (isPlayer)
-						{
-							App->player->Change_Col_State(player_colision_state::NONE);
-						}
 						//Allow the object to ignore down collisions (player jumping in topo of platform)
 						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
 						{
@@ -205,8 +202,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						if (isPlayer && !App->player->player.player_tang_mode)
 						{
 							App->player->Change_Col_State(player_colision_state::DYING);
+							typeColDetected = true;
+							LOG("KILL");
 						}
-						LOG("KILL");
 
 					}
 					if(collider_list[i].collider_type == CLIMB)
@@ -214,10 +212,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						if (isPlayer && !App->player->player.player_tang_mode)
 						{
 							App->player->Change_Col_State(player_colision_state::CLIMBING);
+							typeColDetected = true;
+							LOG("CLIMB");
 						}
-						LOG("CLIMB");
 					}
-					
 					
 
 				}
@@ -242,5 +240,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		currentPoint->y = prediction.y;
 		//if(isPlayer)
 		//	App->player->Change_Col_State(player_colision_state::NONE);
+	}
+
+	if (!typeColDetected) 
+	{
+		App->player->Change_Col_State(player_colision_state::NONE);
 	}
 }

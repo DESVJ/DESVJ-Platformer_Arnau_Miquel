@@ -39,6 +39,7 @@ public:
 	p2List<Collider> collider_list;
 
 	Collider* allowClippingCollider = nullptr;
+	bool typeColDetected = false;
 
 	void MoveObject(SDL_Rect*, p2Point<int>, bool isPlayer = false);
 
