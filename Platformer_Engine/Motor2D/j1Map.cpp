@@ -78,7 +78,9 @@ void j1Map::Draw()
 							&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
 						{
 							//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
-							App->render->Blit(coord_tileset->data->texture, x, y, &rect);
+							//App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { coord_layer->data->speed,  1 });
+							//Paralaxx wont work if culling deletes it, divide or mult culling by layer speed to prevent it from failing
+							App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { 1,  1 });
 						}
 					}
 				}
@@ -498,6 +500,11 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->gid[i] = tile.attribute("gid").as_uint();
 		i++;
 		tile = tile.next_sibling("tile");
+	}
+
+	if ((p2SString)node.child("properties").child("property").attribute("name").as_string() == (p2SString)"speed")
+	{
+		layer->speed = node.child("properties").child("property").attribute("value").as_float();
 	}
 
 	if ((p2SString)node.child("properties").child("property").attribute("name").as_string() == (p2SString)"isTangLayer" && node.child("properties").child("property").attribute("value").as_bool() == true)

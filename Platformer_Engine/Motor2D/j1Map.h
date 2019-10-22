@@ -34,6 +34,7 @@ struct MapLayer {
 
 	p2SString name = "Name_Null";
 	uint width = 0u;
+	float speed = 1.0f;
 	uint height = 0u;
 	uint* gid = nullptr;
 	bool isTang = false;

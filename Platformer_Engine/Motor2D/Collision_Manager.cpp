@@ -202,9 +202,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						}
 					}
 					//If collider is type KILL, kill player
-					if(collider_list[i].collider_type == KILL/*TEMPORAL!!!!!!!!!!!!!!!!*/&&App->player->player.player_god_mode==false && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
+					if(collider_list[i].collider_type == KILL && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
 					{
-						if (isPlayer && !App->player->player.player_tang_mode)
+						if (isPlayer && !App->player->player.player_tang_mode && !App->player->player.player_god_mode)
 						{
 							App->player->Change_Col_State(player_colision_state::DYING);
 							typeColDetected = true;

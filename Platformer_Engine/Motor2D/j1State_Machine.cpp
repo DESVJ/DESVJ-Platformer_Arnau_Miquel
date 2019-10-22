@@ -162,7 +162,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	}
 	else speed.x = 0;
 	if (jump == true) {
-		if (speed.y == 0 && (current_animation->current_frame == 0 || reset_animation == true))speed.y = -12;
+		if (speed.y == 0 && (current_animation->current_frame == 0 || reset_animation == true))speed.y = -13;
 	}
 	else if (up == true) {
 		if (speed.y > -2)speed.y--;
