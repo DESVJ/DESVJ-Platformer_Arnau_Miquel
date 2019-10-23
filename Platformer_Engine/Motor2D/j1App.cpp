@@ -94,6 +94,7 @@ bool j1App::Awake()
 			item = item->next;
 		}
 	}
+	load_game = save_game = "save_game.xml";
 
 	return ret;
 }
@@ -277,25 +278,18 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame()
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list
+
 	want_to_load = true;
 }
 
 // ---------------------------------------
 void j1App::SaveGame() const
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list ... should we overwrite ?
 
 	want_to_save = true;
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
-{
-	// need to add functionality to file_system module for this to work
-}
 
 bool j1App::LoadGameNow()
 {

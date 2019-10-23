@@ -290,3 +290,38 @@ void j1Player::Change_Col_State(player_colision_state state)
 {
 	player.col_state = state;
 }
+
+bool j1Player::Save(pugi::xml_node& data)const {
+	pugi::xml_node player_node = data.append_child("player info");
+	player_node.append_child("position");
+	player_node.child("position").append_attribute("x") = player.player_rect.x;
+	player_node.child("position").append_attribute("y") = player.player_rect.y;
+	player_node.child("position").append_attribute("w") = player.player_rect.w;
+	player_node.child("position").append_attribute("h") = player.player_rect.h;
+	player_node.append_attribute("speed") = 0;
+	player_node.append_attribute("flip") = player.player_flip;
+	player_node.append_attribute("not jumping") = player.player_not_jumping;
+	player_node.append_attribute("god mode") = player.player_god_mode;
+	player_node.append_attribute("tang mode") = player.player_tang_mode;
+	player_node.append_attribute("alive") = player.player_alive;
+	player_node.append_attribute("respawn") = player.player_respawn;
+	player_node.append_attribute("climbing") = player.player_climbing;
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node& data) {
+	player.player_rect.x = data.child("player info").child("position").attribute("x").as_int();
+	player.player_rect.y = data.child("player info").child("position").attribute("y").as_int();
+	player.player_rect.w = data.child("player info").child("position").attribute("w").as_int();
+	player.player_rect.h = data.child("player info").child("position").attribute("h").as_int();
+	player.player_speed.x = data.child("player info").attribute("speed").as_int();
+	player.player_speed.y = data.child("player info").attribute("speed").as_int();
+	player.player_flip = data.child("player info").attribute("flip").as_bool();
+	player.player_not_jumping = data.child("player info").attribute("not jumping").as_bool();
+	player.player_god_mode = data.child("player info").attribute("god mode").as_bool();
+	player.player_tang_mode = data.child("player info").attribute("tang mode").as_bool();
+	player.player_alive = data.child("player info").attribute("alive").as_bool();
+	player.player_respawn = data.child("player info").attribute("respawn").as_bool();
+	player.player_climbing = data.child("player info").attribute("climbing").as_bool();
+	return true;
+}

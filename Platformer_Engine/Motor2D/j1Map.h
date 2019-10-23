@@ -124,6 +124,12 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	//Save
+	bool Save(pugi::xml_node&) const;
+
+	//Load
+	bool Load(pugi::xml_node&);
+
 	void Translate_Coord(int* x, int* y) {
 		*x *= data.tile_width;
 		*y *= data.tile_height;
@@ -146,6 +152,7 @@ private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
+	p2SString			map_name;
 	bool				map_loaded;
 };
 

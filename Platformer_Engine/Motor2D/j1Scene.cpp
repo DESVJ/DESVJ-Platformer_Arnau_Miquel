@@ -114,7 +114,7 @@ bool j1Scene::CleanUp()
 }
 
 
-//Load map 1
+//Load map
 void j1Scene::Load_Map_By_Name(const char* name)
 {
 	App->colliders.collider_list.clear();

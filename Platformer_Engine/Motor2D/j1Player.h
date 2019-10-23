@@ -114,6 +114,12 @@ public:
 	//Start level again
 	void Start_F3();
 
+	//Save
+	bool Save(pugi::xml_node&) const;
+
+	//Load
+	bool Load(pugi::xml_node&);
+
 	//Load animation pushbacks by name
 	//void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);

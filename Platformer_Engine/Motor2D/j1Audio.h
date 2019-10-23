@@ -38,7 +38,7 @@ public:
 	void ChangeVolume(bool plus);
 
 	
-	bool Save(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 private:
 

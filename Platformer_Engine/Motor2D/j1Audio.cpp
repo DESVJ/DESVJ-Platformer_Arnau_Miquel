@@ -172,7 +172,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 }
 
 
-bool j1Audio::Save(pugi::xml_node& node_sent) {
+bool j1Audio::Save(pugi::xml_node& node_sent) const{
 	pugi::xml_node cam = node_sent.append_child("music");
 	cam.append_attribute("volume").set_value(Mix_VolumeMusic(-1));
 	return true;

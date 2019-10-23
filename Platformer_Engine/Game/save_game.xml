@@ -1,9 +1,21 @@
 <?xml version="1.0"?>
 <game_state>
-	<renderer>
-		<camera x="100" y="0" />
-	</renderer>
+	<input />
+	<window />
+	<textures />
 	<audio>
 		<music volume="128" />
 	</audio>
+	<map>
+		<map info name="map_1_final.tmx" />
+	</map>
+	<scene />
+	<player>
+		<player info speed="0" flip="false" not jumping="true" god mode="false" tang mode="false" alive="true" respawn="false" climbing="false">
+			<position x="112" y="464" w="16" h="-20" />
+		</player info>
+	</player>
+	<renderer>
+		<camera x="0" y="-768" />
+	</renderer>
 </game_state>

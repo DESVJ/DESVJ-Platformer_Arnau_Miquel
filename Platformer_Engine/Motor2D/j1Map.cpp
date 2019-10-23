@@ -236,6 +236,7 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
+	map_name = file_name;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
@@ -557,4 +558,18 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 	}
 
 	return ret;
+}
+
+bool j1Map::Save(pugi::xml_node& data)const {
+	pugi::xml_node map_node = data.append_child("map info");
+	map_node.append_attribute("name") = map_name.GetString();
+	return true;
+}
+
+bool j1Map::Load(pugi::xml_node& data) {
+	App->colliders.collider_list.clear();
+	App->map->CleanUp();
+	App->map->Load(data.child("map_info").attribute("name").as_string());
+	App->colliders.LoadColliders();
+	return true;
 }
