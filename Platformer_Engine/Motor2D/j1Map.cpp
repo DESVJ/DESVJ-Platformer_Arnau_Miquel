@@ -561,7 +561,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 }
 
 bool j1Map::Save(pugi::xml_node& data)const {
-	pugi::xml_node map_node = data.append_child("map info");
+	pugi::xml_node map_node = data.append_child("map_info");
 	map_node.append_attribute("name") = map_name.GetString();
 	return true;
 }

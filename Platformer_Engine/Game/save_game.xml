@@ -7,13 +7,14 @@
 		<music volume="128" />
 	</audio>
 	<map>
-		<map info name="map_1_final.tmx" />
+		<map_info name="map_1_final.tmx" />
 	</map>
 	<scene />
 	<player>
-		<player info speed="0" flip="false" not jumping="true" god mode="false" tang mode="false" alive="true" respawn="false" climbing="false">
+		<player_info flip="false" not_jumping="true" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
 			<position x="112" y="464" w="16" h="-20" />
-		</player info>
+			<speed x="0" y="0" />
+		</player_info>
 	</player>
 	<renderer>
 		<camera x="0" y="-768" />
