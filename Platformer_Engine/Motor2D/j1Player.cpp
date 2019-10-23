@@ -34,7 +34,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
 
-
+	
 
 	//LoadAnimationFromTMX(&player_node, &idle, "idle");
 	LoadAnimationFromTMX(&player_node, &idle, "idle");
@@ -118,19 +118,18 @@ bool j1Player::Update(float dt)
 	if (player.player_rect.w != 0) {
 
 		int animation_created_mov = player.player_rect.w - current_frame.w;
-		if (animation_created_mov != 0)
-			App->colliders.MoveObject(&player.player_rect, { animation_created_mov / 2, 0 }, true);
+		if(animation_created_mov != 0)  
+			App->colliders.MoveObject(&player.player_rect, { animation_created_mov, 0 }, true);
+			//App->colliders.MoveObject(&player.player_rect, {animation_created_mov / 2, 0}, true); Better divided by 2 but it breaks colisions in right walls
 	}
 
 	//TODO: Smooth camera follow
 	player.player_rect.w = current_frame.w;
 	player.player_rect.h = -current_frame.h;
-	//player.player_render_rect.w = current_animation->maxWidth;
-	//player.player_render_rect.h = -current_animation->maxHeight;
 
 
 
-	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0 }, true);
+	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
 	if (player.player_rect.y - player.player_rect.h > App->render->limitNegY)
 	{
@@ -139,11 +138,11 @@ bool j1Player::Update(float dt)
 	if (current_animation != &jump&&player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{
 		//TODO: Falling looks wird on high falls
-		App->colliders.MoveObject(&player.player_rect, { 0, 4 }, true);
+		App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
 	}
 
 	//SHOW COLLIDERS
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 	{
 		App->input->is_Debug_Mode = !App->input->is_Debug_Mode;
 	}
@@ -160,21 +159,27 @@ bool j1Player::Update(float dt)
 	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
 
 
-	//player.player_render_rect.x = player.player_rect.x - animation_created_mov / 2;
-	//player.player_render_rect.y = player.player_rect.y;
+
+	//This must be debug mode only
+	//if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, {1, 0});
+	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { -1, 0 });
+	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { 0, -1 });
+	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	//	App->colliders.MoveObject(&player.player_rect, { 0, 1 });
+
 
 	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
-	App->render->MoveCameraToPointInsideLimits({ player.player_rect.x, player.player_rect.y });
+	App->render->MoveCameraToPointInsideLimits({player.player_rect.x, player.player_rect.y});
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
 	if (player.player_flip == false && player.player_speed.x < 0)player.player_flip = true;
 	else if (player.player_flip == true && player.player_speed.x > 0)player.player_flip = false;
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
-
-
 	App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
-	//App->render->DrawQuad({ player.player_render_rect.x, player.player_render_rect.y, player.player_render_rect.w, player.player_render_rect.h }, 255, 0, 255, 50);
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
@@ -193,9 +198,9 @@ bool j1Player::CleanUp()
 void j1Player::Start_F3() {
 	p2List_item<MapObjectGroup*>* objects_map;
 	objects_map = App->map->data.object_layers.start;
-	while (objects_map != NULL)
+	while (objects_map != NULL) 
 	{
-		if (objects_map->data->name == "SpawnPoint") {
+		if (objects_map->data->name == "SpawnPoint"){
 			p2List_item<object_property*>* isSpawn;
 			isSpawn = objects_map->data->properties.start;
 			while (isSpawn != NULL)
@@ -221,7 +226,7 @@ void j1Player::Start_F3() {
 				isSpawn = isSpawn->next;
 			}
 		}
-		objects_map = objects_map->next;
+		objects_map=objects_map->next;
 	}
 }
 
@@ -266,33 +271,17 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 	}
 
 
-	if (correctNodeGroup)
+	if (correctNodeGroup) 
 	{
 		for (pugi::xml_node obj = correctNodeGroup->child("object"); obj; obj = obj.next_sibling("object"))
 		{
-			if (obj.child("properties").child("property").attribute("value").as_bool() == true)
+			if (obj.child("properties").child("property").attribute("value").as_bool() == true) 
 			{
 				anim->PushBack({ obj.attribute("x").as_int(),
 				obj.attribute("y").as_int(),
 				obj.attribute("width").as_int(),
 				obj.attribute("height").as_int() });
 
-				if (anim->maxHeight == 0)
-				{
-					anim->maxHeight = obj.attribute("height").as_int();
-				}
-				else if (obj.attribute("height").as_int() > anim->maxHeight)
-				{
-					anim->maxHeight = obj.attribute("height").as_int();
-				}
-				if (anim->maxWidth == 0)
-				{
-					anim->maxWidth = obj.attribute("width").as_int();
-				}
-				else if (obj.attribute("width").as_int() > anim->maxWidth)
-				{
-					anim->maxWidth = obj.attribute("width").as_int();
-				}
 			}
 		}
 	}

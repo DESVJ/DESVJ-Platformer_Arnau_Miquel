@@ -30,7 +30,7 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 		}
 		//CHECK JUMP AND JUMP WITH DIRECTION//
 		bool jump = false;
-		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (god_mode == false))jump = true;
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)&&(god_mode==false))jump = true;
 		if (jump == true) {
 			if (input_in == I_RIGHT)input_in = I_JUMP_RIGHT;
 			else if (input_in == I_LEFT)input_in = I_JUMP_LEFT;
@@ -110,7 +110,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	case S_RUN_LEFT:
 		left = true;
 	case S_RUN_RIGHT:
-		if (left == false)right = true;
+		if (left==false)right = true;
 		current_animation = &App->player->run;
 		break;
 	case S_JUMP_LEFT:

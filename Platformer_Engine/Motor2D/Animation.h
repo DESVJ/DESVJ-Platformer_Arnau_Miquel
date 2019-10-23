@@ -14,8 +14,6 @@ public:
 	float current_frame;
 	int last_frame = 0;
 	int finished = 0;
-	int maxWidth = 0;
-	int maxHeight = 0;
 
 public:
 

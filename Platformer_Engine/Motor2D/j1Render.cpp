@@ -27,7 +27,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
@@ -35,7 +35,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 
 	renderer = SDL_CreateRenderer(App->win->window, -1, flags);
 
-	if(renderer == NULL)
+	if (renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -128,7 +128,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.x = (int)(camera.x * speed.x) + x * scale;
 	rect.y = (int)(camera.y * speed.y) + y * scale;
 
-	if(section != NULL)
+	if (section != NULL)
 	{
 		rect.w = section->w;
 		rect.h = section->h;
@@ -144,14 +144,14 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 
-	if(pivot_x != INT_MAX && pivot_y != INT_MAX)
+	if (pivot_x != INT_MAX && pivot_y != INT_MAX)
 	{
 		pivot.x = pivot_x;
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
 	if (flip == true)flip_render = SDL_FLIP_HORIZONTAL;
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip_render/*SDL_FLIP_NONE*/) != 0)
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip_render/*SDL_FLIP_NONE*/) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -169,7 +169,7 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	SDL_Rect rec(rect);
-	if(use_camera)
+	if (use_camera)
 	{
 		rec.x = (int)(camera.x + rect.x * scale);
 		rec.y = (int)(camera.y + rect.y * scale);
@@ -179,7 +179,7 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -198,12 +198,12 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 
 	int result = -1;
 
-	if(use_camera)
+	if (use_camera)
 		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -225,7 +225,7 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	float factor = (float)M_PI / 180.0f;
 
-	for(uint i = 0; i < 360; ++i)
+	for (uint i = 0; i < 360; ++i)
 	{
 		points[i].x = (int)(x + radius * cos(i * factor));
 		points[i].y = (int)(y + radius * sin(i * factor));
@@ -233,7 +233,7 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -242,10 +242,10 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-void j1Render::MoveCameraInsideLimits(int x, int y) 
+void j1Render::MoveCameraInsideLimits(int x, int y)
 {
 
-	if (x >= 0) 
+	if (x >= 0)
 	{
 		//X left limit
 		if (camera.x + x >= limitNegX)
@@ -260,7 +260,7 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 	else
 	{
 		//X right limit
-		if (camera.x + x <= -limitPosX) 
+		if (camera.x + x <= -limitPosX)
 		{
 			camera.x = -limitPosX;
 		}
@@ -271,7 +271,7 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 
 	}
 
-	if (y >= 0) 
+	if (y >= 0)
 	{
 		//Y up limit
 		if (camera.y + y >= limitPosY)
@@ -286,7 +286,7 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 	else
 	{
 		//Y down limit
-		if (camera.y + y <= -limitNegY) 
+		if (camera.y + y <= -limitNegY)
 		{
 			camera.y = -limitNegY;
 		}
@@ -300,12 +300,12 @@ void j1Render::MoveCameraInsideLimits(int x, int y)
 }
 
 
-void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point) 
+void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 {
 
 	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
-	int x = -(point.x* (int)App->win->GetScale()) + (App->win->width / 2);
-	int y = -(point.y* (int)App->win->GetScale()) + (App->win->height / 2);
+	int x = -(point.x * (int)App->win->GetScale()) + (App->win->width / 2);
+	int y = -(point.y * (int)App->win->GetScale()) + (App->win->height / 2);
 
 	if (x >= 0)
 	{
@@ -363,9 +363,9 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 
 }
 
-void j1Render::SetMapLimitsWithTMX() 
+void j1Render::SetMapLimitsWithTMX()
 {
-	
+
 	p2List_item<MapObjectGroup*>* itemA;
 	itemA = App->map->data.object_layers.start;
 	while (itemA != NULL)
