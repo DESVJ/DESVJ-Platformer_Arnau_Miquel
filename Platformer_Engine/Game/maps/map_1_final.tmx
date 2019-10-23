@@ -12910,8 +12910,16 @@
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
-  <object id="69" x="32" y="316" width="160" height="4"/>
-  <object id="91" x="32" y="492" width="160" height="4"/>
+  <object id="69" x="32" y="316" width="160" height="4">
+   <properties>
+    <property name="colliderType" value="Kill"/>
+   </properties>
+  </object>
+  <object id="91" x="32" y="492" width="160" height="4">
+   <properties>
+    <property name="colliderType" value="Kill"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="87" name="OnlyTangZones">
   <properties>
@@ -12942,7 +12950,7 @@
     <property name="colliderType" value="Tang"/>
    </properties>
   </object>
-  <object id="83" x="32" y="480" width="160" height="32">
+  <object id="83" x="32" y="496" width="160" height="16">
    <properties>
     <property name="colliderType" value="Tang"/>
    </properties>
