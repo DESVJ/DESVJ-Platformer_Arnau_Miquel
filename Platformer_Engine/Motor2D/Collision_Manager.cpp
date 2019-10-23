@@ -190,7 +190,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 										currentPoint->x = block->x + block->w;
 									}
 								}
-								else if (prediction.x + prediction.w < block->x)
+								else if (prediction.x + prediction.w > block->x)
 								{
 									if (dir == RIGHT)
 									{
