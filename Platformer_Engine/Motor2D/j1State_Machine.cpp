@@ -20,17 +20,17 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 		if (right == true && left == true)input_in = I_RIGHT_AND_LEFT;
 		else if (right == true) input_in = I_RIGHT;
 		else if (left == true)input_in = I_LEFT;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP || App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 			input_out[inputsouts] = O_RIGHT;
 			inputsouts++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP || App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
 			input_out[inputsouts] = O_LEFT;
 			inputsouts++;
 		}
 		//CHECK JUMP AND JUMP WITH DIRECTION//
 		bool jump = false;
-		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)&&(god_mode==false))jump = true;
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (god_mode == false))jump = true;
 		if (jump == true) {
 			if (input_in == I_RIGHT)input_in = I_JUMP_RIGHT;
 			else if (input_in == I_LEFT)input_in = I_JUMP_LEFT;
@@ -70,11 +70,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			else if (input_in == I_LEFT)input_in = I_DOWN_LEFT;
 			else input_in = I_DOWN;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
 			input_out[inputsouts] = O_UP;
 			inputsouts++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
 			input_out[inputsouts] = O_DOWN;
 			inputsouts++;
 		}
@@ -110,7 +110,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	case S_RUN_LEFT:
 		left = true;
 	case S_RUN_RIGHT:
-		if (left==false)right = true;
+		if (left == false)right = true;
 		current_animation = &App->player->run;
 		break;
 	case S_JUMP_LEFT:
