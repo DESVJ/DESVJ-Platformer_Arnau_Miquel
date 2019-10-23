@@ -117,7 +117,7 @@ bool j1Player::Update(float dt)
 
 	if (player.player_rect.w != 0) {
 
-		animation_created_mov = player.player_rect.w - current_frame.w;
+		int animation_created_mov = player.player_rect.w - current_frame.w;
 		if (animation_created_mov != 0)
 			App->colliders.MoveObject(&player.player_rect, { animation_created_mov / 2, 0 }, true);
 	}
@@ -125,8 +125,8 @@ bool j1Player::Update(float dt)
 	//TODO: Smooth camera follow
 	player.player_rect.w = current_frame.w;
 	player.player_rect.h = -current_frame.h;
-	player.player_render_rect.w = current_animation->maxWidth;
-	player.player_render_rect.h = -current_animation->maxHeight;
+	//player.player_render_rect.w = current_animation->maxWidth;
+	//player.player_render_rect.h = -current_animation->maxHeight;
 
 
 
@@ -160,20 +160,11 @@ bool j1Player::Update(float dt)
 	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
 
 
-	player.player_render_rect.x = player.player_rect.x - animation_created_mov / 2;
-	player.player_render_rect.y = player.player_rect.y;
-	//This must be debug mode only
-	//if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, {1, 0});
-	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { -1, 0 });
-	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { 0, -1 });
-	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { 0, 1 });
+	//player.player_render_rect.x = player.player_rect.x - animation_created_mov / 2;
+	//player.player_render_rect.y = player.player_rect.y;
 
 	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
-	App->render->MoveCameraToPointInsideLimits({ player.player_render_rect.x, player.player_render_rect.y });
+	App->render->MoveCameraToPointInsideLimits({ player.player_rect.x, player.player_rect.y });
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
@@ -183,7 +174,7 @@ bool j1Player::Update(float dt)
 
 
 	App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
-	App->render->DrawQuad({ player.player_render_rect.x, player.player_render_rect.y, player.player_render_rect.w, player.player_render_rect.h }, 255, 0, 255, 50);
+	//App->render->DrawQuad({ player.player_render_rect.x, player.player_render_rect.y, player.player_render_rect.w, player.player_render_rect.h }, 255, 0, 255, 50);
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
