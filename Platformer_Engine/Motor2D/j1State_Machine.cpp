@@ -20,11 +20,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 		if (right == true && left == true)input_in = I_RIGHT_AND_LEFT;
 		else if (right == true) input_in = I_RIGHT;
 		else if (left == true)input_in = I_LEFT;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP || App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
 			input_out[inputsouts] = O_RIGHT;
 			inputsouts++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE) {
 			input_out[inputsouts] = O_LEFT;
 			inputsouts++;
 		}
@@ -70,11 +70,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			else if (input_in == I_LEFT)input_in = I_DOWN_LEFT;
 			else input_in = I_DOWN;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) {
 			input_out[inputsouts] = O_UP;
 			inputsouts++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE) {
 			input_out[inputsouts] = O_DOWN;
 			inputsouts++;
 		}
