@@ -158,7 +158,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							{
 								colisionDetectedY = true;
 								//Correct movement or move object in a normal way
-								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 2) - prediction.h)
+								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
 								{
 									if (dir == DOWN)
 									{
@@ -183,14 +183,14 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							{
 								colisionDetectedX = true;
 								////Coliding with the sides of an object
-								if (prediction.x > block->x + block->w)
+								if (prediction.x >= block->x + block->w)
 								{
 									if (dir == LEFT)
 									{
 										currentPoint->x = block->x + block->w;
 									}
 								}
-								else if (prediction.x + prediction.w > block->x)
+								else if (prediction.x + prediction.w >= block->x)
 								{
 									if (dir == RIGHT)
 									{
@@ -280,13 +280,13 @@ void Collider_Manager::Correct(SDL_Rect* prediction)
 						if (&collider_list[i] != allowClippingCollider)
 						{
 							//Is the collision inside y and y + h?
-							if (prediction->y > block->y&& prediction->y + prediction->h < block->y + block->h)
+							if (prediction->y > block->y && prediction->y + prediction->h < block->y + block->h)
 							{
-								if (prediction->x > block->x + block->w)
+								if (prediction->x >= block->x + block->w)
 								{
 										prediction->x = block->x + block->w;
 								}
-								else if (prediction->x + prediction->w > block->x)
+								else if (prediction->x + prediction->w >= block->x)
 								{
 										prediction->x = block->x - prediction->w;
 								}
