@@ -174,7 +174,7 @@ bool j1Player::Update(float dt)
 
 
 	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
-	App->render->MoveCameraToPointInsideLimits({player.player_rect.x, player.player_rect.y});
+	App->render->MoveCameraToPointInsideLimits({player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y});
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
