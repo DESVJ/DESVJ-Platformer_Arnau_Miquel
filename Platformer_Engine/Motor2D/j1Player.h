@@ -17,7 +17,7 @@ struct Player_Info
 {
 
 	SDL_Rect player_rect = { 0, 0, 0, 0 };
-	SDL_Rect player_collider_rect = { 0, 0, 0, 0 };
+	SDL_Rect player_render_rect = { 0, 0, 20, 20 };
 	p2Point<int> player_speed;
 	bool player_flip;
 	bool player_not_jumping;
@@ -134,6 +134,8 @@ public:
 	Animation idle_ladder;
 	Animation movement_ladder;
 	Animation death;
+
+	int animation_created_mov = 0;
 
 private:
 	int gravity = 1;

@@ -362,3 +362,30 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 
 
 }
+
+void j1Render::SetMapLimitsWithTMX() 
+{
+	
+	p2List_item<MapObjectGroup*>* itemA;
+	itemA = App->map->data.object_layers.start;
+	while (itemA != NULL)
+	{
+		//for each prop in that layer
+		p2List_item<object_property*>* isLimit;
+		isLimit = itemA->data->properties.start;
+		while (isLimit != NULL)
+		{
+			//if the layer is a collider layer
+			if (isLimit->data->name == "isMapLimits" && isLimit->data->prop_value.value_bool == true)
+			{
+				limitPosX = itemA->data->objects.start->data->rect.x * App->win->GetScale() - camera.w;
+			}
+			isLimit = isLimit->next;
+		}
+		itemA = itemA->next;
+	}
+
+
+
+
+}

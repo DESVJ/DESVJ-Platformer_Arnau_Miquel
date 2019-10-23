@@ -34,6 +34,7 @@ bool j1Scene::Start()
 {
 	App->map->Load("map_1_final.tmx");
 	App->colliders.LoadColliders();
+	App->render->SetMapLimitsWithTMX();
 
 	return true;
 }
@@ -121,5 +122,6 @@ void j1Scene::Load_Map_By_Name(const char* name)
 	App->map->CleanUp();
 	App->map->Load(name);
 	App->colliders.LoadColliders();
+	App->render->SetMapLimitsWithTMX();
 	App->player->Start_F3();
 }

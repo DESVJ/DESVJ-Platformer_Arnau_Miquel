@@ -41,6 +41,7 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+	void SetMapLimitsWithTMX();
 
 public:
 
