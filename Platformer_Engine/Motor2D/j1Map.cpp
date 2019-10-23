@@ -9,6 +9,7 @@
 #include"j1Player.h"
 #include"j1Window.h"
 #include"j1Input.h"
+#include "j1Audio.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -304,6 +305,26 @@ bool j1Map::Load(const char* file_name)
 
 	if(ret == true)
 	{
+		////////////////WHEN MUSIC AVAILABLE TRY IF THIS WORKS
+		p2List_item<MapObjectGroup*>* objects_map;
+		objects_map = data.object_layers.start;
+		while (objects_map != NULL)
+		{
+			if (objects_map->data->name == "Music_Sound") {
+				p2List_item<object_property*>* isMusic;
+				isMusic = objects_map->data->properties.start;
+				while (isMusic != NULL)
+				{
+					if (isMusic->data->name == "isMusicObjectGroup"&&isMusic->data->prop_value.value_bool == true)
+					{
+						App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);
+					}
+					isMusic = isMusic->next;
+				}
+			}
+			objects_map = objects_map->next;
+		}
+
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
