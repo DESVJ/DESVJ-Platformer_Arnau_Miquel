@@ -252,3 +252,51 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		App->player->Change_Col_State(player_colision_state::NONE);
 	}
 }
+
+void Collider_Manager::Correct(SDL_Rect* prediction)
+{
+	for (int i = 0; i < collider_list.count(); i++)
+	{
+		SDL_Rect* block = &collider_list[i].collider_rect;
+		//Watch if the collider is inside the camera, if not, do not calculate colision
+		if ((block->x + block->w) * App->win->GetScale() >= -App->render->camera.x && block->x * App->win->GetScale() <= -App->render->camera.x + App->win->width
+			&& (block->y + block->h) * App->win->GetScale() >= -App->render->camera.y && block->y * App->win->GetScale() <= -App->render->camera.y + App->win->height)
+		{
+			//Is the collider enabled?
+			if (collider_list[i].enabled) //&& is not tang colider
+			{
+				//If it is, check for collisions between it and the object
+				if (CheckCollision(*prediction, *block))
+				{
+					//If there is a colision, look collider type
+					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
+					{
+						//Allow the object to ignore down collisions (player jumping in topo of platform)
+						if (allowClippingCollider != nullptr && prediction->y <= allowClippingCollider->collider_rect.y)
+						{
+							allowClippingCollider = nullptr;
+						}
+						//TODO: Maybe going too fast can cause clipping
+						if (&collider_list[i] != allowClippingCollider)
+						{
+							//Is the collision inside y and y + h?
+							if (prediction->y > block->y&& prediction->y + prediction->h < block->y + block->h)
+							{
+								if (prediction->x > block->x + block->w)
+								{
+										prediction->x = block->x + block->w;
+								}
+								else if (prediction->x + prediction->w > block->x)
+								{
+										prediction->x = block->x - prediction->w;
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

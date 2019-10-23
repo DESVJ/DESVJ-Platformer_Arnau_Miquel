@@ -45,6 +45,7 @@ public:
 	void MoveObject(SDL_Rect*, p2Point<int>, bool isPlayer = false);
 
 	void LoadColliders();
+	void Correct(SDL_Rect* prediction);
 
 	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
 	{

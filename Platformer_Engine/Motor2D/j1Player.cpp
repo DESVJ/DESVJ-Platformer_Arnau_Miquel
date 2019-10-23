@@ -119,7 +119,7 @@ bool j1Player::Update(float dt)
 
 		int animation_created_mov = player.player_rect.w - current_frame.w;
 		if(animation_created_mov != 0)  
-			App->colliders.MoveObject(&player.player_rect, { animation_created_mov, 0 }, true);
+			App->colliders.MoveObject(&player.player_rect, { animation_created_mov/2, 0 }, true);
 			//App->colliders.MoveObject(&player.player_rect, {animation_created_mov / 2, 0}, true); Better divided by 2 but it breaks colisions in right walls
 	}
 
@@ -131,6 +131,8 @@ bool j1Player::Update(float dt)
 
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
+	//TEMPORAL//
+	App->colliders.Correct(&player.player_rect);
 	if (player.player_rect.y - player.player_rect.h > App->render->limitNegY)
 	{
 		player.player_alive = false;
