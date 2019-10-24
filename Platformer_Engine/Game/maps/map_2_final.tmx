@@ -91,7 +91,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <layer id="76" name="parallax1" width="115" height="36" locked="1" opacity="0.93">
+ <layer id="76" name="parallax1" width="115" height="36" opacity="0.93">
   <properties>
    <property name="speed" type="float" value="0.6"/>
   </properties>
@@ -4238,7 +4238,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="77" name="parallax2" width="115" height="36" locked="1">
+ <layer id="77" name="parallax2" width="115" height="36">
   <properties>
    <property name="speed" type="float" value="1.2"/>
   </properties>
@@ -8385,7 +8385,7 @@
    <tile gid="610"/>
   </data>
  </layer>
- <layer id="78" name="floorCovered" width="115" height="36" locked="1">
+ <layer id="78" name="floorCovered" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -12529,7 +12529,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="79" name="cave" width="115" height="36" locked="1">
+ <layer id="79" name="cave" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -16673,7 +16673,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="81" name="house" width="115" height="36" locked="1">
+ <layer id="81" name="house" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -20817,7 +20817,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="82" name="house2" width="115" height="36" locked="1">
+ <layer id="82" name="house2" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -24961,7 +24961,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="83" name="platforms" width="115" height="36" locked="1">
+ <layer id="83" name="platforms" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -29105,7 +29105,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="84" name="floor" width="115" height="36" locked="1">
+ <layer id="84" name="floor" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -37396,7 +37396,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="86" name="stairs" width="115" height="36" locked="1">
+ <layer id="86" name="stairs" width="115" height="36">
   <data>
    <tile/>
    <tile/>
@@ -41540,7 +41540,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="56" name="WalkZones" locked="1">
+ <objectgroup id="56" name="WalkZones">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
@@ -41661,7 +41661,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="57" name="KillZones" locked="1">
+ <objectgroup id="57" name="KillZones">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
@@ -41701,7 +41701,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="59" name="OnlyTangZones" locked="1">
+ <objectgroup id="59" name="OnlyTangZones">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
@@ -41746,7 +41746,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="58" name="ClimbZones" locked="1">
+ <objectgroup id="58" name="ClimbZones">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
@@ -41761,13 +41761,13 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="73" name="SpawnPoint" locked="1">
+ <objectgroup id="73" name="SpawnPoint">
   <properties>
    <property name="isSpawn" type="bool" value="true"/>
   </properties>
   <object id="62" x="32" y="368" width="16" height="32"/>
  </objectgroup>
- <objectgroup id="87" name="MapLimits" locked="1">
+ <objectgroup id="87" name="MapLimits">
   <properties>
    <property name="isMapLimits" type="bool" value="true"/>
   </properties>
@@ -41777,13 +41777,13 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="75" name="Music &amp;&amp; Sound" locked="1">
+ <objectgroup id="75" name="Music &amp;&amp; Sound">
   <properties>
    <property name="isMusicObjectGroup" type="bool" value="true"/>
   </properties>
-  <object id="72" x="32" y="0" width="16" height="16">
+  <object id="72" name="Background Music" x="32" y="0" width="16" height="16">
    <properties>
-    <property name="src" value="Game/audio/music/Grasslands_Theme.ogg"/>
+    <property name="src" value="audio/music/Grasslands_Theme.ogg"/>
    </properties>
   </object>
  </objectgroup>

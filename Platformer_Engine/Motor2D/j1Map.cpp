@@ -310,7 +310,7 @@ bool j1Map::Load(const char* file_name)
 		objects_map = data.object_layers.start;
 		while (objects_map != NULL)
 		{
-			if (objects_map->data->name == "Music_Sound") {
+			if (objects_map->data->properties.start->data->name == "isMusicObjectGroup" && objects_map->data->properties.start->data->prop_value.value_bool == true) {
 				p2List_item<object_property*>* isMusic;
 				isMusic = objects_map->data->properties.start;
 				while (isMusic != NULL)
