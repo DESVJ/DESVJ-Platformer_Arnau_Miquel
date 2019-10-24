@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="50" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="110" nextobjectid="106">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="50" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="111" nextobjectid="107">
  <tileset firstgid="1" name="map_2_Tileset" tilewidth="16" tileheight="16" tilecount="1984" columns="62">
   <image source="map_2_Tileset_2.png" width="1001" height="512"/>
  </tileset>
  <tileset firstgid="1985" name="Taiga_Tileset" tilewidth="16" tileheight="16" tilecount="264" columns="33">
   <image source="Taiga_Tileset_2.png" width="528" height="128"/>
  </tileset>
- <tileset firstgid="2249" name="Props" tilewidth="16" tileheight="16" tilecount="320" columns="30">
+ <tileset firstgid="2249" name="Props" tilewidth="16" tileheight="16" tilecount="300" columns="30">
   <image source="Props_2.png" width="488" height="160"/>
  </tileset>
  <layer id="99" name="parallax" width="50" height="54">
@@ -27263,6 +27263,16 @@
   <object id="94" x="672" y="0" width="80" height="16">
    <properties>
     <property name="endingPoint" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="110" name="Music &amp;&amp; Sound">
+  <properties>
+   <property name="isMusicObjectGroup" type="bool" value="true"/>
+  </properties>
+  <object id="106" name="Background Music" x="0" y="0" width="16" height="16">
+   <properties>
+    <property name="src" value="audio/music/Dungeon_Theme.ogg"/>
    </properties>
   </object>
  </objectgroup>

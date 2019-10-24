@@ -4240,7 +4240,7 @@
  </layer>
  <layer id="77" name="parallax2" width="115" height="36">
   <properties>
-   <property name="speed" type="float" value="1.2"/>
+   <property name="speed" type="float" value="1.05"/>
   </properties>
   <data>
    <tile/>
