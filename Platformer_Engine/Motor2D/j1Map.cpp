@@ -311,6 +311,11 @@ bool j1Map::Load(const char* file_name)
 		while (objects_map != NULL)
 		{
 			if (objects_map->data->name == "Music && Sound")PrepareMusicSource(objects_map);
+			else if (objects_map->data->name == "EndPoint") {
+				if (objects_map->data->properties.start->data->name == "isEndPoint"&&objects_map->data->properties.start->data->prop_value.value_bool == true) {
+					end_point = objects_map->data->objects.start->data->rect;
+				}
+			}
 			objects_map = objects_map->next;
 		}
 

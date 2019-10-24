@@ -4,19 +4,19 @@
 	<window />
 	<textures />
 	<audio>
-		<music volume="63" />
+		<music volume="128" />
 	</audio>
 	<map>
-		<map_info name="map_1_final.tmx" />
+		<map_info name="map_2_final.tmx" />
 	</map>
 	<scene />
 	<player>
 		<player_info flip="false" not_jumping="true" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
-			<position x="104" y="464" w="16" h="-20" />
+			<position x="32" y="400" w="16" h="-20" />
 			<speed x="0" y="0" />
 		</player_info>
 	</player>
 	<renderer>
-		<camera x="0" y="-768" />
+		<camera x="0" y="-816" />
 	</renderer>
 </game_state>

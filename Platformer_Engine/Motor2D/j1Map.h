@@ -150,6 +150,7 @@ public:
 
 	MapData data;
 	int culling_offset = 0;
+	SDL_Rect end_point;
 
 private:
 

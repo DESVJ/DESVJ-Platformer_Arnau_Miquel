@@ -9,6 +9,8 @@
 #include "Animation.h"
 #include"j1Window.h"
 #include "j1State_Machine.h"
+//////////////TEMPORAL
+#include "j1Scene.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -186,7 +188,8 @@ bool j1Player::Update(float dt)
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
-
+	///////TEMPORAL
+	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true)App->scene->Load_Map_By_Name("map_2_final.tmx");
 	return true;
 }
 
