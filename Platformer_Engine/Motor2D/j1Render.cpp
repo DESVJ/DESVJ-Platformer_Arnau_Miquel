@@ -307,6 +307,9 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	int x = -(point.x * (int)App->win->GetScale()) + (App->win->width / 2);
 	int y = -(point.y * (int)App->win->GetScale()) + (App->win->height / 2);
 
+	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
+	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
+
 
 
 	if (x >= 0)
@@ -316,10 +319,7 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 		{
 			camera.x = limitNegX;
 		}
-		else
-		{
-			camera.x = x;
-		}
+
 	}
 	else
 	{
@@ -359,9 +359,8 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 			camera.y = y;
 		}
 	}
-	followMinRect = {-camera.x, -camera.y, 100, 50 };
-	App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
+	//App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
 }
 
