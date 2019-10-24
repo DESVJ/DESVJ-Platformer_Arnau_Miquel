@@ -181,7 +181,8 @@ bool j1Player::Update(float dt)
 	if (player.player_flip == false && player.player_speed.x < 0)player.player_flip = true;
 	else if (player.player_flip == true && player.player_speed.x > 0)player.player_flip = false;
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
-	App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
+	if(player.player_god_mode)
+		App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
