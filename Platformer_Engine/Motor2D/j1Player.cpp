@@ -108,7 +108,7 @@ bool j1Player::Update(float dt)
 	// Check if player is dead and dead animation is finished
 	if (player.player_alive == false) {
 		if (current_animation->GetFinished() == 1) {
-			current_animation->Reset();
+		//	current_animation->Reset();
 			player.player_respawn = true;
 		}
 	}
@@ -214,23 +214,28 @@ void j1Player::Start_F3() {
 					player.player_rect.y = objects_map->data->objects.start->data->rect.y;
 					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
 					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
-					if (input_in == I_DEAD)input_in = I_NONE;
-					App->player->Change_Col_State(player_colision_state::NONE);
-					player.player_flip = false;
-					player.player_not_jumping = true;
-					player.player_god_mode = false;
-					player.player_tang_mode = false;
-					player.player_alive = true;
-					player.player_respawn = false;
-					player.player_climbing = false;
-					inputs_out = 0;
-					actual_state = S_IDLE;
 				}
 				isSpawn = isSpawn->next;
 			}
 		}
+		else if (objects_map->data->name == "Music && Sound")
+		{
+			if(player.player_alive==true)App->map->PrepareMusicSource(objects_map);
+			else App->map->PrepareMusicSource(objects_map, true);
+		}
 		objects_map=objects_map->next;
 	}
+	if (input_in == I_DEAD)input_in = I_NONE;
+	App->player->Change_Col_State(player_colision_state::NONE);
+	player.player_flip = false;
+	player.player_not_jumping = true;
+	player.player_god_mode = false;
+	player.player_tang_mode = false;
+	player.player_alive = true;
+	player.player_respawn = false;
+	player.player_climbing = false;
+	inputs_out = 0;
+	actual_state = S_IDLE;
 }
 
 //void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)

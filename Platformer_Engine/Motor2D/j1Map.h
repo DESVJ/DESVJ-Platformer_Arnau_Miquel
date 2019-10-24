@@ -130,6 +130,9 @@ public:
 	//Load
 	bool Load(pugi::xml_node&);
 
+	//Get source of music
+	void PrepareMusicSource(p2List_item<MapObjectGroup*>*, bool dead = false);
+
 	void Translate_Coord(int* x, int* y) {
 		*x *= data.tile_width;
 		*y *= data.tile_height;

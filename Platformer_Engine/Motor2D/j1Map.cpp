@@ -310,18 +310,7 @@ bool j1Map::Load(const char* file_name)
 		objects_map = data.object_layers.start;
 		while (objects_map != NULL)
 		{
-			if (objects_map->data->properties.start->data->name == "isMusicObjectGroup" && objects_map->data->properties.start->data->prop_value.value_bool == true) {
-				p2List_item<object_property*>* isMusic;
-				isMusic = objects_map->data->properties.start;
-				while (isMusic != NULL)
-				{
-					if (isMusic->data->name == "isMusicObjectGroup"&&isMusic->data->prop_value.value_bool == true)
-					{
-						App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);
-					}
-					isMusic = isMusic->next;
-				}
-			}
+			if (objects_map->data->name == "Music && Sound")PrepareMusicSource(objects_map);
 			objects_map = objects_map->next;
 		}
 
@@ -593,4 +582,19 @@ bool j1Map::Load(pugi::xml_node& data) {
 	App->map->Load(data.child("map_info").attribute("name").as_string());
 	App->colliders.LoadColliders();
 	return true;
+}
+
+
+void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool dead) {
+	p2List_item<object_property*>* isMusic;
+	isMusic = objects_map->data->properties.start;
+	while (isMusic != NULL)
+	{
+		if (isMusic->data->name == "isMusicObjectGroup"&&isMusic->data->prop_value.value_bool == true)
+		{
+			if (dead == false)App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);// , 0.1);
+			else App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string, 0);
+		}
+		isMusic = isMusic->next;
+	}
 }
