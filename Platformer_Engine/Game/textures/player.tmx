@@ -150,6 +150,7 @@
  <objectgroup id="6" name="jump">
   <properties>
    <property name="animation_name" value="jump"/>
+   <property name="sound" value="audio/fx/death.wav"/>
    <property name="speed" type="float" value="0.1"/>
   </properties>
   <object id="54" x="6" y="171" width="16" height="20">
@@ -186,6 +187,7 @@
  <objectgroup id="7" name="death">
   <properties>
    <property name="animation_name" value="death"/>
+   <property name="sound" value="audio/fx/death.wav"/>
    <property name="speed" type="float" value="0.05"/>
   </properties>
   <object id="60" x="6" y="235" width="16" height="20">
