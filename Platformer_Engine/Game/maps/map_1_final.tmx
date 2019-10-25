@@ -14995,56 +14995,6 @@
    <tile gid="38"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="38"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="219"/>
-   <tile/>
-   <tile gid="38"/>
-   <tile/>
-   <tile/>
    <tile gid="2191"/>
    <tile gid="2192"/>
    <tile/>
@@ -15097,6 +15047,56 @@
    <tile/>
    <tile gid="2224"/>
    <tile gid="2225"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="38"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="219"/>
+   <tile/>
+   <tile gid="38"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile gid="30"/>
@@ -23107,56 +23107,6 @@
    <tile gid="9"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="9"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="9"/>
-   <tile/>
-   <tile/>
    <tile gid="2207"/>
    <tile gid="2208"/>
    <tile/>
@@ -23209,6 +23159,56 @@
    <tile/>
    <tile gid="2240"/>
    <tile gid="2241"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="9"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="9"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -27219,7 +27219,7 @@
     <property name="colliderType" value="Tang"/>
    </properties>
   </object>
-  <object id="98" x="80" y="480" width="32" height="32">
+  <object id="98" x="80" y="464" width="32" height="32">
    <properties>
     <property name="colliderType" value="Tang"/>
    </properties>
@@ -27260,7 +27260,7 @@
   <properties>
    <property name="isEndPoint" type="bool" value="true"/>
   </properties>
-  <object id="94" x="672" y="0" width="80" height="16">
+  <object id="94" x="692" y="0" width="41" height="2">
    <properties>
     <property name="endingPoint" type="bool" value="true"/>
    </properties>
