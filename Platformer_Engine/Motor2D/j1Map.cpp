@@ -597,7 +597,7 @@ void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool d
 	{
 		if (isMusic->data->name == "isMusicObjectGroup"&&isMusic->data->prop_value.value_bool == true)
 		{
-			if (dead == false)App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);// , 0.1);
+			if (dead == false)App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);
 			else App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string, 0);
 		}
 		isMusic = isMusic->next;

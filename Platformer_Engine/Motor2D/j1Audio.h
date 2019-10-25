@@ -5,7 +5,7 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #include "p2List.h"
 
-#define DEFAULT_MUSIC_FADE_TIME 2.0f
+#define DEFAULT_MUSIC_FADE_TIME 0.1f
 
 struct _Mix_Music;
 struct Mix_Chunk;
