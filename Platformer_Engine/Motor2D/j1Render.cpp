@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include"j1Player.h"
 
 #define VSYNC true
 
@@ -310,54 +311,44 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
 	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
 
-
-
-	if (x >= 0)
+	//Left X mov
+	if (camera.x >= limitNegX)
 	{
-		//X left limit
-		if (x >= limitNegX)
-		{
-			camera.x = limitNegX;
-		}
-
+		camera.x = limitNegX;
 	}
-	else
+	else if (point.x < followMinRect.x)
 	{
-		//X right limit
-		if (x <= -limitPosX)
-		{
-			camera.x = -limitPosX;
-		}
-		else
-		{
-			camera.x = x;
-		}
-
+		camera.x = x - ((followMinRect.w / 2) * (int)App->win->GetScale());
 	}
 
-	if (y >= 0)
+	//Right X mov
+	if (camera.x <= -limitPosX)
 	{
-		//Y up limit
-		if (y >= limitPosY)
-		{
-			camera.y = limitPosY;
-		}
-		else
-		{
-			camera.y = y;
-		}
+		camera.x = -limitPosX;
 	}
-	else
+	else if (point.x > followMinRect.x + followMinRect.w)
 	{
-		//Y down limit
-		if (y <= -limitNegY)
-		{
-			camera.y = -limitNegY;
-		}
-		else
-		{
-			camera.y = y;
-		}
+		camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
+	}
+
+	//Up Y mov
+	if (camera.y >= limitPosY)
+	{
+		camera.y = limitPosY;
+	}
+	else if (point.y + App->player->player.player_rect.h < followMinRect.y)
+	{
+		camera.y = y + (App->player->player.player_rect.h / 2) * (int)App->win->GetScale();
+	}
+
+	//Down Y mov
+	if (camera.y <= -limitNegY)
+	{
+		camera.y = -limitNegY;
+	}
+	else if (point.y > followMinRect.y + followMinRect.h)
+	{
+		camera.y = y + -App->player->player.player_rect.h * (int)App->win->GetScale();
 	}
 
 	//App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
