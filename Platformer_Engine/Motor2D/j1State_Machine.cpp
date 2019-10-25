@@ -162,7 +162,8 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	}
 	else speed.x = 0;
 	if (jump == true) {
-		if (speed.y == 0 && (current_animation->current_frame == 0 || reset_animation == true)) {
+		if (/*speed.y == 0 &&*/ (current_animation->current_frame == 0 || reset_animation == true)) {
+			speed.y = 0;
 			speed.y--;
 			App->player->player.player_stop_jumping_up = false;
 		}
@@ -176,7 +177,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	else if (down == true) {
 		if (speed.y < 2)speed.y++;
 	}
-	else speed.y = 0;
+	else if (speed.y < 0)speed.y = 0;
 	return current_animation;
 
 }

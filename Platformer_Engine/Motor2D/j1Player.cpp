@@ -80,7 +80,7 @@ bool j1Player::Start()
 	//player.player_rect.h = 0;
 	player.player_flip = false;
 	player.player_not_jumping = true;
-	player.player_stop_jumping_up = false;
+	player.player_stop_jumping_up = true;
 	player.player_god_mode = false;
 	player.player_tang_mode = false;
 	player.player_alive = true;
@@ -140,10 +140,11 @@ bool j1Player::Update(float dt)
 	{
 		player.player_alive = false;
 	}
-	if (current_animation != &jump&&player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
+	if (/*current_animation != &jump*/player.player_stop_jumping_up == true && player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{
 		//TODO: Falling looks wird on high falls
-		App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
+		//App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
+		if(player.player_speed.y<8)player.player_speed.y += gravity;
 	}
 
 	//SHOW COLLIDERS
@@ -160,10 +161,12 @@ bool j1Player::Update(float dt)
 
 
 
-	if (player.player_speed.y < -7 && player.player_god_mode == false) {
+	if (player.player_speed.y < -8 && player.player_god_mode == false) {
 		player.player_stop_jumping_up = true;
 	}
-	if (current_animation == &jump && player.player_stop_jumping_up ==true && player.player_god_mode == false)player.player_speed.y += gravity;
+	if (current_animation == &jump && player.player_stop_jumping_up == true && player.player_god_mode == false) {
+		//player.player_speed.y += gravity;
+	}
 
 
 
