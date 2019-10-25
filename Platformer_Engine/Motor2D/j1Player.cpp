@@ -86,6 +86,7 @@ bool j1Player::Start()
 	player.player_alive = true;
 	player.player_respawn = false;
 	player.player_climbing = false;
+	player.spacebar_pushed = false;
 
 	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
 
@@ -157,16 +158,18 @@ bool j1Player::Update(float dt)
 	{
 		player.player_god_mode = !player.player_god_mode;
 		player.player_not_jumping = true;
+		player.spacebar_pushed = false;
 	}
 
 
 
-	if (player.player_speed.y < -8 && player.player_god_mode == false) {
+	if ((player.player_speed.y < -8 && player.player_god_mode == false)||player.spacebar_pushed==false) {
 		player.player_stop_jumping_up = true;
+		player.spacebar_pushed = false;
 	}
-	if (current_animation == &jump && player.player_stop_jumping_up == true && player.player_god_mode == false) {
+	/*if (current_animation == &jump && player.player_stop_jumping_up == true && player.player_god_mode == false) {
 		//player.player_speed.y += gravity;
-	}
+	}*/
 
 
 
@@ -243,6 +246,7 @@ void j1Player::Start_F3() {
 	player.player_alive = true;
 	player.player_respawn = false;
 	player.player_climbing = false;
+	player.spacebar_pushed = false;
 	inputs_out = 0;
 	actual_state = S_IDLE;
 }
@@ -322,6 +326,7 @@ bool j1Player::Save(pugi::xml_node& data)const {
 	player_node.append_attribute("flip") = player.player_flip;
 	player_node.append_attribute("not_jumping") = player.player_not_jumping;
 	player_node.append_attribute("stop_jumping_up") = player.player_stop_jumping_up;
+	player_node.append_attribute("spacebar_pushed") = player.spacebar_pushed;
 	player_node.append_attribute("god_mode") = player.player_god_mode;
 	player_node.append_attribute("tang_mode") = player.player_tang_mode;
 	player_node.append_attribute("alive") = player.player_alive;
@@ -342,6 +347,7 @@ bool j1Player::Load(pugi::xml_node& data) {
 	player.player_flip = data.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = data.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = data.child("player_info").attribute("stop_jumping_up").as_bool();
+	player.spacebar_pushed = data.child("player_info").attribute("spacebar_pushed").as_bool();
 	player.player_god_mode = data.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = data.child("player_info").attribute("tang_mode").as_bool();
 	player.player_alive = data.child("player_info").attribute("alive").as_bool();

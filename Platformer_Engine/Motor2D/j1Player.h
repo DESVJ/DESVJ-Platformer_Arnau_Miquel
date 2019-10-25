@@ -27,6 +27,7 @@ struct Player_Info
 	bool player_alive;
 	bool player_respawn;
 	bool player_climbing;
+	bool spacebar_pushed;
 	SDL_Texture* player_spritesheet;
 	player_colision_state col_state;
 

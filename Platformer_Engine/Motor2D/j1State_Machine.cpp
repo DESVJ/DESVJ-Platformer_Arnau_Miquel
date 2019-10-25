@@ -30,7 +30,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 		}
 		//CHECK JUMP AND JUMP WITH DIRECTION//
 		bool jump = false;
-		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)&&(god_mode==false))jump = true;
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (god_mode == false)) {
+			jump = true;
+			App->player->player.spacebar_pushed = true;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)App->player->player.spacebar_pushed = false;
 		if (jump == true) {
 			if (input_in == I_RIGHT)input_in = I_JUMP_RIGHT;
 			else if (input_in == I_LEFT)input_in = I_JUMP_LEFT;
