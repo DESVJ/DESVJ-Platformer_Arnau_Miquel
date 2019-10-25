@@ -21,6 +21,7 @@ struct Player_Info
 	p2Point<int> player_speed;
 	bool player_flip;
 	bool player_not_jumping;
+	bool player_stop_jumping_up;
 	bool player_god_mode;
 	bool player_tang_mode;
 	bool player_alive;

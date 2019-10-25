@@ -105,7 +105,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 
 
 	//Set movement direction
-	Direction dir = DOWN;
+	Direction dir = NONE_DIRECTION;
 	if (increment.x > 0)
 	{
 		dir = RIGHT;

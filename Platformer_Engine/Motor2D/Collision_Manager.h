@@ -27,7 +27,7 @@ struct Collider
 };
 
 enum Direction {
-	UP, DOWN, RIGHT, LEFT
+	NONE_DIRECTION, UP, DOWN, RIGHT, LEFT
 };
 
 class Collider_Manager

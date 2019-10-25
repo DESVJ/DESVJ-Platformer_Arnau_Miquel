@@ -80,6 +80,7 @@ bool j1Player::Start()
 	//player.player_rect.h = 0;
 	player.player_flip = false;
 	player.player_not_jumping = true;
+	player.player_stop_jumping_up = false;
 	player.player_god_mode = false;
 	player.player_tang_mode = false;
 	player.player_alive = true;
@@ -159,8 +160,10 @@ bool j1Player::Update(float dt)
 
 
 
-
-	if (current_animation == &jump && player.player_speed.y < 12 && player.player_god_mode == false)player.player_speed.y += gravity;
+	if (player.player_speed.y < -7 && player.player_god_mode == false) {
+		player.player_stop_jumping_up = true;
+	}
+	if (current_animation == &jump && player.player_stop_jumping_up ==true && player.player_god_mode == false)player.player_speed.y += gravity;
 
 
 
@@ -315,6 +318,7 @@ bool j1Player::Save(pugi::xml_node& data)const {
 	player_node.child("speed").append_attribute("y") = player.player_speed.y;
 	player_node.append_attribute("flip") = player.player_flip;
 	player_node.append_attribute("not_jumping") = player.player_not_jumping;
+	player_node.append_attribute("stop_jumping_up") = player.player_stop_jumping_up;
 	player_node.append_attribute("god_mode") = player.player_god_mode;
 	player_node.append_attribute("tang_mode") = player.player_tang_mode;
 	player_node.append_attribute("alive") = player.player_alive;
@@ -334,6 +338,7 @@ bool j1Player::Load(pugi::xml_node& data) {
 	player.player_speed.y = data.child("player_info").child("speed").attribute("y").as_int();
 	player.player_flip = data.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = data.child("player_info").attribute("not_jumping").as_bool();
+	player.player_stop_jumping_up = data.child("player_info").attribute("stop_jumping_up").as_bool();
 	player.player_god_mode = data.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = data.child("player_info").attribute("tang_mode").as_bool();
 	player.player_alive = data.child("player_info").attribute("alive").as_bool();

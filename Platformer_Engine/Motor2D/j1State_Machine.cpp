@@ -162,7 +162,13 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	}
 	else speed.x = 0;
 	if (jump == true) {
-		if (speed.y == 0 && (current_animation->current_frame == 0 || reset_animation == true))speed.y = -13;
+		if (speed.y == 0 && (current_animation->current_frame == 0 || reset_animation == true)) {
+			speed.y--;
+			App->player->player.player_stop_jumping_up = false;
+		}
+		else if (App->player->player.player_stop_jumping_up == false) {
+			speed.y--;
+		}
 	}
 	else if (up == true) {
 		if (speed.y > -2)speed.y--;
@@ -271,6 +277,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_JUMP_FINISH)actual = S_IDLE;
+		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_RIGHT && actual == S_JUMP_RIGHT)actual = S_IDLE;
 		break;
 	case S_JUMP_LEFT:
 		switch (input_in) {
@@ -282,6 +289,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 		case I_DEAD:actual = S_DEAD; break;
 		}
 		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_JUMP_FINISH)actual = S_IDLE;
+		for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_LEFT && actual == S_JUMP_LEFT)actual = S_IDLE;
 		break;
 	case S_UP:
 		switch (input_in) {
