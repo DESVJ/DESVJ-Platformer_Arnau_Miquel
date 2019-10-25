@@ -11,7 +11,7 @@
 	</map>
 	<scene />
 	<player>
-		<player_info flip="false" not_jumping="true" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
+		<player_info flip="false" not_jumping="true" stop_jumping_up="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
 			<position x="32" y="400" w="16" h="-20" />
 			<speed x="0" y="0" />
 		</player_info>
