@@ -163,6 +163,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									if (dir == DOWN)
 									{
  										currentPoint->y = block->y;
+
+										if(isPlayer && App->player->player.player_speed.y >= 2)
+											App->audio->PlayFx(App->player->jump_down_fx);
+
 										//TEMPORAL!!!!!!!!!!!!!!!!
 	//									if (App->player->player.player_not_jumping == false)App->audio->PlayFx(App->player->jump_down_fx);
 										App->player->player.player_not_jumping = true;
