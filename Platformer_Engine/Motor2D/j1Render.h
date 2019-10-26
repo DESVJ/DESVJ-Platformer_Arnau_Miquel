@@ -49,7 +49,8 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
-	SDL_Rect followMinRect = {0, 0, 100, 75};
+	SDL_Rect followMinRect = {0, 0, 50, 50};
+	int followSpeed = 7;
 
 public:
 	//camera limits

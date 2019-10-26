@@ -116,7 +116,7 @@ void j1Map::Draw()
 							int y = i;
 							Translate_Coord(&x, &y);
 
-							if ((x + rect.w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
+							if ((x + rect.w) * App->win->GetScale() / coord_layer->data->speed >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x * coord_layer->data->speed + App->win->width - culling_offset
 								&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
 							{
 								//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
