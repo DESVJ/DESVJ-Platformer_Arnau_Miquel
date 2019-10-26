@@ -124,7 +124,6 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		dir = UP;
 	}
 
-
 	bool colisionDetectedX = false;
 	bool colisionDetectedY = false;
 	typeColDetected = false;
@@ -156,15 +155,15 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							//Is the collision inside x and x + w?
 							if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
 							{
-								colisionDetectedY = true;
 								//Correct movement or move object in a normal way
 								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
 								{
+									colisionDetectedY = true;
 									if (dir == DOWN)
 									{
- 										currentPoint->y = block->y;
+										currentPoint->y = block->y;
 
-										if(isPlayer && App->player->player.player_speed.y >= 2)
+										if(isPlayer && App->player->player.player_speed.y >= 2 && App->player->player.col_state == player_colision_state::NONE)
 											App->audio->PlayFx(App->player->jump_down_fx);
 
 										//TEMPORAL!!!!!!!!!!!!!!!!
@@ -176,14 +175,26 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 								{
 									if (dir == UP)
 									{
-										//currentPoint->y = block->y + block->h - currentPoint->h;
-										if(collider_list[i].canBeJumped)
+										colisionDetectedY = true;
+										if (isPlayer && App->player->player.col_state == player_colision_state::CLIMBING) 
+										{
+											colisionDetectedY = false;
 											allowClippingCollider = &collider_list[i];
+										}
+
+										//currentPoint->y = block->y + block->h - currentPoint->h;
+										if (collider_list[i].canBeJumped) 
+										{
+											allowClippingCollider = &collider_list[i];
+										}
+										else
+										{
+											currentPoint->y = block->y + block->h - prediction.h;
+										}
 									}
 
 								}
 							}
-							//Is the collision inside y and y + h?
 							if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
 							{
 								colisionDetectedX = true;
@@ -219,10 +230,17 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					}
 					if(collider_list[i].collider_type == CLIMB)
 					{
-						if (isPlayer && !App->player->player.player_tang_mode)
+						typeColDetected = true;
+						if (isPlayer && !App->player->player.player_tang_mode && 
+							(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || 
+							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->player->player.player_rect.y > collider_list[i].collider_rect.y)))
 						{
+							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->player->player.player_rect.y)
+							{
+								colisionDetectedY = false;
+								colisionDetectedX = false;
+							}
 							App->player->Change_Col_State(player_colision_state::CLIMBING);
-							typeColDetected = true;
 							LOG("CLIMB");
 						}
 					}
@@ -256,6 +274,12 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	{
 		App->player->Change_Col_State(player_colision_state::NONE);
 	}
+
+	//if (isPlayer && colisionDetectedX)
+	//	Correct(&App->player->player.player_rect, dir);
+
+
+
 }
 
 void Collider_Manager::Correct(SDL_Rect* prediction)
@@ -288,11 +312,11 @@ void Collider_Manager::Correct(SDL_Rect* prediction)
 							{
 								if (prediction->x >= block->x + block->w)
 								{
-										prediction->x = block->x + block->w;
+									prediction->x = block->x + block->w;
 								}
 								else if (prediction->x + prediction->w >= block->x)
 								{
-										prediction->x = block->x - prediction->w;
+									prediction->x = block->x - prediction->w;
 								}
 
 							}

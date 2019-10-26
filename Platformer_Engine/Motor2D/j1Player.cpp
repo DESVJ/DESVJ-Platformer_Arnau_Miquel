@@ -146,13 +146,15 @@ bool j1Player::Update(float dt)
 
 	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
 	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
-	//TEMPORAL//
+
+	
 	App->colliders.Correct(&player.player_rect);
+
 	if (player.player_rect.y - player.player_rect.h > App->render->limitNegY)
 	{
 		player.player_alive = false;
 	}
-	if (/*current_animation != &jump*/player.player_stop_jumping_up == true && player.player_god_mode == false/* && player.player_alive == true*/ && player.player_climbing == false)
+	if (/*current_animation != &jump*/player.player_stop_jumping_up == true && player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{
 		//TODO: Falling looks wird on high falls
 		//App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
@@ -204,16 +206,12 @@ bool j1Player::Update(float dt)
 	else if (player.player_flip == true && player.player_speed.x > 0)player.player_flip = false;
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
 	if(player.player_god_mode)
-		App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, MAX_COLOR_NUMBER, MAX_COLOR_NUMBER, MAX_COLOR_NUMBER, 55);
+		App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
 	///////TEMPORAL
-	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true) {
-		App->map->map_id++;
-		if (App->map->map_id > MAX_NUMBER_MAPS)App->map->map_id = 1;
-		App->scene->Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
-	}
+	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true)App->scene->Load_Map_By_Name("map_2_final.tmx");
 	return true;
 }
 
@@ -254,19 +252,18 @@ void j1Player::Start_F3() {
 	}
 	if (input_in == I_DEAD)input_in = I_NONE;
 	App->player->Change_Col_State(player_colision_state::NONE);
-	pugi::xml_node config = App->config_file.child("config").child("player");
-	player.player_flip = config.child("player_info").attribute("flip").as_bool();
-	player.player_not_jumping = config.child("player_info").attribute("not_jumping").as_bool();
-	player.player_stop_jumping_up = config.child("player_info").attribute("stop_jumping_up").as_bool();
-	player.player_god_mode = config.child("player_info").attribute("god_mode").as_bool();
-	player.player_tang_mode = config.child("player_info").attribute("tang_mode").as_bool();
-	player.player_alive = config.child("player_info").attribute("alive").as_bool();
-	player.player_respawn = config.child("player_info").attribute("respawn").as_bool();
-	player.player_climbing = config.child("player_info").attribute("climbing").as_bool();
-	player.spacebar_pushed = config.child("player_info").attribute("spacebar_pushed").as_bool();
-	inputs_out = config.child("inputs_out").attribute("value").as_int();
-	actual_state = (state)config.child("actual_state").attribute("value").as_int();
 
+
+	player.player_flip = false;
+	player.player_not_jumping = true;
+	player.player_god_mode = false;
+	player.player_tang_mode = false;
+	player.player_alive = true;
+	player.player_respawn = false;
+	player.player_climbing = false;
+	player.spacebar_pushed = false;
+	inputs_out = 0;
+	actual_state = S_IDLE;
 }
 
 //void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)

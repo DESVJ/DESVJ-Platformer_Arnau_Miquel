@@ -24393,7 +24393,7 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="81" x="608" y="576" width="96" height="8">
+  <object id="81" x="608" y="576" width="112" height="8">
    <properties>
     <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>

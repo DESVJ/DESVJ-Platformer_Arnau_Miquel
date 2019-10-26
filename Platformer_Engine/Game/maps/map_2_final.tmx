@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="100" nextobjectid="93">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="100" nextobjectid="101">
  <tileset firstgid="1" name="Background_Parallax_1" tilewidth="16" tileheight="16" tilecount="312" columns="24">
   <image source="Background_Parallax_1.png" width="384" height="216"/>
  </tileset>
@@ -50095,7 +50095,7 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="19" x="688" y="160" width="144" height="16">
+  <object id="19" x="688" y="160" width="160" height="16">
    <properties>
     <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>
@@ -50122,9 +50122,8 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="25" x="864" y="400" width="256" height="32">
+  <object id="25" x="848" y="400" width="272" height="32">
    <properties>
-    <property name="canBeJumpThrough" type="bool" value="true"/>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
@@ -50192,8 +50191,43 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
+  <object id="93" x="1200" y="208" width="32" height="16">
+   <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="94" x="1216" y="224" width="48" height="16">
+   <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="95" x="1248" y="240" width="48" height="16">
+   <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="97" x="1280" y="256" width="48" height="16">
+   <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="98" x="1312" y="272" width="48" height="16">
+   <properties>
+    <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="100" x="1808" y="0" width="16" height="576">
+   <properties>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="57" name="KillZones" locked="1">
+ <objectgroup id="57" name="KillZones">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
@@ -50232,8 +50266,13 @@
     <property name="colliderType" value="Kill"/>
    </properties>
   </object>
+  <object id="99" x="1600" y="560" width="208" height="16">
+   <properties>
+    <property name="colliderType" value="Kill"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="59" name="OnlyTangZones">
+ <objectgroup id="59" name="OnlyTangZones" locked="1">
   <properties>
    <property name="isColliderLayer" value="true"/>
   </properties>
