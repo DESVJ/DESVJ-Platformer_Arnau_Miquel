@@ -17,6 +17,7 @@ enum player_colision_state {
 struct Player_Info
 {
 
+	int minPlayerHeight;
 	SDL_Rect player_rect = { 0, 0, 0, 0 };
 	SDL_Rect player_collider_rect = { 0, 0, 0, 0 };
 	p2Point<int> player_speed;

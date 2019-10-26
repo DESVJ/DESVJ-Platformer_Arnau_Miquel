@@ -32,6 +32,25 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+
+bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
+{
+
+
+	int scale = (int)App->win->GetScale();
+
+	if ((x + rect.w) * scale / speed >= -App->render->camera.x + culling_offset && x * scale <= -App->render->camera.x * speed + App->win->width - culling_offset
+		&& (y + rect.h) * scale  >= -App->render->camera.y + culling_offset && y * scale <= -App->render->camera.y + App->win->height - culling_offset)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
 void j1Map::Draw()
 {
 	if(map_loaded == false)
@@ -69,20 +88,12 @@ void j1Map::Draw()
 						int y = i;
 						Translate_Coord(&x, &y);
 
-						//if (coord_layer->data == App->colliders.collider_layer) 
-						//{
-						//	App->colliders.collider_list[colliderCounter].collider_rect = {x, y, App->colliders.collider_layer->width, App->colliders.collider_layer->height};
-						//	colliderCounter++;
-						//}
-
-						if ((x + rect.w) * App->win->GetScale() / coord_layer->data->speed >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x * coord_layer->data->speed + App->win->width - culling_offset
-							&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+						if (Culling_Check(x, y, rect, coord_layer->data->speed)) 
 						{
-							//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
 							App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { coord_layer->data->speed,  1 });
-							//Paralaxx wont work if culling deletes it, divide or mult culling by layer speed to prevent it from failing
-							//App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { 1,  1 });
 						}
+
+
 					}
 				}
 			}
@@ -116,10 +127,8 @@ void j1Map::Draw()
 							int y = i;
 							Translate_Coord(&x, &y);
 
-							if ((x + rect.w) * App->win->GetScale() / coord_layer->data->speed >= -App->render->camera.x + culling_offset && x * App->win->GetScale() <= -App->render->camera.x * coord_layer->data->speed + App->win->width - culling_offset
-								&& (y + rect.h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+							if (Culling_Check(x, y, rect, coord_layer->data->speed))
 							{
-								//If in tang mode, render only tang layers (tang mode loading and rendering TODO)
 								App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 							}
 						}

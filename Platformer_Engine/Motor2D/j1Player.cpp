@@ -312,6 +312,16 @@ void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* a
 				obj.attribute("width").as_int(),
 				obj.attribute("height").as_int() });
 
+				if (player.minPlayerHeight == 0) 
+				{
+					player.minPlayerHeight = -obj.attribute("height").as_int();
+				}
+				else if (player.minPlayerHeight > obj.attribute("height").as_int()) 
+				{
+					player.minPlayerHeight = -obj.attribute("height").as_int();
+				}
+
+
 			}
 		}
 	}

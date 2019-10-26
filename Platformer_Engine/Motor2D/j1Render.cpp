@@ -310,48 +310,55 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 
 	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
 	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
+	
+	if (x <= (App->map->data.tile_width + App->map->data.tile_height) * (int)App->win->GetScale())
+	{
+		//Left X mov
+		if (camera.x >= limitNegX)
+		{
+			camera.x = limitNegX;
+		}
+		else if (point.x <= followMinRect.x)
+		{
+			camera.x = x - ((followMinRect.w / 2) * (int)App->win->GetScale());
+		}
 
-	//Left X mov
-	if (camera.x >= limitNegX)
-	{
-		camera.x = limitNegX;
-	}
-	else if (point.x < followMinRect.x)
-	{
-		camera.x = x - ((followMinRect.w / 2) * (int)App->win->GetScale());
-	}
-
-	//Right X mov
-	if (camera.x <= -limitPosX)
-	{
-		camera.x = -limitPosX;
-	}
-	else if (point.x > followMinRect.x + followMinRect.w)
-	{
-		camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
-	}
-
-	//Up Y mov
-	if (camera.y >= limitPosY)
-	{
-		camera.y = limitPosY;
-	}
-	else if (point.y + App->player->player.player_rect.h < followMinRect.y)
-	{
-		camera.y = y + (App->player->player.player_rect.h / 2) * (int)App->win->GetScale();
+		//Right X mov
+		if (camera.x <= -limitPosX)
+		{
+			camera.x = -limitPosX;
+		}
+		else if (point.x >= followMinRect.x + followMinRect.w)
+		{
+			camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
+		}
 	}
 
-	//Down Y mov
-	if (camera.y <= -limitNegY)
+	if (y <= (App->map->data.tile_width + App->map->data.tile_height) * (int)App->win->GetScale())
 	{
-		camera.y = -limitNegY;
-	}
-	else if (point.y > followMinRect.y + followMinRect.h)
-	{
-		camera.y = y + -App->player->player.player_rect.h * (int)App->win->GetScale();
+		//Up Y mov
+		if (camera.y >= limitPosY)
+		{
+			camera.y = limitPosY;
+		}
+		else if (point.y + App->player->player.minPlayerHeight <= followMinRect.y)
+		{
+			camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
+		}
+
+		//Down Y mov
+		if (camera.y <= -limitNegY)
+		{
+			camera.y = -limitNegY;
+		}
+		else if (point.y >= followMinRect.y + followMinRect.h)
+		{
+			camera.y = y + -App->player->player.minPlayerHeight * (int)App->win->GetScale();
+		}
 	}
 
-	//App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
+
+	App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
 }
 
