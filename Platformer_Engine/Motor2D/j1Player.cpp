@@ -98,6 +98,8 @@ bool j1Player::Start()
 	//player.player_rect.w = 0;
 	//player.player_rect.h = 0;
 
+	player.player_collider_rect = {player.player_rect.x, player.player_rect.y, 18, -20};
+
 
 	player.player_spritesheet = App->tex->Load(player.texture_source.GetString());
 
@@ -132,23 +134,18 @@ bool j1Player::Update(float dt)
 
 	if (player.player_rect.w != 0) {
 
-		int animation_created_mov = player.player_rect.w - current_frame.w;
-		if(animation_created_mov != 0)  
-			App->colliders.MoveObject(&player.player_rect, { animation_created_mov/2, 0 }, true);
-			//App->colliders.MoveObject(&player.player_rect, {animation_created_mov / 2, 0}, true); Better divided by 2 but it breaks colisions in right walls
+		animation_created_mov = player.player_collider_rect.w - current_frame.w;
+		//App->colliders.MoveObject(&player.player_rect, {animation_created_mov / 2, 0}, true); Better divided by 2 but it breaks colisions in right walls
 	}
 
 	//TODO: Smooth camera follow
 	player.player_rect.w = current_frame.w;
 	player.player_rect.h = -current_frame.h;
 
-
-
-	App->colliders.MoveObject(&player.player_rect, { player.player_speed.x , 0}, true);
-	App->colliders.MoveObject(&player.player_rect, { 0, player.player_speed.y }, true);
-
+	App->colliders.MoveObject(&player.player_collider_rect, { player.player_speed.x , 0}, true);
+	App->colliders.MoveObject(&player.player_collider_rect, { 0, player.player_speed.y }, true);
 	
-	App->colliders.Correct(&player.player_rect);
+	//App->colliders.Correct(&player.player_rect);
 
 	if (player.player_rect.y - player.player_rect.h > App->render->limitNegY)
 	{
@@ -185,19 +182,10 @@ bool j1Player::Update(float dt)
 	}*/
 
 
+	player.player_rect.x = player.player_collider_rect.x + (animation_created_mov / 2);
+	player.player_rect.y = player.player_collider_rect.y;
+	//player.player_rect.x -= animation_created_mov / 2;
 
-	//This must be debug mode only
-	//if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, {1, 0});
-	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { -1, 0 });
-	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { 0, -1 });
-	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	//	App->colliders.MoveObject(&player.player_rect, { 0, 1 });
-
-
-	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
 	App->render->MoveCameraToPointInsideLimits({player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y});
 
 
@@ -205,8 +193,13 @@ bool j1Player::Update(float dt)
 	if (player.player_flip == false && player.player_speed.x < 0)player.player_flip = true;
 	else if (player.player_flip == true && player.player_speed.x > 0)player.player_flip = false;
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
-	if(player.player_god_mode)
-		App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 255, 255, 55);
+
+	if (player.player_god_mode) 
+	{
+		App->render->DrawQuad({ player.player_rect.x, player.player_rect.y, player.player_rect.w, player.player_rect.h }, 255, 0, 0, 55);
+		App->render->DrawQuad(player.player_collider_rect, 0, 100, 0, 100);
+	}
+
 	for (int i = 0; i < inputs_out; i++)input_out[i] = O_NONE;
 	inputs_out = 0;
 	input_in = I_NONE;
@@ -235,8 +228,11 @@ void j1Player::Start_F3() {
 			{
 				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
 				{
-					player.player_rect.x = objects_map->data->objects.start->data->rect.x;
-					player.player_rect.y = objects_map->data->objects.start->data->rect.y;
+					player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
+					player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
+
+					player.player_rect.x = player.player_collider_rect.x;
+					player.player_rect.y = player.player_collider_rect.y;
 					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
 					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
 				}
@@ -264,6 +260,8 @@ void j1Player::Start_F3() {
 	player.spacebar_pushed = false;
 	inputs_out = 0;
 	actual_state = S_IDLE;
+
+	App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });
 }
 
 //void j1Player::LoadAnimation(pugi::xml_node* animation_node, Animation* anim, const char* name)

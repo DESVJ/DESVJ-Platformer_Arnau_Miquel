@@ -199,7 +199,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							{
 								colisionDetectedX = true;
 								////Coliding with the sides of an object
-								if (prediction.x >= block->x + block->w)
+								if (prediction.x <= block->x + block->w)
 								{
 									if (dir == LEFT)
 									{
@@ -233,7 +233,8 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						typeColDetected = true;
 						if (isPlayer && !App->player->player.player_tang_mode && 
 							(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || 
-							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->player->player.player_rect.y > collider_list[i].collider_rect.y)))
+							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->player->player.player_rect.y > collider_list[i].collider_rect.y)) && 
+							App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) > collider_list[i].collider_rect.x)
 						{
 							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->player->player.player_rect.y)
 							{
@@ -260,71 +261,14 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	if (!colisionDetectedX)
 	{
 		currentPoint->x = prediction.x;
-		//if(isPlayer)
-		//	App->player->Change_Col_State(player_colision_state::NONE);
 	}
 	if (!colisionDetectedY)
 	{
 		currentPoint->y = prediction.y;
-		//if(isPlayer)
-		//	App->player->Change_Col_State(player_colision_state::NONE);
 	}
 
 	if (!typeColDetected) 
 	{
 		App->player->Change_Col_State(player_colision_state::NONE);
 	}
-
-	//if (isPlayer && colisionDetectedX)
-	//	Correct(&App->player->player.player_rect, dir);
-
-
-
-}
-
-void Collider_Manager::Correct(SDL_Rect* prediction)
-{
-	for (int i = 0; i < collider_list.count(); i++)
-	{
-		SDL_Rect* block = &collider_list[i].collider_rect;
-		//Watch if the collider is inside the camera, if not, do not calculate colision
-		if (App->map->Culling_Check(block->x, block->y, *block, 1))
-		{
-			//Is the collider enabled?
-			if (collider_list[i].enabled) //&& is not tang colider
-			{
-				//If it is, check for collisions between it and the object
-				if (CheckCollision(*prediction, *block))
-				{
-					//If there is a colision, look collider type
-					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
-					{
-						//Allow the object to ignore down collisions (player jumping in topo of platform)
-						if (allowClippingCollider != nullptr && prediction->y <= allowClippingCollider->collider_rect.y)
-						{
-							allowClippingCollider = nullptr;
-						}
-						//TODO: Maybe going too fast can cause clipping
-						if (&collider_list[i] != allowClippingCollider)
-						{
-							//Is the collision inside y and y + h?
-							if (prediction->y > block->y && prediction->y + prediction->h < block->y + block->h)
-							{
-								if (prediction->x >= block->x + block->w)
-								{
-									prediction->x = block->x + block->w;
-								}
-								else if (prediction->x + prediction->w >= block->x)
-								{
-									prediction->x = block->x - prediction->w;
-								}
-
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 }

@@ -146,6 +146,7 @@ public:
 	unsigned int jump_up_fx;
 	unsigned int jump_down_fx;
 	unsigned int switch_fx;
+	int animation_created_mov = 0;
 
 
 private:
