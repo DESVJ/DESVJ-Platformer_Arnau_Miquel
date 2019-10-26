@@ -94,7 +94,7 @@ bool j1App::Awake()
 			item = item->next;
 		}
 	}
-	load_game = save_game = "save_game.xml";
+	load_game = save_game = app_config.child("save_game_source").child_value();
 
 	return ret;
 }

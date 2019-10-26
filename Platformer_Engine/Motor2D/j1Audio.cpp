@@ -1,6 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1Audio.h"
+#include "j1App.h"
 #include "p2List.h"
 
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -187,10 +188,12 @@ void j1Audio::ChangeVolume(bool plus) {
 	}
 	else if (volume > 0)volume--;
 	Mix_VolumeMusic(volume);
+	Mix_Volume(-1, volume);
 	pugi::xml_document document_save;
-	pugi::xml_parse_result result = document_save.load_file("save_game.xml");
+	p2SString source = App->config_file.child("config").child("app").child("save_game_source").child_value();
+	pugi::xml_parse_result result = document_save.load_file(source.GetString());
 	if (!result)
 		LOG("Error in loading xml: %s.", result.description());
 	document_save.child("game_state").child("audio").child("music").attribute("volume").set_value(volume);
-	document_save.save_file("save_game.xml");
+	document_save.save_file(source.GetString());
 }

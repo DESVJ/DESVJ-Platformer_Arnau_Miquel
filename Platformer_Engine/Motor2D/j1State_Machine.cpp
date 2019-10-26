@@ -9,7 +9,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
-void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[5], player_colision_state collision_state) {
+void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state) {
 	if (actual != S_DEAD && (collision_state != DYING || god_mode == true)) {
 		input_in = I_NONE;
 		//LEFT AND RIGHT MOVEMENT
@@ -194,7 +194,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	return current_animation;
 
 }
-bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout input_out[5]) {
+bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT]) {
 	bool reset_animation = false;
 	state before_check = actual;
 	Animation* current_animation = &App->player->idle;
