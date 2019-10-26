@@ -9,6 +9,7 @@
 #include "Animation.h"
 #include"j1Window.h"
 #include "j1State_Machine.h"
+#include "j1Audio.h"
 //////////////TEMPORAL
 #include "j1Scene.h"
 
@@ -45,6 +46,14 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LoadAnimationFromTMX(&player_node, &idle_ladder, "idle_ladder");
 	LoadAnimationFromTMX(&player_node, &movement_ladder, "movement_ladder");
 	LoadAnimationFromTMX(&player_node, &death, "death");
+
+	//LoadSoundFXFromTMX
+	LoadSoundFXFromTMX(&player_node, death_fx, "death");
+	LoadSoundFXFromTMX(&player_node, jump_down_fx, "jump_down");
+	LoadSoundFXFromTMX(&player_node, jump_up_fx, "jump_up");
+	LoadSoundFXFromTMX(&player_node, switch_fx, "switch");
+
+
 
 	//LoadAnimation(&config.child("animations"), &run, "run");
 	//LoadAnimation(&config.child("animations"), &jump, "jump");
@@ -356,4 +365,20 @@ bool j1Player::Load(pugi::xml_node& data) {
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
 	return true;
+}
+
+void j1Player::LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name) {
+	pugi::xml_node objectgroup;
+	pugi::xml_node *correctNodeGroup = nullptr;
+	for (objectgroup = sound_node->child("objectgroup"); objectgroup; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		if (strcmp(objectgroup.attribute("name").as_string(), "Player_FXS")==0) break;
+	}
+	for (pugi::xml_node obj_prop = objectgroup.child("properties").first_child(); obj_prop; obj_prop = obj_prop.next_sibling("property")) {
+		if ((p2SString)obj_prop.attribute("name").value() == (p2SString)name)
+		{
+			fx=App->audio->LoadFx(obj_prop.attribute("value").as_string());
+			break;
+		}
+	}
 }

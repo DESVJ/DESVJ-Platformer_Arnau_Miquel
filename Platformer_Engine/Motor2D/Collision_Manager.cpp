@@ -5,6 +5,7 @@
 #include"j1Window.h"
 #include"j1Map.h"
 #include"j1Input.h"
+#include "j1Audio.h"
 ///////////TEMPORAL
 #include "j1Player.h"
 
@@ -164,6 +165,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									{
  										currentPoint->y = block->y;
 										//TEMPORAL!!!!!!!!!!!!!!!!
+	//									if (App->player->player.player_not_jumping == false)App->audio->PlayFx(App->player->jump_down_fx);
 										App->player->player.player_not_jumping = true;
 									}
 								}

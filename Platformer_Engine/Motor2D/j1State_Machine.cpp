@@ -6,7 +6,7 @@
 #include "j1Input.h"
 #include "j1Player.h"
 //#include "j1Render.h"
-//#include "j1Audio.h"
+#include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
 void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[5], player_colision_state collision_state) {
@@ -85,7 +85,10 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 
 
 		//CHECK IF CHANGE TANGIBILITY//
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)App->player->player.player_tang_mode = !App->player->player.player_tang_mode;
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+			App->player->player.player_tang_mode = !App->player->player.player_tang_mode;
+			App->audio->PlayFx(App->player->switch_fx);
+		}
 
 		///////////////////TEMPORAL!!!!!!!!!!!!!!!!!///////////////
 		if (not_jumping == true) {
@@ -153,6 +156,9 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 		current_animation = &App->player->movement_ladder;
 		break;
 	case S_DEAD:
+		if (App->player->player.player_alive == true) {
+			App->audio->PlayFx(App->player->death_fx);
+		}
 		App->player->player.player_alive = false;
 		current_animation = &App->player->death;
 		break;
@@ -170,6 +176,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 			speed.y = 0;
 			speed.y--;
 			App->player->player.player_stop_jumping_up = false;
+			App->audio->PlayFx(App->player->jump_up_fx);
 		}
 		else if (App->player->player.player_stop_jumping_up == false) {
 			speed.y--;

@@ -7,6 +7,7 @@
 #include"p2Point.h"
 #include"p2SString.h"
 #include "Animation.h"
+
 enum player_colision_state {
 
 	NONE, CLIMBING, DYING
@@ -125,6 +126,7 @@ public:
 	//Load animation pushbacks by name
 	//void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);
+	void LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name);
 
 	void Change_Col_State(player_colision_state state);
 
@@ -136,6 +138,11 @@ public:
 	Animation idle_ladder;
 	Animation movement_ladder;
 	Animation death;
+	unsigned int death_fx;
+	unsigned int jump_up_fx;
+	unsigned int jump_down_fx;
+	unsigned int switch_fx;
+
 
 private:
 	int gravity = 1;

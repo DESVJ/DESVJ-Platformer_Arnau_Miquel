@@ -305,7 +305,7 @@ bool j1Map::Load(const char* file_name)
 
 	if(ret == true)
 	{
-		////////////////WHEN MUSIC AVAILABLE TRY IF THIS WORKS
+		
 		p2List_item<MapObjectGroup*>* objects_map;
 		objects_map = data.object_layers.start;
 		while (objects_map != NULL)
