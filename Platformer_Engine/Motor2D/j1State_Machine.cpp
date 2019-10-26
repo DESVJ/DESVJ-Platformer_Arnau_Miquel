@@ -189,6 +189,8 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 		if (speed.y < 2)speed.y++;
 	}
 	else if (speed.y < 0)speed.y = 0;
+	//////////////////TEMPORAL
+	else if (speed.y != 0 && App->player->player.player_god_mode == true)speed.y = 0;
 	return current_animation;
 
 }

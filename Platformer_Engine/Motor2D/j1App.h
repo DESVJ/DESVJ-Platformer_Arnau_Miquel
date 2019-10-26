@@ -90,6 +90,9 @@ public:
 
 	Collider_Manager colliders;
 
+	pugi::xml_document	config_file;
+
+
 private:
 
 	p2List<j1Module*>	modules;

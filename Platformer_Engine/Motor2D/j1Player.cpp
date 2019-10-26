@@ -12,7 +12,6 @@
 #include "j1Audio.h"
 //////////////TEMPORAL
 #include "j1Scene.h"
-#define MAX_INPUTS_OUT 5
 
 j1Player::j1Player() : j1Module()
 {
@@ -65,8 +64,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player.spacebar_pushed = config.child("player_info").attribute("spacebar_pushed").as_bool();
 	inputs_out = config.child("inputs_out").attribute("value").as_int();
 	actual_state = (state)config.child("actual_state").attribute("value").as_int();
-
+	gravity = config.child("gravity").attribute("value").as_int();
 	player.texture_source = config.child("texture_source").child_value();
+	maximum_speed= config.child("maximum_speed").attribute("value").as_int();
 	//LoadAnimation(&config.child("animations"), &run, "run");
 	//LoadAnimation(&config.child("animations"), &jump, "jump");
 	//LoadAnimation(&config.child("animations"), &idle_ladder, "idle_ladder");
@@ -156,7 +156,7 @@ bool j1Player::Update(float dt)
 	{
 		//TODO: Falling looks wird on high falls
 		//App->colliders.MoveObject(&player.player_rect, { 0, 4}, true);
-		if(player.player_speed.y<8)player.player_speed.y += gravity;
+		if(player.player_speed.y<maximum_speed)player.player_speed.y += gravity;
 	}
 
 	//SHOW COLLIDERS
@@ -174,7 +174,7 @@ bool j1Player::Update(float dt)
 
 
 
-	if ((player.player_speed.y < -8 && player.player_god_mode == false)||player.spacebar_pushed==false) {
+	if ((player.player_speed.y < -maximum_speed && player.player_god_mode == false)||player.spacebar_pushed==false) {
 		player.player_stop_jumping_up = true;
 		player.spacebar_pushed = false;
 	}
@@ -250,6 +250,8 @@ void j1Player::Start_F3() {
 	}
 	if (input_in == I_DEAD)input_in = I_NONE;
 	App->player->Change_Col_State(player_colision_state::NONE);
+
+
 	player.player_flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;

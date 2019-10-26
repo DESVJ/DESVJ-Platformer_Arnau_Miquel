@@ -7,6 +7,8 @@
 #include"p2Point.h"
 #include"p2SString.h"
 #include "Animation.h"
+#define MAX_INPUTS_OUT 5
+
 
 enum player_colision_state {
 
@@ -147,13 +149,14 @@ public:
 
 
 private:
-	int gravity = 1;
+	int gravity;
+	int maximum_speed;
 	///////TEMPORAL
 	int difference_y;
 	int inputs_out;
 	state actual_state;
 	inputin input_in;
-	inputout input_out[5];
+	inputout input_out[MAX_INPUTS_OUT];
 
 	pugi::xml_document	player_info_file;
 };
