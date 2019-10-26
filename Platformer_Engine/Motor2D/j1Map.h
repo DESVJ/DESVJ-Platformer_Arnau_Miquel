@@ -100,6 +100,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<MapLayer*>	tang_layers;
+	p2List<MapLayer*>	background_layers;
 	p2List<MapObjectGroup*> object_layers;
 };
 

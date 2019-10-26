@@ -60,12 +60,51 @@ void j1Map::Draw()
 	int number_of_layers = data.layers.count();
 	p2List_item<MapLayer*>* coord_layer = data.layers.start;
 	p2List_item<MapLayer*>* tang_coord_layer = data.tang_layers.start;
+	p2List_item<MapLayer*>* background_coord_layer = data.background_layers.start;
+
 	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
 	//for of every layer
 
+
+	for (int layer_counter = 0; layer_counter < data.background_layers.count(); layer_counter++) {
+
+		//for of every x in one layer
+		for (int i = 0; i < background_coord_layer->data->height; i++) {
+
+			//for of every y in one layer
+
+			for (int j = 0; j < background_coord_layer->data->width; j++) {
+				int n = background_coord_layer->data->Get(j, i);
+				int gid = background_coord_layer->data->gid[n];
+				if (gid != 0) {
+					while (ret == false) {
+						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+						else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+						else ret = true;
+					}
+					ret = false;
+					SDL_Rect rect = coord_tileset->data->GetRect(background_coord_layer->data->gid[n]);
+					int x = j;
+					int y = i;
+					Translate_Coord(&x, &y);
+
+					if (Culling_Check(x, y, rect, background_coord_layer->data->speed))
+					{
+						App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { background_coord_layer->data->speed,  1 });
+					}
+
+
+				}
+			}
+		}
+		background_coord_layer = background_coord_layer->next;
+	}
+	if (App->player->player.player_tang_mode)
+		App->render->DrawQuad({0, 0, data.width * data.tile_width,  data.width * data.tile_width }, 0, 0, 0, 100);
+
+
 	if (!App->player->player.player_tang_mode) 
 	{
-		int colliderCounter = 0;
 		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
 
 			//for of every x in one layer
@@ -102,8 +141,7 @@ void j1Map::Draw()
 	}
 	else
 	{
-		int colliderCounter = 0;
-		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
+		for (int layer_counter = 0; layer_counter < data.tang_layers.count(); layer_counter++) {
 
 			//for of every x in one layer
 			if (tang_coord_layer != nullptr)
@@ -217,6 +255,17 @@ bool j1Map::CleanUp()
 	}
 	data.tang_layers.clear();
 
+	p2List_item<MapLayer*>* itemBG;
+	itemBG = data.background_layers.start;
+	while (itemBG != NULL)
+	{
+		itemBG->data->name.Clear();
+		RELEASE(itemBG->data->gid);
+		RELEASE(itemBG->data);
+		itemBG = itemBG->next;
+	}
+	data.background_layers.clear();
+
 
 	p2List_item<MapObjectGroup*>* itemO;
 	itemO = data.object_layers.start;
@@ -291,13 +340,20 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadLayer(layer, set);
 		}
-		if (!set->isTang) 
+		if (set->speed == 1.0f) 
 		{
-			data.layers.add(set);
+			if (!set->isTang)
+			{
+				data.layers.add(set);
+			}
+			else
+			{
+				data.tang_layers.add(set);
+			}
 		}
 		else
 		{
-			data.tang_layers.add(set);
+			data.background_layers.add(set);
 		}
 	}
 	for (layer = map_file.child("map").child("objectgroup"); layer && ret; layer = layer.next_sibling("objectgroup"))
