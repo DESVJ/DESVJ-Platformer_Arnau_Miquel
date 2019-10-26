@@ -147,8 +147,7 @@ void j1Map::Draw()
 		{
 			Collider *col = &App->colliders.collider_list[i];
 			SDL_Rect *rect = &col->collider_rect;
-			if ((rect->x + rect->w) * App->win->GetScale() >= -App->render->camera.x + culling_offset && rect->x * App->win->GetScale() <= -App->render->camera.x + App->win->width - culling_offset
-				&& (rect->y + rect->h) * App->win->GetScale() >= -App->render->camera.y + culling_offset && rect->y * App->win->GetScale() <= -App->render->camera.y + App->win->height - culling_offset)
+			if (Culling_Check(rect->x, rect->y, *rect, 1))
 			{
 				SDL_Color color;
 				switch (col->collider_type)
@@ -380,8 +379,8 @@ bool j1Map::LoadMap()
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
 
-		App->render->limitNegX = 0; App->render->limitPosX = ((data.width * data.tile_width) * App->win->GetScale()) - App->render->camera.w;
-		App->render->limitPosY = 0;  App->render->limitNegY = ((data.height * data.tile_height) * App->win->GetScale()) - App->render->camera.h;
+		App->render->limitNegX = 0; App->render->limitPosX = ((data.width * data.tile_width) * (int)App->win->GetScale()) - App->render->camera.w;
+		App->render->limitPosY = 0;  App->render->limitNegY = ((data.height * data.tile_height) * (int)App->win->GetScale()) - App->render->camera.h;
 
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 

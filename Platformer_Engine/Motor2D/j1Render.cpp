@@ -357,8 +357,8 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 		}
 	}
 
-
-	App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
+	if(App->player->player.player_god_mode)
+		App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
 }
 
@@ -377,7 +377,7 @@ void j1Render::SetMapLimitsWithTMX()
 			//if the layer is a collider layer
 			if (isLimit->data->name == "isMapLimits" && isLimit->data->prop_value.value_bool == true)
 			{
-				limitPosX = itemA->data->objects.start->data->rect.x * App->win->GetScale() - camera.w;
+				limitPosX = itemA->data->objects.start->data->rect.x * (int)App->win->GetScale() - camera.w;
 			}
 			isLimit = isLimit->next;
 		}

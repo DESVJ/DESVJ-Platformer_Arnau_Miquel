@@ -134,8 +134,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	{
 		SDL_Rect *block = &collider_list[i].collider_rect;
 		//Watch if the collider is inside the camera, if not, do not calculate colision
-		if ((block->x + block->w) * App->win->GetScale() >= -App->render->camera.x && block->x * App->win->GetScale() <= -App->render->camera.x + App->win->width
-			&& (block->y + block->h) * App->win->GetScale() >= -App->render->camera.y && block->y * App->win->GetScale() <= -App->render->camera.y + App->win->height)
+		if (App->map->Culling_Check(block->x, block->y, {0, 0, block->w, block->h}, 1))
 		{
 			//Is the collider enabled?
 			if (collider_list[i].enabled) //&& is not tang colider
@@ -261,8 +260,7 @@ void Collider_Manager::Correct(SDL_Rect* prediction)
 	{
 		SDL_Rect* block = &collider_list[i].collider_rect;
 		//Watch if the collider is inside the camera, if not, do not calculate colision
-		if ((block->x + block->w) * App->win->GetScale() >= -App->render->camera.x && block->x * App->win->GetScale() <= -App->render->camera.x + App->win->width
-			&& (block->y + block->h) * App->win->GetScale() >= -App->render->camera.y && block->y * App->win->GetScale() <= -App->render->camera.y + App->win->height)
+		if (App->map->Culling_Check(block->x, block->y, *block, 1))
 		{
 			//Is the collider enabled?
 			if (collider_list[i].enabled) //&& is not tang colider

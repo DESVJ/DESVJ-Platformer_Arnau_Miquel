@@ -50,16 +50,16 @@ bool j1Scene::Update(float dt)
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(0, 3 * App->win->GetScale());
+		App->render->MoveCameraInsideLimits(0, 3 * (int)App->win->GetScale());
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(0, (-3 * App->win->GetScale()));
+		App->render->MoveCameraInsideLimits(0, (-3 * (int)App->win->GetScale()));
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(3 * App->win->GetScale(), 0);
+		App->render->MoveCameraInsideLimits(3 * (int)App->win->GetScale(), 0);
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits((-3 * App->win->GetScale()), 0);
+		App->render->MoveCameraInsideLimits((-3 * (int)App->win->GetScale()), 0);
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_REPEAT)
 		App->audio->ChangeVolume(true);
