@@ -12,13 +12,12 @@
 #include "j1Audio.h"
 //////////////TEMPORAL
 #include "j1Scene.h"
+#define MAX_INPUTS_OUT 5
 
 j1Player::j1Player() : j1Module()
 {
 	name.create("player");
 
-	///////TEMPORAL
-	difference_y = 256;
 }
 
 // Destructor
@@ -32,7 +31,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 {
 
 
-	player_info_file.load_file("textures/player.tmx");
+	player_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node player_node = player_info_file.child("map");
 
 	player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
@@ -54,7 +53,20 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LoadSoundFXFromTMX(&player_node, switch_fx, "switch");
 
 
+	difference_y = config.child("difference_y").attribute("value").as_int();
+	player.player_flip = config.child("player_info").attribute("flip").as_bool();
+	player.player_not_jumping = config.child("player_info").attribute("not_jumping").as_bool();
+	player.player_stop_jumping_up = config.child("player_info").attribute("stop_jumping_up").as_bool();
+	player.player_god_mode = config.child("player_info").attribute("god_mode").as_bool();
+	player.player_tang_mode = config.child("player_info").attribute("tang_mode").as_bool();
+	player.player_alive = config.child("player_info").attribute("alive").as_bool();
+	player.player_respawn = config.child("player_info").attribute("respawn").as_bool();
+	player.player_climbing = config.child("player_info").attribute("climbing").as_bool();
+	player.spacebar_pushed = config.child("player_info").attribute("spacebar_pushed").as_bool();
+	inputs_out = config.child("inputs_out").attribute("value").as_int();
+	actual_state = (state)config.child("actual_state").attribute("value").as_int();
 
+	player.texture_source = config.child("texture_source").child_value();
 	//LoadAnimation(&config.child("animations"), &run, "run");
 	//LoadAnimation(&config.child("animations"), &jump, "jump");
 	//LoadAnimation(&config.child("animations"), &idle_ladder, "idle_ladder");
@@ -67,8 +79,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start()
 {
-	inputs_out = 0;
-	actual_state = S_IDLE;
 
 	p2List_item<MapObjectGroup*>* objects_map;
 	objects_map = App->map->data.object_layers.start;
@@ -87,17 +97,9 @@ bool j1Player::Start()
 	//player.player_rect.y = App->map->data.tile_width * 8;
 	//player.player_rect.w = 0;
 	//player.player_rect.h = 0;
-	player.player_flip = false;
-	player.player_not_jumping = true;
-	player.player_stop_jumping_up = true;
-	player.player_god_mode = false;
-	player.player_tang_mode = false;
-	player.player_alive = true;
-	player.player_respawn = false;
-	player.player_climbing = false;
-	player.spacebar_pushed = false;
 
-	player.player_spritesheet = App->tex->Load("textures/Player_SpriteSheet.png");
+
+	player.player_spritesheet = App->tex->Load(player.texture_source.GetString());
 
 	return true;
 }

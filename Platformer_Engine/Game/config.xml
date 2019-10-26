@@ -31,6 +31,15 @@
     
     <!--Everything reletad to player movement-->    
     <movement gravity="1" />
+    <load_file>textures/player.tmx</load_file>
+    <difference_y value="256"/>
+    <inputs_out value="0"/>
+    <actual_state value="1"/>
+    <player_info flip="false" not_jumping="false" stop_jumping_up="true" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
+	<position x="104" y="816" w="16" h="-20" />
+	<speed x="0" y="1" />
+    </player_info>
+    <texture_source>textures/Player_SpriteSheet.png</texture_source>
 
   </player>
   
