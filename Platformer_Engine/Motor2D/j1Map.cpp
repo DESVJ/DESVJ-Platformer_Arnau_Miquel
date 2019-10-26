@@ -127,7 +127,7 @@ void j1Map::Draw()
 							int y = i;
 							Translate_Coord(&x, &y);
 
-							if (Culling_Check(x, y, rect, coord_layer->data->speed))
+							if (Culling_Check(x, y, rect, 1))
 							{
 								App->render->Blit(coord_tileset->data->texture, x, y, &rect);
 							}
