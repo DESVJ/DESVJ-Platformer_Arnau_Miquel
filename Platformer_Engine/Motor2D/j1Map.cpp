@@ -28,7 +28,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-
+	map_id = config.child("maps").child("map").attribute("id").as_int();
 	return ret;
 }
 
@@ -610,4 +610,14 @@ void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool d
 		}
 		isMusic = isMusic->next;
 	}
+}
+
+p2SString j1Map::GetSourceFromID(int id) {
+	pugi::xml_node map_node = App->config_file.child("config").child("map").child("maps").child("map");
+	do{
+		if (map_node.attribute("id").as_int() == id)break;
+		else map_node = map_node.next_sibling("map");
+	} while (map_node != NULL);
+	if (map_node != NULL)return map_node.attribute("source").as_string();
+	else return "";
 }

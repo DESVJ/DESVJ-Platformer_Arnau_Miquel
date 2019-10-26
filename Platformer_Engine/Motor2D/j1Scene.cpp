@@ -32,7 +32,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("map_1_final.tmx");
+	App->map->Load(App->map->GetSourceFromID(App->map->map_id).GetString());
 	App->colliders.LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 
@@ -67,12 +67,14 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_REPEAT)
 		App->audio->ChangeVolume(false);
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		Load_Map_By_Name("map_1_final.tmx");
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		Load_Map_By_Name("map_2_final.tmx");
-
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		App->map->map_id = 1;
+		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		App->map->map_id = 2;
+		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->player->Start_F3();
 

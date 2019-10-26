@@ -9,6 +9,7 @@
 #include "j1Module.h"
 #include"p2DynArray.h"
 
+#define MAX_NUMBER_MAPS 2
 
 struct object_property
 {
@@ -137,6 +138,7 @@ public:
 		*x *= data.tile_width;
 		*y *= data.tile_height;
 	}
+	p2SString GetSourceFromID(int id);
 
 private:
 
@@ -152,6 +154,7 @@ public:
 	MapData data;
 	int culling_offset = 0;
 	SDL_Rect end_point;
+	int map_id;
 
 private:
 

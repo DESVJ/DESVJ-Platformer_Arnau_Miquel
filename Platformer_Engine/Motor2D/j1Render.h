@@ -4,6 +4,7 @@
 
 #include "p2Point.h"
 #include "j1Module.h"
+#define MAX_COLOR_NUMBER 255
 
 class j1Render : public j1Module
 {

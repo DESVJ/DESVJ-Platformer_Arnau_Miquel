@@ -24,6 +24,10 @@
 
   <map>
     <folder>maps/</folder>
+    <maps>
+	<map id="1" source="map_1_final.tmx"/>
+	<map id="2" source="map_2_final.tmx"/>
+    </maps>
   </map>
 
 
