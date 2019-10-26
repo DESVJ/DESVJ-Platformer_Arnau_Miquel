@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include"j1Input.h"
 #include"j1Player.h"
 
 #define VSYNC true
@@ -311,8 +312,7 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
 	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
 	
-	if (x <= (App->map->data.tile_width + App->map->data.tile_height) * (int)App->win->GetScale())
-	{
+
 		//Left X mov
 		if (camera.x >= limitNegX)
 		{
@@ -332,10 +332,9 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 		{
 			camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
 		}
-	}
 
-	if (y <= (App->map->data.tile_width + App->map->data.tile_height) * (int)App->win->GetScale())
-	{
+
+
 		//Up Y mov
 		if (camera.y >= limitPosY)
 		{
@@ -355,9 +354,9 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 		{
 			camera.y = y + -App->player->player.minPlayerHeight * (int)App->win->GetScale();
 		}
-	}
 
-	if(App->player->player.player_god_mode)
+
+	if(App->player->player.player_god_mode || App->input->is_Debug_Mode)
 		App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
 }
