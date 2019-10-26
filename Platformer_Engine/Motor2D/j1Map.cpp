@@ -382,6 +382,9 @@ bool j1Map::LoadMap()
 		App->render->limitNegX = 0; App->render->limitPosX = ((data.width * data.tile_width) * (int)App->win->GetScale()) - App->render->camera.w;
 		App->render->limitPosY = 0;  App->render->limitNegY = ((data.height * data.tile_height) * (int)App->win->GetScale()) - App->render->camera.h;
 
+		App->player->killLimit = data.height * data.tile_height;
+
+
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;

@@ -147,9 +147,10 @@ bool j1Player::Update(float dt)
 	
 	//App->colliders.Correct(&player.player_rect);
 
-	if (player.player_rect.y - player.player_rect.h > App->render->limitNegY)
+	if (player.player_rect.y + player.player_rect.h > killLimit)
 	{
 		player.player_alive = false;
+		App->audio->PlayFx(App->player->death_fx);
 	}
 	if (/*current_animation != &jump*/player.player_stop_jumping_up == true && player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{

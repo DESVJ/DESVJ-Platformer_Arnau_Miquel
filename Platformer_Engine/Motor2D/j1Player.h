@@ -147,7 +147,7 @@ public:
 	unsigned int jump_down_fx;
 	unsigned int switch_fx;
 	int animation_created_mov = 0;
-
+	int killLimit;
 
 private:
 	int gravity;
