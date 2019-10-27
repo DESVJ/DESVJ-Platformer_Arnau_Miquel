@@ -49,6 +49,9 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+	difference_volume = config.child("difference").attribute("value").as_int();
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
+	Mix_Volume(-1, (MIX_MAX_VOLUME-difference_volume));
 
 	return ret;
 }
@@ -188,7 +191,8 @@ void j1Audio::ChangeVolume(bool plus) {
 	}
 	else if (volume > 0)volume--;
 	Mix_VolumeMusic(volume);
-	Mix_Volume(-1, volume);
+	if(volume-difference_volume>=0)Mix_Volume(-1, volume-difference_volume);
+	else Mix_Volume(-1, 0);
 	pugi::xml_document document_save;
 	p2SString source = App->config_file.child("config").child("app").child("save_game_source").child_value();
 	pugi::xml_parse_result result = document_save.load_file(source.GetString());
