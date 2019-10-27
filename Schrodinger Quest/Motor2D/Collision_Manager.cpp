@@ -75,10 +75,6 @@ void Collider_Manager::LoadColliders()
 						{
 							clr.canBeJumped = clr_type->data->prop_value.value_bool;
 						}
-						else
-						{
-							clr.canBeJumped = false;
-						}
 
 						clr_type = clr_type->next;
 					}

@@ -26,7 +26,7 @@ struct Collider
 {
 	SDL_Rect collider_rect;
 	bool enabled;
-	bool canBeJumped;
+	bool canBeJumped = false;
 	Collider_Types collider_type;
 };
 
