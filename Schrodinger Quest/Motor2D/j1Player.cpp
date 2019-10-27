@@ -105,7 +105,7 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	CheckInputs(player.player_god_mode, player.player_not_jumping, inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state);
+	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state, player.player_collider_rect);
 
 	if (player.player_respawn == true)
 		Start_F3();
@@ -118,7 +118,7 @@ bool j1Player::Update(float dt)
 {
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
-	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation);
+	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation, player.player_climbing, player.player_alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up);
 
 	if (reset_animation == true) 
 	{
