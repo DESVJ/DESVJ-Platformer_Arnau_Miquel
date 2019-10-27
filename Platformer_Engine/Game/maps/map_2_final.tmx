@@ -54805,17 +54805,7 @@
     <property name="colliderType" value="Kill"/>
    </properties>
   </object>
-  <object id="51" x="1216" y="560" width="240" height="16">
-   <properties>
-    <property name="colliderType" value="Kill"/>
-   </properties>
-  </object>
   <object id="52" x="480" y="288" width="32" height="16">
-   <properties>
-    <property name="colliderType" value="Kill"/>
-   </properties>
-  </object>
-  <object id="99" x="1600" y="560" width="208" height="16">
    <properties>
     <property name="colliderType" value="Kill"/>
    </properties>
