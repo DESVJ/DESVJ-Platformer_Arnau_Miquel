@@ -341,8 +341,8 @@ void j1Player::Change_Col_State(player_colision_state state)
 bool j1Player::Save(pugi::xml_node& data)const {
 	pugi::xml_node player_node = data.append_child("player_info");
 	player_node.append_child("position");
-	player_node.child("position").append_attribute("x") = player.player_rect.x;
-	player_node.child("position").append_attribute("y") = player.player_rect.y;
+	player_node.child("position").append_attribute("x") = player.player_collider_rect.x;
+	player_node.child("position").append_attribute("y") = player.player_collider_rect.y;
 	player_node.child("position").append_attribute("w") = player.player_rect.w;
 	player_node.child("position").append_attribute("h") = player.player_rect.h;
 	player_node.append_child("speed");
@@ -364,8 +364,8 @@ bool j1Player::Save(pugi::xml_node& data)const {
 }
 
 bool j1Player::Load(pugi::xml_node& data) {
-	player.player_rect.x = data.child("player_info").child("position").attribute("x").as_int();
-	player.player_rect.y = data.child("player_info").child("position").attribute("y").as_int();
+	player.player_collider_rect.x = data.child("player_info").child("position").attribute("x").as_int();
+	player.player_collider_rect.y = data.child("player_info").child("position").attribute("y").as_int();
 	player.player_rect.w = data.child("player_info").child("position").attribute("w").as_int();
 	player.player_rect.h = data.child("player_info").child("position").attribute("h").as_int();
 	player.player_speed.x = data.child("player_info").child("speed").attribute("x").as_int();
