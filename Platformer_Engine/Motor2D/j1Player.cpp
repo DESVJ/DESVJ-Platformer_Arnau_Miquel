@@ -133,6 +133,7 @@ bool j1Player::Update(float dt)
 	// Change the sprite if intangible
 	if (player.player_tang_mode == true)current_frame.y += difference_y;
 
+
 	if (player.player_rect.w != 0) {
 
 		animation_created_mov = player.player_collider_rect.w - current_frame.w;
@@ -209,7 +210,11 @@ bool j1Player::Update(float dt)
 	inputs_out = 0;
 	input_in = I_NONE;
 	///////TEMPORAL
-	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true)App->scene->Load_Map_By_Name("map_2_final.tmx");
+	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true) {
+		App->map->map_id++;
+		if (App->map->map_id > MAX_NUMBER_MAPS)App->map->map_id = 1;
+		App->scene->Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+	}
 	return true;
 }
 
