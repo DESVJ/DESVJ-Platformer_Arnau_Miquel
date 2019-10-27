@@ -74,11 +74,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			else if (input_in == I_LEFT)input_in = I_DOWN_LEFT;
 			else input_in = I_DOWN;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE || god_mode == false) {
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && god_mode == false) {
 			input_out[inputsouts] = O_UP;
 			inputsouts++;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE || god_mode == false) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && god_mode == false) {
 			input_out[inputsouts] = O_DOWN;
 			inputsouts++;
 		}
