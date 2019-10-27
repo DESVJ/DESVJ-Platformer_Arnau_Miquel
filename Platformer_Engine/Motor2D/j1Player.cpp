@@ -151,12 +151,6 @@ bool j1Player::Update(float dt)
 	}
 	
 	//App->colliders.Correct(&player.player_rect);
-
-	if (player.player_rect.y + player.player_rect.h > killLimit)
-	{
-		player.player_alive = false;
-		App->audio->PlayFx(App->player->death_fx);
-	}
 	if (/*current_animation != &jump*/player.player_stop_jumping_up == true && player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
 	{
 		//TODO: Falling looks wird on high falls
@@ -192,7 +186,14 @@ bool j1Player::Update(float dt)
 	player.player_rect.y = player.player_collider_rect.y;
 	//player.player_rect.x -= animation_created_mov / 2;
 
+
+
 	App->render->MoveCameraToPointInsideLimits({player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y});
+
+	if (player.player_rect.y + player.player_rect.h > killLimit)
+	{
+		Change_Col_State(player_colision_state::DYING);
+	}
 
 
 	//App->render->DrawQuad({ player.player_position.x, player.player_position.y, App->map->data.tile_width, App->map->data.tile_height}, 255, 255, 255, 255);
