@@ -85,8 +85,23 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 
 
 		//CHECK IF CHANGE TANGIBILITY//
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) 
+		{
 			App->player->player.player_tang_mode = !App->player->player.player_tang_mode;
+			if (App->player->player.player_tang_mode == false) 
+			{
+
+				for (int i = 0; i < App->colliders.collider_list.count(); i++)
+				{
+					if (App->colliders.CheckAbsoluteCollision(App->player->player.player_collider_rect, App->colliders.collider_list[i].collider_rect))
+					{
+						App->player->Change_Col_State(player_colision_state::DYING);
+						LOG("kill");
+					}
+				}
+
+				App->player->tangSwitchDeadCheck = true;
+			}
 			App->audio->PlayFx(App->player->switch_fx);
 		}
 

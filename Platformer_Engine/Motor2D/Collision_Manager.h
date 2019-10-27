@@ -50,8 +50,6 @@ public:
 	{
 		bool detectedX = true;
 		bool detectedY = true;
-		// TODO 0: Return true if there is an overlap
-		// between argument "r" and property "rect"
 
 		if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x) 
 		{
@@ -65,6 +63,28 @@ public:
 
 		return detectedX && detectedY;
 	}
+
+	bool CheckAbsoluteCollision(const SDL_Rect& rect, const SDL_Rect& r)
+	{
+
+		bool detectedX = false;
+		bool detectedY = false;
+
+		//Check if rect is full inside of r
+		if (rect.x > r.x && rect.x + rect.w < r.x + r.w)
+		{
+			detectedX = true;
+		}
+
+		if (rect.y < r.y + r.h && rect.y + rect.h > r.y)
+		{
+			detectedY = true;
+		}
+
+		return detectedX && detectedY;
+
+	}
+
 
 };
 

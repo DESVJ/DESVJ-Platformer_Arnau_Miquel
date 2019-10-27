@@ -143,8 +143,11 @@ bool j1Player::Update(float dt)
 	player.player_rect.w = current_frame.w;
 	player.player_rect.h = -current_frame.h;
 
-	App->colliders.MoveObject(&player.player_collider_rect, { player.player_speed.x , 0}, true);
-	App->colliders.MoveObject(&player.player_collider_rect, { 0, player.player_speed.y }, true);
+	if (player.col_state != player_colision_state::DYING) 
+	{
+		App->colliders.MoveObject(&player.player_collider_rect, { player.player_speed.x , 0}, true);
+		App->colliders.MoveObject(&player.player_collider_rect, { 0, player.player_speed.y }, true);
+	}
 	
 	//App->colliders.Correct(&player.player_rect);
 

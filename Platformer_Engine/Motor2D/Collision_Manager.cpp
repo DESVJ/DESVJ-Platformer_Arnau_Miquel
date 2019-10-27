@@ -141,6 +141,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
 				{
+
 					//If there is a colision, look collider type
 					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
 					{

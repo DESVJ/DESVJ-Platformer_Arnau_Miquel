@@ -149,6 +149,7 @@ public:
 	unsigned int switch_fx;
 	int animation_created_mov = 0;
 	int killLimit;
+	bool tangSwitchDeadCheck = false;
 
 private:
 	int gravity;
