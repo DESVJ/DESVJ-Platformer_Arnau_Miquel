@@ -74,11 +74,11 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 			else if (input_in == I_LEFT)input_in = I_DOWN_LEFT;
 			else input_in = I_DOWN;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE) {
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP || App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE || god_mode == false) {
 			input_out[inputsouts] = O_UP;
 			inputsouts++;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE || god_mode == false) {
 			input_out[inputsouts] = O_DOWN;
 			inputsouts++;
 		}
@@ -172,13 +172,15 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation) {
 	}
 	else speed.x = 0;
 	if (jump == true) {
-		if (/*speed.y == 0 &&*/ (current_animation->current_frame == 0 || reset_animation == true)) {
+		if (/*speed.y == 0 &&*/ (current_animation->current_frame == 0 || reset_animation == true) && App->player->player.player_in_air == false) {
 			speed.y = 0;
 			speed.y--;
-			App->player->player.player_stop_jumping_up = false;
+  			App->player->player.player_stop_jumping_up = false;
 			App->audio->PlayFx(App->player->jump_up_fx);
+			App->player->player.player_in_air = true;
+			
 		}
-		else if (App->player->player.player_stop_jumping_up == false) {
+		else if (App->player->player.player_stop_jumping_up == false ){
 			speed.y--;
 		}
 	}

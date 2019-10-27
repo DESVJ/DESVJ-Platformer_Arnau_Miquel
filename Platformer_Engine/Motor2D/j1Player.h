@@ -31,6 +31,7 @@ struct Player_Info
 	bool player_alive;
 	bool player_respawn;
 	bool player_climbing;
+	bool player_in_air;
 	bool spacebar_pushed;
 	p2SString texture_source;
 	SDL_Texture* player_spritesheet;

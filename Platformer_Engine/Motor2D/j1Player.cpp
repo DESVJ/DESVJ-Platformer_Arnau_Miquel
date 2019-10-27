@@ -56,6 +56,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player.player_flip = config.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = config.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = config.child("player_info").attribute("stop_jumping_up").as_bool();
+	player.player_in_air = config.child("player_info").attribute("in_air").as_bool();
 	player.player_god_mode = config.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = config.child("player_info").attribute("tang_mode").as_bool();
 	player.player_alive = config.child("player_info").attribute("alive").as_bool();
@@ -350,6 +351,7 @@ bool j1Player::Save(pugi::xml_node& data)const {
 	player_node.append_attribute("flip") = player.player_flip;
 	player_node.append_attribute("not_jumping") = player.player_not_jumping;
 	player_node.append_attribute("stop_jumping_up") = player.player_stop_jumping_up;
+	player_node.append_attribute("in_air") = player.player_in_air;
 	player_node.append_attribute("spacebar_pushed") = player.spacebar_pushed;
 	player_node.append_attribute("god_mode") = player.player_god_mode;
 	player_node.append_attribute("tang_mode") = player.player_tang_mode;
@@ -371,6 +373,7 @@ bool j1Player::Load(pugi::xml_node& data) {
 	player.player_flip = data.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = data.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = data.child("player_info").attribute("stop_jumping_up").as_bool();
+	player.player_in_air = data.child("player_info").attribute("in_air").as_bool();
 	player.spacebar_pushed = data.child("player_info").attribute("spacebar_pushed").as_bool();
 	player.player_god_mode = data.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = data.child("player_info").attribute("tang_mode").as_bool();

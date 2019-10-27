@@ -169,6 +169,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 										//TEMPORAL!!!!!!!!!!!!!!!!
 	//									if (App->player->player.player_not_jumping == false)App->audio->PlayFx(App->player->jump_down_fx);
 										App->player->player.player_not_jumping = true;
+										App->player->player.player_in_air = false;
 									}
 								}
 								else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
