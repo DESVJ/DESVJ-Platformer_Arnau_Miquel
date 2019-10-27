@@ -64,6 +64,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 		if(fullscreen_window == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+			App->map->fullscreen_Correction = config.child("correction").attribute("value").as_int();
 		}
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);

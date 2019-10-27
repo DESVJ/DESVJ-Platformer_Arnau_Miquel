@@ -87,8 +87,11 @@ bool j1Player::Start()
 	{
 
 		if (objects_map->data->name == "SpawnPoint"&& objects_map->data->properties.start->data->prop_value.value_bool == true) {
-			player.player_rect.x = objects_map->data->objects.start->data->rect.x;
-			player.player_rect.y = objects_map->data->objects.start->data->rect.y;
+			player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
+			player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
+
+			player.player_rect.x = player.player_collider_rect.x;
+			player.player_rect.y = player.player_collider_rect.y;
 			player.player_rect.w = objects_map->data->objects.start->data->rect.w;
 			player.player_rect.h = objects_map->data->objects.start->data->rect.h;
 		}

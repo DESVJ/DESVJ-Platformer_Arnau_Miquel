@@ -156,6 +156,7 @@ public:
 	int culling_offset = 0;
 	SDL_Rect end_point;
 	int map_id;
+	int fullscreen_Correction = 1;
 
 private:
 

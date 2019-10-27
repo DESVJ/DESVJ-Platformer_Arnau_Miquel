@@ -16,7 +16,8 @@
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
-    <fullscreen_window value="false"/>
+    <fullscreen_window value="true"/>
+    <correction value ="2"/>
   </window>
 
   <file_system>

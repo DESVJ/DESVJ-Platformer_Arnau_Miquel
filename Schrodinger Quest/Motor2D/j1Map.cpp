@@ -39,8 +39,8 @@ bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 
 	int scale = (int)App->win->GetScale();
 
-	if ((x + rect.w) * scale / speed >= -App->render->camera.x + culling_offset && x * scale <= -App->render->camera.x * speed + App->win->width - culling_offset
-		&& (y + rect.h) * scale  >= -App->render->camera.y + culling_offset && y * scale <= -App->render->camera.y + App->win->height - culling_offset)
+	if ((x + rect.w) * scale / speed >= -App->render->camera.x + culling_offset && x * scale / fullscreen_Correction <= -App->render->camera.x * speed + App->win->width - culling_offset
+		&& (y + rect.h) * scale  >= -App->render->camera.y + culling_offset && y * scale / fullscreen_Correction <= -App->render->camera.y + App->win->height - culling_offset)
 	{
 		return true;
 	}

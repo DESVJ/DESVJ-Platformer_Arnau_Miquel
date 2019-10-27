@@ -56,6 +56,8 @@ Here is a list with the innovations done in this delivery:
   
   * Camera
 
+  * Camera & Collision culling
+
 ## Credits
 
 In order to make this game, we have used art not owned by us. Below we credit the authors of this art:

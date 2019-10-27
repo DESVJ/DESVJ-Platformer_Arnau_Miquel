@@ -79,10 +79,10 @@ bool j1Scene::Update(float dt)
 		App->player->Start_F3();
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->LoadGame();
+		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->SaveGame();
+		App->LoadGame();
 
 
 	//App->render->Blit(img, 0, 0);
