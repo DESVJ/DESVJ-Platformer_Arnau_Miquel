@@ -4,7 +4,7 @@ Schrödinger Quest is a platformer game consisting of two levels where the playe
 
 ## Usage
 
-This game is played using these keys in the keyboard:
+This game is played using these keys in the keyboard and this button of the mouse:
 
 * Movement with WASD.
 
@@ -15,6 +15,22 @@ This game is played using these keys in the keyboard:
 * Change volume with +/-.
 
 * Exit the game with Escape.
+
+Apart from these keys, there are some debug keys:
+
+* Start from the first level with F1.
+
+* Start from the second level with F2.
+
+* Start from the beginning of the current level with F3.
+
+* Save the current state with F5.
+
+* Load the previous state with F6.
+
+* Show colliders and logic with F9.
+
+* God Mode with F10.
 
 ## Authors
 * Arnau Falgueras Garcia de Atocha
@@ -62,16 +78,22 @@ Here is a list with the innovations done in this delivery:
 
 In order to make this game, we have used art not owned by us. Below we credit the authors of this art:
 
-* Background & Tilesets
+* Background & Tilesets:
 
-    * https://0x72.itch.io/
-	Downloaded from https://0x72.itch.io/16x16-industrial-tileset
+    * 16x16 Industrial Tileset by Robert:
+    	* https://0x72.itch.io/
+    
+		Downloaded from https://0x72.itch.io/16x16-industrial-tileset
 
-	* https://vnitti.itch.io/
-	Downloaded from https://vnitti.itch.io/taiga-asset-pack
+    * Taiga: Asset Pack by vnitti:
+    	* https://vnitti.itch.io/
+		
+		Downloaded from https://vnitti.itch.io/taiga-asset-pack
 
-	* https://opengameart.org/users/ansimuz?page=1
-	Downloaded from https://opengameart.org/content/living-tissue-background
+     * Living Tissue Background by ansimuz:
+     	* https://opengameart.org/users/ansimuz
+		
+		Downloaded from https://opengameart.org/content/living-tissue-background
 
 
 * Sprites of the player: Pixel Art Adventurer Sprites by Elthen:
