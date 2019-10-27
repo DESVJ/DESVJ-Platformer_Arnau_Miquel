@@ -99,7 +99,7 @@ bool j1Player::Start()
 	//player.player_rect.w = 0;
 	//player.player_rect.h = 0;
 
-	player.player_collider_rect = {player.player_rect.x, player.player_rect.y, 18, -20};
+	player.player_collider_rect = {player.player_rect.x, player.player_rect.y, 15, -20};
 
 
 	player.player_spritesheet = App->tex->Load(player.texture_source.GetString());

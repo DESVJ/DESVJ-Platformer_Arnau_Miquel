@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="102" nextobjectid="105">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="102" nextobjectid="106">
  <tileset firstgid="1" name="Background_Parallax_1" tilewidth="16" tileheight="16" tilecount="312" columns="24">
   <image source="Background_Parallax_1.png" width="384" height="216"/>
  </tileset>
@@ -17047,24 +17047,24 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="803"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
+   <tile gid="803"/>
    <tile/>
    <tile/>
    <tile/>
@@ -17173,7 +17173,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
@@ -17299,7 +17299,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="770"/>
    <tile gid="803"/>
    <tile gid="771"/>
@@ -17425,7 +17425,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
@@ -17551,7 +17551,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
@@ -17677,7 +17677,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
@@ -17803,7 +17803,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="770"/>
@@ -17929,7 +17929,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
    <tile gid="803"/>
@@ -35206,24 +35206,24 @@
    <tile gid="699"/>
    <tile gid="699"/>
    <tile gid="699"/>
-   <tile gid="732"/>
    <tile gid="701"/>
    <tile/>
-   <tile gid="699"/>
-   <tile gid="700"/>
-   <tile gid="732"/>
-   <tile gid="699"/>
-   <tile gid="733"/>
-   <tile gid="733"/>
-   <tile gid="699"/>
-   <tile gid="699"/>
-   <tile gid="700"/>
-   <tile gid="732"/>
-   <tile gid="732"/>
-   <tile gid="733"/>
-   <tile gid="732"/>
-   <tile gid="699"/>
-   <tile gid="733"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="733"/>
    <tile gid="699"/>
    <tile gid="701"/>
@@ -35332,8 +35332,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35458,8 +35458,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35584,8 +35584,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35710,8 +35710,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35836,8 +35836,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35962,8 +35962,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="701"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -36088,8 +36088,8 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
    <tile gid="734"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -36214,7 +36214,7 @@
    <tile gid="732"/>
    <tile gid="732"/>
    <tile gid="732"/>
-   <tile gid="732"/>
+   <tile gid="859"/>
    <tile gid="859"/>
    <tile gid="729"/>
    <tile gid="696"/>
@@ -44292,24 +44292,24 @@
    <tile gid="715"/>
    <tile gid="715"/>
    <tile gid="715"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
-   <tile gid="715"/>
-   <tile gid="716"/>
-   <tile gid="748"/>
-   <tile gid="715"/>
-   <tile gid="749"/>
-   <tile gid="749"/>
-   <tile gid="715"/>
-   <tile gid="715"/>
-   <tile gid="716"/>
-   <tile gid="748"/>
-   <tile gid="748"/>
-   <tile gid="749"/>
-   <tile gid="748"/>
-   <tile gid="715"/>
-   <tile gid="749"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
+   <tile gid="819"/>
    <tile gid="749"/>
    <tile gid="715"/>
    <tile gid="717"/>
@@ -44418,8 +44418,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -44544,8 +44544,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -44670,8 +44670,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -44796,8 +44796,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -44922,8 +44922,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -45048,8 +45048,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="717"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -45174,8 +45174,8 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
    <tile gid="750"/>
+   <tile gid="819"/>
    <tile gid="943"/>
    <tile/>
    <tile/>
@@ -45300,7 +45300,7 @@
    <tile gid="748"/>
    <tile gid="748"/>
    <tile gid="748"/>
-   <tile gid="748"/>
+   <tile gid="875"/>
    <tile gid="875"/>
    <tile gid="745"/>
    <tile gid="712"/>
@@ -54633,7 +54633,7 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="18" x="624" y="400" width="224" height="176">
+  <object id="18" x="624" y="416" width="208" height="160">
    <properties>
     <property name="colliderType" value="Walkeable"/>
    </properties>
@@ -54660,17 +54660,12 @@
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="24" x="848" y="544" width="272" height="32">
+  <object id="24" x="832" y="544" width="288" height="32">
    <properties>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>
-  <object id="25" x="848" y="400" width="272" height="32">
-   <properties>
-    <property name="colliderType" value="Walkeable"/>
-   </properties>
-  </object>
-  <object id="26" x="1104" y="432" width="16" height="112">
+  <object id="26" x="1104" y="416" width="16" height="128">
    <properties>
     <property name="colliderType" value="Walkeable"/>
    </properties>
@@ -54772,6 +54767,11 @@
   <object id="101" x="1584" y="176" width="64" height="16">
    <properties>
     <property name="canBeJumpThrough" type="bool" value="true"/>
+    <property name="colliderType" value="Walkeable"/>
+   </properties>
+  </object>
+  <object id="105" x="624" y="400" width="496" height="16">
+   <properties>
     <property name="colliderType" value="Walkeable"/>
    </properties>
   </object>

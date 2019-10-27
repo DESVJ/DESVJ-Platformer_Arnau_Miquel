@@ -164,7 +164,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									{
 										currentPoint->y = block->y;
 
-										if (isPlayer)
+										if (isPlayer && !App->player->canJump)
 											App->player->canJump = true;
 
 										if(isPlayer && App->player->player.player_speed.y >= 2 && App->player->player.col_state == player_colision_state::NONE)
@@ -208,14 +208,16 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 								{
 									if (dir == LEFT)
 									{
-										currentPoint->x = block->x + block->w;
+										if(isPlayer && App->player->player.col_state != player_colision_state::CLIMBING)
+											currentPoint->x = block->x + block->w;
 									}
 								}
 								else if (prediction.x + prediction.w >= block->x)
 								{
 									if (dir == RIGHT)
 									{
-										currentPoint->x = block->x - currentPoint->w;
+										if (isPlayer && App->player->player.col_state != player_colision_state::CLIMBING)
+											currentPoint->x = block->x - currentPoint->w;
 									}
 								}
 
@@ -239,7 +241,8 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						if (isPlayer && !App->player->player.player_tang_mode && 
 							(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || 
 							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->player->player.player_rect.y > collider_list[i].collider_rect.y)) && 
-							App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) > collider_list[i].collider_rect.x)
+							(App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) > collider_list[i].collider_rect.x
+								&& App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) < collider_list[i].collider_rect.x + collider_list[i].collider_rect.w))
 						{
 							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->player->player.player_rect.y)
 							{
@@ -270,7 +273,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	if (!colisionDetectedY)
 	{
 		currentPoint->y = prediction.y;
-		App->player->canJump = false;
+		if (increment.y > 0) 
+		{
+			App->player->canJump = false;
+		}
 	}
 
 	if (!typeColDetected) 

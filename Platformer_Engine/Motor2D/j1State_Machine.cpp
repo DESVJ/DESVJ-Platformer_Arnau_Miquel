@@ -15,8 +15,8 @@ void CheckInputs(bool god_mode, bool& not_jumping, int& inputsouts, int& speed_y
 		//LEFT AND RIGHT MOVEMENT
 		bool left = false;
 		bool right = false;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) right = true;
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) left = true;
+		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && App->player->player.col_state != player_colision_state::CLIMBING)|| App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) right = true;
+		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && App->player->player.col_state != player_colision_state::CLIMBING)|| App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) left = true;
 		if (right == true && left == true)input_in = I_RIGHT_AND_LEFT;
 		else if (right == true) input_in = I_RIGHT;
 		else if (left == true)input_in = I_LEFT;
