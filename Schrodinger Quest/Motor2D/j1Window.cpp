@@ -61,6 +61,10 @@ bool j1Window::Awake(pugi::xml_node& config)
 			App->map->fullscreen_Correction = config.child("correction").attribute("value").as_int();
 			scale *= config.child("scale_Correction").attribute("value").as_float();
 		}
+		else
+		{
+			App->map->fullscreen_Correction = config.child("scale_No_Correction").attribute("value").as_int();
+		}
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 

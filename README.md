@@ -40,7 +40,7 @@ Apart from these keys, there are some debug keys:
     * Github account: MayKoder(https://github.com/MayKoder)
 
 ## Github link
-https://github.com/DESVJ/DESVJ-Platformer_Arnau_Miquel
+https://github.com/DESVJ/Schrodinger_Quest
 
 ## Innovations
 

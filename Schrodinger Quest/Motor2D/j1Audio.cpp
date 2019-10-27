@@ -176,7 +176,8 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 }
 
 
-bool j1Audio::Save(pugi::xml_node& node_sent) const{
+bool j1Audio::Save(pugi::xml_node& node_sent) const
+{
 	pugi::xml_node cam = node_sent.append_child("music");
 	cam.append_attribute("volume").set_value(Mix_VolumeMusic(-1));
 	return true;
@@ -184,20 +185,31 @@ bool j1Audio::Save(pugi::xml_node& node_sent) const{
 
 
 //Change volume with +/-
-void j1Audio::ChangeVolume(bool plus) {
+void j1Audio::ChangeVolume(bool plus) 
+{
 	int volume = Mix_VolumeMusic(-1);
-	if (plus == true) {
+
+	if (plus == true) 
+	{
 		if (volume < 128)volume++;
 	}
-	else if (volume > 0)volume--;
+	else if (volume > 0)
+		volume--;
+
 	Mix_VolumeMusic(volume);
-	if(volume-difference_volume>=0)Mix_Volume(-1, volume-difference_volume);
-	else Mix_Volume(-1, 0);
+
+	if(volume-difference_volume>=0)
+		Mix_Volume(-1, volume-difference_volume);
+	else 
+		Mix_Volume(-1, 0);
+
 	pugi::xml_document document_save;
 	p2SString source = App->config_file.child("config").child("app").child("save_game_source").child_value();
 	pugi::xml_parse_result result = document_save.load_file(source.GetString());
+
 	if (!result)
 		LOG("Error in loading xml: %s.", result.description());
+
 	document_save.child("game_state").child("audio").child("music").attribute("volume").set_value(volume);
 	document_save.save_file(source.GetString());
 }
