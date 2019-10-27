@@ -342,7 +342,8 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 		}
 		else if (point.y + App->player->player.minPlayerHeight <= followMinRect.y)
 		{
-			camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
+			if(y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale() <= 0)
+				camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
 		}
 
 		//Down Y mov
