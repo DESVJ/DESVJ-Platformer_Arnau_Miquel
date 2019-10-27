@@ -1,6 +1,6 @@
-# DESVJ_Platformer
+# Schrödinger Quest
 
-DESVJ_Platformer is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) using C++ in Visual Studio and with SDL and pugixml libraries and Tiled for the creation of the maps. 
+Schrödinger Quest is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) using C++ in Visual Studio and with SDL and pugixml libraries and Tiled for the creation of the maps. 
 
 ## Usage
 
@@ -53,6 +53,8 @@ Here is a list with the innovations done in this delivery:
   * Tiled related
   
   * Collisions
+  
+  * Camera
 
 ## Credits
 
