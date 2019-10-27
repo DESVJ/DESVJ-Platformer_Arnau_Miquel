@@ -271,10 +271,6 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		}
 	}
 
-	////Draw prediction on debug mode
-	//if(App->input->is_Debug_Mode)
-	//	App->render->DrawQuad({prediction.x, prediction.y, currentPoint->w, currentPoint->h}, 255, 255, 255, 255);
-
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (!colisionDetectedX)
 	{
