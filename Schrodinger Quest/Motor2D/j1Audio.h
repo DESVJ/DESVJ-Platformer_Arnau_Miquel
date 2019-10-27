@@ -44,6 +44,7 @@ private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
+	int difference_volume;
 };
 
 #endif // __j1AUDIO_H__

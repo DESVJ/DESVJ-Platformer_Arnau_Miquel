@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Schrödinger Quest</title>
     <organization>UPC</organization>
     <save_game_source>save_game.xml</save_game_source>
   </app>
@@ -10,6 +10,10 @@
   <renderer>
     <vsync value="true"/>
   </renderer>
+
+  <audio>
+    <difference value="80"/>
+  </audio>
 
   <window>
     <resolution width="1024" height="768" scale="3"/>
