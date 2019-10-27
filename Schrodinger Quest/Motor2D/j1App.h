@@ -17,6 +17,7 @@ class j1Map;
 class j1Player;
 class Collider_Manager;
 
+//Application class
 class j1App
 {
 public:
@@ -48,7 +49,10 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	//Load game function
 	void LoadGame();
+
+	//Save game function
 	void SaveGame() const;
 
 private:
@@ -71,7 +75,7 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
-	// Load / Save
+	// Load / Save states
 	bool LoadGameNow();
 	bool SavegameNow() const;
 
@@ -87,9 +91,10 @@ public:
 	j1Map*				map;
 	j1Player*			player;
 
+	//Collider manager 
+	Collider_Manager	colliders;
 
-	Collider_Manager colliders;
-
+	//Config xml file
 	pugi::xml_document	config_file;
 
 

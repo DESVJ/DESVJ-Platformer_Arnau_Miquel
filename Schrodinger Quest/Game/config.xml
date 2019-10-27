@@ -21,6 +21,7 @@
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
+    <scale_Correction value ="1.6"/>
     <correction value ="2"/>
   </window>
 
@@ -48,11 +49,15 @@
     <gravity value="1"/>
     <maximum_speed value="8"/>
     <player_info flip="false" not_jumping="false" stop_jumping_up="true" in_air="true" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
-	<position x="104" y="816" w="16" h="-20" />
-	<speed x="0" y="1" />
+	  <position x="104" y="816" w="16" h="-20" />
+	  <speed x="0" y="1" />
     </player_info>
     <texture_source>textures/Player_SpriteSheet.png</texture_source>
 
+    <animation_created_mov value="0" />
+    <tangSwitchDeadCheck value="false" />
+    <canJump value="false" />
+    <collider_rect w="15" h="-20" />
 
   </player>
   

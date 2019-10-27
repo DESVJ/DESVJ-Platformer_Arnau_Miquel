@@ -40,12 +40,6 @@ bool j1Window::Awake(pugi::xml_node& config)
 		height = config.child("resolution").attribute("height").as_int(480);
 		scale = config.child("resolution").attribute("scale").as_int(1);
 
-		if (fullscreen_window == true)
-		{
-			scale *= 1.6f;
-		}
-
-
 		if(fullscreen == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
@@ -65,6 +59,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 			App->map->fullscreen_Correction = config.child("correction").attribute("value").as_int();
+			scale *= config.child("scale_Correction").attribute("value").as_float();
 		}
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);

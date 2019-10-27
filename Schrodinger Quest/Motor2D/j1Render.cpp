@@ -244,120 +244,62 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-void j1Render::MoveCameraInsideLimits(int x, int y)
-{
-
-	if (x >= 0)
-	{
-		//X left limit
-		if (camera.x + x >= limitNegX)
-		{
-			camera.x = limitNegX;
-		}
-		else
-		{
-			camera.x += x;
-		}
-	}
-	else
-	{
-		//X right limit
-		if (camera.x + x <= -limitPosX)
-		{
-			camera.x = -limitPosX;
-		}
-		else
-		{
-			camera.x += x;
-		}
-
-	}
-
-	if (y >= 0)
-	{
-		//Y up limit
-		if (camera.y + y >= limitPosY)
-		{
-			camera.y = limitPosY;
-		}
-		else
-		{
-			camera.y += y;
-		}
-	}
-	else
-	{
-		//Y down limit
-		if (camera.y + y <= -limitNegY)
-		{
-			camera.y = -limitNegY;
-		}
-		else
-		{
-			camera.y += y;
-		}
-	}
-
-
-}
-
-
 void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 {
 
-	//TODO: THIS IS TEMPORAL, WE NEED A SMOOTHER FOLLOW
+	//Convert point from world space to camera space
 	int x = -(point.x * (int)App->win->GetScale()) + (App->win->width / 2);
 	int y = -(point.y * (int)App->win->GetScale()) + (App->win->height / 2);
 
+	//Move follow rect to center of camera
 	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
 	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
 	
 
-		//Left X mov
-		if (camera.x >= limitNegX)
-		{
-			camera.x = limitNegX;
-		}
-		else if (point.x <= followMinRect.x)
-		{
-			camera.x = x - ((followMinRect.w / 2) * (int)App->win->GetScale());
-		}
+	//Left X mov
+	if (camera.x >= limitNegX)
+	{
+		camera.x = limitNegX;
+	}
+	else if (point.x <= followMinRect.x)
+	{
+		camera.x = x - ((followMinRect.w / 2) * (int)App->win->GetScale());
+	}
 
-		//Right X mov
-		if (camera.x <= -limitPosX)
-		{
-			camera.x = -limitPosX;
-		}
-		else if (point.x >= followMinRect.x + followMinRect.w)
-		{
-			camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
-		}
-
-
-
-		//Up Y mov
-		if (camera.y >= limitPosY)
-		{
-			camera.y = limitPosY;
-		}
-		else if (point.y + App->player->player.minPlayerHeight <= followMinRect.y)
-		{
-			if(y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale() <= 0)
-				camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
-		}
-
-		//Down Y mov
-		if (camera.y <= -limitNegY)
-		{
-			camera.y = -limitNegY;
-		}
-		else if (point.y >= followMinRect.y + followMinRect.h)
-		{
-			camera.y = y + -App->player->player.minPlayerHeight * (int)App->win->GetScale();
-		}
+	//Right X mov
+	if (camera.x <= -limitPosX)
+	{
+		camera.x = -limitPosX;
+	}
+	else if (point.x >= followMinRect.x + followMinRect.w)
+	{
+		camera.x = x + ((followMinRect.w / 2) * (int)App->win->GetScale());
+	}
 
 
-	if(App->player->player.player_god_mode || App->input->is_Debug_Mode)
+	//Up Y mov
+	if (camera.y >= limitPosY)
+	{
+		camera.y = limitPosY;
+	}
+	else if (point.y + App->player->player.minPlayerHeight <= followMinRect.y)
+	{
+		if(y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale() <= 0)
+			camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
+	}
+
+	//Down Y mov
+	if (camera.y <= -limitNegY)
+	{
+		camera.y = -limitNegY;
+	}
+	else if (point.y >= followMinRect.y + followMinRect.h)
+	{
+		camera.y = y + -App->player->player.minPlayerHeight * (int)App->win->GetScale();
+	}
+
+
+	if(App->input->is_Debug_Mode)
 		App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
 
 }
@@ -369,22 +311,19 @@ void j1Render::SetMapLimitsWithTMX()
 	itemA = App->map->data.object_layers.start;
 	while (itemA != NULL)
 	{
-		//for each prop in that layer
+		//For each prop in that layer
 		p2List_item<object_property*>* isLimit;
 		isLimit = itemA->data->properties.start;
 		while (isLimit != NULL)
 		{
-			//if the layer is a collider layer
+			//If the layer is a map limit
 			if (isLimit->data->name == "isMapLimits" && isLimit->data->prop_value.value_bool == true)
 			{
+				//Set map limit on X
 				limitPosX = itemA->data->objects.start->data->rect.x * (int)App->win->GetScale() - camera.w;
 			}
 			isLimit = isLimit->next;
 		}
 		itemA = itemA->next;
 	}
-
-
-
-
 }

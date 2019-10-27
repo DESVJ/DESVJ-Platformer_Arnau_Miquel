@@ -11,6 +11,7 @@
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
+//Game general state
 enum MainState
 {
 	CREATE = 1,
@@ -22,17 +23,22 @@ enum MainState
 	EXIT
 };
 
+//Pointer to application
 j1App* App = NULL;
 
+
+//Main game function
 int main(int argc, char* args[])
 {
 	LOG("Engine starting ... %d");
 
+	//Used to report memory leaks
 	ReportMemoryLeaks();
 
 	MainState state = MainState::CREATE;
 	int result = EXIT_FAILURE;
 
+	//Game loop
 	while(state != EXIT)
 	{
 		switch(state)

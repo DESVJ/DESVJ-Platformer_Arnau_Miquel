@@ -66,7 +66,7 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
-//	pugi::xml_document	config_file;
+
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
 
@@ -74,9 +74,9 @@ bool j1App::Awake()
 		
 	config = LoadConfig(config_file);
 
+	//Window name setup
 	if(config.empty() == false)
 	{
-		// self-config
 		ret = true;
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());

@@ -19,6 +19,7 @@ public:
 	j1Module() : active(false)
 	{}
 
+	//Called on module initialization
 	void Init()
 	{
 		active = true;
@@ -60,11 +61,13 @@ public:
 		return true;
 	}
 
+	//Called when loading the game
 	virtual bool Load(pugi::xml_node&)
 	{
 		return true;
 	}
 
+	//Called when saving the game
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
@@ -72,7 +75,10 @@ public:
 
 public:
 
+	//Name of the module
 	p2SString	name;
+
+	//State of the module 
 	bool		active;
 
 };

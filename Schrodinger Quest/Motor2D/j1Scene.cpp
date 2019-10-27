@@ -32,6 +32,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	//Load map 1 && collisions on game start
 	App->map->Load(App->map->GetSourceFromID(App->map->map_id).GetString());
 	App->colliders.LoadColliders();
 	App->render->SetMapLimitsWithTMX();
@@ -49,51 +50,43 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(0, 3 * (int)App->win->GetScale());
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(0, (-3 * (int)App->win->GetScale()));
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits(3 * (int)App->win->GetScale(), 0);
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->MoveCameraInsideLimits((-3 * (int)App->win->GetScale()), 0);
-
+	//Volume change +
 	if (App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_REPEAT)
 		App->audio->ChangeVolume(true);
 
+	//Volume change -
 	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_REPEAT)
 		App->audio->ChangeVolume(false);
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	//Start from the first level
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	{
 		App->map->map_id = 1;
 		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+	//Start from the second level
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
+	{
 		App->map->map_id = 2;
 		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 	}
+
+	//Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->player->Start_F3();
 
+	//Save the current state
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+	//Load the previous state (even across levels)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-
-	//App->render->Blit(img, 0, 0);
+	//Draw map
 	App->map->Draw();
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count());
-
-	App->win->SetTitle(title.GetString());
 	return true;
 }
 
@@ -102,6 +95,7 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
+	//Close game
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -117,7 +111,7 @@ bool j1Scene::CleanUp()
 }
 
 
-//Load map
+//Load map by name
 void j1Scene::Load_Map_By_Name(const char* name)
 {
 	App->colliders.collider_list.clear();

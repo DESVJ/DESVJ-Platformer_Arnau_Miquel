@@ -32,10 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load map 1
+	//Load map
 	void Load_Map_By_Name(const char*);
 
-private:
 };
 
 #endif // __j1SCENE_H__

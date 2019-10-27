@@ -1,10 +1,8 @@
 #ifndef __j1RENDER_H__
 #define __j1RENDER_H__
 
-
 #include "p2Point.h"
 #include "j1Module.h"
-#define MAX_COLOR_NUMBER 255
 
 class j1Render : public j1Module
 {
@@ -42,6 +40,8 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+
+	//Set map limits by TMX file
 	void SetMapLimitsWithTMX();
 
 public:
@@ -50,12 +50,14 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
+
+	//Camera follow rect
 	SDL_Rect followMinRect = {0, 0, 50, 50};
 
-public:
-	//camera limits
+	//Camera limits
 	int limitPosX, limitNegX, limitPosY, limitNegY;
-	void MoveCameraInsideLimits(int, int);
+
+	//Move camera to a point inside map limits
 	void MoveCameraToPointInsideLimits(p2Point<int> point);
 
 };

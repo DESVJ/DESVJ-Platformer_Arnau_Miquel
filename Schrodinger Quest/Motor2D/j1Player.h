@@ -9,19 +9,21 @@
 #include "Animation.h"
 #define MAX_INPUTS_OUT 5
 
-
-enum player_colision_state {
-
-	NONE, CLIMBING, DYING
-
+//Collision state enum
+enum player_colision_state 
+{
+	NONE, 
+	CLIMBING, 
+	DYING
 };
 
+//Player struct
 struct Player_Info
 {
 
 	int minPlayerHeight;
-	SDL_Rect player_rect = { 0, 0, 0, 0 };
-	SDL_Rect player_collider_rect = { 0, 0, 0, 0 };
+	SDL_Rect player_rect;
+	SDL_Rect player_collider_rect;
 	p2Point<int> player_speed;
 	bool player_flip;
 	bool player_not_jumping;
@@ -40,7 +42,9 @@ struct Player_Info
 
 };
 
-enum state {
+//Player states
+enum state 
+{
 	S_NONE = 0,
 	S_IDLE,
 	S_RUN_RIGHT,
@@ -60,7 +64,9 @@ enum state {
 	S_DEAD
 };
 
-enum inputin {
+//Input states
+enum inputin 
+{
 	I_NONE = 0,
 	I_RIGHT,
 	I_LEFT,
@@ -86,7 +92,9 @@ enum inputin {
 	I_DEAD
 };
 
-enum inputout {
+//Output states
+enum inputout 
+{
 	O_NONE = 0,
 	O_RIGHT,
 	O_LEFT,
@@ -96,6 +104,7 @@ enum inputout {
 	O_DEAD_FINISH
 };
 
+//Player class
 class j1Player : public j1Module
 {
 
@@ -129,13 +138,16 @@ public:
 	bool Load(pugi::xml_node&);
 
 	//Load animation pushbacks by name
-	//void LoadAnimation(pugi::xml_node* animation_node, Animation* anim,const char* name);
 	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);
+
+	//Load sound by TMX
 	void LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name);
 
+	//Change col_state state
 	void Change_Col_State(player_colision_state state);
 
 public:
+
 	Player_Info player;
 	Animation idle;
 	Animation run;
@@ -147,15 +159,15 @@ public:
 	unsigned int jump_up_fx;
 	unsigned int jump_down_fx;
 	unsigned int switch_fx;
-	int animation_created_mov = 0;
+	int animation_created_mov;
 	int killLimit;
-	bool tangSwitchDeadCheck = false;
-	bool canJump = false;
+	bool tangSwitchDeadCheck;
+	bool canJump;
 
 private:
+
 	int gravity;
 	int maximum_speed;
-	///////TEMPORAL
 	int difference_y;
 	int inputs_out;
 	state actual_state;
