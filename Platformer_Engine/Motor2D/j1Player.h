@@ -150,6 +150,7 @@ public:
 	int animation_created_mov = 0;
 	int killLimit;
 	bool tangSwitchDeadCheck = false;
+	bool canJump = false;
 
 private:
 	int gravity;

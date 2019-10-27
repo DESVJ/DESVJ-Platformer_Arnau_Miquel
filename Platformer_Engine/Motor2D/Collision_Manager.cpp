@@ -164,6 +164,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									{
 										currentPoint->y = block->y;
 
+										if (isPlayer)
+											App->player->canJump = true;
+
 										if(isPlayer && App->player->player.player_speed.y >= 2 && App->player->player.col_state == player_colision_state::NONE)
 											App->audio->PlayFx(App->player->jump_down_fx);
 
@@ -267,6 +270,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	if (!colisionDetectedY)
 	{
 		currentPoint->y = prediction.y;
+		App->player->canJump = false;
 	}
 
 	if (!typeColDetected) 
