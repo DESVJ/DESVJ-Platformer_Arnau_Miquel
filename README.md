@@ -54,6 +54,8 @@ Here is a list with the innovations done in this delivery:
 
 * Height of jump changes depending of time pushing spacebar.
 
+* Use of left button mouse
+
 ## Work by members
 
 * Arnau Falgueras Garcia de Atocha
