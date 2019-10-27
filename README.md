@@ -56,11 +56,23 @@ Here is a list with the innovations done in this delivery:
   
   * Camera
 
-  * Camera & Collision culling
+  * Occlusion Culling
 
 ## Credits
 
 In order to make this game, we have used art not owned by us. Below we credit the authors of this art:
+
+* Background & Tilesets
+
+    * https://0x72.itch.io/
+	Downloaded from https://0x72.itch.io/16x16-industrial-tileset
+
+	* https://vnitti.itch.io/
+	Downloaded from https://vnitti.itch.io/taiga-asset-pack
+
+	* https://opengameart.org/users/ansimuz?page=1
+	Downloaded from https://opengameart.org/content/living-tissue-background
+
 
 * Sprites of the player: Pixel Art Adventurer Sprites by Elthen:
     * https://elthen.itch.io/
