@@ -12,22 +12,32 @@
 #include"j1Render.h"
 #include"j1App.h"
 
-
+//Collide type
 enum Collider_Types
 {
-	WALKEABLE, KILL, CLIMB, TANG
+	WALKEABLE, 
+	KILL, 
+	CLIMB, 
+	TANG
 };
 
+//Collider info
 struct Collider 
 {
-	SDL_Rect collider_rect = {0, 0, 0, 0};
-	bool enabled = true;
-	bool canBeJumped = false;
+	SDL_Rect collider_rect;
+	bool enabled;
+	bool canBeJumped;
 	Collider_Types collider_type;
 };
 
-enum Direction {
-	NONE_DIRECTION, UP, DOWN, RIGHT, LEFT
+//Movement direction
+enum Direction 
+{
+	NONE_DIRECTION, 
+	UP, 
+	DOWN, 
+	RIGHT, 
+	LEFT
 };
 
 class Collider_Manager
@@ -37,15 +47,19 @@ public:
 	Collider_Manager();
 	~Collider_Manager();
 
+	//List of colliders
 	p2List<Collider> collider_list;
 
-	Collider* allowClippingCollider = nullptr;
-	bool typeColDetected = false;
+	Collider* allowClippingCollider;
+	bool typeColDetected;
 
+	//Function to move objects by collision prediction
 	void MoveObject(SDL_Rect*, p2Point<int>, bool isPlayer = false);
 
+	//Load colliders
 	void LoadColliders();
 
+	//Check for rect collision
 	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
 	{
 		bool detectedX = true;
@@ -84,10 +98,6 @@ public:
 		return detectedX && detectedY;
 
 	}
-
-
 };
-
-
 
 #endif // __j1COLLISION_H__

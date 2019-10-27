@@ -16,7 +16,7 @@ struct object_property
 	p2SString name = "Name_Null";
 	union value
 	{
-		bool value_bool = false;
+		bool value_bool;
 		int value_int;
 		float value_float;
 		const char* value_string;
@@ -26,8 +26,8 @@ struct object_property
 };
 struct object_struct {
 
-	int id = 0;
-	SDL_Rect rect = {0, 0, 0, 0};
+	int id;
+	SDL_Rect rect;
 	p2List<object_property*> properties;
 };
 
@@ -71,7 +71,9 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
-	inline SDL_Rect GetRect(int id) {
+
+	inline SDL_Rect GetRect(int id) 
+	{
 		int n = id - firstgid;
 		int x = n % num_tiles_width;
 		x = ((x * tile_width) + (x * spacing)) + margin;
@@ -117,7 +119,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
-	// Called each loop iteration
+	//Draw map
 	void Draw();
 
 	// Called before quitting
@@ -135,7 +137,8 @@ public:
 	//Get source of music
 	void PrepareMusicSource(p2List_item<MapObjectGroup*>*, bool dead = false);
 
-	void Translate_Coord(int* x, int* y) {
+	void Translate_Coord(int* x, int* y) 
+	{
 		*x *= data.tile_width;
 		*y *= data.tile_height;
 	}
@@ -143,6 +146,7 @@ public:
 
 private:
 
+	//Map loading functions
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
@@ -151,12 +155,14 @@ private:
 
 public:
 
+	//Check for occlusion culling
 	bool Culling_Check(int x, int y, SDL_Rect rect, float speed);
+
 	MapData data;
-	int culling_offset = 0;
+	int culling_offset;
 	SDL_Rect end_point;
 	int map_id;
-	int fullscreen_Correction = 1;
+	int fullscreen_Correction;
 
 private:
 

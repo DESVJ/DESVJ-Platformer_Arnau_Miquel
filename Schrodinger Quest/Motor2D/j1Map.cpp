@@ -29,16 +29,16 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 	map_id = config.child("maps").child("map").attribute("id").as_int();
+	culling_offset = config.child("culling_offset").attribute("value").as_int();
 	return ret;
 }
 
 
 bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 {
-
-
 	int scale = (int)App->win->GetScale();
 
+	//Check if tile is inside camera rect
 	if ((x + rect.w) * scale / speed >= -App->render->camera.x + culling_offset && x * scale / fullscreen_Correction <= -App->render->camera.x * speed + App->win->width - culling_offset
 		&& (y + rect.h) * scale  >= -App->render->camera.y + culling_offset && y * scale / fullscreen_Correction <= -App->render->camera.y + App->win->height - culling_offset)
 	{
@@ -63,16 +63,14 @@ void j1Map::Draw()
 	p2List_item<MapLayer*>* background_coord_layer = data.background_layers.start;
 
 	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
-	//for of every layer
 
-
+	//Draw background layers
 	for (int layer_counter = 0; layer_counter < data.background_layers.count(); layer_counter++) {
 
 		//for of every x in one layer
 		for (int i = 0; i < background_coord_layer->data->height; i++) {
 
 			//for of every y in one layer
-
 			for (int j = 0; j < background_coord_layer->data->width; j++) {
 				int n = background_coord_layer->data->Get(j, i);
 				int gid = background_coord_layer->data->gid[n];
@@ -99,10 +97,12 @@ void j1Map::Draw()
 		}
 		background_coord_layer = background_coord_layer->next;
 	}
+
+	//Draw a background black square
 	if (App->player->player.player_tang_mode)
 		App->render->DrawQuad({0, 0, data.width * data.tile_width,  data.width * data.tile_width }, 0, 0, 0, 100);
 
-
+	//Draw tang and non-tang layers
 	if (!App->player->player.player_tang_mode) 
 	{
 		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
@@ -178,7 +178,7 @@ void j1Map::Draw()
 	}
 
 
-
+	//Draw map debug colliders
 	if (App->input->is_Debug_Mode)
 	{
 		for (int i = 0; i < App->colliders.collider_list.count(); i++)
@@ -210,6 +210,7 @@ void j1Map::Draw()
 			}
 		}
 	}
+
 	int i;
 }
 
@@ -244,6 +245,7 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	//Remove all tang layers
 	p2List_item<MapLayer*>* itemT;
 	itemT = data.tang_layers.start;
 	while (itemT != NULL)
@@ -255,6 +257,7 @@ bool j1Map::CleanUp()
 	}
 	data.tang_layers.clear();
 
+	//Remove all backgrounds
 	p2List_item<MapLayer*>* itemBG;
 	itemBG = data.background_layers.start;
 	while (itemBG != NULL)
@@ -266,7 +269,7 @@ bool j1Map::CleanUp()
 	}
 	data.background_layers.clear();
 
-
+	//Remove all obect groups
 	p2List_item<MapObjectGroup*>* itemO;
 	itemO = data.object_layers.start;
 	while (itemO != NULL)
@@ -642,13 +645,15 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 	return ret;
 }
 
-bool j1Map::Save(pugi::xml_node& data)const {
+bool j1Map::Save(pugi::xml_node& data)const 
+{
 	pugi::xml_node map_node = data.append_child("map_info");
 	map_node.append_attribute("name") = map_name.GetString();
 	return true;
 }
 
-bool j1Map::Load(pugi::xml_node& data) {
+bool j1Map::Load(pugi::xml_node& data) 
+{
 	App->colliders.collider_list.clear();
 	App->map->CleanUp();
 	App->map->Load(data.child("map_info").attribute("name").as_string());
@@ -657,7 +662,8 @@ bool j1Map::Load(pugi::xml_node& data) {
 }
 
 
-void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool dead) {
+void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool dead) 
+{
 	p2List_item<object_property*>* isMusic;
 	isMusic = objects_map->data->properties.start;
 	while (isMusic != NULL)
@@ -671,7 +677,8 @@ void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool d
 	}
 }
 
-p2SString j1Map::GetSourceFromID(int id) {
+p2SString j1Map::GetSourceFromID(int id) 
+{
 	pugi::xml_node map_node = App->config_file.child("config").child("map").child("maps").child("map");
 	do{
 		if (map_node.attribute("id").as_int() == id)break;

@@ -3,9 +3,7 @@
 
 #include "j1Module.h"
 
-//#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
-//#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
 
@@ -56,6 +54,7 @@ public:
 		return keyboard[id];
 	}
 
+	//Check mouse states
 	j1KeyState GetMouseButtonDown(int id) const
 	{
 		return mouse_buttons[id - 1];

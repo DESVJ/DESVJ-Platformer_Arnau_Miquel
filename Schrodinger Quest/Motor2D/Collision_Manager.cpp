@@ -6,14 +6,15 @@
 #include"j1Map.h"
 #include"j1Input.h"
 #include "j1Audio.h"
-///////////TEMPORAL
 #include "j1Player.h"
 
 
-Collider_Manager::Collider_Manager() {
+Collider_Manager::Collider_Manager() 
+{
 
 }
-Collider_Manager::~Collider_Manager() {
+Collider_Manager::~Collider_Manager() 
+{
 
 }
 
@@ -48,7 +49,7 @@ void Collider_Manager::LoadColliders()
 					clr_type = objects->data->properties.start;
 					while (clr_type !=NULL)
 					{
-
+						//Load collider type
 						if (clr_type->data->name == "colliderType") 
 						{
 							if ((p2SString)clr_type->data->prop_value.value_string == "Walkeable")
@@ -67,18 +68,22 @@ void Collider_Manager::LoadColliders()
 							{
 								clr.collider_type = TANG;
 							}
-							//LOG("%s", clr_type->data->prop_value.value_string);
 						}
+
+						//Load collider canBeJumped
 						if (clr_type->data->name == "canBeJumpThrough")
 						{
 							clr.canBeJumped = clr_type->data->prop_value.value_bool;
-							LOG("AA");
+						}
+						else
+						{
+							clr.canBeJumped = false;
 						}
 
 						clr_type = clr_type->next;
 					}
-
-
+					
+					//Add collider to list
 					collider_list.add(clr);
 
 					objects = objects->next;
@@ -88,10 +93,6 @@ void Collider_Manager::LoadColliders()
 		}
 		itemA = itemA->next;
 	}
-
-
-
-
 
 }
 
@@ -124,6 +125,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		dir = UP;
 	}
 
+	//Init coollision bools
 	bool colisionDetectedX = false;
 	bool colisionDetectedY = false;
 	typeColDetected = false;
@@ -132,11 +134,12 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	for (int i = 0; i < collider_list.count(); i++)
 	{
 		SDL_Rect *block = &collider_list[i].collider_rect;
+
 		//Watch if the collider is inside the camera, if not, do not calculate colision
 		if (App->map->Culling_Check(block->x, block->y, {0, 0, block->w, block->h}, 1))
 		{
 			//Is the collider enabled?
-			if (collider_list[i].enabled) //&& is not tang colider
+			if (collider_list[i].enabled)
 			{
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
@@ -145,12 +148,13 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					//If there is a colision, look collider type
 					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
 					{
-						//Allow the object to ignore down collisions (player jumping in topo of platform)
+						//Allow the object to ignore down collisions (player jumping in top of platform)
 						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
 						{
 							allowClippingCollider = nullptr;
 						}
-						//TODO: Maybe going too fast can cause clipping
+
+
 						if (&collider_list[i] != allowClippingCollider) 
 						{
 							//Is the collision inside x and x + w?
@@ -164,16 +168,19 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									{
 										currentPoint->y = block->y;
 
-										if (isPlayer && !App->player->canJump)
-											App->player->canJump = true;
+										if (isPlayer) 
+										{
 
-										if(isPlayer && App->player->player.player_speed.y >= 2 && App->player->player.col_state == player_colision_state::NONE)
-											App->audio->PlayFx(App->player->jump_down_fx);
+											if (!App->player->canJump)
+												App->player->canJump = true;
 
-										//TEMPORAL!!!!!!!!!!!!!!!!
-	//									if (App->player->player.player_not_jumping == false)App->audio->PlayFx(App->player->jump_down_fx);
-										App->player->player.player_not_jumping = true;
-										App->player->player.player_in_air = false;
+											if (App->player->player.player_speed.y >= 2 && App->player->player.col_state == player_colision_state::NONE)
+												App->audio->PlayFx(App->player->jump_down_fx);
+
+											App->player->player.player_not_jumping = true;
+											App->player->player.player_in_air = false;
+										}
+
 									}
 								}
 								else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
@@ -187,7 +194,6 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 											allowClippingCollider = &collider_list[i];
 										}
 
-										//currentPoint->y = block->y + block->h - currentPoint->h;
 										if (collider_list[i].canBeJumped) 
 										{
 											allowClippingCollider = &collider_list[i];
@@ -224,6 +230,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 							}
 						}
 					}
+
 					//If collider is type KILL, kill player
 					if(collider_list[i].collider_type == KILL && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
 					{
@@ -235,6 +242,8 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 						}
 
 					}
+
+					//If collider is type Climb, climb
 					if(collider_list[i].collider_type == CLIMB)
 					{
 						typeColDetected = true;
@@ -262,8 +271,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		}
 	}
 
-	if(App->input->is_Debug_Mode)
-		App->render->DrawQuad({prediction.x, prediction.y, currentPoint->w, currentPoint->h}, 255, 255, 255, 255);
+	////Draw prediction on debug mode
+	//if(App->input->is_Debug_Mode)
+	//	App->render->DrawQuad({prediction.x, prediction.y, currentPoint->w, currentPoint->h}, 255, 255, 255, 255);
 
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (!colisionDetectedX)
@@ -279,6 +289,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		}
 	}
 
+	//Reset typeColDetected state
 	if (!typeColDetected) 
 	{
 		App->player->Change_Col_State(player_colision_state::NONE);

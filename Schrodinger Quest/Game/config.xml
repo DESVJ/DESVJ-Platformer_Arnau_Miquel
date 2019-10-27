@@ -22,6 +22,7 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
     <scale_Correction value ="1.6"/>
+    <scale_No_Correction value ="1"/>
     <correction value ="2"/>
   </window>
 
@@ -32,9 +33,13 @@
   <map>
     <folder>maps/</folder>
     <maps>
-	<map id="1" source="map_1_final.tmx"/>
-	<map id="2" source="map_2_final.tmx"/>
+	    <map id="1" source="map_1_final.tmx"/>
+	    <map id="2" source="map_2_final.tmx"/>
     </maps>
+      
+    <culling_offset value="0" />
+    
+    
   </map>
 
 
