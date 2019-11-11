@@ -7,6 +7,7 @@
 #include"p2Point.h"
 #include"p2SString.h"
 #include "Animation.h"
+#include"p2List.h"
 #define MAX_INPUTS_OUT 5
 
 //Collision state enum
@@ -145,6 +146,9 @@ public:
 
 	//Change col_state state
 	void Change_Col_State(player_colision_state state);
+
+	//Move player to spawn
+	void MoveToSpawn();
 
 public:
 

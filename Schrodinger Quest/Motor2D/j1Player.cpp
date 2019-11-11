@@ -79,23 +79,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	//Load player spawn position
-	p2List_item<MapObjectGroup*>* objects_map;
-	objects_map = App->map->data.object_layers.start;
-	while (objects_map != NULL)
-	{
-
-		if (objects_map->data->name == "SpawnPoint"&& objects_map->data->properties.start->data->prop_value.value_bool == true) 
-		{
-			player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
-			player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
-
-			player.player_rect.x = player.player_collider_rect.x;
-			player.player_rect.y = player.player_collider_rect.y;
-			player.player_rect.w = objects_map->data->objects.start->data->rect.w;
-			player.player_rect.h = objects_map->data->objects.start->data->rect.h;
-		}
-		objects_map = objects_map->next;
-	}
+	MoveToSpawn();
 
 	//Load player spritesheet
 	player.player_spritesheet = App->tex->Load(player.texture_source.GetString());
@@ -248,37 +232,7 @@ bool j1Player::CleanUp()
 void j1Player::Start_F3()
 {
 
-	//Set position to spawn point
-	p2List_item<MapObjectGroup*>* objects_map;
-	objects_map = App->map->data.object_layers.start;
-	while (objects_map != NULL) 
-	{
-		if (objects_map->data->name == "SpawnPoint"){
-			p2List_item<object_property*>* isSpawn;
-			isSpawn = objects_map->data->properties.start;
-			while (isSpawn != NULL)
-			{
-				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
-				{
-					player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
-					player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
-
-					player.player_rect.x = player.player_collider_rect.x;
-					player.player_rect.y = player.player_collider_rect.y;
-					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
-					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
-				}
-				isSpawn = isSpawn->next;
-			}
-		}
-		else if (objects_map->data->name == "Music && Sound")
-		{
-			//Restart music
-			if(player.player_alive==true)App->map->PrepareMusicSource(objects_map);
-			else App->map->PrepareMusicSource(objects_map, true);
-		}
-		objects_map=objects_map->next;
-	}
+	MoveToSpawn();
 	if (input_in == I_DEAD)input_in = I_NONE;
 	App->player->Change_Col_State(player_colision_state::NONE);
 
@@ -424,4 +378,41 @@ void j1Player::LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, 
 			break;
 		}
 	}
+}
+
+void j1Player::MoveToSpawn()
+{
+	//Set position to spawn point
+	p2List_item<MapObjectGroup*>* objects_map;
+	objects_map = App->map->data.object_layers.start;
+	while (objects_map != NULL)
+	{
+		if (objects_map->data->name == "SpawnPoint") {
+			p2List_item<object_property*>* isSpawn;
+			isSpawn = objects_map->data->properties.start;
+			while (isSpawn != NULL)
+			{
+				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
+				{
+					player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
+					player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
+
+					player.player_rect.x = player.player_collider_rect.x;
+					player.player_rect.y = player.player_collider_rect.y;
+					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
+					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
+				}
+				isSpawn = isSpawn->next;
+			}
+		}
+		else if (objects_map->data->name == "Music && Sound")
+		{
+			//Restart music
+			if (player.player_alive == true)App->map->PrepareMusicSource(objects_map);
+			else App->map->PrepareMusicSource(objects_map, true);
+		}
+		objects_map = objects_map->next;
+	}
+
+	
 }

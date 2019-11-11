@@ -60,44 +60,8 @@ public:
 	void LoadColliders();
 
 	//Check for rect collision
-	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
-	{
-		bool detectedX = true;
-		bool detectedY = true;
-
-		if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x) 
-		{
-			detectedX = false;
-		}
-
-		if (rect.y < r.y || (rect.y + rect.h) > r.y + r.h)
-		{
-			detectedY = false;
-		}
-
-		return detectedX && detectedY;
-	}
-
-	bool CheckAbsoluteCollision(const SDL_Rect& rect, const SDL_Rect& r)
-	{
-
-		bool detectedX = false;
-		bool detectedY = false;
-
-		//Check if rect is full inside of r
-		if (rect.x > r.x && rect.x + rect.w < r.x + r.w)
-		{
-			detectedX = true;
-		}
-
-		if (rect.y < r.y + r.h && rect.y + rect.h > r.y)
-		{
-			detectedY = true;
-		}
-
-		return detectedX && detectedY;
-
-	}
+	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r);
+	bool CheckAbsoluteCollision(const SDL_Rect& rect, const SDL_Rect& r);
 };
 
 #endif // __j1COLLISION_H__
