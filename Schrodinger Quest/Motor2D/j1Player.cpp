@@ -181,7 +181,7 @@ bool j1Player::Update(float dt)
 	App->render->MoveCameraToPointInsideLimits({player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y});
 
 	//Check if player is under the map and kill it
-	if (player.player_rect.y + player.player_rect.h > killLimit)
+	if (player.player_rect.y + player.player_rect.h > killLimit && !player.player_respawn)
 	{
 		Change_Col_State(player_colision_state::DYING);
 	}
@@ -249,7 +249,7 @@ void j1Player::Start_F3()
 	actual_state = (state)App->config_file.child("config").child("player").child("actual_state").attribute("value").as_int();
 
 	//Restart camera position
-	App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });
+	//App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });
 }
 
 void j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)

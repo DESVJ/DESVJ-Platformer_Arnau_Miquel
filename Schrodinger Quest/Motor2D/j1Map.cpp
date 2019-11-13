@@ -38,7 +38,7 @@ bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 {
 	int scale = (int)App->win->GetScale();
 
-	//Check if tile is inside camera rect
+	////Check if tile is inside camera rect
 	if ((x + rect.w) * scale / speed >= -App->render->camera.x + culling_offset && x * scale / fullscreen_Correction <= -App->render->camera.x * speed + App->win->width - culling_offset
 		&& (y + rect.h) * scale  >= -App->render->camera.y + culling_offset && y * scale / fullscreen_Correction <= -App->render->camera.y + App->win->height - culling_offset)
 	{
@@ -48,6 +48,14 @@ bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 	{
 		return false;
 	}
+
+	//if (App->colliders.CheckAbsoluteCollision(rect, { -App->render->camera.x, -App->render->camera.y, (int)App->win->width, (int)App->win->height}))
+	//{
+	//	return true;
+	//}
+
+
+	//return false;
 
 }
 
@@ -85,7 +93,7 @@ void j1Map::Draw()
 	//Draw map debug colliders
 	if (App->input->is_Debug_Mode)
 	{
-		for (int i = 0; i < App->colliders.collider_list.count(); i++)
+		for (unsigned int i = 0; i < App->colliders.collider_list.count(); i++)
 		{
 			Collider *col = &App->colliders.collider_list[i];
 			SDL_Rect *rect = &col->collider_rect;
@@ -114,8 +122,6 @@ void j1Map::Draw()
 			}
 		}
 	}
-
-	int i;
 }
 
 
@@ -180,7 +186,7 @@ bool j1Map::CleanUp()
 	{
 		itemO->data->name.Clear();
 		itemO->data->properties.clear();
-		for (int i = 0; i < itemO->data->objects.count(); i++)
+		for (unsigned int i = 0; i < itemO->data->objects.count(); i++)
 		{
 			itemO->data->objects[i]->properties.clear();
 			RELEASE(itemO->data->objects[i]);
@@ -598,10 +604,10 @@ void j1Map::GeneralDraw(p2List_item<MapLayer*>* list, p2List_item<TileSet*>* coo
 	for (int layer_counter = 0; layer_counter < len; layer_counter++) {
 
 		//for of every x in one layer
-		for (int i = 0; i < list->data->height; i++) {
+		for (unsigned int i = 0; i < list->data->height; i++) {
 
 			//for of every y in one layer
-			for (int j = 0; j < list->data->width; j++) {
+			for (unsigned int j = 0; j < list->data->width; j++) {
 				int n = list->data->Get(j, i);
 				int gid = list->data->gid[n];
 				if (gid != 0) {
