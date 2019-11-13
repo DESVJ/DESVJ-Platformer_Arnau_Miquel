@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="60" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="122" nextobjectid="108">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="60" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="122" nextobjectid="110">
  <tileset firstgid="1" name="map_2_Tileset" tilewidth="16" tileheight="16" tilecount="1984" columns="62">
   <image source="map_2_Tileset_2.png" width="1001" height="512"/>
  </tileset>
@@ -29435,6 +29435,11 @@
   <object id="107" name="Map Limit X" x="800" y="0" width="16" height="864">
    <properties>
     <property name="LimitX" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="109" name="Map Limit Y" x="0" y="860" width="800" height="4">
+   <properties>
+    <property name="LimitY" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

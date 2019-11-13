@@ -65,38 +65,7 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* coord_tileset = data.tilesets.start;
 
 	//Draw background layers
-	for (int layer_counter = 0; layer_counter < data.background_layers.count(); layer_counter++) {
-
-		//for of every x in one layer
-		for (int i = 0; i < background_coord_layer->data->height; i++) {
-
-			//for of every y in one layer
-			for (int j = 0; j < background_coord_layer->data->width; j++) {
-				int n = background_coord_layer->data->Get(j, i);
-				int gid = background_coord_layer->data->gid[n];
-				if (gid != 0) {
-					while (ret == false) {
-						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
-						else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
-						else ret = true;
-					}
-					ret = false;
-					SDL_Rect rect = coord_tileset->data->GetRect(background_coord_layer->data->gid[n]);
-					int x = j;
-					int y = i;
-					Translate_Coord(&x, &y);
-
-					if (Culling_Check(x, y, rect, background_coord_layer->data->speed))
-					{
-						App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { background_coord_layer->data->speed,  1 });
-					}
-
-
-				}
-			}
-		}
-		background_coord_layer = background_coord_layer->next;
-	}
+	GeneralDraw(background_coord_layer, coord_tileset, (int)data.background_layers.count(), ret);
 
 	//Draw a background black square
 	if (App->player->player.player_tang_mode)
@@ -105,76 +74,11 @@ void j1Map::Draw()
 	//Draw tang and non-tang layers
 	if (!App->player->player.player_tang_mode) 
 	{
-		for (int layer_counter = 0; layer_counter < number_of_layers; layer_counter++) {
-
-			//for of every x in one layer
-			for (int i = 0; i < coord_layer->data->height; i++) {
-
-				//for of every y in one layer
-
-				for (int j = 0; j < coord_layer->data->width; j++) {
-					int n = coord_layer->data->Get(j, i);
-					int gid = coord_layer->data->gid[n];
-					if (gid != 0) {
-						while (ret == false) {
-							if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
-							else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
-							else ret = true;
-						}
-						ret = false;
-						SDL_Rect rect = coord_tileset->data->GetRect(coord_layer->data->gid[n]);
-						int x = j;
-						int y = i;
-						Translate_Coord(&x, &y);
-
-						if (Culling_Check(x, y, rect, coord_layer->data->speed)) 
-						{
-							App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { coord_layer->data->speed,  1 });
-						}
-
-
-					}
-				}
-			}
-			coord_layer = coord_layer->next;
-		}
+		GeneralDraw(coord_layer, coord_tileset, (int)data.layers.count(), ret);
 	}
 	else
 	{
-		for (int layer_counter = 0; layer_counter < data.tang_layers.count(); layer_counter++) {
-
-			//for of every x in one layer
-			if (tang_coord_layer != nullptr)
-			{
-				for (int i = 0; i < tang_coord_layer->data->height; i++) {
-
-					//for of every y in one layer
-
-					for (int j = 0; j < tang_coord_layer->data->width; j++) {
-						int n = tang_coord_layer->data->Get(j, i);
-						int gid = tang_coord_layer->data->gid[n];
-						if (gid != 0) {
-							while (ret == false) {
-								if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
-								else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
-								else ret = true;
-							}
-							ret = false;
-							SDL_Rect rect = coord_tileset->data->GetRect(tang_coord_layer->data->gid[n]);
-							int x = j;
-							int y = i;
-							Translate_Coord(&x, &y);
-
-							if (Culling_Check(x, y, rect, 1))
-							{
-								App->render->Blit(coord_tileset->data->texture, x, y, &rect);
-							}
-						}
-					}
-				}
-				tang_coord_layer = tang_coord_layer->next;
-			}
-		}
+		GeneralDraw(tang_coord_layer, coord_tileset, (int)data.tang_layers.count(), ret);
 	}
 
 
@@ -686,4 +590,42 @@ p2SString j1Map::GetSourceFromID(int id)
 	} while (map_node != NULL);
 	if (map_node != NULL)return map_node.attribute("source").as_string();
 	else return "";
+}
+
+
+void j1Map::GeneralDraw(p2List_item<MapLayer*>* list, p2List_item<TileSet*>* coord_tileset, int len,  bool ret)
+{
+	for (int layer_counter = 0; layer_counter < len; layer_counter++) {
+
+		//for of every x in one layer
+		for (int i = 0; i < list->data->height; i++) {
+
+			//for of every y in one layer
+			for (int j = 0; j < list->data->width; j++) {
+				int n = list->data->Get(j, i);
+				int gid = list->data->gid[n];
+				if (gid != 0) {
+					while (ret == false) 
+					{
+						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+						else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+						else ret = true;
+					}
+					ret = false;
+					SDL_Rect rect = coord_tileset->data->GetRect(list->data->gid[n]);
+					int x = j;
+					int y = i;
+					Translate_Coord(&x, &y);
+
+					if (Culling_Check(x, y, rect, list->data->speed))
+					{
+						App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { list->data->speed,  1 });
+					}
+
+
+				}
+			}
+		}
+		list = list->next;
+	}
 }
