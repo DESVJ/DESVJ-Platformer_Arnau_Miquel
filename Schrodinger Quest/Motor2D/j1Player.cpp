@@ -139,15 +139,11 @@ bool j1Player::Update(float dt)
 	{
 		if (player.player_flip == SDL_FLIP_NONE)
 		{
-			player.player_speed.x -= 1;
+			player.player_speed.x -= 0.1f;
 		}
 		else
 		{
-			player.player_speed.x += 1;
-		}
-		if (player.player_speed.x == 0) 
-		{
-			player.isSliding = false;
+			player.player_speed.x += 0.1f;
 		}
 
 	}

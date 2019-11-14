@@ -25,7 +25,7 @@ struct Player_Info
 	int minPlayerHeight;
 	SDL_Rect player_rect;
 	SDL_Rect player_collider_rect;
-	p2Point<int> player_speed;
+	p2Point<float> player_speed;
 	bool player_flip;
 	bool player_not_jumping;
 	bool player_stop_jumping_up;
