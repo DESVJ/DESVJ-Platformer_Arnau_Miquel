@@ -119,6 +119,46 @@ bool j1Player::Update(float dt)
 		}
 	}
 
+	//Slide mec
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN && player.player_speed.x != 0)
+	{
+		if (!player.isSliding) 
+		{
+			player.isSliding = true;
+			if (player.player_flip == SDL_FLIP_NONE) 
+			{
+				player.player_speed.x = 10;
+			}
+			else
+			{
+				player.player_speed.x = -10;
+			}
+		}
+	}
+	if (player.isSliding)
+	{
+		if (player.player_flip == SDL_FLIP_NONE)
+		{
+			player.player_speed.x -= 1;
+		}
+		else
+		{
+			player.player_speed.x += 1;
+		}
+		if (player.player_speed.x == 0) 
+		{
+			player.isSliding = false;
+		}
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP ) 
+	{
+
+		player.player_speed.x = 0;
+		player.isSliding = false;
+	}
+
+
 	// Change if the sprite if intangible
 	if (player.player_tang_mode == true)
 		current_frame.y += difference_y;
@@ -178,7 +218,12 @@ bool j1Player::Update(float dt)
 	player.player_rect.y = player.player_collider_rect.y;
 
 	//Move camera to new player position
-	App->render->MoveCameraToPointInsideLimits({player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y});
+	App->render->MoveCameraToPointInsideLimits({player.player_collider_rect.x + (player.player_collider_rect.w / 2), player.player_collider_rect.y});
+
+	//App->render->camera.x = -(player.player_rect.x * (int)App->win->GetScale() - (int)App->win->width / 2);
+	//App->render->camera.y = -(player.player_rect.y * (int)App->win->GetScale() - (int)App->win->height / 2);
+
+
 
 	//Check if player is under the map and kill it
 	if (player.player_rect.y + player.player_rect.h > killLimit && !player.player_respawn)
@@ -399,8 +444,8 @@ void j1Player::MoveToSpawn()
 
 					player.player_rect.x = player.player_collider_rect.x;
 					player.player_rect.y = player.player_collider_rect.y;
-					player.player_rect.w = objects_map->data->objects.start->data->rect.w;
-					player.player_rect.h = objects_map->data->objects.start->data->rect.h;
+					//player.player_rect.w = objects_map->data->objects.start->data->rect.w;
+					//player.player_rect.h = objects_map->data->objects.start->data->rect.h;
 				}
 				isSpawn = isSpawn->next;
 			}

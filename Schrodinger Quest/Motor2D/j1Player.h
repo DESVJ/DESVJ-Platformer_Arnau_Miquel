@@ -40,6 +40,9 @@ struct Player_Info
 	SDL_Texture* player_spritesheet;
 	player_colision_state col_state;
 
+	//Set to xml
+	bool isSliding = false;
+
 
 };
 
