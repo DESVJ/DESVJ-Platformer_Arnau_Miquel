@@ -139,11 +139,19 @@ bool j1Player::Update(float dt)
 	{
 		if (player.player_flip == SDL_FLIP_NONE)
 		{
-			player.player_speed.x -= 0.1f;
+			player.player_speed.x -= 0.4f;
+			if (player.player_speed.x <= 0) 
+			{
+				player.isSliding = false;
+			}
 		}
 		else
 		{
-			player.player_speed.x += 0.1f;
+			player.player_speed.x += 0.4f;
+			if (player.player_speed.x >= 0)
+			{
+				player.isSliding = false;
+			}
 		}
 
 	}
@@ -179,8 +187,8 @@ bool j1Player::Update(float dt)
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders.MoveObject(&player.player_collider_rect, { player.player_speed.x , 0}, true);
-		App->colliders.MoveObject(&player.player_collider_rect, { 0, player.player_speed.y }, true);
+		App->colliders.MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, true);
+		App->colliders.MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, true);
 	}
 
 
@@ -232,6 +240,9 @@ bool j1Player::Update(float dt)
 		player.player_flip = true;
 	else if (player.player_flip == true && player.player_speed.x > 0)
 		player.player_flip = false;
+
+	if(player.player_speed.x == 0)
+		LOG("%f, %f", player.player_speed.x, player.player_speed.y);
 
 	//Render player GFX
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);

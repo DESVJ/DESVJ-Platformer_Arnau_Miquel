@@ -127,7 +127,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 	typeColDetected = false;
 
 	//Itinerate all collider objects
-	for (int i = 0; i < collider_list.count(); i++)
+	for (unsigned int i = 0; i < collider_list.count(); i++)
 	{
 		SDL_Rect *block = &collider_list[i].collider_rect;
 

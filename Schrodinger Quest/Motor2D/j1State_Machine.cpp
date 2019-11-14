@@ -8,7 +8,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
-void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, int& inputsouts, int& speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
+void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
 {
 	
 	//Check if the player is dead
@@ -253,7 +253,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 
 
-Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up) 
+Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up) 
 {
 
 	Animation* current_animation;
@@ -358,19 +358,34 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation, bool&
 	{
 		if (speed.x < 2)
 		{
-			speed.x++;
+			speed.x += 0.2f;
 		}
 	}
 	else if (left == true) 
 	{
 		if (speed.x > -2)
 		{
-			speed.x--;
+			speed.x -= 0.2f;
 		}
 	}
 	else 
 	{
-		speed.x = 0;
+		/*speed.x = 0;*/
+
+		if (speed.x > 0) 
+		{
+			speed.x -= 0.5f;
+			if (speed.x <= 0)
+				speed.x = 0;
+		}
+		else
+		{
+			speed.x += 0.5f;
+			if (speed.x >= 0)
+				speed.x = 0;
+		}
+
+
 	}
 
 	if (jump == true) 
@@ -399,7 +414,7 @@ Animation* ExecuteState(iPoint& speed, state actual, bool reset_animation, bool&
 	{
 		if (speed.y < 2)
 		{
-			speed.y++;
+			speed.y += 0.3f;
 		}
 	}
 	else if (speed.y < 0) 

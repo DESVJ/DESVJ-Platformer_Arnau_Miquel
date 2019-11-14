@@ -59,7 +59,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 			App->map->fullscreen_Correction = config.child("correction").attribute("value").as_int();
-			scale *= config.child("scale_Correction").attribute("value").as_float();
+			scale *= (uint)config.child("scale_Correction").attribute("value").as_float();
 		}
 		else
 		{
