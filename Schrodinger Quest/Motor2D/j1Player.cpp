@@ -127,11 +127,11 @@ bool j1Player::Update(float dt)
 			player.isSliding = true;
 			if (player.player_flip == SDL_FLIP_NONE) 
 			{
-				player.player_speed.x = 10;
+				player.player_speed.x += 8;
 			}
 			else
 			{
-				player.player_speed.x = -10;
+				player.player_speed.x -= 8;
 			}
 		}
 	}
@@ -240,9 +240,6 @@ bool j1Player::Update(float dt)
 		player.player_flip = true;
 	else if (player.player_flip == true && player.player_speed.x > 0)
 		player.player_flip = false;
-
-	if(player.player_speed.x == 0)
-		LOG("%f, %f", player.player_speed.x, player.player_speed.y);
 
 	//Render player GFX
 	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
