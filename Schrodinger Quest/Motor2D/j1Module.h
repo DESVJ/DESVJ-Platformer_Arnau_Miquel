@@ -73,6 +73,8 @@ public:
 		return true;
 	}
 
+	virtual void OnCollision(/*Collider_Types type*/) {};
+
 public:
 
 	//Name of the module

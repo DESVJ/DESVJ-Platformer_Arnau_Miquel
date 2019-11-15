@@ -93,7 +93,7 @@ void Collider_Manager::LoadColliders()
 }
 
 //Move an object by movement prediction
-void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment, bool isPlayer) 
+void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment, bool isPlayer, j1Module* s_mod)
 {
 
 	//Set movement prediction
