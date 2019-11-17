@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="98">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="109">
  <imagelayer id="2" name="spritesheet">
   <image source="Player_SpriteSheet.png" width="416" height="512"/>
  </imagelayer>
@@ -223,6 +223,51 @@
     <property name="collider" type="bool" value="true"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="11" name="slide">
+  <properties>
+   <property name="animation_name" value="slide"/>
+   <property name="speed" type="float" value="0.05"/>
+  </properties>
+  <object id="98" x="6" y="235" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="99" x="36" y="236" width="20" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="100" x="65" y="233" width="25" height="22">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="101" x="100" y="241" width="20" height="14">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="102" x="133" y="246" width="21" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="103" x="166" y="245" width="21" height="11">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="104" x="198" y="246" width="21" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="105" x="134" y="204" width="21" height="19"/>
+  <object id="106" x="167" y="204" width="21" height="19"/>
+  <object id="107" x="197" y="204" width="24" height="19"/>
+  <object id="108" x="230" y="204" width="23" height="19"/>
  </objectgroup>
  <objectgroup id="10" name="Player_FXS">
   <properties>
