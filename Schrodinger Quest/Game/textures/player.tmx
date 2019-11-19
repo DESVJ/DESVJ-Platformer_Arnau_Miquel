@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="109">
- <imagelayer id="2" name="spritesheet">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="117">
+ <imagelayer id="2" name="spritesheet" locked="1">
   <image source="Player_SpriteSheet.png" width="416" height="512"/>
  </imagelayer>
- <objectgroup id="3" name="idle">
+ <objectgroup id="3" name="idle" locked="1">
   <properties>
    <property name="animation_name" value="idle"/>
    <property name="speed" type="float" value="0.2"/>
@@ -74,7 +74,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="run">
+ <objectgroup id="4" name="run" locked="1">
   <properties>
    <property name="animation_name" value="run"/>
    <property name="speed" type="float" value="0.2"/>
@@ -120,7 +120,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="idle_ladder">
+ <objectgroup id="8" name="idle_ladder" locked="1">
   <properties>
    <property name="animation_name" value="idle_ladder"/>
    <property name="speed" type="float" value="1"/>
@@ -131,7 +131,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="9" name="movement_ladder">
+ <objectgroup id="9" name="movement_ladder" locked="1">
   <properties>
    <property name="animation_name" value="movement_ladder"/>
    <property name="speed" type="float" value="0.1"/>
@@ -147,7 +147,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="6" name="jump">
+ <objectgroup id="6" name="jump" locked="1">
   <properties>
    <property name="animation_name" value="jump"/>
    <property name="speed" type="float" value="0.1"/>
@@ -183,7 +183,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="7" name="death">
+ <objectgroup id="7" name="death" locked="1">
   <properties>
    <property name="animation_name" value="death"/>
    <property name="speed" type="float" value="0.05"/>
@@ -227,30 +227,51 @@
  <objectgroup id="11" name="slide">
   <properties>
    <property name="animation_name" value="slide"/>
-   <property name="speed" type="float" value="0.05"/>
+   <property name="speed" type="float" value="0.1"/>
   </properties>
-  <object id="105" x="134" y="204" width="21" height="19">
-   <properties>
-    <property name="collider" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="106" x="167" y="204" width="21" height="19">
    <properties>
     <property name="collider" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="107" x="197" y="204" width="24" height="19">
-   <properties>
-    <property name="collider" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="108" x="230" y="204" width="23" height="19">
+  <object id="107" x="199" y="204" width="22" height="19">
    <properties>
     <property name="collider" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="10" name="Player_FXS">
+ <objectgroup id="12" name="down_attack">
+  <properties>
+   <property name="animation_name" value="down_attack"/>
+   <property name="speed" type="float" value="0.5"/>
+  </properties>
+  <object id="112" x="37" y="75" width="24" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="113" x="69" y="73" width="27" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="114" x="101" y="72" width="27" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="115" x="133" y="73" width="26" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="116" x="165" y="75" width="25" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="Player_FXS" locked="1">
   <properties>
    <property name="death" value="audio/fx/death.wav"/>
    <property name="jump_down" value="audio/fx/jump_down.wav"/>

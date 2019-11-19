@@ -162,6 +162,7 @@ public:
 	Animation idle_ladder;
 	Animation slide;
 	Animation movement_ladder;
+	Animation down_attack;
 	Animation death;
 	unsigned int death_fx;
 	unsigned int jump_up_fx;

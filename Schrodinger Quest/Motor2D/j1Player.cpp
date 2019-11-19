@@ -41,6 +41,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LoadAnimationFromTMX(&player_node, &movement_ladder, "movement_ladder");
 	LoadAnimationFromTMX(&player_node, &death, "death");
 	LoadAnimationFromTMX(&player_node, &slide, "slide");
+	LoadAnimationFromTMX(&player_node, &down_attack, "down_attack");
 
 	//Sound loading
 	LoadSoundFXFromTMX(&player_node, death_fx, "death");
@@ -104,7 +105,7 @@ bool j1Player::Update(float dt)
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
 	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation, player.player_climbing, player.player_alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up);
-
+	//Animation* current_animation = &slide;
 	if (reset_animation == true) 
 	{
 		current_animation->Reset();
