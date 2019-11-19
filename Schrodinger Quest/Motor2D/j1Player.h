@@ -160,6 +160,7 @@ public:
 	Animation run;
 	Animation jump;
 	Animation idle_ladder;
+	Animation slide;
 	Animation movement_ladder;
 	Animation death;
 	unsigned int death_fx;

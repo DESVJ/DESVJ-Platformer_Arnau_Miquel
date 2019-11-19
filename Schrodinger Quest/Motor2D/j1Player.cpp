@@ -40,6 +40,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LoadAnimationFromTMX(&player_node, &idle_ladder, "idle_ladder");
 	LoadAnimationFromTMX(&player_node, &movement_ladder, "movement_ladder");
 	LoadAnimationFromTMX(&player_node, &death, "death");
+	LoadAnimationFromTMX(&player_node, &slide, "slide");
 
 	//Sound loading
 	LoadSoundFXFromTMX(&player_node, death_fx, "death");
