@@ -11,6 +11,7 @@
 #include"j1Input.h"
 #include "j1Audio.h"
 #include <math.h>
+#include "brofiler/Brofiler.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -30,6 +31,13 @@ bool j1Map::Awake(pugi::xml_node& config)
 	folder.create(config.child("folder").child_value());
 	map_id = config.child("maps").child("map").attribute("id").as_int();
 	culling_offset = config.child("culling_offset").attribute("value").as_int();
+	int last_id = config.child("maps").last_child().attribute("id").as_int();
+	maps = new p2SString[last_id];
+	pugi::xml_node config_1 = config.child("maps").child("map");
+	for (int i = 0; i < last_id; i++) {
+		maps[i] = config_1.attribute("source").as_string();
+		if(i+1!=last_id)config_1.next_sibling("map");
+	}
 	return ret;
 }
 
@@ -60,7 +68,7 @@ bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 }
 
 void j1Map::Draw()
-{
+{BROFILER_CATEGORY("Draw Map", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
 		return;
 
@@ -131,6 +139,7 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
+	pugi::xml_document	map_file;
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
@@ -206,6 +215,7 @@ bool j1Map::CleanUp()
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
+	pugi::xml_document map_file;
 	bool ret = true;
 	map_name = file_name;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
@@ -221,7 +231,7 @@ bool j1Map::Load(const char* file_name)
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
-		ret = LoadMap();
+		ret = LoadMap(map_file);
 	}
 
 	// Load all tilesets info ----------------------------------------------
@@ -329,7 +339,7 @@ bool j1Map::Load(const char* file_name)
 }
 
 // Load map general properties
-bool j1Map::LoadMap()
+bool j1Map::LoadMap(pugi::xml_document &map_file)
 {
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
@@ -587,15 +597,16 @@ void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool d
 	}
 }
 
-p2SString j1Map::GetSourceFromID(int id) 
+p2SString j1Map::GetSourceFromID(int id)
 {
-	pugi::xml_node map_node = App->config_file.child("config").child("map").child("maps").child("map");
-	do{
+	//pugi::xml_node map_node = App->config_file.child("config").child("map").child("maps").child("map");
+	/*do{
 		if (map_node.attribute("id").as_int() == id)break;
 		else map_node = map_node.next_sibling("map");
 	} while (map_node != NULL);
-	if (map_node != NULL)return map_node.attribute("source").as_string();
-	else return "";
+
+	if (map_node != NULL)*/return maps[id].GetString();// map_node.attribute("source").as_string();
+	//else return "";
 }
 
 

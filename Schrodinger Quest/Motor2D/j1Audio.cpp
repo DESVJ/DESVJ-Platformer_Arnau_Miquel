@@ -204,7 +204,7 @@ void j1Audio::ChangeVolume(bool plus)
 		Mix_Volume(-1, 0);
 
 	pugi::xml_document document_save;
-	p2SString source = App->config_file.child("config").child("app").child("save_game_source").child_value();
+	p2SString source = App->save_game;//App->config_file.child("config").child("app").child("save_game_source").child_value();
 	pugi::xml_parse_result result = document_save.load_file(source.GetString());
 
 	if (!result)

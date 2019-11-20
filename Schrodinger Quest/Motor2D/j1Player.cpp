@@ -27,7 +27,7 @@ j1Player::~j1Player()
 bool j1Player::Awake(pugi::xml_node& config)
 {
 
-
+	pugi::xml_document	player_info_file;
 	player_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node player_node = player_info_file.child("map");
 
@@ -288,16 +288,16 @@ void j1Player::Start_F3()
 	App->player->Change_Col_State(player_colision_state::NONE);
 
 	//Restart player vars
-	player.player_flip = App->config_file.child("config").child("player").child("player_info").attribute("flip").as_bool();
-	player.player_not_jumping = App->config_file.child("config").child("player").child("player_info").attribute("not_jumping").as_bool();
-	player.player_god_mode = App->config_file.child("config").child("player").child("player_info").attribute("god_mode").as_bool();
-	player.player_tang_mode = App->config_file.child("config").child("player").child("player_info").attribute("tang_mode").as_bool();
-	player.player_alive = App->config_file.child("config").child("player").child("player_info").attribute("alive").as_bool();
-	player.player_respawn = App->config_file.child("config").child("player").child("player_info").attribute("respawn").as_bool();
-	player.player_climbing = App->config_file.child("config").child("player").child("player_info").attribute("climbing").as_bool();
-	player.spacebar_pushed = App->config_file.child("config").child("player").child("player_info").attribute("spacebar_pushed").as_bool();
-	inputs_out = App->config_file.child("config").child("player").child("inputs_out").attribute("value").as_int();
-	actual_state = (state)App->config_file.child("config").child("player").child("actual_state").attribute("value").as_int();
+	player.player_flip = false;
+	player.player_not_jumping = true;
+	player.player_god_mode = false;
+	player.player_tang_mode = false;
+	player.player_alive = true;
+	player.player_respawn = false;
+	player.player_climbing = false;
+	player.spacebar_pushed = false;
+	inputs_out = 0;
+	actual_state = (state)1;
 
 	//Restart camera position
 	//App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });

@@ -148,7 +148,7 @@ public:
 private:
 
 	//Map loading functions
-	bool LoadMap();
+	bool LoadMap(pugi::xml_document&);
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
@@ -167,10 +167,10 @@ public:
 
 private:
 
-	pugi::xml_document	map_file;
 	p2SString			folder;
 	p2SString			map_name;
 	bool				map_loaded;
+	p2SString*			maps;
 };
 
 #endif // __j1MAP_H__

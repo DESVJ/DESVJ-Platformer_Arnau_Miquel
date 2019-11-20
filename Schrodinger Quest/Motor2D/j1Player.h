@@ -183,7 +183,6 @@ private:
 	inputin input_in;
 	inputout input_out[MAX_INPUTS_OUT];
 
-	pugi::xml_document	player_info_file;
 };
 
 #endif // __j1PLAYER_H__

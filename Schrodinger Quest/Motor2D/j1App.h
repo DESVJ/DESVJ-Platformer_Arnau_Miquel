@@ -94,8 +94,8 @@ public:
 	//Collider manager 
 	Collider_Manager	colliders;
 
-	//Config xml file
-	pugi::xml_document	config_file;
+	mutable p2SString	save_game;
+
 
 
 private:
@@ -112,7 +112,6 @@ private:
 	mutable bool		want_to_save;
 	bool				want_to_load;
 	p2SString			load_game;
-	mutable p2SString	save_game;
 };
 
 extern j1App* App;

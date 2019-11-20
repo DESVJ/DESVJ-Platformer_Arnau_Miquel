@@ -2,6 +2,7 @@
 
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "brofiler/Brofiler.h"
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -71,7 +72,8 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	bool ret = false;
-		
+
+	pugi::xml_document	config_file;
 	config = LoadConfig(config_file);
 
 	//Window name setup
@@ -117,7 +119,7 @@ bool j1App::Start()
 
 // Called each loop iteration
 bool j1App::Update()
-{
+{ BROFILER_CATEGORY("Update", Profiler::Color::Orchid)
 	bool ret = true;
 	PrepareUpdate();
 
@@ -169,7 +171,7 @@ void j1App::FinishUpdate()
 
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
-{
+{BROFILER_CATEGORY("PreUpdate", Profiler::Color::Black)
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -213,7 +215,7 @@ bool j1App::DoUpdate()
 
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
-{
+{BROFILER_CATEGORY("PostUpdate", Profiler::Color::Red)
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
