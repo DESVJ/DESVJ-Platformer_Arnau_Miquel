@@ -36,7 +36,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	pugi::xml_node config_1 = config.child("maps").child("map");
 	for (int i = 0; i < last_id; i++) {
 		maps[i] = config_1.attribute("source").as_string();
-		if(i+1!=last_id)config_1.next_sibling("map");
+		if(i+1!=last_id)config_1=config_1.next_sibling("map");
 	}
 	return ret;
 }
@@ -137,7 +137,7 @@ void j1Map::Draw()
 bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
-
+	delete[] maps;
 	// Remove all tilesets
 	pugi::xml_document	map_file;
 	p2List_item<TileSet*>* item;
@@ -334,7 +334,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
-
+	//////////////IMPORTANT!!!!!!!!!! HERE (RETURN) THE STRING WHICH INDICATES WHICH COLLIDER IS (F.E. WALKEABLE) IS DESTROYED
 	return ret;
 }
 
@@ -605,7 +605,9 @@ p2SString j1Map::GetSourceFromID(int id)
 		else map_node = map_node.next_sibling("map");
 	} while (map_node != NULL);
 
-	if (map_node != NULL)*/return maps[id].GetString();// map_node.attribute("source").as_string();
+	if (map_node != NULL)*/
+	id--;
+	return maps[id].GetString();// map_node.attribute("source").as_string();
 	//else return "";
 }
 
