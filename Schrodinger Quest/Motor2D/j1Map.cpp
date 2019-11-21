@@ -35,7 +35,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	maps = new p2SString[last_id];
 	pugi::xml_node config_1 = config.child("maps").child("map");
 	for (int i = 0; i < last_id; i++) {
-		maps[i] = config_1.attribute("source").as_string();
+		maps[i].create(config_1.attribute("source").as_string());
 		if(i+1!=last_id)config_1=config_1.next_sibling("map");
 	}
 	return ret;
@@ -137,7 +137,7 @@ void j1Map::Draw()
 bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
-	delete[] maps;
+	//delete[] maps;
 	// Remove all tilesets
 	pugi::xml_document	map_file;
 	p2List_item<TileSet*>* item;

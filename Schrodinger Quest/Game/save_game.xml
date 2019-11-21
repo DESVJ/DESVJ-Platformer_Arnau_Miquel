@@ -12,11 +12,11 @@
 	<scene />
 	<player>
 		<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" col_state="0" actual_state="1">
-			<position x="282" y="400" w="16" h="-20" />
+			<position x="209" y="400" w="16" h="-20" />
 			<speed x="0" y="8" />
 		</player_info>
 	</player>
 	<renderer>
-		<camera x="-280" y="-774" />
+		<camera x="-61" y="-774" />
 	</renderer>
 </game_state>

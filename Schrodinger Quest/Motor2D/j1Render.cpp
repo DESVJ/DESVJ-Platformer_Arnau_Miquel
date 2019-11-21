@@ -321,7 +321,17 @@ void j1Render::SetMapLimitsWithTMX()
 			if (isLimit->data->name == "isMapLimits" && isLimit->data->prop_value.value_bool == true)
 			{
 				//Set map limit on X
-				limitPosX = itemA->data->objects.start->data->rect.x * (int)App->win->GetScale() - camera.w;
+				for (unsigned int i = 0; i < itemA->data->objects.count(); i++)
+				{
+					if (itemA->data->objects[i]->properties[0]->name == "LimitX") 
+					{
+						limitPosX = itemA->data->objects[i]->rect.x * (int)App->win->GetScale() - camera.w;
+					}
+					else if(itemA->data->objects[i]->properties[0]->name == "LimitY")
+					{
+						limitNegY = itemA->data->objects[i]->rect.y * (int)App->win->GetScale() - camera.h;
+					}
+				}
 			}
 			isLimit = isLimit->next;
 		}
