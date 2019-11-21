@@ -62,6 +62,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player.player_respawn = config.child("player_info").attribute("respawn").as_bool();
 	player.player_climbing = config.child("player_info").attribute("climbing").as_bool();
 	player.spacebar_pushed = config.child("player_info").attribute("spacebar_pushed").as_bool();
+	player.stop_slide = config.child("player_info").attribute("stop_slide").as_bool();
+	player.stop_attack = config.child("player_info").attribute("stop_attack").as_bool();
 	inputs_out = config.child("inputs_out").attribute("value").as_int();
 	actual_state = (state)config.child("actual_state").attribute("value").as_int();
 	gravity = config.child("gravity").attribute("value").as_int();
@@ -91,7 +93,7 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state, player.player_collider_rect);
+	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_slide,player.stop_attack,inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state, player.player_collider_rect);
 
 	if (player.player_respawn == true)
 		Start_F3();
@@ -104,7 +106,7 @@ bool j1Player::Update(float dt)
 {
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
-	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation, player.player_climbing, player.player_alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up);
+	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation, player.player_climbing, player.player_alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, player.player_flip, player.stop_slide);
 	//Animation* current_animation = &slide;
 	if (reset_animation == true) 
 	{
@@ -119,6 +121,12 @@ bool j1Player::Update(float dt)
 		{
 			player.player_respawn = true;
 		}
+	}
+
+	// Check if player is attacking and attack animation is finished
+	if (actual_state == S_DOWN_ATTACK && current_animation->GetFinished() == 1)
+	{
+		player.stop_attack = true;
 	}
 
 	//Slide mec
@@ -296,6 +304,8 @@ void j1Player::Start_F3()
 	player.player_respawn = false;
 	player.player_climbing = false;
 	player.spacebar_pushed = false;
+	player.stop_slide = false;
+	player.stop_attack = false;
 	inputs_out = 0;
 	actual_state = (state)1;
 
@@ -382,6 +392,8 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("alive") = player.player_alive;
 	player_node.append_attribute("respawn") = player.player_respawn;
 	player_node.append_attribute("climbing") = player.player_climbing;
+	player_node.append_attribute("stop_slide") = player.stop_slide;
+	player_node.append_attribute("stop_attack") = player.stop_attack;
 	player_node.append_attribute("col_state") = player.col_state;
 	player_node.append_attribute("actual_state") = actual_state;
 
@@ -407,6 +419,8 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.player_alive = data.child("player_info").attribute("alive").as_bool();
 	player.player_respawn = data.child("player_info").attribute("respawn").as_bool();
 	player.player_climbing = data.child("player_info").attribute("climbing").as_bool();
+	player.stop_slide = data.child("player_info").attribute("stop_slide").as_bool();
+	player.stop_attack = data.child("player_info").attribute("stop_attack").as_bool();
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
 

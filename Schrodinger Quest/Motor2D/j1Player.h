@@ -8,7 +8,7 @@
 #include"p2SString.h"
 #include "Animation.h"
 #include"p2List.h"
-#define MAX_INPUTS_OUT 5
+#define MAX_INPUTS_OUT 8
 
 //Collision state enum
 enum player_colision_state 
@@ -36,6 +36,8 @@ struct Player_Info
 	bool player_climbing;
 	bool player_in_air;
 	bool spacebar_pushed;
+	bool stop_slide;
+	bool stop_attack;
 	p2SString texture_source;
 	SDL_Texture* player_spritesheet;
 	player_colision_state col_state;
@@ -65,6 +67,11 @@ enum state
 	S_LADDER_DOWN,
 	S_LADDER_UP,
 	S_LADDER_IDLE,
+	S_SLIDE,
+	S_SLIDE_RIGHT,
+	S_SLIDE_LEFT,
+	S_DOWN_ATTACK,
+	S_DOWN_ATTACK_JUMP,
 	S_DEAD
 };
 
@@ -93,6 +100,8 @@ enum inputin
 	I_LADDER,
 	I_LADDER_UP,
 	I_LADDER_DOWN,
+	I_SLIDE,
+	I_DOWN_ATTACK,
 	I_DEAD
 };
 
@@ -104,6 +113,8 @@ enum inputout
 	O_LEFT,
 	O_UP,
 	O_DOWN,
+	O_SLIDE,
+	O_DOWN_ATTACK,
 	O_JUMP_FINISH,
 	O_DEAD_FINISH
 };

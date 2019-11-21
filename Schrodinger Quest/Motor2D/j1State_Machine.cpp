@@ -8,7 +8,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL.h"
 
-void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
+void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, bool& stop_slide, bool& stop_attack, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
 {
 	
 	//Check if the player is dead
@@ -89,6 +89,30 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 			}
 		}
 
+
+		//Check slide
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && stop_slide == false)
+		{
+			input_in = I_SLIDE;
+		}
+		if (stop_slide == true)
+		{
+			input_out[inputsouts] = O_SLIDE;
+			inputsouts++;
+			stop_slide = false;
+		}
+
+		//Check down attack
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+		{
+			input_in = I_DOWN_ATTACK;
+			if (spacebar_pushed == true)spacebar_pushed = false;
+		}
+		if (stop_attack == true) {
+			input_out[inputsouts] = O_DOWN_ATTACK;
+			inputsouts++;
+			stop_attack = false;
+		}
 
 		//Check ladder movement/idle
 		if (collision_state == CLIMBING && god_mode == false && (jump == false && left == false && right == false)) 
@@ -253,14 +277,16 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 
 
-Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up) 
+Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide)
 {
 
 	Animation* current_animation;
 	current_animation = &App->player->idle;
 
 	bool right = false;
+	bool slide_right = false;
 	bool left = false;
+	bool slide_left = false;
 	bool up = false;
 	bool down = false;
 	bool jump = false;
@@ -281,6 +307,23 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 				right = true;
 			}
 			current_animation = &App->player->run;
+			break;
+
+		case S_SLIDE:
+			if (flip == false)
+			{
+				slide_right = true;
+			}
+			else
+			{
+				slide_left = true;
+			}
+			current_animation = &App->player->slide;
+			LOG("V:%f", speed.x);
+			break;
+
+		case S_DOWN_ATTACK:
+			current_animation = &App->player->down_attack;
 			break;
 
 		case S_JUMP_LEFT:
@@ -354,19 +397,27 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 
 	//Define speed
 
-	if (right == true) 
+	if (right == true)
 	{
 		if (speed.x < 2)
 		{
 			speed.x += 0.2f;
 		}
 	}
-	else if (left == true) 
+	else if (slide_right == true && speed.x <= 2)
+	{
+		speed.x = 5;
+	}
+	else if (left == true)
 	{
 		if (speed.x > -2)
 		{
 			speed.x -= 0.2f;
 		}
+	}
+	else if (slide_left == true && speed.x >= -2)
+	{
+		speed.x = -5;
 	}
 	else 
 	{
@@ -377,12 +428,16 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			speed.x -= 0.5f;
 			if (speed.x <= 0)
 				speed.x = 0;
+			else if (speed.x <= 2 && slide_right == true)
+				stop_slide = true;
 		}
 		else
 		{
 			speed.x += 0.5f;
 			if (speed.x >= 0)
 				speed.x = 0;
+			else if (speed.x >= -2 && slide_left == true)
+				stop_slide = true;
 		}
 
 
@@ -463,6 +518,14 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_LEFT;
 					break;
 
+				case I_SLIDE:
+					actual = S_SLIDE;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_UP_RIGHT_LEFT:
 				case I_UP:
 					actual = S_UP;
@@ -523,6 +586,14 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_LEFT;
 					break;
 
+				case I_SLIDE:
+					actual = S_SLIDE;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_UP_RIGHT_LEFT:
 				case I_UP_LEFT:
 				case I_UP:
@@ -581,6 +652,14 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_RIGHT; 
 					break;
 
+				case I_SLIDE:
+					actual = S_SLIDE;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_UP_RIGHT_LEFT:
 				case I_UP_RIGHT:
 				case I_UP:
@@ -632,6 +711,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_LEFT;
 					break;
 
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_LADDER_DOWN:
 					actual = S_LADDER_DOWN;
 					break;
@@ -660,6 +743,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 
 				case I_JUMP: 
 					actual = S_JUMP; 
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
 					break;
 
 				case I_LADDER_DOWN:
@@ -694,6 +781,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 
 				case I_JUMP:
 					actual = S_JUMP;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
 					break;
 
 				case I_LADDER_DOWN:
@@ -749,6 +840,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_UP_RIGHT;
 					break;
 
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_DEAD:
 					actual = S_DEAD;
 					break;
@@ -783,6 +878,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 				case I_UP_RIGHT_LEFT:
 				case I_UP_LEFT:
 					actual = S_UP; 
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
 					break;
 
 				case I_DEAD:
@@ -840,6 +939,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 				case I_UP_RIGHT_LEFT:
 				case I_UP_RIGHT:
 					actual = S_UP;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
 					break;
 
 				case I_DEAD:
@@ -905,6 +1008,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_DOWN_RIGHT;
 					break;
 
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_DEAD:
 					actual = S_DEAD; 
 					break;
@@ -939,6 +1046,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 				case I_DOWN_RIGHT_LEFT:
 				case I_DOWN_LEFT:
 					actual = S_DOWN;
+					break;
+
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
 					break;
 
 				case I_DEAD:
@@ -999,6 +1110,10 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_DOWN; 
 					break;
 
+				case I_DOWN_ATTACK:
+					actual = S_DOWN_ATTACK;
+					break;
+
 				case I_DEAD:
 					actual = S_DEAD;
 					break;
@@ -1030,6 +1145,31 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 				}
 			}
 			break;
+
+		case S_SLIDE:
+			switch (input_in)
+			{
+			case I_DEAD:
+				actual = S_DEAD;
+				break;
+			}
+			for (int i = 0; i <= inputsouts; i++)if(input_out[i]==O_SLIDE)
+			{
+				actual = S_IDLE;
+			}
+			break;
+
+		case S_DOWN_ATTACK:
+			switch (input_in)
+			{
+			case I_DEAD:
+				actual = S_DEAD;
+				break;
+			}
+			for (int i = 0; i <= inputsouts; i++)if (input_out[i] == O_DOWN_ATTACK)
+			{
+				actual = S_IDLE;
+			}
 
 		case S_LADDER_IDLE:
 			if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)
