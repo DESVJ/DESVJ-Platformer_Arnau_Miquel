@@ -166,8 +166,8 @@ bool j1Player::Update(float dt)
 
 
 	// Change if the sprite if intangible
-	if (player.player_tang_mode == true)
-		current_frame.y += difference_y;
+	//if (player.player_tang_mode == true)
+	//	current_frame.y += difference_y;
 
 	//Calculate animation offset
 	if (player.player_rect.w != 0) 
@@ -228,7 +228,7 @@ bool j1Player::Update(float dt)
 
 	//App->render->camera.x = -(player.player_rect.x * (int)App->win->GetScale() - (int)App->win->width / 2);
 	//App->render->camera.y = -(player.player_rect.y * (int)App->win->GetScale() - (int)App->win->height / 2);
-	LOG("%f", App->player->player.player_speed.y);
+	//LOG("%f", App->player->player.player_speed.y);
 
 
 	//Check if player is under the map and kill it
