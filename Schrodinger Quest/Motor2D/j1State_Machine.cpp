@@ -91,7 +91,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 
 		//Check slide
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN && stop_slide == false)
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN && stop_slide == false)
 		{
 			input_in = I_SLIDE;
 		}
@@ -103,7 +103,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 		}
 
 		//Check down attack
-		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			input_in = I_DOWN_ATTACK;
 			if (spacebar_pushed == true)spacebar_pushed = false;
