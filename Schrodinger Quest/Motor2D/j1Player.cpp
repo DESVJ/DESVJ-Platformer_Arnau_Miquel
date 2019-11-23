@@ -12,7 +12,7 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 
-j1Player::j1Player() : j1Module()
+j1Player::j1Player(Types type) : Entity(Types::player)
 {
 	name.create("player");
 }

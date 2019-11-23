@@ -15,7 +15,7 @@ enum class Types
 class Entity :public j1Module
 {
 public:
-	Entity() {
+	Entity(Types type) {
 
 	}
 
