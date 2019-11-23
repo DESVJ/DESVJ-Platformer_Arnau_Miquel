@@ -83,6 +83,19 @@ bool j1Scene::Update(float dt)
 	//Load the previous state (even across levels)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
+	
+	//Enable and disable 30fps cap
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
+	{
+		if (App->fps_limit == App->fps_min) 
+		{
+			App->fps_limit = App->fps_max;
+		}
+		else
+		{
+			App->fps_limit = App->fps_min;
+		}
+	}
 
 	//Draw map
 	App->map->Draw();

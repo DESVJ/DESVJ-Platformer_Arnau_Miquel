@@ -5,6 +5,8 @@
     <title>Schrödinger Quest</title>
     <organization>UPC</organization>
     <save_game_source>save_game.xml</save_game_source>
+    <max_fps value ="60"/>
+    <min_fps_cap value ="30"/>
   </app>
 	
   <renderer>

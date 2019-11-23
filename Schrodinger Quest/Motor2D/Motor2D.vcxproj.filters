@@ -49,6 +49,12 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Game Core\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Game Core\Timers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -123,6 +129,12 @@
     <ClInclude Include="Entity.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Game Core\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Game Core\Timers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Core">
@@ -142,6 +154,9 @@
     </Filter>
     <Filter Include="Game Core\Containers">
       <UniqueIdentifier>{66b1e48a-1a77-435d-ae40-69d5a7f886a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Core\Timers">
+      <UniqueIdentifier>{950441ee-7ac3-45a0-9fe5-655708e9e300}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
