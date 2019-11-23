@@ -10,6 +10,7 @@
 #include"j1Window.h"
 #include"j1Input.h"
 #include "j1Audio.h"
+#include "EntityManager.h"
 #include <math.h>
 #include "brofiler/Brofiler.h"
 
@@ -84,11 +85,11 @@ void j1Map::Draw()
 	GeneralDraw(background_coord_layer, coord_tileset, (int)data.background_layers.count(), ret);
 
 	//Draw a background black square
-	if (App->player->player.player_tang_mode)
+	if (App->entity_manager->Player->player.player_tang_mode)
 		App->render->DrawQuad({0, 0, data.width * data.tile_width,  data.width * data.tile_width }, 0, 0, 0, 100);
 
 	//Draw tang and non-tang layers
-	if (!App->player->player.player_tang_mode) 
+	if (!App->entity_manager->Player->player.player_tang_mode)
 	{
 		GeneralDraw(coord_layer, coord_tileset, (int)data.layers.count(), ret);
 	}
@@ -361,7 +362,7 @@ bool j1Map::LoadMap(pugi::xml_document &map_file)
 		App->render->limitNegX = 0; App->render->limitPosX = ((data.width * data.tile_width) * (int)App->win->GetScale()) - App->render->camera.w;
 		App->render->limitPosY = 0;  App->render->limitNegY = ((data.height * data.tile_height) * (int)App->win->GetScale()) - App->render->camera.h;
 
-		App->player->killLimit = data.height * data.tile_height;
+		App->entity_manager->Player->killLimit = data.height * data.tile_height;
 
 
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());

@@ -6,6 +6,7 @@
 #include"j1Map.h"
 #include"j1Input.h"
 #include "j1Audio.h"
+#include "EntityManager.h"
 #include "j1Player.h"
 
 
@@ -142,7 +143,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 				{
 
 					//If there is a colision, look collider type
-					if ((collider_list[i].collider_type == WALKEABLE && !App->player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->player->player.player_tang_mode))
+					if ((collider_list[i].collider_type == WALKEABLE && !App->entity_manager->Player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->entity_manager->Player->player.player_tang_mode))
 					{
 						//Allow the object to ignore down collisions (player jumping in top of platform)
 						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
@@ -167,14 +168,14 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 										if (isPlayer) 
 										{
 
-											if (App->player->player.player_speed.y >= 8 && App->player->canJump == false && App->player->player.col_state == player_colision_state::NONE)
-												App->audio->PlayFx(App->player->jump_down_fx);
+											if (App->entity_manager->Player->player.player_speed.y >= 8 && App->entity_manager->Player->canJump == false && App->entity_manager->Player->player.col_state == player_colision_state::NONE)
+												App->audio->PlayFx(App->entity_manager->Player->jump_down_fx);
 
-											if (!App->player->canJump)
-												App->player->canJump = true;
+											if (!App->entity_manager->Player->canJump)
+												App->entity_manager->Player->canJump = true;
 
-											App->player->player.player_not_jumping = true;
-											App->player->player.player_in_air = false;
+											App->entity_manager->Player->player.player_not_jumping = true;
+											App->entity_manager->Player->player.player_in_air = false;
 										}
 
 									}
@@ -184,7 +185,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 									if (dir == UP)
 									{
 										colisionDetectedY = true;
-										if (isPlayer && App->player->player.col_state == player_colision_state::CLIMBING) 
+										if (isPlayer && App->entity_manager->Player->player.col_state == player_colision_state::CLIMBING)
 										{
 											colisionDetectedY = false;
 											allowClippingCollider = &collider_list[i];
@@ -210,7 +211,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 								{
 									if (dir == LEFT)
 									{
-										if(isPlayer && App->player->player.col_state != player_colision_state::CLIMBING)
+										if(isPlayer && App->entity_manager->Player->player.col_state != player_colision_state::CLIMBING)
 											currentPoint->x = block->x + block->w;
 									}
 								}
@@ -218,7 +219,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 								{
 									if (dir == RIGHT)
 									{
-										if (isPlayer && App->player->player.col_state != player_colision_state::CLIMBING)
+										if (isPlayer && App->entity_manager->Player->player.col_state != player_colision_state::CLIMBING)
 											currentPoint->x = block->x - currentPoint->w;
 									}
 								}
@@ -230,9 +231,9 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					//If collider is type KILL, kill player
 					if(collider_list[i].collider_type == KILL && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
 					{
-						if (isPlayer && !App->player->player.player_tang_mode && !App->player->player.player_god_mode)
+						if (isPlayer && !App->entity_manager->Player->player.player_tang_mode && !App->entity_manager->Player->player.player_god_mode)
 						{
-							App->player->Change_Col_State(player_colision_state::DYING);
+							App->entity_manager->Player->Change_Col_State(player_colision_state::DYING);
 							typeColDetected = true;
 							LOG("KILL");
 						}
@@ -243,18 +244,18 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 					if(collider_list[i].collider_type == CLIMB)
 					{
 						typeColDetected = true;
-						if (isPlayer && !App->player->player.player_tang_mode && 
+						if (isPlayer && !App->entity_manager->Player->player.player_tang_mode &&
 							(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || 
-							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->player->player.player_rect.y > collider_list[i].collider_rect.y)) && 
-							(App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) > collider_list[i].collider_rect.x
-								&& App->player->player.player_rect.x + (App->player->player.player_rect.w / 2) < collider_list[i].collider_rect.x + collider_list[i].collider_rect.w))
+							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->entity_manager->Player->player.player_rect.y > collider_list[i].collider_rect.y)) &&
+							(App->entity_manager->Player->player.player_rect.x + (App->entity_manager->Player->player.player_rect.w / 2) > collider_list[i].collider_rect.x
+								&& App->entity_manager->Player->player.player_rect.x + (App->entity_manager->Player->player.player_rect.w / 2) < collider_list[i].collider_rect.x + collider_list[i].collider_rect.w))
 						{
-							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->player->player.player_rect.y)
+							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->entity_manager->Player->player.player_rect.y)
 							{
 								colisionDetectedY = false;
 								colisionDetectedX = false;
 							}
-							App->player->Change_Col_State(player_colision_state::CLIMBING);
+							App->entity_manager->Player->Change_Col_State(player_colision_state::CLIMBING);
 							LOG("CLIMB");
 						}
 					}
@@ -277,14 +278,14 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		currentPoint->y = prediction.y;
 		if (increment.y > 0) 
 		{
-			App->player->canJump = false;
+			App->entity_manager->Player->canJump = false;
 		}
 	}
 
 	//Reset typeColDetected state
 	if (!typeColDetected) 
 	{
-		App->player->Change_Col_State(player_colision_state::NONE);
+		App->entity_manager->Player->Change_Col_State(player_colision_state::NONE);
 	}
 }
 

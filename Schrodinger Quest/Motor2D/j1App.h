@@ -16,7 +16,7 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class j1Player;
+class EntityManager;
 class Collider_Manager;
 
 //Application class
@@ -91,7 +91,7 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Player*			player;
+	EntityManager*		entity_manager;
 
 	//Collider manager 
 	Collider_Manager	colliders;

@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "EntityManager.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -74,7 +75,7 @@ bool j1Scene::Update(float dt)
 
 	//Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		App->player->Start_F3();
+		App->entity_manager->Player->Start_F3();
 
 	//Save the current state
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -132,5 +133,5 @@ void j1Scene::Load_Map_By_Name(const char* name)
 	App->map->Load(name);
 	App->colliders.LoadColliders();
 	App->render->SetMapLimitsWithTMX();
-	App->player->Start_F3();
+	App->entity_manager->Player->Start_F3();
 }

@@ -3,6 +3,7 @@
 EntityManager::EntityManager()
 {
 	name.create("entity_manager");
+	Player = (j1Player*)CreateEntity(Types::player);
 }
 
 //Destructor
@@ -12,9 +13,9 @@ EntityManager::~EntityManager()
 // Called before render is available
 bool EntityManager::Awake(pugi::xml_node& a)
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->Awake(a);
+		entities.At(i)->data->Awake(a);
 	}
 	return true;
 }
@@ -22,9 +23,9 @@ bool EntityManager::Awake(pugi::xml_node& a)
 // Called before the first frame
 bool EntityManager::Start()
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->Start();
+		entities.At(i)->data->Start();
 	}
 	return true;
 }
@@ -32,9 +33,9 @@ bool EntityManager::Start()
 // Called each loop iteration
 bool EntityManager::PreUpdate()
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->PreUpdate();
+		entities.At(i)->data->PreUpdate();
 	}
 	return true;
 }
@@ -42,9 +43,9 @@ bool EntityManager::PreUpdate()
 // Called each loop iteration
 bool EntityManager::Update(float dt)
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->Update(dt);
+		entities.At(i)->data->Update(dt);
 	}
 	return true;
 }
@@ -52,20 +53,20 @@ bool EntityManager::Update(float dt)
 // Called before quitting
 bool EntityManager::CleanUp()
 {
-	for (int i = entities->count() - 1; i >= 0; i--)
+	for (int i = entities.count() - 1; i >= 0; i--)
 	{
-		entities->del(entities->At(i));
+		entities.del(entities.At(i));
 	}
-	entities->clear();
+	entities.clear();
 	return true;
 }
 
 //Called when loading the game
 bool EntityManager::Load(pugi::xml_node& n)
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->Load(n);
+		entities.At(i)->data->Load(n);
 	}
 	return true;
 }
@@ -73,9 +74,9 @@ bool EntityManager::Load(pugi::xml_node& n)
 //Called when saving the game
 bool EntityManager::Save(pugi::xml_node& s) const
 {
-	for (int i = 0; i < entities->count(); i++)
+	for (int i = 0; i < entities.count(); i++)
 	{
-		entities->At(i)->data->Save(s);
+		entities.At(i)->data->Save(s);
 	}
 	return true;
 }
@@ -88,6 +89,7 @@ Entity* EntityManager::CreateEntity(Types type)
 	switch (type)
 	{
 	case Types::player:
+		ret = new j1Player(Types::player);
 		break;
 
 	case Types::enemy_ground:
@@ -98,7 +100,7 @@ Entity* EntityManager::CreateEntity(Types type)
 
 	if (ret != nullptr)
 	{
-		entities->add(ret);
+		entities.add(ret);
 	}
 	return ret;
 }
@@ -106,11 +108,11 @@ Entity* EntityManager::CreateEntity(Types type)
 //Called when deleting a new Entity
 bool EntityManager::DeleteEntity(Entity* e)
 {
-	int n=entities->find(e);
+	int n=entities.find(e);
 	if (n == -1)return false;
 	else
 	{
-		entities->del(entities->At(n));
+		entities.del(entities.At(n));
 		return true;
 	}
 }

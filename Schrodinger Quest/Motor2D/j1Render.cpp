@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include"j1Input.h"
 #include"j1Player.h"
+#include "EntityManager.h"
 #include "brofiler/Brofiler.h"
 
 #define VSYNC true
@@ -283,10 +284,10 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	{
 		camera.y = limitPosY;
 	}
-	else if (point.y + App->player->player.minPlayerHeight <= followMinRect.y)
+	else if (point.y + App->entity_manager->Player->player.minPlayerHeight <= followMinRect.y)
 	{
-		if(y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale() <= 0)
-			camera.y = y + (App->player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
+		if(y + (App->entity_manager->Player->player.minPlayerHeight / 2) * (int)App->win->GetScale() <= 0)
+			camera.y = y + (App->entity_manager->Player->player.minPlayerHeight / 2) * (int)App->win->GetScale();
 	}
 
 	//Down Y mov
@@ -296,7 +297,7 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	}
 	else if (point.y >= followMinRect.y + followMinRect.h)
 	{
-		camera.y = y + -App->player->player.minPlayerHeight * (int)App->win->GetScale();
+		camera.y = y + -App->entity_manager->Player->player.minPlayerHeight * (int)App->win->GetScale();
 	}
 
 

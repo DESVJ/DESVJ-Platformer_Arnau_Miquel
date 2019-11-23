@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "Entity.h"
+#include "j1Player.h"
 #include "p2List.h"
 
 class Entity;
@@ -44,6 +45,7 @@ public:
 	bool DeleteEntity(Entity*);
 
 public:
-	p2List <Entity*>* entities;
+	p2List <Entity*> entities;
+	j1Player* Player;
 };
 #endif // !_ENTITYMANAGER_H

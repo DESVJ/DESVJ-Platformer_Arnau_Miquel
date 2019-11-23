@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Player.h"
 #include "j1Audio.h"
+#include "EntityManager.h"
 #include "SDL/include/SDL.h"
 
 void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, bool& stop_slide, bool& stop_attack, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
@@ -59,7 +60,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 		//Check jump and jump direction
 		bool jump = false;
-		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (god_mode == false) && App->player->canJump) 
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) && (god_mode == false) && App->entity_manager->Player->canJump)
 		{
 			jump = true;
 			spacebar_pushed = true;
@@ -251,13 +252,13 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 					if (App->colliders.CheckAbsoluteCollision(collider_rect, App->colliders.collider_list[i].collider_rect))
 					{
 						//Kill player if is inside a block when changing state
-						App->player->Change_Col_State(player_colision_state::DYING);
+						App->entity_manager->Player->Change_Col_State(player_colision_state::DYING);
 					}
 				}
 
 				tangSwitchDeadCheck = true;
 			}
-			App->audio->PlayFx(App->player->switch_fx);
+			App->audio->PlayFx(App->entity_manager->Player->switch_fx);
 		}
 
 
@@ -281,7 +282,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 {
 
 	Animation* current_animation;
-	current_animation = &App->player->idle;
+	current_animation = &App->entity_manager->Player->idle;
 
 	bool right = false;
 	bool slide_right = false;
@@ -295,7 +296,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 	switch (actual) 
 	{
 		case S_IDLE:
-			current_animation = &App->player->idle;
+			current_animation = &App->entity_manager->Player->idle;
 			break;
 
 		case S_RUN_LEFT:
@@ -306,7 +307,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->player->run;
+			current_animation = &App->entity_manager->Player->run;
 			break;
 
 		case S_SLIDE:
@@ -318,12 +319,12 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				slide_left = true;
 			}
-			current_animation = &App->player->slide;
+			current_animation = &App->entity_manager->Player->slide;
 			LOG("V:%f", speed.x);
 			break;
 
 		case S_DOWN_ATTACK:
-			current_animation = &App->player->down_attack;
+			current_animation = &App->entity_manager->Player->down_attack;
 			break;
 
 		case S_JUMP_LEFT:
@@ -336,7 +337,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			}
 
 		case S_JUMP:
-			current_animation = &App->player->jump;
+			current_animation = &App->entity_manager->Player->jump;
 			jump = true;
 			break;
 
@@ -348,7 +349,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->player->run;
+			current_animation = &App->entity_manager->Player->run;
 
 		case S_UP:
 			up = true;
@@ -362,7 +363,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->player->run;
+			current_animation = &App->entity_manager->Player->run;
 
 		case S_DOWN:
 			down = true;
@@ -370,7 +371,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 
 		case S_LADDER_IDLE:
 			climbing = true;
-			current_animation = &App->player->idle_ladder;
+			current_animation = &App->entity_manager->Player->idle_ladder;
 			break;
 
 		case S_LADDER_DOWN:
@@ -382,16 +383,16 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 				up = true;
 			}
 			climbing = true;
-			current_animation = &App->player->movement_ladder;
+			current_animation = &App->entity_manager->Player->movement_ladder;
 			break;
 
 		case S_DEAD:
 			if (alive == true) 
 			{
-				App->audio->PlayFx(App->player->death_fx);
+				App->audio->PlayFx(App->entity_manager->Player->death_fx);
 			}
 			alive = false;
-			current_animation = &App->player->death;
+			current_animation = &App->entity_manager->Player->death;
 			break;
 	}
 
@@ -450,7 +451,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			speed.y = 0;
 			speed.y--;
   			stop_jumping_up = false;
-			App->audio->PlayFx(App->player->jump_up_fx);
+			App->audio->PlayFx(App->entity_manager->Player->jump_up_fx);
 			in_air = true;
 		}
 		else if (stop_jumping_up == false )
@@ -1172,7 +1173,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 			}
 
 		case S_LADDER_IDLE:
-			if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)
+			if (App->entity_manager->Player->player.col_state != CLIMBING || App->entity_manager->Player->player.player_god_mode == true)
 			{
 				actual = S_IDLE;
 			}
@@ -1200,7 +1201,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 			break;
 
 		case S_LADDER_DOWN:
-			if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)
+			if (App->entity_manager->Player->player.col_state != CLIMBING || App->entity_manager->Player->player.player_god_mode == true)
 			{
 				actual = S_IDLE;
 			}
@@ -1232,7 +1233,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 			break;
 
 		case S_LADDER_UP:
-			if (App->player->player.col_state != CLIMBING || App->player->player.player_god_mode == true)
+			if (App->entity_manager->Player->player.col_state != CLIMBING || App->entity_manager->Player->player.player_god_mode == true)
 			{
 				actual = S_IDLE;
 			}

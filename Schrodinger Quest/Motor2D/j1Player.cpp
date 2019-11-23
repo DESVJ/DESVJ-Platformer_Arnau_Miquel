@@ -293,7 +293,7 @@ void j1Player::Start_F3()
 
 	MoveToSpawn();
 	if (input_in == I_DEAD)input_in = I_NONE;
-	App->player->Change_Col_State(player_colision_state::NONE);
+	Change_Col_State(player_colision_state::NONE);
 
 	//Restart player vars
 	player.player_flip = false;
