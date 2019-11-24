@@ -55,6 +55,9 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Game Core\Timers</Filter>
     </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Game Core\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

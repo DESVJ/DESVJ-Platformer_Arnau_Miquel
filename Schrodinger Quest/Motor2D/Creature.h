@@ -1,26 +1,17 @@
-#ifndef _ENTITY_H
-#define _ENTITY_H
+#ifndef _CREATURE_H
+#define _CREATURE_H
+#include "Entity.h"
+#include "p2Point.h"
 
-#include "j1Module.h"
-
-enum class Types
-{
-	none=0,
-	player,
-	enemy_ground,
-	enemy_air,
-	unknown
-};
-
-class Entity :public j1Module
+class Creature : public Entity 
 {
 public:
-	Entity(Types type) {
+	Creature(Types type) :Entity(type) {
 
 	}
 
 	// Destructor
-	virtual ~Entity() {
+	virtual ~Creature() {
 
 	}
 
@@ -67,9 +58,8 @@ public:
 	}
 
 public:
-	Types entity_type;
-	SDL_Rect position_rect;
-	SDL_Rect collision_rect;
+	p2Point<float> speed;
+	p2Point<int> spawn;
 };
 
-#endif // !ENTITY_H
+#endif
