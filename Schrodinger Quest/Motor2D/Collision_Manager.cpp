@@ -121,7 +121,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		dir = UP;
 	}
 
-	p2Point<bool> result = {false, false};
+
+	//Init coollision bools
+	p2Point<bool> result = { false, false };
+	s_mod->typeColDetected = false;
 
 	//Itinerate all collider objects
 	for (unsigned int i = 0; i < collider_list.count(); i++)
@@ -137,7 +140,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
 				{
-					result = s_mod->OnCollision(&collider_list[i], prediction, block, dir);
+					result = s_mod->OnCollision(&collider_list[i], prediction, block, dir, result);
 				}
 			}
 		}

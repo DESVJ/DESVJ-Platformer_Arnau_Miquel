@@ -165,7 +165,7 @@ public:
 	//Move player to spawn
 	void MoveToSpawn();
 
-	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction);
+	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
 
 public:
@@ -190,7 +190,6 @@ public:
 
 private:
 
-	bool typeColDetected;
 	int gravity;
 	int maximum_speed;
 	int difference_y;

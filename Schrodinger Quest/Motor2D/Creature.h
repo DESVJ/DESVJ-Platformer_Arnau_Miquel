@@ -60,7 +60,7 @@ public:
 		return true;
 	}
 
-	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction) 
+	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>)
 	{
 		return { false, false };
 	}
@@ -69,6 +69,7 @@ public:
 public:
 	p2Point<float> speed;
 	p2Point<int> spawn;
+	bool typeColDetected;
 };
 
 #endif

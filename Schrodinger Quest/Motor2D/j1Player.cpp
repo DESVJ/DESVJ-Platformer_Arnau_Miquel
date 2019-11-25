@@ -482,13 +482,8 @@ void j1Player::MoveToSpawn()
 	
 }
 
-p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir)
+p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)
 {
-
-	//Init coollision bools
-	bool colisionDetectedX = false;
-	bool colisionDetectedY = false;
-
 	//If there is a colision, look collider type
 	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
 	{
@@ -507,7 +502,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 				//Correct movement or move object in a normal way
 				if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
 				{
-					colisionDetectedY = true;
+					prev_res.y = true;
 					if (dir == DOWN)
 					{
 						player.player_collider_rect.y = block->y;
@@ -527,10 +522,10 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 				{
 					if (dir == UP)
 					{
-						colisionDetectedY = true;
+						prev_res.y = true;
 						if (player.col_state == player_colision_state::CLIMBING)
 						{
-							colisionDetectedY = false;
+							prev_res.y = false;
 							App->colliders->allowClippingCollider = in_collider;
 						}
 
@@ -548,7 +543,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 			}
 			if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
 			{
-				colisionDetectedX = true;
+				prev_res.x = true;
 				////Coliding with the sides of an object
 				if (prediction.x <= block->x + block->w)
 				{
@@ -595,17 +590,14 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		{
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && in_collider->collider_rect.y + in_collider->collider_rect.h > player.player_rect.y)
 			{
-				colisionDetectedY = false;
-				colisionDetectedX = false;
+				prev_res = {false, false};
 			}
 			Change_Col_State(player_colision_state::CLIMBING);
 			LOG("CLIMB");
 		}
 	}
 
-
-
-	return { colisionDetectedX, colisionDetectedY };
+	return prev_res;
 }
 void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2Point<int> increment)
 {
