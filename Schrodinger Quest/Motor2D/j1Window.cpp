@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Window.h"
+#include "SDL_image/include/SDL_image.h"
 
 
 j1Window::j1Window() : j1Module()
@@ -78,6 +79,14 @@ bool j1Window::Awake(pugi::xml_node& config)
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
 		}
+	}
+
+	icon_surf = IMG_Load("textures/Window_Icon/win_icon.png");
+	SDL_SetWindowIcon(window, icon_surf);
+
+	if (icon_surf != NULL)
+	{
+		SDL_FreeSurface(icon_surf);
 	}
 
 	return ret;
