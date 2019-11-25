@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "p2Point.h"
 #include"Collision_Manager.h"
+#include"Animation.h"
+#include"p2SString.h"
 
 struct Collider;
 enum Direction;
@@ -48,6 +50,9 @@ public:
 		return true;
 	}
 
+	//Load animation pushbacks by name
+	virtual pugi::xml_node LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);
+
 	//Called when loading the game
 	virtual bool Load(pugi::xml_node&)
 	{
@@ -69,6 +74,12 @@ public:
 public:
 	p2Point<float> speed;
 	p2Point<int> spawn;
+
+	//General animations
+	Animation idle;
+	Animation death;
+
+	//General collisions
 	bool typeColDetected;
 };
 

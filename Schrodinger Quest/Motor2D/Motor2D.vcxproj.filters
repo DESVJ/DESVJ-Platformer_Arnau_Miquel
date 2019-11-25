@@ -58,6 +58,9 @@
     <ClCompile Include="Creature.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="eSnakeEnemy.cpp">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -141,6 +144,12 @@
     <ClInclude Include="Creature.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="eGroundEnemy.h">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="eSnakeEnemy.h">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Core">
@@ -163,6 +172,9 @@
     </Filter>
     <Filter Include="Game Core\Timers">
       <UniqueIdentifier>{950441ee-7ac3-45a0-9fe5-655708e9e300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Core\Modules\eEnemy">
+      <UniqueIdentifier>{3b8f66d6-34a2-4395-9855-df1499bef2da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

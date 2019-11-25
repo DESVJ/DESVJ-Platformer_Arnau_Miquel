@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include"eSnakeEnemy.h"
 
 EntityManager::EntityManager()
 {
@@ -93,6 +94,7 @@ Entity* EntityManager::CreateEntity(Types type)
 		break;
 
 	case Types::enemy_ground:
+		//ret = new eSnakeEnemy(Types::enemy_ground);
 		break;
 	case Types::enemy_air:
 		break;

@@ -153,11 +153,9 @@ public:
 	//Load
 	bool Load(pugi::xml_node&);
 
-	//Load animation pushbacks by name
-	void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim,const char* name);
-
 	//Load sound by TMX
 	void LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name);
+	pugi::xml_node LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);
 
 	//Change col_state state
 	void Change_Col_State(player_colision_state state);
@@ -168,17 +166,16 @@ public:
 	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
 
+
 public:
 
 	Player_Info player;
-	Animation idle;
 	Animation run;
 	Animation jump;
 	Animation idle_ladder;
 	Animation slide;
 	Animation movement_ladder;
 	Animation down_attack;
-	Animation death;
 	unsigned int death_fx;
 	unsigned int jump_up_fx;
 	unsigned int jump_down_fx;
