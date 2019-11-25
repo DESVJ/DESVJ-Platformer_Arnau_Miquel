@@ -22,6 +22,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 	frames = 0;
 	want_to_save = want_to_load = false;
+	colliders = new Collider_Manager();
 
 	input = new j1Input();
 	win = new j1Window();
@@ -296,6 +297,7 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	PERF_START(ptimer);
+	delete colliders;
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.end;

@@ -102,9 +102,9 @@ void j1Map::Draw()
 	//Draw map debug colliders
 	if (App->input->is_Debug_Mode)
 	{
-		for (unsigned int i = 0; i < App->colliders.collider_list.count(); i++)
+		for (unsigned int i = 0; i < App->colliders->collider_list.count(); i++)
 		{
-			Collider *col = &App->colliders.collider_list[i];
+			Collider *col = &App->colliders->collider_list[i];
 			SDL_Rect *rect = &col->collider_rect;
 			if (Culling_Check(rect->x, rect->y, *rect, 1))
 			{
@@ -575,10 +575,10 @@ bool j1Map::Save(pugi::xml_node& data)const
 
 bool j1Map::Load(pugi::xml_node& data) 
 {
-	App->colliders.collider_list.clear();
+	App->colliders->collider_list.clear();
 	App->map->CleanUp();
 	App->map->Load(data.child("map_info").attribute("name").as_string());
-	App->colliders.LoadColliders();
+	App->colliders->LoadColliders();
 	return true;
 }
 

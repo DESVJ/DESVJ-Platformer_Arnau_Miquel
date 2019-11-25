@@ -35,7 +35,7 @@ bool j1Scene::Start()
 {
 	//Load map 1 && collisions on game start
 	App->map->Load(App->map->GetSourceFromID(App->map->map_id).GetString());
-	App->colliders.LoadColliders();
+	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 
 	return true;
@@ -128,10 +128,10 @@ bool j1Scene::CleanUp()
 //Load map by name
 void j1Scene::Load_Map_By_Name(const char* name)
 {
-	App->colliders.collider_list.clear();
+	App->colliders->collider_list.clear();
 	App->map->CleanUp();
 	App->map->Load(name);
-	App->colliders.LoadColliders();
+	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 	App->entity_manager->Player->Start_F3();
 }

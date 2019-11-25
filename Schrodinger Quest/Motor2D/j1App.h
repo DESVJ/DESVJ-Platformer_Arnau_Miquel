@@ -94,7 +94,7 @@ public:
 	EntityManager*		entity_manager;
 
 	//Collider manager 
-	Collider_Manager	colliders;
+	Collider_Manager*	colliders;
 
 	mutable p2SString	save_game;
 

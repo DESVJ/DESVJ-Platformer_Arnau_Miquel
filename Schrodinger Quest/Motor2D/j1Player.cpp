@@ -197,8 +197,8 @@ bool j1Player::Update(float dt)
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders.MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, true);
-		App->colliders.MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, true);
+		App->colliders->MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, true);
+		App->colliders->MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, true);
 	}
 
 
@@ -268,7 +268,7 @@ bool j1Player::Update(float dt)
 	input_in = I_NONE;
 
 	//Check map ending
-	if (App->colliders.CheckCollision(player.player_rect, App->map->end_point) == true) 
+	if (App->colliders->CheckCollision(player.player_rect, App->map->end_point) == true) 
 	{
 		App->map->map_id++;
 		if (App->map->map_id > MAX_NUMBER_MAPS)
@@ -283,7 +283,7 @@ bool j1Player::Update(float dt)
 bool j1Player::CleanUp()
 {
 	App->tex->UnLoad(player.player_spritesheet);
-	App->colliders.collider_list.clear();
+	App->colliders->collider_list.clear();
 	return true;
 }
 
