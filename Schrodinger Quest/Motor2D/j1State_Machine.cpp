@@ -247,7 +247,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 			if (tang_mode == false) 
 			{
 
-				for (int i = 0; i < App->colliders.collider_list.count(); i++)
+				for (unsigned int i = 0; i < App->colliders.collider_list.count(); i++)
 				{
 					if (App->colliders.CheckAbsoluteCollision(collider_rect, App->colliders.collider_list[i].collider_rect))
 					{

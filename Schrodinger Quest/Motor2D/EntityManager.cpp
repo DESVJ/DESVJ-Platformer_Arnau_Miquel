@@ -13,7 +13,7 @@ EntityManager::~EntityManager()
 // Called before render is available
 bool EntityManager::Awake(pugi::xml_node& a)
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Awake(a);
 	}
@@ -23,7 +23,7 @@ bool EntityManager::Awake(pugi::xml_node& a)
 // Called before the first frame
 bool EntityManager::Start()
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Start();
 	}
@@ -33,7 +33,7 @@ bool EntityManager::Start()
 // Called each loop iteration
 bool EntityManager::PreUpdate()
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->PreUpdate();
 	}
@@ -43,7 +43,7 @@ bool EntityManager::PreUpdate()
 // Called each loop iteration
 bool EntityManager::Update(float dt)
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Update(dt);
 	}
@@ -64,7 +64,7 @@ bool EntityManager::CleanUp()
 //Called when loading the game
 bool EntityManager::Load(pugi::xml_node& n)
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Load(n);
 	}
@@ -74,7 +74,7 @@ bool EntityManager::Load(pugi::xml_node& n)
 //Called when saving the game
 bool EntityManager::Save(pugi::xml_node& s) const
 {
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Save(s);
 	}

@@ -57,6 +57,9 @@ public:
 		return true;
 	}
 
+	//virtual void OnCollision() = 0;
+	//virtual void AfterCollision() = 0;
+
 public:
 	p2Point<float> speed;
 	p2Point<int> spawn;

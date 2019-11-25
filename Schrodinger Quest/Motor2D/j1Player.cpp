@@ -407,8 +407,8 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.player_collider_rect.y = data.child("player_info").child("position").attribute("y").as_int();
 	player.player_rect.w = data.child("player_info").child("position").attribute("w").as_int();
 	player.player_rect.h = data.child("player_info").child("position").attribute("h").as_int();
-	player.player_speed.x = data.child("player_info").child("speed").attribute("x").as_int();
-	player.player_speed.y = data.child("player_info").child("speed").attribute("y").as_int();
+	player.player_speed.x = data.child("player_info").child("speed").attribute("x").as_float();
+	player.player_speed.y = data.child("player_info").child("speed").attribute("y").as_float();
 	player.player_flip = data.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = data.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = data.child("player_info").attribute("stop_jumping_up").as_bool();

@@ -218,9 +218,10 @@ void j1App::FinishUpdate()
 	float wait_time = (1.f / fps_limit) * 1000.f;
 	wait_time -= last_frame_ms;
 
-	float prev_delay_time = ptimer.ReadMs();
+	//double prev_delay_time = ptimer.ReadMs();
+	//SDL_Delay((Uint32)fabs(wait_time));
 	SDL_Delay(fabs(wait_time));
-	float time_waited = ptimer.ReadMs() - prev_delay_time;
+	//double time_waited = ptimer.ReadMs() - prev_delay_time;
 	//LOG("Expected wait: %f ms  Time waited: %f ms Diff: %f ms", wait_time, time_waited, wait_time - time_waited);
 
 }
@@ -263,7 +264,7 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item->data->Update((float)dt);
 	}
 
 	return ret;
