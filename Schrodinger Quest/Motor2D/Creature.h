@@ -64,7 +64,7 @@ public:
 	{
 		return { false, false };
 	}
-	virtual void AfterCollision(p2Point<bool> col_result) {}
+	virtual void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>) {}
 
 public:
 	p2Point<float> speed;

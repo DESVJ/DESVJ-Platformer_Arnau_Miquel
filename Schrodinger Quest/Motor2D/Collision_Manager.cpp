@@ -94,14 +94,13 @@ void Collider_Manager::LoadColliders()
 }
 
 //Move an object by movement prediction
-void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment, bool isPlayer, Creature* s_mod)
+void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment, Creature* s_mod)
 {
 
 	//Set movement prediction
 	SDL_Rect prediction = *currentPoint;
 	prediction.x += increment.x;
 	prediction.y += increment.y;
-
 
 	//Set movement direction
 	Direction dir = NONE_DIRECTION;
@@ -122,10 +121,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 		dir = UP;
 	}
 
-	//Init coollision bools
-	bool colisionDetectedX = false;
-	bool colisionDetectedY = false;
-	typeColDetected = false;
+	p2Point<bool> result = {false, false};
 
 	//Itinerate all collider objects
 	for (unsigned int i = 0; i < collider_list.count(); i++)
@@ -141,152 +137,12 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
 				{
-
-					//If there is a colision, look collider type
-					if ((collider_list[i].collider_type == WALKEABLE && !App->entity_manager->Player->player.player_tang_mode) || (collider_list[i].collider_type == TANG && App->entity_manager->Player->player.player_tang_mode))
-					{
-						//Allow the object to ignore down collisions (player jumping in top of platform)
-						if (allowClippingCollider != nullptr && currentPoint->y <= allowClippingCollider->collider_rect.y) 
-						{
-							allowClippingCollider = nullptr;
-						}
-
-
-						if (&collider_list[i] != allowClippingCollider) 
-						{
-							//Is the collision inside x and x + w?
-							if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
-							{
-								//Correct movement or move object in a normal way
-								if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
-								{
-									colisionDetectedY = true;
-									if (dir == DOWN)
-									{
-										currentPoint->y = block->y;
-
-										if (isPlayer) 
-										{
-
-											if (App->entity_manager->Player->player.player_speed.y >= 8 && App->entity_manager->Player->canJump == false && App->entity_manager->Player->player.col_state == player_colision_state::NONE)
-												App->audio->PlayFx(App->entity_manager->Player->jump_down_fx);
-
-											if (!App->entity_manager->Player->canJump)
-												App->entity_manager->Player->canJump = true;
-
-											App->entity_manager->Player->player.player_not_jumping = true;
-											App->entity_manager->Player->player.player_in_air = false;
-										}
-
-									}
-								}
-								else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
-								{
-									if (dir == UP)
-									{
-										colisionDetectedY = true;
-										if (isPlayer && App->entity_manager->Player->player.col_state == player_colision_state::CLIMBING)
-										{
-											colisionDetectedY = false;
-											allowClippingCollider = &collider_list[i];
-										}
-
-										if (collider_list[i].canBeJumped) 
-										{
-											allowClippingCollider = &collider_list[i];
-										}
-										else
-										{
-											currentPoint->y = block->y + block->h - prediction.h;
-										}
-									}
-
-								}
-							}
-							if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
-							{
-								colisionDetectedX = true;
-								////Coliding with the sides of an object
-								if (prediction.x <= block->x + block->w)
-								{
-									if (dir == LEFT)
-									{
-										if(isPlayer && App->entity_manager->Player->player.col_state != player_colision_state::CLIMBING)
-											currentPoint->x = block->x + block->w;
-									}
-								}
-								else if (prediction.x + prediction.w >= block->x)
-								{
-									if (dir == RIGHT)
-									{
-										if (isPlayer && App->entity_manager->Player->player.col_state != player_colision_state::CLIMBING)
-											currentPoint->x = block->x - currentPoint->w;
-									}
-								}
-
-							}
-						}
-					}
-
-					//If collider is type KILL, kill player
-					if(collider_list[i].collider_type == KILL && prediction.y > collider_list[i].collider_rect.y + (collider_list[i].collider_rect.h / 2))
-					{
-						if (isPlayer && !App->entity_manager->Player->player.player_tang_mode && !App->entity_manager->Player->player.player_god_mode)
-						{
-							App->entity_manager->Player->Change_Col_State(player_colision_state::DYING);
-							typeColDetected = true;
-							LOG("KILL");
-						}
-
-					}
-
-					//If collider is type Climb, climb
-					if(collider_list[i].collider_type == CLIMB)
-					{
-						typeColDetected = true;
-						if (isPlayer && !App->entity_manager->Player->player.player_tang_mode &&
-							(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || 
-							(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->entity_manager->Player->player.player_rect.y > collider_list[i].collider_rect.y)) &&
-							(App->entity_manager->Player->player.player_rect.x + (App->entity_manager->Player->player.player_rect.w / 2) > collider_list[i].collider_rect.x
-								&& App->entity_manager->Player->player.player_rect.x + (App->entity_manager->Player->player.player_rect.w / 2) < collider_list[i].collider_rect.x + collider_list[i].collider_rect.w))
-						{
-							if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collider_list[i].collider_rect.y + collider_list[i].collider_rect.h > App->entity_manager->Player->player.player_rect.y)
-							{
-								colisionDetectedY = false;
-								colisionDetectedX = false;
-							}
-							App->entity_manager->Player->Change_Col_State(player_colision_state::CLIMBING);
-							LOG("CLIMB");
-						}
-					}
-					
-
+					result = s_mod->OnCollision(&collider_list[i], prediction, block, dir);
 				}
-
-
 			}
 		}
 	}
-
-	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
-	if (!colisionDetectedX)
-	{
-		currentPoint->x = prediction.x;
-	}
-	if (!colisionDetectedY)
-	{
-		currentPoint->y = prediction.y;
-		if (increment.y > 0) 
-		{
-			App->entity_manager->Player->canJump = false;
-		}
-	}
-
-	//Reset typeColDetected state
-	if (!typeColDetected) 
-	{
-		App->entity_manager->Player->Change_Col_State(player_colision_state::NONE);
-	}
+	s_mod->AfterCollision(result, prediction, increment);
 }
 
 

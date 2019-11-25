@@ -197,8 +197,8 @@ bool j1Player::Update(float dt)
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders->MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, true);
-		App->colliders->MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, true);
+		App->colliders->MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, this);
+		App->colliders->MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, this);
 	}
 
 
@@ -480,4 +480,152 @@ void j1Player::MoveToSpawn()
 	}
 
 	
+}
+
+p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir)
+{
+
+	//Init coollision bools
+	bool colisionDetectedX = false;
+	bool colisionDetectedY = false;
+
+	//If there is a colision, look collider type
+	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
+	{
+		//Allow the object to ignore down collisions (player jumping in top of platform)
+		if (App->colliders->allowClippingCollider != nullptr && player.player_collider_rect.y <= App->colliders->allowClippingCollider->collider_rect.y)
+		{
+			App->colliders->allowClippingCollider = nullptr;
+		}
+
+
+		if (in_collider != App->colliders->allowClippingCollider)
+		{
+			//Is the collision inside x and x + w?
+			if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
+			{
+				//Correct movement or move object in a normal way
+				if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
+				{
+					colisionDetectedY = true;
+					if (dir == DOWN)
+					{
+						player.player_collider_rect.y = block->y;
+
+						if (player.player_speed.y >= 8 && canJump == false && player.col_state == player_colision_state::NONE)
+							App->audio->PlayFx(jump_down_fx);
+
+						if (!canJump)
+							canJump = true;
+
+						player.player_not_jumping = true;
+						player.player_in_air = false;
+	
+					}
+				}
+				else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+				{
+					if (dir == UP)
+					{
+						colisionDetectedY = true;
+						if (player.col_state == player_colision_state::CLIMBING)
+						{
+							colisionDetectedY = false;
+							App->colliders->allowClippingCollider = in_collider;
+						}
+
+						if (in_collider->canBeJumped)
+						{
+							App->colliders->allowClippingCollider = in_collider;
+						}
+						else
+						{
+							player.player_collider_rect.y = block->y + block->h - prediction.h;
+						}
+					}
+
+				}
+			}
+			if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
+			{
+				colisionDetectedX = true;
+				////Coliding with the sides of an object
+				if (prediction.x <= block->x + block->w)
+				{
+					if (dir == LEFT)
+					{
+						if (player.col_state != player_colision_state::CLIMBING)
+							player.player_collider_rect.x = block->x + block->w;
+					}
+				}
+				else if (prediction.x + prediction.w >= block->x)
+				{
+					if (dir == RIGHT)
+					{
+						if (player.col_state != player_colision_state::CLIMBING)
+							player.player_collider_rect.x = block->x - player.player_collider_rect.w;
+					}
+				}
+
+			}
+		}
+	}
+
+	//If collider is type KILL, kill player
+	if (in_collider->collider_type == KILL && prediction.y > in_collider->collider_rect.y + (in_collider->collider_rect.h / 2))
+	{
+		if (!player.player_tang_mode && !player.player_god_mode)
+		{
+			Change_Col_State(player_colision_state::DYING);
+			typeColDetected = true;
+			LOG("KILL");
+		}
+
+	}
+
+	//If collider is type Climb, climb
+	if (in_collider->collider_type == CLIMB)
+	{
+		typeColDetected = true;
+		if (!player.player_tang_mode &&
+			(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT ||
+			(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player.player_rect.y > in_collider->collider_rect.y)) &&
+				(player.player_rect.x + (player.player_rect.w / 2) > in_collider->collider_rect.x
+					&& player.player_rect.x + (player.player_rect.w / 2) < in_collider->collider_rect.x + in_collider->collider_rect.w))
+		{
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && in_collider->collider_rect.y + in_collider->collider_rect.h > player.player_rect.y)
+			{
+				colisionDetectedY = false;
+				colisionDetectedX = false;
+			}
+			Change_Col_State(player_colision_state::CLIMBING);
+			LOG("CLIMB");
+		}
+	}
+
+
+
+	return { colisionDetectedX, colisionDetectedY };
+}
+void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2Point<int> increment)
+{
+	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
+	if (col_result.x == false)
+	{
+		player.player_collider_rect.x = prediction.x;
+	}
+	if (col_result.y == false)
+	{
+		player.player_collider_rect.y = prediction.y;
+		if (increment.y > 0)
+		{
+			canJump = false;
+		}
+	}
+
+	//Reset typeColDetected state
+	if (!typeColDetected)
+	{
+		Change_Col_State(player_colision_state::NONE);
+	}
 }

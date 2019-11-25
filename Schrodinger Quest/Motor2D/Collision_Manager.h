@@ -56,7 +56,7 @@ public:
 	bool typeColDetected;
 
 	//Function to move objects by collision prediction
-	void MoveObject(SDL_Rect*, p2Point<int>, bool isPlayer = false, Creature* s_mod = nullptr);
+	void MoveObject(SDL_Rect*, p2Point<int>, Creature* s_mod);
 
 	//Load colliders
 	void LoadColliders();
