@@ -2,7 +2,10 @@
 #define _CREATURE_H
 #include "Entity.h"
 #include "p2Point.h"
+#include"Collision_Manager.h"
 
+struct Collider;
+enum Direction;
 class Creature : public Entity 
 {
 public:
@@ -57,8 +60,11 @@ public:
 		return true;
 	}
 
-	//virtual void OnCollision() = 0;
-	//virtual void AfterCollision() = 0;
+	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction) 
+	{
+		return { false, false };
+	}
+	virtual void AfterCollision(p2Point<bool> col_result) {}
 
 public:
 	p2Point<float> speed;

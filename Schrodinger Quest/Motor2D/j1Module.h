@@ -73,7 +73,7 @@ public:
 		return true;
 	}
 
-	virtual void OnCollision(/*Collider_Types type*/) {};
+	//virtual void OnCollision(/*Collider_Types type*/) {};
 
 public:
 
