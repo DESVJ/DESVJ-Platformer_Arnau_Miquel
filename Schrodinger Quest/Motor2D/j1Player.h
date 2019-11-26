@@ -8,7 +8,7 @@
 #include"p2SString.h"
 #include "Animation.h"
 #include"p2List.h"
-#include "Creature.h"
+#include "eCreature.h"
 #define MAX_INPUTS_OUT 8
 
 //Collision state enum
@@ -121,7 +121,7 @@ enum inputout
 };
 
 //Player class
-class j1Player : public Creature
+class j1Player : public eCreature
 {
 
 public:

@@ -1,5 +1,5 @@
-#ifndef _CREATURE_H
-#define _CREATURE_H
+#ifndef _ECREATURE_H
+#define _ECREATURE_H
 #include "Entity.h"
 #include "p2Point.h"
 #include"Collision_Manager.h"
@@ -8,15 +8,15 @@
 
 struct Collider;
 enum Direction;
-class Creature : public Entity 
+class eCreature : public Entity
 {
 public:
-	Creature(Types type) :Entity(type) {
+	eCreature(Types type) :Entity(type) {
 
 	}
 
 	// Destructor
-	virtual ~Creature() {
+	virtual ~eCreature() {
 
 	}
 

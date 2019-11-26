@@ -10,10 +10,10 @@
 #include"p2SString.h"
 #include"p2List.h"
 #include"j1Render.h"
-#include"Creature.h"
+#include"eCreature.h"
 #include"j1App.h"
 
-class Creature;
+class eCreature;
 //Collide type
 enum Collider_Types
 {
@@ -56,7 +56,7 @@ public:
 	bool typeColDetected;
 
 	//Function to move objects by collision prediction
-	void MoveObject(SDL_Rect*, p2Point<int>, Creature* s_mod);
+	void MoveObject(SDL_Rect*, p2Point<int>, eCreature* s_mod);
 
 	//Load colliders
 	void LoadColliders();

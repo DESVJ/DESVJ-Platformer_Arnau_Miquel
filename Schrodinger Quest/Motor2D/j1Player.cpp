@@ -12,7 +12,7 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 
-j1Player::j1Player(Types type) : Creature(Types::player)
+j1Player::j1Player(Types type) : eCreature(Types::player)
 {
 	name.create("player");
 }
@@ -573,7 +573,7 @@ void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2P
 
 pugi::xml_node j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
 {
-	pugi::xml_node res = Creature::LoadAnimationFromTMX(animation_node, anim, name);
+	pugi::xml_node res = eCreature::LoadAnimationFromTMX(animation_node, anim, name);
 
 	//TODO: Remove this from here, needs to be player only
 	if (player.minPlayerHeight == 0)

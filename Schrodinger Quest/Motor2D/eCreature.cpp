@@ -1,7 +1,7 @@
-#include"Creature.h"
+#include"eCreature.h"
 #include"EntityManager.h"
 
-pugi::xml_node Creature::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
+pugi::xml_node eCreature::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
 {
 	//Load objectgroups from tmx
 	pugi::xml_node objectgroup;

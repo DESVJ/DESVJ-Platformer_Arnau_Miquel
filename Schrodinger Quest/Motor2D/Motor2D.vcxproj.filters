@@ -55,11 +55,11 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Game Core\Timers</Filter>
     </ClCompile>
-    <ClCompile Include="Creature.cpp">
-      <Filter>Game Core\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="eSnakeEnemy.cpp">
       <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="eCreature.cpp">
+      <Filter>Game Core\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,14 +141,14 @@
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Game Core\Timers</Filter>
     </ClInclude>
-    <ClInclude Include="Creature.h">
-      <Filter>Game Core\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="eGroundEnemy.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
     <ClInclude Include="eSnakeEnemy.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="eCreature.h">
+      <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

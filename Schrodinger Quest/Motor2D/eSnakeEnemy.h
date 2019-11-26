@@ -5,7 +5,7 @@
 #include"p2Log.h"
 #include"p2SString.h"
 #include"p2List.h"
-#include"Creature.h"
+#include"eCreature.h"
 #include"eGroundEnemy.h"
 
 

@@ -5,12 +5,12 @@
 #include"p2Log.h"
 #include"p2SString.h"
 #include"p2List.h"
-#include"Creature.h"
+#include"eCreature.h"
 
 
-class Creature;
+class eCreature;
 //Player class
-class eGroundEnemy : public Creature
+class eGroundEnemy : public eCreature
 {
 
 public:
