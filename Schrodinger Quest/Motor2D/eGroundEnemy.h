@@ -16,7 +16,7 @@ class eGroundEnemy : public eCreature
 public:
 
 	eGroundEnemy(Types type) :eCreature(type) {
-
+		name.create("ground_enemy");
 	}
 	
 	// Destructor

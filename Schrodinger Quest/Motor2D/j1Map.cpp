@@ -334,6 +334,12 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	//Load enemys
+	//for (int i = 0; i < ; i++)
+	//{
+
+	//}
+
 	map_loaded = ret;
 	//////////////IMPORTANT!!!!!!!!!! HERE (RETURN) THE STRING WHICH INDICATES WHICH COLLIDER IS (F.E. WALKEABLE) IS DESTROYED
 	return ret;
@@ -538,6 +544,12 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 		set->name = props1.attribute("name").value();
 		set->prop_value.value_bool = props1.attribute("value").as_bool();
 
+		if (set->name == "isSpawn" && set->prop_value.value_bool) 
+		{
+			App->entity_manager->Player->spawn.x = node.child("object").attribute("x").as_int();
+			App->entity_manager->Player->spawn.y = node.child("object").attribute("y").as_int();
+		}
+
 		object->properties.add(set);
 	}
 
@@ -548,6 +560,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 
 		set->id = objs.attribute("id").as_int();
 		set->rect = { objs.attribute("x").as_int(), objs.attribute("y").as_int() , objs.attribute("width").as_int() , objs.attribute("height").as_int() };
+
 		for (pugi::xml_node subNode = objs.child("properties").child("property"); subNode && ret; subNode = subNode.next_sibling("property"))
 		{
 			object_property *set2 = new object_property();

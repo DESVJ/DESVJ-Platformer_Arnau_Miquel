@@ -71,8 +71,8 @@
 
       <ground_enemy>
         <snake>
-          <load_file>textures/snake.tmx</load_file>
-          <texture_source>textures/Enemy Sprites/Cobra_Sprite_Sheet.png</texture_source>
+          <load_file>textures/Enemy_Sprites/snake.tmx</load_file>
+          <texture_source>textures/Enemy_Sprites/Cobra_Sprite_Sheet.png</texture_source>
         </snake>
       </ground_enemy>
 

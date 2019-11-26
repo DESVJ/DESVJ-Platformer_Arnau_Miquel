@@ -31,7 +31,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node player_node = player_info_file.child("map");
 
-	player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
+	//player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
 
 	//Animation laoding 
 	LoadAnimationFromTMX(&player_node, &idle, "idle");
@@ -397,29 +397,15 @@ void j1Player::LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, 
 void j1Player::MoveToSpawn()
 {
 	//Set position to spawn point
+
+	collision_rect.x = spawn.x;
+	collision_rect.y = spawn.y;
+
 	p2List_item<MapObjectGroup*>* objects_map;
 	objects_map = App->map->data.object_layers.start;
 	while (objects_map != NULL)
 	{
-		if (objects_map->data->name == "SpawnPoint") {
-			p2List_item<object_property*>* isSpawn;
-			isSpawn = objects_map->data->properties.start;
-			while (isSpawn != NULL)
-			{
-				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
-				{
-					collision_rect.x = objects_map->data->objects.start->data->rect.x;
-					collision_rect.y = objects_map->data->objects.start->data->rect.y;
-
-					position_rect.x = collision_rect.x;
-					position_rect.y = collision_rect.y;
-					//player.player_rect.w = objects_map->data->objects.start->data->rect.w;
-					//player.player_rect.h = objects_map->data->objects.start->data->rect.h;
-				}
-				isSpawn = isSpawn->next;
-			}
-		}
-		else if (objects_map->data->name == "Music && Sound")
+		if (objects_map->data->name == "Music && Sound")
 		{
 			//Restart music
 			if (alive == true)App->map->PrepareMusicSource(objects_map);

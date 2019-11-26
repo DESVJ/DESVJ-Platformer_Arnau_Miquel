@@ -17,7 +17,7 @@ class eSnakeEnemy : public eGroundEnemy
 public:
 
 	eSnakeEnemy(Types type) :eGroundEnemy(type) {
-
+		name.create("enemy_info");
 	}
 
 	// Destructor
