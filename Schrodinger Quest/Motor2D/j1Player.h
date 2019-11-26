@@ -164,7 +164,6 @@ public:
 public:
 
 	Player_Info player;
-	Animation run;
 	Animation jump;
 	Animation idle_ladder;
 	Animation slide;

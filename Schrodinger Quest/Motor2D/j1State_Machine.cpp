@@ -307,7 +307,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->entity_manager->Player->run;
+			current_animation = &App->entity_manager->Player->move;
 			break;
 
 		case S_SLIDE:
@@ -349,7 +349,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->entity_manager->Player->run;
+			current_animation = &App->entity_manager->Player->move;
 
 		case S_UP:
 			up = true;
@@ -363,7 +363,7 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			{
 				right = true;
 			}
-			current_animation = &App->entity_manager->Player->run;
+			current_animation = &App->entity_manager->Player->move;
 
 		case S_DOWN:
 			down = true;

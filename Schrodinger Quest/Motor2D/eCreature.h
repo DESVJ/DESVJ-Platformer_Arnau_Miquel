@@ -82,6 +82,8 @@ public:
 	//General animations
 	Animation idle;
 	Animation death;
+	Animation move;
+
 
 	//General collisions
 	bool typeColDetected;

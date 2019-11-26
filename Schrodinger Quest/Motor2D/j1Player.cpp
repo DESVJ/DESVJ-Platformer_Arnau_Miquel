@@ -35,7 +35,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	//Animation laoding 
 	LoadAnimationFromTMX(&player_node, &idle, "idle");
-	LoadAnimationFromTMX(&player_node, &run, "run");
+	LoadAnimationFromTMX(&player_node, &move, "move");
 	LoadAnimationFromTMX(&player_node, &jump, "jump");
 	LoadAnimationFromTMX(&player_node, &idle_ladder, "idle_ladder");
 	LoadAnimationFromTMX(&player_node, &movement_ladder, "movement_ladder");
