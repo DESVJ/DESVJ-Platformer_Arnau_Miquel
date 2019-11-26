@@ -18,6 +18,7 @@ class j1Scene;
 class j1Map;
 class EntityManager;
 class Collider_Manager;
+class j1PathFinding;
 
 //Application class
 class j1App
@@ -92,6 +93,7 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	EntityManager*		entity_manager;
+	j1PathFinding*		pathfinding;
 
 	//Collider manager 
 	Collider_Manager*	colliders;

@@ -553,6 +553,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	if ((p2SString)node.child("properties").child("property").attribute("name").as_string() == (p2SString)"isTangLayer" && node.child("properties").child("property").attribute("value").as_bool() == true)
 		layer->isTang = true;
 
+	if ((p2SString)node.child("properties").child("property").attribute("name").as_string() == (p2SString)"isPathFinding" && node.child("properties").child("property").attribute("value").as_bool() == true)
+		layer->isPathFinding = true;
+
 	return ret;
 }
 
@@ -654,37 +657,108 @@ p2SString j1Map::GetSourceFromID(int id)
 
 void j1Map::GeneralDraw(p2List_item<MapLayer*>* list, p2List_item<TileSet*>* coord_tileset, int len,  bool ret)
 {
-	for (int layer_counter = 0; layer_counter < len; layer_counter++) {
 
-		//for of every x in one layer
-		for (unsigned int i = 0; i < list->data->height; i++) {
+		for (int layer_counter = 0; layer_counter < len; layer_counter++) {
 
-			//for of every y in one layer
-			for (unsigned int j = 0; j < list->data->width; j++) {
-				int n = list->data->Get(j, i);
-				int gid = list->data->gid[n];
-				if (gid != 0) {
-					while (ret == false) 
-					{
-						if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
-						else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
-						else ret = true;
+			//for of every x in one layer
+			for (unsigned int i = 0; i < list->data->height; i++) {
+
+				//for of every y in one layer
+				for (unsigned int j = 0; j < list->data->width; j++) {
+					int n = list->data->Get(j, i);
+					int gid = list->data->gid[n];
+					if (gid != 0) {
+						while (ret == false)
+						{
+							if (coord_tileset->next != NULL && coord_tileset->next->data->firstgid <= gid) coord_tileset = coord_tileset->next;
+							else if (coord_tileset->prev != NULL && coord_tileset->data->firstgid > gid)coord_tileset = coord_tileset->prev;
+							else ret = true;
+						}
+						ret = false;
+						SDL_Rect rect = coord_tileset->data->GetRect(list->data->gid[n]);
+						int x = j;
+						int y = i;
+						Translate_Coord(&x, &y);
+
+						if (Culling_Check(x, y, rect, list->data->speed))
+						{
+							if(!list->data->isPathFinding || (list->data->isPathFinding && App->input->is_Debug_Mode))
+								App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { list->data->speed,  1 });
+						}
+
+
 					}
-					ret = false;
-					SDL_Rect rect = coord_tileset->data->GetRect(list->data->gid[n]);
-					int x = j;
-					int y = i;
-					Translate_Coord(&x, &y);
-
-					if (Culling_Check(x, y, rect, list->data->speed))
-					{
-						App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { list->data->speed,  1 });
-					}
-
-
 				}
 			}
+			list = list->next;
 		}
-		list = list->next;
+}
+
+
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
 	}
+
+	return set;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		//TODO: Change this to a new bool
+		if (layer->name == "PathFinding")
+		{
+			uchar* map = new uchar[layer->width*layer->height];
+			memset(map, 1, layer->width*layer->height);
+
+			for (int y = 0; y < data.height; ++y)
+			{
+				for (int x = 0; x < data.width; ++x)
+				{
+					int i = (y*layer->width) + x;
+
+					int tile_id = layer->Get(x, y);
+					TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+					if (tileset != NULL)
+					{
+						map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+						/*TileType* ts = tileset->GetTileType(tile_id);
+						if(ts != NULL)
+						{
+							map[i] = ts->properties.Get("walkable", 1);
+						}*/
+					}
+				}
+			}
+
+			*buffer = map;
+			width = data.width;
+			height = data.height;
+			ret = true;
+
+			break;
+		}	
+	}
+
+	return ret;
 }

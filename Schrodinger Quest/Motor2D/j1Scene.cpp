@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "EntityManager.h"
+#include "j1Pathfinding.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -38,12 +39,42 @@ bool j1Scene::Start()
 	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+
+	RELEASE_ARRAY(data);
+
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	// debug pathfing ------------------
+	static iPoint origin;
+	static bool origin_selected = false;
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = { x, y };
+	
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+		}
+	}
+
 	return true;
 }
 
@@ -100,6 +131,19 @@ bool j1Scene::Update(float dt)
 
 	//Draw map
 	App->map->Draw();
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = { x, y };
+	App->render->DrawQuad({ p.x, p.y , 16, 16}, 255, 0, 0, 100);
+
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = { path->At(i)->x, path->At(i)->y };
+		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 255, 255, 0, 100);
+	}
 
 	return true;
 }

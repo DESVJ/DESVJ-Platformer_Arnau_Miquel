@@ -61,6 +61,9 @@
     <ClCompile Include="eCreature.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -148,6 +151,9 @@
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
     <ClInclude Include="eCreature.h">
+      <Filter>Game Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>

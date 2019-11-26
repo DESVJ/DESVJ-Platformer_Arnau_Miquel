@@ -39,6 +39,7 @@ struct MapLayer {
 	uint height = 0u;
 	uint* gid = nullptr;
 	bool isTang = false;
+	bool isPathFinding = false;
 	inline uint Get(int x, int y) const 
 	{
 		return (y * width) + x;
@@ -159,6 +160,9 @@ public:
 
 	//Check for occlusion culling
 	bool Culling_Check(int x, int y, SDL_Rect rect, float speed);
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	TileSet* GetTilesetFromTileId(int id) const;
+
 
 	MapData data;
 	int culling_offset;
