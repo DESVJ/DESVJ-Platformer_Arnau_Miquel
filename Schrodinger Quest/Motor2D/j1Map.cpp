@@ -544,6 +544,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 		set->name = props1.attribute("name").value();
 		set->prop_value.value_bool = props1.attribute("value").as_bool();
 
+		//TODO REMOVE THIS, BAD, BAAAAAAAAAAAAAD, PUT IT AFTER THIS FUNCTION IS CALLED
 		if (set->name == "isSpawn" && set->prop_value.value_bool) 
 		{
 			App->entity_manager->Player->spawn.x = node.child("object").attribute("x").as_int();
@@ -560,6 +561,8 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 
 		set->id = objs.attribute("id").as_int();
 		set->rect = { objs.attribute("x").as_int(), objs.attribute("y").as_int() , objs.attribute("width").as_int() , objs.attribute("height").as_int() };
+
+
 
 		for (pugi::xml_node subNode = objs.child("properties").child("property"); subNode && ret; subNode = subNode.next_sibling("property"))
 		{
