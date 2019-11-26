@@ -16,7 +16,7 @@ bool EntityManager::Awake(pugi::xml_node& a)
 {
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
-		entities.At(i)->data->Awake(a);
+		entities.At(i)->data->Awake(a.child(entities.At(i)->data->name.GetString()));
 	}
 	return true;
 }
@@ -67,7 +67,7 @@ bool EntityManager::Load(pugi::xml_node& n)
 {
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
-		entities.At(i)->data->Load(n);
+		entities.At(i)->data->Load(n.child(entities.At(i)->data->name.GetString()));
 	}
 	return true;
 }
@@ -77,7 +77,7 @@ bool EntityManager::Save(pugi::xml_node& s) const
 {
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
-		entities.At(i)->data->Save(s);
+		entities.At(i)->data->Save(s.append_child(entities.At(i)->data->name.GetString()));
 	}
 	return true;
 }
