@@ -122,6 +122,7 @@ public:
 	//Draw map
 	void Draw();
 	void GeneralDraw(p2List_item<MapLayer*>* list, p2List_item<TileSet*>*, int len, bool ret);
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();

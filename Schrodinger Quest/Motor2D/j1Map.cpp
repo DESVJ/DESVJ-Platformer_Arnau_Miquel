@@ -70,7 +70,8 @@ bool j1Map::Culling_Check(int x, int y, SDL_Rect rect, float speed)
 }
 
 void j1Map::Draw()
-{BROFILER_CATEGORY("Draw Map", Profiler::Color::DarkOrange)
+{
+	BROFILER_CATEGORY("Draw Map", Profiler::Color::DarkOrange)
 	if(map_loaded == false)
 		return;
 
@@ -134,6 +135,10 @@ void j1Map::Draw()
 	}
 }
 
+bool j1Map::PostUpdate() 
+{
+	return true;
+}
 
 // Called before quitting
 bool j1Map::CleanUp()
@@ -305,6 +310,7 @@ bool j1Map::Load(const char* file_name)
 				object_struct* object = set->objects[i];
 				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value.value_string == "snake")
 				{
+					object->rect.y += object->rect.h;
 					App->entity_manager->CreateEntity(Types::enemy_ground)->position_rect = object->rect;
 				}
 

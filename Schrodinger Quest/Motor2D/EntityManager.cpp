@@ -106,7 +106,8 @@ Entity* EntityManager::CreateEntity(Types type)
 	{
 		entities.add(ret);
 		//ret->Awake();
-		//ret->Start();
+		if(type == Types::enemy_ground)
+			ret->Start();
 	}
 	return ret;
 }

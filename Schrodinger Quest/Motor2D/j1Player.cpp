@@ -98,6 +98,9 @@ bool j1Player::PreUpdate()
 	if (respawn == true)
 		Start_F3();
 
+	//Move camera to new player position
+	App->render->MoveCameraToPointInsideLimits({ collision_rect.x + (collision_rect.w / 2), collision_rect.y });
+
 	return true;
 }
 
@@ -197,7 +200,7 @@ bool j1Player::Update(float dt)
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders->MoveObject(&collision_rect, { (int)round(speed.x) , 0}, this);
+		App->colliders->MoveObject(&collision_rect, { (int)round(speed.x * 60 * dt) , 0}, this);
 		App->colliders->MoveObject(&collision_rect, { 0, (int)round(speed.y) }, this);
 	}
 
@@ -231,13 +234,6 @@ bool j1Player::Update(float dt)
 	position_rect.x = collision_rect.x + (animation_created_mov / 2);
 	position_rect.y = collision_rect.y;
 
-	//Move camera to new player position
-	App->render->MoveCameraToPointInsideLimits({collision_rect.x + (collision_rect.w / 2), collision_rect.y});
-
-	//App->render->camera.x = -(player.player_rect.x * (int)App->win->GetScale() - (int)App->win->width / 2);
-	//App->render->camera.y = -(player.player_rect.y * (int)App->win->GetScale() - (int)App->win->height / 2);
-	//LOG("%f", App->player->player.player_speed.y);
-
 
 	//Check if player is under the map and kill it
 	if (position_rect.y + position_rect.h > killLimit && !respawn)
@@ -253,6 +249,8 @@ bool j1Player::Update(float dt)
 
 	//Render player GFX
 	App->render->Blit(player.player_spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
+	if (App->input->is_Debug_Mode)
+		App->render->DrawQuad(App->render->followMinRect, 255, 210, 78, 50);
 
 	//Render player colider in debug mode
 	if (App->input->is_Debug_Mode) 

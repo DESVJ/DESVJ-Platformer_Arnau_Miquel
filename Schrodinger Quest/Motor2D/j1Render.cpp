@@ -299,11 +299,6 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	{
 		camera.y = y + -App->entity_manager->Player->player.minPlayerHeight * (int)App->win->GetScale();
 	}
-
-
-	if(App->input->is_Debug_Mode)
-		App->render->DrawQuad(followMinRect, 255, 210, 78, 50);
-
 }
 
 void j1Render::SetMapLimitsWithTMX()

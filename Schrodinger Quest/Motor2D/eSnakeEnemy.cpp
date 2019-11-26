@@ -5,22 +5,27 @@
 bool eSnakeEnemy::Awake(pugi::xml_node& config)
 {
 
-	//pugi::xml_node animation_node = config.child("enemy_info").child("ground_enemy").child("snake").child("load_file").value();
+	//pugi::xml_document	player_info_file;
+	////p2SString s = config.child("ground_enemy").child("snake").child("load_file").child_value();
+	//player_info_file.load_file(config.child("ground_enemy").child("snake").child("load_file").child_value());
+	//pugi::xml_node player_node = player_info_file.child("map");
 
-	pugi::xml_document	player_info_file;
-	//p2SString s = config.child("ground_enemy").child("snake").child("load_file").child_value();
-	player_info_file.load_file(config.child("ground_enemy").child("snake").child("load_file").child_value());
-	pugi::xml_node player_node = player_info_file.child("map");
-
-	LoadAnimationFromTMX(&player_node, &idle, "idle");
-
-	//LOG("%f", idle.speed);
+	//LoadAnimationFromTMX(&player_node, &idle, "idle");
 
 	return true;
 }
 
 bool eSnakeEnemy::Start()
 {
+
+	//TODO THIS IS HARDCODED, CANT USE IT ON AWAKE BECASUSE ITS CALLED DURING RUNTIME, NEEDS TO BE FIXED
+	pugi::xml_document	player_info_file;
+	player_info_file.load_file("textures/Enemy_Sprites/snake.tmx");
+	pugi::xml_node player_node = player_info_file.child("map");
+
+	LoadAnimationFromTMX(&player_node, &idle, "idle");
+
+
 	if (!spritesheet)
 	{
 		//Remove hardcode when tmx of enemy is created
