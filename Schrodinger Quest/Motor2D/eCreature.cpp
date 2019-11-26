@@ -1,5 +1,6 @@
 #include"eCreature.h"
 #include"EntityManager.h"
+#include"j1Textures.h"
 
 pugi::xml_node eCreature::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
 {
@@ -45,4 +46,13 @@ pugi::xml_node eCreature::LoadAnimationFromTMX(pugi::xml_node* animation_node, A
 		}
 	}
 	return ret;
+}
+
+bool eCreature::CleanUp()
+{
+	if (spritesheet)
+	{
+		App->tex->UnLoad(spritesheet);
+	}
+	return true;
 }

@@ -5,6 +5,7 @@ EntityManager::EntityManager()
 {
 	name.create("entity_manager");
 	Player = (j1Player*)CreateEntity(Types::player);
+	CreateEntity(Types::enemy_ground);
 }
 
 //Destructor
@@ -56,6 +57,7 @@ bool EntityManager::CleanUp()
 {
 	for (int i = entities.count() - 1; i >= 0; i--)
 	{
+		entities.At(i)->data->CleanUp();
 		entities.del(entities.At(i));
 	}
 	entities.clear();
@@ -94,7 +96,7 @@ Entity* EntityManager::CreateEntity(Types type)
 		break;
 
 	case Types::enemy_ground:
-		//ret = new eSnakeEnemy(Types::enemy_ground);
+		ret = new eSnakeEnemy(Types::enemy_ground);
 		break;
 	case Types::enemy_air:
 		break;
@@ -114,6 +116,7 @@ bool EntityManager::DeleteEntity(Entity* e)
 	if (n == -1)return false;
 	else
 	{
+		entities.At(n)->data->CleanUp();
 		entities.del(entities.At(n));
 		return true;
 	}

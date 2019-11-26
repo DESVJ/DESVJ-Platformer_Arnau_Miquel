@@ -5,6 +5,7 @@
 #include"Collision_Manager.h"
 #include"Animation.h"
 #include"p2SString.h"
+#include"j1Textures.h"
 
 struct Collider;
 enum Direction;
@@ -45,10 +46,7 @@ public:
 	}
 
 	// Called before quitting
-	virtual bool CleanUp()
-	{
-		return true;
-	}
+	virtual bool CleanUp();
 
 	//Load animation pushbacks by name
 	virtual pugi::xml_node LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);
@@ -84,9 +82,12 @@ public:
 	Animation death;
 	Animation move;
 
-
 	//General collisions
 	bool typeColDetected;
+
+	//General gfx
+	SDL_Texture* spritesheet;
+
 };
 
 #endif

@@ -66,6 +66,25 @@
     	<canJump value="false" />
     	<collider_rect w="15" h="-20" />
      </player>
+
+    <enemy_info>
+
+      <ground_enemy>
+        <snake>
+          <load_file>textures/snake.tmx</load_file>
+          <texture_source>textures/Enemy Sprites/Cobra_Sprite_Sheet.png</texture_source>
+        </snake>
+      </ground_enemy>
+
+      <fly_enemy>
+        <bat>
+          <load_file>textures/bat.tmx</load_file>
+          <texture_source>Bat_Sprite_Sheet.png</texture_source>
+        </bat>
+      </fly_enemy>
+
+    </enemy_info>
+    
   </entity_manager>
   
   

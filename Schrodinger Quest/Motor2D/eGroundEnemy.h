@@ -15,43 +15,35 @@ class eGroundEnemy : public eCreature
 
 public:
 
-	eGroundEnemy(Types type);
+	eGroundEnemy(Types type) :eCreature(type) {
 
-	//// Destructor
-	//virtual ~eGroundEnemy() {
+	}
+	
+	// Destructor
+	virtual ~eGroundEnemy() {
 
-	//}
+	}
 
-	//// Called before render is available
-	//bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&)
+	{
+		return true;
+	}
 
-	//// Called before the first frame
-	//bool Start();
+	// Called before the first frame
+	virtual bool Start() {
+		return true;
+	}
 
 	//// Called each loop iteration
 	//bool PreUpdate();
-	//bool Update(float dt);
+	bool Update(float dt) {
+		return true;
+	}
 
-	//// Called before quitting
-	//bool CleanUp();
-
-	////Start level again
-	//void Start_F3();
-
-	////Save
-	//bool Save(pugi::xml_node&) const;
-
-	////Load
-	//bool Load(pugi::xml_node&);
-
-	////Load animation pushbacks by name
-	//void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);
-
-	////Load sound by TMX
-	//void LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name);
-
-	////Move player to spawn
-	//void MoveToSpawn();
+	// Called before quitting
+	virtual bool CleanUp() {
+		return true;
+	}
 
 };
 #endif // __EGROUNDENEMY_H__

@@ -16,23 +16,27 @@ class eSnakeEnemy : public eGroundEnemy
 
 public:
 
-	eSnakeEnemy(Types type);
+	eSnakeEnemy(Types type) :eGroundEnemy(type) {
+
+	}
 
 	// Destructor
-	~eSnakeEnemy();
+	~eSnakeEnemy() {
 
-	//// Called before render is available
-	//bool Awake(pugi::xml_node&);
+	}
 
-	//// Called before the first frame
-	//bool Start();
+	// Called before render is available
+	bool Awake(pugi::xml_node&);
+
+	// Called before the first frame
+	bool Start();
 
 	//// Called each loop iteration
 	//bool PreUpdate();
-	//bool Update(float dt);
+	bool Update(float dt);
 
-	//// Called before quitting
-	//bool CleanUp();
+	// Called before quitting
+	bool CleanUp();
 
 	////Start level again
 	//void Start_F3();
@@ -51,6 +55,7 @@ public:
 
 	////Move player to spawn
 	//void MoveToSpawn();
+
 
 };
 #endif // __ESNAKEENEMY_H__
