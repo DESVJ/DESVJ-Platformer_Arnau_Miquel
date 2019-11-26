@@ -24,16 +24,10 @@ struct Player_Info
 {
 
 	int minPlayerHeight;
-	SDL_Rect player_rect;
-	SDL_Rect player_collider_rect;
-	p2Point<float> player_speed;
-	bool player_flip;
 	bool player_not_jumping;
 	bool player_stop_jumping_up;
 	bool player_god_mode;
 	bool player_tang_mode;
-	bool player_alive;
-	bool player_respawn;
 	bool player_climbing;
 	bool player_in_air;
 	bool spacebar_pushed;

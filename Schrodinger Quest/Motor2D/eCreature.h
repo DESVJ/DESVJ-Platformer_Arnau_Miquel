@@ -75,6 +75,10 @@ public:
 	p2Point<float> speed;
 	p2Point<int> spawn;
 
+	bool flip;
+	bool alive;
+	bool respawn;
+
 	//General animations
 	Animation idle;
 	Animation death;

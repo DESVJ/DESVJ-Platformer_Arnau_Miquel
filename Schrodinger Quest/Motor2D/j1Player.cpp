@@ -52,14 +52,14 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	//Var loading
 	difference_y = config.child("difference_y").attribute("value").as_int();
-	player.player_flip = config.child("player_info").attribute("flip").as_bool();
+	flip = config.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = config.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = config.child("player_info").attribute("stop_jumping_up").as_bool();
 	player.player_in_air = config.child("player_info").attribute("in_air").as_bool();
 	player.player_god_mode = config.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = config.child("player_info").attribute("tang_mode").as_bool();
-	player.player_alive = config.child("player_info").attribute("alive").as_bool();
-	player.player_respawn = config.child("player_info").attribute("respawn").as_bool();
+	alive = config.child("player_info").attribute("alive").as_bool();
+	respawn = config.child("player_info").attribute("respawn").as_bool();
 	player.player_climbing = config.child("player_info").attribute("climbing").as_bool();
 	player.spacebar_pushed = config.child("player_info").attribute("spacebar_pushed").as_bool();
 	player.stop_slide = config.child("player_info").attribute("stop_slide").as_bool();
@@ -73,8 +73,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	tangSwitchDeadCheck = config.child("tangSwitchDeadCheck").attribute("value").as_bool();
 	canJump = config.child("canJump").attribute("value").as_bool();
 
-	player.player_collider_rect.w = config.child("collider_rect").attribute("w").as_int();
-	player.player_collider_rect.h = config.child("collider_rect").attribute("h").as_int();
+	collision_rect.w = config.child("collider_rect").attribute("w").as_int();
+	collision_rect.h = config.child("collider_rect").attribute("h").as_int();
 
 	return true;
 }
@@ -93,9 +93,9 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_slide,player.stop_attack,inputs_out, player.player_speed.y, actual_state, input_in, input_out, player.col_state, player.player_collider_rect);
+	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_slide,player.stop_attack,inputs_out, speed.y, actual_state, input_in, input_out, player.col_state, collision_rect);
 
-	if (player.player_respawn == true)
+	if (respawn == true)
 		Start_F3();
 
 	return true;
@@ -106,7 +106,7 @@ bool j1Player::Update(float dt)
 {
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
-	Animation* current_animation = ExecuteState(player.player_speed, actual_state, reset_animation, player.player_climbing, player.player_alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, player.player_flip, player.stop_slide);
+	Animation* current_animation = ExecuteState(speed, actual_state, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip, player.stop_slide);
 	//Animation* current_animation = &slide;
 	if (reset_animation == true) 
 	{
@@ -115,11 +115,11 @@ bool j1Player::Update(float dt)
 
 	SDL_Rect current_frame = current_animation->GetCurrentFrame();
 	// Check if player is dead and dead animation is finished
-	if (player.player_alive == false) 
+	if (alive == false) 
 	{
 		if (current_animation->GetFinished() == 1) 
 		{
-			player.player_respawn = true;
+			respawn = true;
 		}
 	}
 
@@ -130,35 +130,35 @@ bool j1Player::Update(float dt)
 	}
 
 	//Slide mec
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN && player.player_speed.x != 0)
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN && speed.x != 0)
 	{
 		if (!player.isSliding) 
 		{
 			player.isSliding = true;
-			if (player.player_flip == SDL_FLIP_NONE) 
+			if (flip == SDL_FLIP_NONE) 
 			{
-				player.player_speed.x += 8;
+				speed.x += 8;
 			}
 			else
 			{
-				player.player_speed.x -= 8;
+				speed.x -= 8;
 			}
 		}
 	}
 	if (player.isSliding)
 	{
-		if (player.player_flip == SDL_FLIP_NONE)
+		if (flip == SDL_FLIP_NONE)
 		{
-			player.player_speed.x -= 0.4f;
-			if (player.player_speed.x <= 0) 
+			speed.x -= 0.4f;
+			if (speed.x <= 0) 
 			{
 				player.isSliding = false;
 			}
 		}
 		else
 		{
-			player.player_speed.x += 0.4f;
-			if (player.player_speed.x >= 0)
+			speed.x += 0.4f;
+			if (speed.x >= 0)
 			{
 				player.isSliding = false;
 			}
@@ -168,7 +168,7 @@ bool j1Player::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP ) 
 	{
 
-		player.player_speed.x = 0;
+		speed.x = 0;
 		player.isSliding = false;
 	}
 
@@ -178,27 +178,27 @@ bool j1Player::Update(float dt)
 	//	current_frame.y += difference_y;
 
 	//Calculate animation offset
-	if (player.player_rect.w != 0) 
+	if (position_rect.w != 0) 
 	{
-		animation_created_mov = player.player_collider_rect.w - current_frame.w;
+		animation_created_mov = collision_rect.w - current_frame.w;
 	}
 
 	//Update player rect
-	player.player_rect.w = current_frame.w;
-	player.player_rect.h = -current_frame.h;
+	position_rect.w = current_frame.w;
+	position_rect.h = -current_frame.h;
 
 	//Increment player speed by gravity
-	if (player.player_stop_jumping_up == true && player.player_god_mode == false && player.player_alive == true && player.player_climbing == false)
+	if (player.player_stop_jumping_up == true && player.player_god_mode == false && alive == true && player.player_climbing == false)
 	{
-		if (player.player_speed.y < maximum_speed)
-			player.player_speed.y += gravity;
+		if (speed.y < maximum_speed)
+			speed.y += gravity;
 	}
 
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders->MoveObject(&player.player_collider_rect, { (int)round(player.player_speed.x) , 0}, this);
-		App->colliders->MoveObject(&player.player_collider_rect, { 0, (int)round(player.player_speed.y) }, this);
+		App->colliders->MoveObject(&collision_rect, { (int)round(speed.x) , 0}, this);
+		App->colliders->MoveObject(&collision_rect, { 0, (int)round(speed.y) }, this);
 	}
 
 
@@ -221,18 +221,18 @@ bool j1Player::Update(float dt)
 	//----------------------------------------------------------------------//
 
 	//Jump control check
-	if ((player.player_speed.y < -maximum_speed && player.player_god_mode == false)||player.spacebar_pushed==false) 
+	if ((speed.y < -maximum_speed && player.player_god_mode == false)||player.spacebar_pushed==false) 
 	{
 		player.player_stop_jumping_up = true;
 		player.spacebar_pushed = false;
 	}
 
 	//Update player graphics by collider position
-	player.player_rect.x = player.player_collider_rect.x + (animation_created_mov / 2);
-	player.player_rect.y = player.player_collider_rect.y;
+	position_rect.x = collision_rect.x + (animation_created_mov / 2);
+	position_rect.y = collision_rect.y;
 
 	//Move camera to new player position
-	App->render->MoveCameraToPointInsideLimits({player.player_collider_rect.x + (player.player_collider_rect.w / 2), player.player_collider_rect.y});
+	App->render->MoveCameraToPointInsideLimits({collision_rect.x + (collision_rect.w / 2), collision_rect.y});
 
 	//App->render->camera.x = -(player.player_rect.x * (int)App->win->GetScale() - (int)App->win->width / 2);
 	//App->render->camera.y = -(player.player_rect.y * (int)App->win->GetScale() - (int)App->win->height / 2);
@@ -240,24 +240,24 @@ bool j1Player::Update(float dt)
 
 
 	//Check if player is under the map and kill it
-	if (player.player_rect.y + player.player_rect.h > killLimit && !player.player_respawn)
+	if (position_rect.y + position_rect.h > killLimit && !respawn)
 	{
 		Change_Col_State(player_colision_state::DYING);
 	}
 
 	//Flip player 
-	if (player.player_flip == false && player.player_speed.x < 0)
-		player.player_flip = true;
-	else if (player.player_flip == true && player.player_speed.x > 0)
-		player.player_flip = false;
+	if (flip == false && speed.x < 0)
+		flip = true;
+	else if (flip == true && speed.x > 0)
+		flip = false;
 
 	//Render player GFX
-	App->render->Blit(player.player_spritesheet, player.player_rect.x, player.player_rect.y - current_frame.h, &current_frame, player.player_flip);
+	App->render->Blit(player.player_spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
 
 	//Render player colider in debug mode
 	if (App->input->is_Debug_Mode) 
 	{
-		App->render->DrawQuad(player.player_collider_rect, 0, 100, 0, 100);
+		App->render->DrawQuad(collision_rect, 0, 100, 0, 100);
 	}
 
 	//Clear output array
@@ -268,7 +268,7 @@ bool j1Player::Update(float dt)
 	input_in = I_NONE;
 
 	//Check map ending
-	if (App->colliders->CheckCollision(player.player_rect, App->map->end_point) == true) 
+	if (App->colliders->CheckCollision(position_rect, App->map->end_point) == true) 
 	{
 		App->map->map_id++;
 		if (App->map->map_id > MAX_NUMBER_MAPS)
@@ -296,12 +296,12 @@ void j1Player::Start_F3()
 	Change_Col_State(player_colision_state::NONE);
 
 	//Restart player vars
-	player.player_flip = false;
+	flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
 	player.player_tang_mode = false;
-	player.player_alive = true;
-	player.player_respawn = false;
+	alive = true;
+	respawn = false;
 	player.player_climbing = false;
 	player.spacebar_pushed = false;
 	player.stop_slide = false;
@@ -324,22 +324,22 @@ bool j1Player::Save(pugi::xml_node& data)const
 	//Save all vars to XML file
 	pugi::xml_node player_node = data.append_child("player_info");
 	player_node.append_child("position");
-	player_node.child("position").append_attribute("x") = player.player_collider_rect.x;
-	player_node.child("position").append_attribute("y") = player.player_collider_rect.y;
-	player_node.child("position").append_attribute("w") = player.player_rect.w;
-	player_node.child("position").append_attribute("h") = player.player_rect.h;
+	player_node.child("position").append_attribute("x") = collision_rect.x;
+	player_node.child("position").append_attribute("y") = collision_rect.y;
+	player_node.child("position").append_attribute("w") = position_rect.w;
+	player_node.child("position").append_attribute("h") = position_rect.h;
 	player_node.append_child("speed");
-	player_node.child("speed").append_attribute("x") = player.player_speed.x;
-	player_node.child("speed").append_attribute("y") = player.player_speed.y;
-	player_node.append_attribute("flip") = player.player_flip;
+	player_node.child("speed").append_attribute("x") = speed.x;
+	player_node.child("speed").append_attribute("y") = speed.y;
+	player_node.append_attribute("flip") = flip;
 	player_node.append_attribute("not_jumping") = player.player_not_jumping;
 	player_node.append_attribute("stop_jumping_up") = player.player_stop_jumping_up;
 	player_node.append_attribute("in_air") = player.player_in_air;
 	player_node.append_attribute("spacebar_pushed") = player.spacebar_pushed;
 	player_node.append_attribute("god_mode") = player.player_god_mode;
 	player_node.append_attribute("tang_mode") = player.player_tang_mode;
-	player_node.append_attribute("alive") = player.player_alive;
-	player_node.append_attribute("respawn") = player.player_respawn;
+	player_node.append_attribute("alive") = alive;
+	player_node.append_attribute("respawn") = respawn;
 	player_node.append_attribute("climbing") = player.player_climbing;
 	player_node.append_attribute("stop_slide") = player.stop_slide;
 	player_node.append_attribute("stop_attack") = player.stop_attack;
@@ -352,21 +352,21 @@ bool j1Player::Save(pugi::xml_node& data)const
 bool j1Player::Load(pugi::xml_node& data) 
 {
 	//Load all vars to xml file
-	player.player_collider_rect.x = data.child("player_info").child("position").attribute("x").as_int();
-	player.player_collider_rect.y = data.child("player_info").child("position").attribute("y").as_int();
-	player.player_rect.w = data.child("player_info").child("position").attribute("w").as_int();
-	player.player_rect.h = data.child("player_info").child("position").attribute("h").as_int();
-	player.player_speed.x = data.child("player_info").child("speed").attribute("x").as_float();
-	player.player_speed.y = data.child("player_info").child("speed").attribute("y").as_float();
-	player.player_flip = data.child("player_info").attribute("flip").as_bool();
+	collision_rect.x = data.child("player_info").child("position").attribute("x").as_int();
+	collision_rect.y = data.child("player_info").child("position").attribute("y").as_int();
+	position_rect.w = data.child("player_info").child("position").attribute("w").as_int();
+	position_rect.h = data.child("player_info").child("position").attribute("h").as_int();
+	speed.x = data.child("player_info").child("speed").attribute("x").as_float();
+	speed.y = data.child("player_info").child("speed").attribute("y").as_float();
+	flip = data.child("player_info").attribute("flip").as_bool();
 	player.player_not_jumping = data.child("player_info").attribute("not_jumping").as_bool();
 	player.player_stop_jumping_up = data.child("player_info").attribute("stop_jumping_up").as_bool();
 	player.player_in_air = data.child("player_info").attribute("in_air").as_bool();
 	player.spacebar_pushed = data.child("player_info").attribute("spacebar_pushed").as_bool();
 	player.player_god_mode = data.child("player_info").attribute("god_mode").as_bool();
 	player.player_tang_mode = data.child("player_info").attribute("tang_mode").as_bool();
-	player.player_alive = data.child("player_info").attribute("alive").as_bool();
-	player.player_respawn = data.child("player_info").attribute("respawn").as_bool();
+	alive = data.child("player_info").attribute("alive").as_bool();
+	respawn = data.child("player_info").attribute("respawn").as_bool();
 	player.player_climbing = data.child("player_info").attribute("climbing").as_bool();
 	player.stop_slide = data.child("player_info").attribute("stop_slide").as_bool();
 	player.stop_attack = data.child("player_info").attribute("stop_attack").as_bool();
@@ -408,11 +408,11 @@ void j1Player::MoveToSpawn()
 			{
 				if (isSpawn->data->name == "isSpawn"&&isSpawn->data->prop_value.value_bool == true)
 				{
-					player.player_collider_rect.x = objects_map->data->objects.start->data->rect.x;
-					player.player_collider_rect.y = objects_map->data->objects.start->data->rect.y;
+					collision_rect.x = objects_map->data->objects.start->data->rect.x;
+					collision_rect.y = objects_map->data->objects.start->data->rect.y;
 
-					player.player_rect.x = player.player_collider_rect.x;
-					player.player_rect.y = player.player_collider_rect.y;
+					position_rect.x = collision_rect.x;
+					position_rect.y = collision_rect.y;
 					//player.player_rect.w = objects_map->data->objects.start->data->rect.w;
 					//player.player_rect.h = objects_map->data->objects.start->data->rect.h;
 				}
@@ -422,7 +422,7 @@ void j1Player::MoveToSpawn()
 		else if (objects_map->data->name == "Music && Sound")
 		{
 			//Restart music
-			if (player.player_alive == true)App->map->PrepareMusicSource(objects_map);
+			if (alive == true)App->map->PrepareMusicSource(objects_map);
 			else App->map->PrepareMusicSource(objects_map, true);
 		}
 		objects_map = objects_map->next;
@@ -437,7 +437,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
 	{
 		//Allow the object to ignore down collisions (player jumping in top of platform)
-		if (App->colliders->allowClippingCollider != nullptr && player.player_collider_rect.y <= App->colliders->allowClippingCollider->collider_rect.y)
+		if (App->colliders->allowClippingCollider != nullptr && collision_rect.y <= App->colliders->allowClippingCollider->collider_rect.y)
 		{
 			App->colliders->allowClippingCollider = nullptr;
 		}
@@ -454,9 +454,9 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					prev_res.y = true;
 					if (dir == DOWN)
 					{
-						player.player_collider_rect.y = block->y;
+						collision_rect.y = block->y;
 
-						if (player.player_speed.y >= 8 && canJump == false && player.col_state == player_colision_state::NONE)
+						if (speed.y >= 8 && canJump == false && player.col_state == player_colision_state::NONE)
 							App->audio->PlayFx(jump_down_fx);
 
 						if (!canJump)
@@ -484,7 +484,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 						}
 						else
 						{
-							player.player_collider_rect.y = block->y + block->h - prediction.h;
+							collision_rect.y = block->y + block->h - prediction.h;
 						}
 					}
 
@@ -499,7 +499,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					if (dir == LEFT)
 					{
 						if (player.col_state != player_colision_state::CLIMBING)
-							player.player_collider_rect.x = block->x + block->w;
+							collision_rect.x = block->x + block->w;
 					}
 				}
 				else if (prediction.x + prediction.w >= block->x)
@@ -507,7 +507,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					if (dir == RIGHT)
 					{
 						if (player.col_state != player_colision_state::CLIMBING)
-							player.player_collider_rect.x = block->x - player.player_collider_rect.w;
+							collision_rect.x = block->x - collision_rect.w;
 					}
 				}
 
@@ -533,11 +533,11 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		typeColDetected = true;
 		if (!player.player_tang_mode &&
 			(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT ||
-			(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player.player_rect.y > in_collider->collider_rect.y)) &&
-				(player.player_rect.x + (player.player_rect.w / 2) > in_collider->collider_rect.x
-					&& player.player_rect.x + (player.player_rect.w / 2) < in_collider->collider_rect.x + in_collider->collider_rect.w))
+			(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && position_rect.y > in_collider->collider_rect.y)) &&
+				(position_rect.x + (position_rect.w / 2) > in_collider->collider_rect.x
+					&& position_rect.x + (position_rect.w / 2) < in_collider->collider_rect.x + in_collider->collider_rect.w))
 		{
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && in_collider->collider_rect.y + in_collider->collider_rect.h > player.player_rect.y)
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && in_collider->collider_rect.y + in_collider->collider_rect.h > position_rect.y)
 			{
 				prev_res = {false, false};
 			}
@@ -553,11 +553,11 @@ void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2P
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (col_result.x == false)
 	{
-		player.player_collider_rect.x = prediction.x;
+		collision_rect.x = prediction.x;
 	}
 	if (col_result.y == false)
 	{
-		player.player_collider_rect.y = prediction.y;
+		collision_rect.y = prediction.y;
 		if (increment.y > 0)
 		{
 			canJump = false;
