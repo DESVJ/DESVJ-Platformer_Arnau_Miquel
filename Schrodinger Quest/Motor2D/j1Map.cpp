@@ -11,6 +11,7 @@
 #include"j1Input.h"
 #include "j1Audio.h"
 #include "EntityManager.h"
+#include "eCreature.h"
 #include <math.h>
 #include "brofiler/Brofiler.h"
 
@@ -288,6 +289,29 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadObjectGroup(layer, set);
 		}
+
+		if (set->properties.start->data->name == "isSpawn" && set->properties.start->data->prop_value.value_bool)
+		{
+
+			App->entity_manager->Player->spawn.x = set->objects[0]->rect.x;
+			App->entity_manager->Player->spawn.y = set->objects[0]->rect.y;
+		}
+
+		if (set->properties.start->data->name == "isEnemySpawn" && set->properties.start->data->prop_value.value_bool) 
+		{
+			for (unsigned int i = 0; i < set->objects.count(); i++)
+			{
+
+				object_struct* object = set->objects[i];
+				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value.value_string == "snake")
+				{
+					App->entity_manager->CreateEntity(Types::enemy_ground)->position_rect = object->rect;
+				}
+
+			}
+		}
+
+
 		data.object_layers.add(set);
 	}
 
@@ -543,13 +567,6 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 
 		set->name = props1.attribute("name").value();
 		set->prop_value.value_bool = props1.attribute("value").as_bool();
-
-		//TODO REMOVE THIS, BAD, BAAAAAAAAAAAAAD, PUT IT AFTER THIS FUNCTION IS CALLED
-		if (set->name == "isSpawn" && set->prop_value.value_bool) 
-		{
-			App->entity_manager->Player->spawn.x = node.child("object").attribute("x").as_int();
-			App->entity_manager->Player->spawn.y = node.child("object").attribute("y").as_int();
-		}
 
 		object->properties.add(set);
 	}

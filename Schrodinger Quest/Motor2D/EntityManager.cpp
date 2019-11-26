@@ -5,7 +5,7 @@ EntityManager::EntityManager()
 {
 	name.create("entity_manager");
 	Player = (j1Player*)CreateEntity(Types::player);
-	CreateEntity(Types::enemy_ground);
+	//CreateEntity(Types::enemy_ground);
 }
 
 //Destructor
@@ -105,6 +105,8 @@ Entity* EntityManager::CreateEntity(Types type)
 	if (ret != nullptr)
 	{
 		entities.add(ret);
+		//ret->Awake();
+		//ret->Start();
 	}
 	return ret;
 }

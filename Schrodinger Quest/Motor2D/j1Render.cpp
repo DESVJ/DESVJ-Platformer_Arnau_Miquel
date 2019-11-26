@@ -254,8 +254,8 @@ void  j1Render::MoveCameraToPointInsideLimits(p2Point<int> point)
 	int y = -(point.y * (int)App->win->GetScale()) + (App->win->height / 2);
 
 	//Move follow rect to center of camera
-	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2);
-	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6);
+	followMinRect.x = (-camera.x + ((int)App->win->width / 2)) / (int)App->win->GetScale() - (followMinRect.w / 2.f);
+	followMinRect.y = (-camera.y + ((int)App->win->height / 2)) / (int)App->win->GetScale() - (followMinRect.h * 0.6f);
 	
 
 	//Left X mov

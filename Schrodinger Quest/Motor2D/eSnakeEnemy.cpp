@@ -13,8 +13,6 @@ bool eSnakeEnemy::Awake(pugi::xml_node& config)
 	pugi::xml_node player_node = player_info_file.child("map");
 
 	LoadAnimationFromTMX(&player_node, &idle, "idle");
-	position_rect.x = 20;
-	position_rect.y = 600;
 
 	//LOG("%f", idle.speed);
 

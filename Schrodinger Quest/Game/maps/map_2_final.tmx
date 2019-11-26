@@ -54951,8 +54951,16 @@
   <properties>
    <property name="isEnemySpawn" type="bool" value="true"/>
   </properties>
-  <object id="107" name="Snake_Spawn" type="Snake" x="416" y="288" width="16" height="16"/>
-  <object id="108" name="Snake_Spawn" type="Snake" x="592" y="256" width="16" height="16"/>
+  <object id="107" name="Snake_Spawn" x="416" y="288" width="16" height="16">
+   <properties>
+    <property name="Type" value="snake"/>
+   </properties>
+  </object>
+  <object id="108" name="Snake_Spawn" x="592" y="256" width="16" height="16">
+   <properties>
+    <property name="Type" value="snake"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="87" name="MapLimits">
   <properties>
