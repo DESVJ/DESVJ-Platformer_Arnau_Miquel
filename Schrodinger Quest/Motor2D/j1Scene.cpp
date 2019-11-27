@@ -39,12 +39,8 @@ bool j1Scene::Start()
 	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 
-	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))
-		App->pathfinding->SetMap(w, h, data);
-
-	RELEASE_ARRAY(data);
+	//Create pathfinding map
+	App->pathfinding->UpdatePathFindingMap();
 
 	return true;
 }
@@ -188,6 +184,8 @@ void j1Scene::Load_Map_By_Name(const char* name)
 	App->map->CleanUp();
 
 	App->map->Load(name);
+	App->pathfinding->UpdatePathFindingMap();
+
 	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();
 	App->entity_manager->Player->Start_F3();

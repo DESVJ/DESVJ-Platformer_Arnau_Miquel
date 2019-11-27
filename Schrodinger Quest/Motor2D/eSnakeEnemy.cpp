@@ -33,20 +33,21 @@ bool eSnakeEnemy::Start()
 		spritesheet = App->tex->Load("textures/Enemy_Sprites/Cobra_Sprite_Sheet.png");
 	}
 
+	//iPoint p;
+	//iPoint origin = { position_rect.x, position_rect.y - 10 };
+
+	//p.x = App->entity_manager->Player->collision_rect.x;
+	//p.y = App->entity_manager->Player->collision_rect.y + (App->entity_manager->Player->collision_rect.h / 2);
+
+	//App->map->WorldToMap(&p.x, &p.y);
+	//App->map->WorldToMap(&origin.x, &origin.y);
+	//PathNumber = App->pathfinding->CreatePath(origin, p);
+
 	return true;
 }
 
 bool eSnakeEnemy::PreUpdate() 
 {
-	iPoint p;
-	iPoint origin = { position_rect.x, position_rect.y -10 };
-
-	p.x = App->entity_manager->Player->collision_rect.x;
-	p.y = App->entity_manager->Player->collision_rect.y + (App->entity_manager->Player->collision_rect.h / 2);
-
-	App->map->WorldToMap(&p.x, &p.y);
-	App->map->WorldToMap(&origin.x, &origin.y);
-	PathNumber = App->pathfinding->CreatePath(origin, p);
 
 	return true;
 }
@@ -55,6 +56,16 @@ bool eSnakeEnemy::PreUpdate()
 bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect rec = idle.GetCurrentFrame();
+
+	iPoint p;
+	iPoint origin = { position_rect.x, position_rect.y - 10 };
+
+	p.x = App->entity_manager->Player->collision_rect.x;
+	p.y = App->entity_manager->Player->collision_rect.y + (App->entity_manager->Player->collision_rect.h / 2);
+
+	App->map->WorldToMap(&p.x, &p.y);
+	App->map->WorldToMap(&origin.x, &origin.y);
+	PathNumber = App->pathfinding->CreatePath(origin, p);
 
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - rec.h, &rec, flip);
 	return true;

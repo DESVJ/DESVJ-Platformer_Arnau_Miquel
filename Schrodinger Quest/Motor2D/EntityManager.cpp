@@ -48,6 +48,7 @@ bool EntityManager::Update(float dt)
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Update(dt);
+		//LOG("%i", entities.count());
 	}
 	return true;
 }

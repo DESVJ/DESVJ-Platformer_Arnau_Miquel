@@ -734,7 +734,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		MapLayer* layer = item->data;
 
 		//TODO: Change this to a new bool
-		if (layer->name == "PathFinding")
+		if (layer->isPathFinding)
 		{
 			uchar* map = new uchar[layer->width*layer->height];
 			memset(map, 1, layer->width*layer->height);
