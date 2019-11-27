@@ -58,13 +58,17 @@ bool j1Scene::PreUpdate()
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
+	App->map->Translate_Coord(&x, &y);
+
 	iPoint p = { x, y };
 	
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	//PathFinding with	E
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		if (origin_selected == true)
 		{
+			App->map->WorldToMap(&origin.x, &origin.y);
+			App->map->WorldToMap(&p.x, &p.y);
 			App->pathfinding->CreatePath(origin, p);
 			origin_selected = false;
 		}
@@ -134,6 +138,7 @@ bool j1Scene::Update(float dt)
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
+	App->map->Translate_Coord(&x, &y);
 	iPoint p = { x, y };
 	App->render->DrawQuad({ p.x, p.y , 16, 16}, 255, 0, 0, 100);
 
@@ -141,8 +146,11 @@ bool j1Scene::Update(float dt)
 
 	for (uint i = 0; i < path->Count(); ++i)
 	{
-		iPoint pos = { path->At(i)->x, path->At(i)->y };
-		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 255, 255, 0, 100);
+		int x = path->At(i)->x;
+		int y = path->At(i)->y;
+		App->map->Translate_Coord(&x, &y);
+		iPoint pos = { x, y };
+		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 100);
 	}
 
 	return true;

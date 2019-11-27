@@ -596,7 +596,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 
 			set2->name = subNode.attribute("name").value();
 			set2->prop_value_s = subNode.attribute("value").as_string();
-
+			set2->prop_value.value_bool = subNode.attribute("value").as_string();
 
 			set->properties.add(set2);
 		}
@@ -737,11 +737,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 					int i = (y*layer->width) + x;
 
 					int tile_id = layer->Get(x, y);
-					TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+					//TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 
-					if (tileset != NULL)
+					if (layer->gid[i] > 0)
 					{
-						map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+						map[i] = 0;
 						/*TileType* ts = tileset->GetTileType(tile_id);
 						if(ts != NULL)
 						{

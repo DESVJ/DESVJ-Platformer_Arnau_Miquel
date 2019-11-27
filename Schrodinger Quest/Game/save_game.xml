@@ -7,18 +7,21 @@
 		<music volume="128" />
 	</audio>
 	<map>
-		<map_info name="map_1_final.tmx" />
+		<map_info name="map_2_final.tmx" />
 	</map>
+	<pathfinding />
 	<scene />
 	<entity_manager>
 		<player>
 			<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_slide="false" stop_attack="false" col_state="0" actual_state="1">
-				<position x="115" y="816" w="19" h="-21" />
+				<position x="32" y="400" w="16" h="-20" />
 				<speed x="0" y="8" />
 			</player_info>
 		</player>
+		<enemy_info />
+		<enemy_info />
 	</entity_manager>
 	<renderer>
-		<camera x="0" y="-1812" />
+		<camera x="0" y="-774" />
 	</renderer>
 </game_state>

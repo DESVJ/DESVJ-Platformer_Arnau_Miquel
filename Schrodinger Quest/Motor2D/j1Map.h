@@ -145,6 +145,12 @@ public:
 		*x *= data.tile_width;
 		*y *= data.tile_height;
 	}
+
+	void WorldToMap(int* x, int* y)
+	{
+		*x /= data.tile_width;
+		*y /= data.tile_height;
+	}
 	p2SString GetSourceFromID(int id);
 
 private:
