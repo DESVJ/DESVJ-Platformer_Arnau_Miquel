@@ -61,6 +61,12 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyStateMachine.cpp">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="eEnemy.cpp">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -154,6 +160,9 @@
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="eEnemy.h">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStateMachine.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
   </ItemGroup>

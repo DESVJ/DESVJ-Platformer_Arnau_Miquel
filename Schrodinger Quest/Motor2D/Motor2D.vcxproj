@@ -78,6 +78,8 @@
   <ItemGroup>
     <ClCompile Include="Collision_Manager.cpp" />
     <ClCompile Include="eCreature.cpp" />
+    <ClCompile Include="eEnemy.cpp" />
+    <ClCompile Include="EnemyStateMachine.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="eSnakeEnemy.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -102,6 +104,7 @@
     <ClInclude Include="eCreature.h" />
     <ClInclude Include="eEnemy.h" />
     <ClInclude Include="eGroundEnemy.h" />
+    <ClInclude Include="EnemyStateMachine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="eSnakeEnemy.h" />
