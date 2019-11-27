@@ -8,7 +8,6 @@
 #include "p2Point.h"
 #include "j1Module.h"
 #include"p2DynArray.h"
-
 #define MAX_NUMBER_MAPS 2
 
 struct object_property
@@ -19,9 +18,10 @@ struct object_property
 		bool value_bool;
 		int value_int;
 		float value_float;
-		const char* value_string;
+		//p2SString value_string='NULL';
 
 	}prop_value;
+	p2SString prop_value_s;
 
 };
 struct object_struct {
@@ -178,7 +178,7 @@ private:
 	p2SString*			maps;
 
 	//TODO: Temporal, needs to be fixed, creates error if used as local
-	pugi::xml_document map_file;
+	////pugi::xml_document map_file;
 };
 
 #endif // __j1MAP_H__

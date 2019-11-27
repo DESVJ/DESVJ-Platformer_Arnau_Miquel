@@ -226,7 +226,7 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	map_name = file_name;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
-
+	pugi::xml_document map_file;
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if(result == NULL)
@@ -308,7 +308,7 @@ bool j1Map::Load(const char* file_name)
 			{
 
 				object_struct* object = set->objects[i];
-				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value.value_string == "snake")
+				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value_s == "snake")
 				{
 					object->rect.y += object->rect.h;
 					App->entity_manager->CreateEntity(Types::enemy_ground)->position_rect = object->rect;
@@ -595,7 +595,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, MapObjectGroup* object)
 			object_property *set2 = new object_property();
 
 			set2->name = subNode.attribute("name").value();
-			set2->prop_value.value_string = subNode.attribute("value").as_string();
+			set2->prop_value_s = subNode.attribute("value").as_string();
 
 
 			set->properties.add(set2);
@@ -633,8 +633,8 @@ void j1Map::PrepareMusicSource(p2List_item<MapObjectGroup*>* objects_map, bool d
 	{
 		if (isMusic->data->name == "isMusicObjectGroup"&&isMusic->data->prop_value.value_bool == true)
 		{
-			if (dead == false)App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string);
-			else App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value.value_string, 0);
+			if (dead == false)App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value_s.GetString());
+			else App->audio->PlayMusic(objects_map->data->objects.start->data->properties.start->data->prop_value_s.GetString(), 0);
 		}
 		isMusic = isMusic->next;
 	}

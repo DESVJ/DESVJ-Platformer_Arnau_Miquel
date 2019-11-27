@@ -53,19 +53,19 @@ void Collider_Manager::LoadColliders()
 						//Load collider type
 						if (clr_type->data->name == "colliderType") 
 						{
-							if ((p2SString)clr_type->data->prop_value.value_string == "Walkeable")
+							if ((p2SString)clr_type->data->prop_value_s == "Walkeable")
 							{
 								clr.collider_type = WALKEABLE;
 							}
-							else if((p2SString)clr_type->data->prop_value.value_string == "Kill")
+							else if((p2SString)clr_type->data->prop_value_s == "Kill")
 							{
 								clr.collider_type = KILL;
 							}
-							else if((p2SString)clr_type->data->prop_value.value_string == "Climb")
+							else if((p2SString)clr_type->data->prop_value_s == "Climb")
 							{
 								clr.collider_type = CLIMB;
 							}
-							else if ((p2SString)clr_type->data->prop_value.value_string == "Tang")
+							else if ((p2SString)clr_type->data->prop_value_s == "Tang")
 							{
 								clr.collider_type = TANG;
 							}
