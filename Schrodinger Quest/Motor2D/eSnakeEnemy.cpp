@@ -1,5 +1,6 @@
 #include"eSnakeEnemy.h"
 #include "EntityManager.h"
+#include "j1Input.h"
 
 
 // Called before render is available
@@ -57,16 +58,27 @@ bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect rec = idle.GetCurrentFrame();
 
-	iPoint p;
-	iPoint origin = { position_rect.x, position_rect.y - 10 };
+	PathFinding(App->entity_manager->Player->collision_rect);
 
-	p.x = App->entity_manager->Player->collision_rect.x;
-	p.y = App->entity_manager->Player->collision_rect.y + (App->entity_manager->Player->collision_rect.h / 2);
+	//Render PathFinding
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	App->map->Translate_Coord(&x, &y);
+	iPoint p = { x, y };
+	App->render->DrawQuad({ p.x, p.y , 16, 16 }, 255, 0, 0, 100);
 
-	App->map->WorldToMap(&p.x, &p.y);
-	App->map->WorldToMap(&origin.x, &origin.y);
-	PathNumber = App->pathfinding->CreatePath(origin, p);
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		int x = path->At(i)->x;
+		int y = path->At(i)->y;
+		App->map->Translate_Coord(&x, &y);
+		iPoint pos = { x, y };
+		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 100);
+	}
+
+	//Render Enemy
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - rec.h, &rec, flip);
 	return true;
 }

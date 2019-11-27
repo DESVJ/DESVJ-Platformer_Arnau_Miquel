@@ -64,6 +64,8 @@ public:
 		return true;
 	}
 
+	void PathFinding(SDL_Rect objective);
+
 	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>)
 	{
 		return { false, false };
