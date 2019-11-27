@@ -68,6 +68,10 @@ bool j1Scene::PreUpdate()
 		if (origin_selected == true)
 		{
 			App->map->WorldToMap(&origin.x, &origin.y);
+
+			p.x = App->entity_manager->Player->collision_rect.x;
+			p.y = App->entity_manager->Player->collision_rect.y + (App->entity_manager->Player->collision_rect.h / 2);
+
 			App->map->WorldToMap(&p.x, &p.y);
 			App->pathfinding->CreatePath(origin, p);
 			origin_selected = false;
@@ -182,6 +186,7 @@ void j1Scene::Load_Map_By_Name(const char* name)
 {
 	App->colliders->collider_list.clear();
 	App->map->CleanUp();
+
 	App->map->Load(name);
 	App->colliders->LoadColliders();
 	App->render->SetMapLimitsWithTMX();

@@ -18,6 +18,7 @@ public:
 
 	eSnakeEnemy(Types type) :eGroundEnemy(type) {
 		name.create("enemy_info");
+		entity_type = type;
 	}
 
 	// Destructor
@@ -32,7 +33,7 @@ public:
 	bool Start();
 
 	//// Called each loop iteration
-	//bool PreUpdate();
+	bool PreUpdate();
 	bool Update(float dt);
 
 	// Called before quitting

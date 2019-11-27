@@ -213,6 +213,15 @@ bool j1Map::CleanUp()
 	}
 	data.object_layers.clear();
 
+	for (p2List_item<Entity*>* i = App->entity_manager->entities.end; i != NULL && i->prev != NULL; i = i->prev)
+	{
+		if (i->data->entity_type == Types::enemy_ground || i->data->entity_type == Types::enemy_air)
+		{
+			App->entity_manager->DeleteEntity(i->data);
+		}
+	}
+
+
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -682,7 +691,7 @@ void j1Map::GeneralDraw(p2List_item<MapLayer*>* list, p2List_item<TileSet*>* coo
 
 						if (Culling_Check(x, y, rect, list->data->speed))
 						{
-							if(!list->data->isPathFinding || (list->data->isPathFinding && App->input->is_Debug_Mode))
+							if(!list->data->isPathFinding /*|| (list->data->isPathFinding && App->input->is_Debug_Mode)*/)
 								App->render->Blit(coord_tileset->data->texture, x, y, &rect, false, { list->data->speed,  1 });
 						}
 

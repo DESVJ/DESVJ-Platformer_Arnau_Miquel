@@ -70,6 +70,8 @@ bool j1Input::PreUpdate()
 		}
 	}
 
+	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
+
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
 		if(mouse_buttons[i] == KEY_DOWN)
@@ -78,6 +80,12 @@ bool j1Input::PreUpdate()
 		if(mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
+
+	SDL_GetMouseState(&mouse_x, &mouse_y);
+	int scale = App->win->GetScale();
+	mouse_x = (int)(-App->render->camera.x + mouse_x) / scale;
+	mouse_y = (int)(-App->render->camera.y + mouse_y) / scale;
+	App->map->WorldToMap(&mouse_x, &mouse_y);
 
 	while(SDL_PollEvent(&event) != 0)
 	{
@@ -118,11 +126,13 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
-				int scale = App->win->GetScale();
-				mouse_motion_x = event.motion.xrel / scale;
-				mouse_motion_y = event.motion.yrel / scale;
-				mouse_x = event.motion.x / scale;
-				mouse_y = event.motion.y / scale;
+				//int scale = App->win->GetScale();
+				//mouse_motion_x = event.motion.xrel / scale;
+				//mouse_motion_y = event.motion.yrel / scale;
+				//mouse_x = event.motion.x / scale;
+				//mouse_y = event.motion.y / scale;
+	
+
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 		}

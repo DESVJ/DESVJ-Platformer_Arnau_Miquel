@@ -2,10 +2,11 @@
 #define _ECREATURE_H
 #include "Entity.h"
 #include "p2Point.h"
-#include"Collision_Manager.h"
-#include"Animation.h"
-#include"p2SString.h"
-#include"j1Textures.h"
+#include "Collision_Manager.h"
+#include "Animation.h"
+#include "p2SString.h"
+#include "j1Textures.h"
+#include "j1Pathfinding.h"
 
 struct Collider;
 enum Direction;
@@ -87,6 +88,7 @@ public:
 
 	//General gfx
 	SDL_Texture* spritesheet;
+	int PathNumber;
 
 };
 
