@@ -56,6 +56,8 @@ Here is a list with the innovations done in this delivery:
 
 * Use of left button mouse
 
+* Added game window/taskbar icon
+
 ## Work by members
 
 * Arnau Falgueras Garcia de Atocha
