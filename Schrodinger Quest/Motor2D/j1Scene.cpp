@@ -136,23 +136,6 @@ bool j1Scene::Update(float dt)
 	//Draw map
 	App->map->Draw();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	App->map->Translate_Coord(&x, &y);
-	iPoint p = { x, y };
-	App->render->DrawQuad({ p.x, p.y , 16, 16}, 255, 0, 0, 100);
-
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		int x = path->At(i)->x;
-		int y = path->At(i)->y;
-		App->map->Translate_Coord(&x, &y);
-		iPoint pos = { x, y };
-		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 100);
-	}
-
 	return true;
 }
 

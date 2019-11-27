@@ -1,6 +1,7 @@
 #include"eCreature.h"
 #include"EntityManager.h"
 #include"j1Textures.h"
+#include "p2Point.h"
 
 pugi::xml_node eCreature::LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name)
 {
@@ -55,4 +56,21 @@ bool eCreature::CleanUp()
 		App->tex->UnLoad(spritesheet);
 	}
 	return true;
+}
+
+
+void eCreature::PathFinding(SDL_Rect objective) 
+{
+	p2Point<int> a = { objective.x, objective.y - 10 };
+	p2Point<int> b = { position_rect.x, position_rect.y - 10 };
+
+	if (a.DistanceNoSqrt(b) < 5000) 
+	{
+		iPoint p = { objective.x, objective.y - 10 };
+		iPoint origin = { position_rect.x, position_rect.y - 10 };
+
+		App->map->WorldToMap(&p.x, &p.y);
+		App->map->WorldToMap(&origin.x, &origin.y);
+		PathNumber = App->pathfinding->CreatePath(origin, p);
+	}
 }

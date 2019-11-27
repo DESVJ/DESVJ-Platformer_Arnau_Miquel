@@ -12,9 +12,12 @@
 template<class VALUE>
 class p2DynArray
 {
+
+public:
+	VALUE*			data;
+
 private:
 
-	VALUE*			data;
 	unsigned int	mem_capacity;
 	unsigned int	num_elements;
 
