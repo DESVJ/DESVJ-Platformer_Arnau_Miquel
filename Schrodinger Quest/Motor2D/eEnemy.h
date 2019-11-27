@@ -1,25 +1,25 @@
-#ifndef __EGROUNDENEMY_H__
-#define __EGROUNDENEMY_H__
+#ifndef __EENEMY_H__
+#define __EENEMY_H__
 
 #include"p2Point.h"
 #include"p2Log.h"
 #include"p2SString.h"
 #include"p2List.h"
-#include"eEnemy.h"
+#include"eCreature.h"
 
 
 //Player class
-class eGroundEnemy : public eEnemy
+class eEnemy : public eCreature
 {
 
 public:
 
-	eGroundEnemy(Types type) :eEnemy(type) {
-		name.create("ground_enemy");
+	eEnemy(Types type) :eCreature(type) {
+		name.create("enemy");
 	}
-	
+
 	// Destructor
-	virtual ~eGroundEnemy() {
+	virtual ~eEnemy() {
 
 	}
 
@@ -45,4 +45,4 @@ public:
 	}
 
 };
-#endif // __EGROUNDENEMY_H__
+#endif // __EENEMY_H__

@@ -46,9 +46,6 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Game Core\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Timer.cpp">
       <Filter>Game Core\Timers</Filter>
     </ClCompile>
@@ -155,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Game Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="eEnemy.h">
+      <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
