@@ -1171,6 +1171,7 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 			{
 				actual = S_IDLE;
 			}
+			break;
 
 		case S_LADDER_IDLE:
 			if (App->entity_manager->Player->player.col_state != CLIMBING || App->entity_manager->Player->player.player_god_mode == true)
