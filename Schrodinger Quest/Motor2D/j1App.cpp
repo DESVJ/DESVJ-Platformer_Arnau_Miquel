@@ -183,11 +183,9 @@ void j1App::PrepareUpdate()
 	last_sec_frame_count++;
 
 	// TODO 4: Calculate the dt: differential time since last frame
-	dt = (ptimer.ReadMs() - old_time) / 1000.f;
-
-	old_time = ptimer.ReadMs();
-
-	//LOG("%f", dt * fps_limit);
+	//dt = (ptimer.ReadMs() - old_time) / 1000.f;
+	/*old_time = ptimer.ReadMs();*/
+	dt = frame_time.ReadSec();
 
 	frame_time.Start();
 }
