@@ -218,14 +218,8 @@ void j1App::FinishUpdate()
 	App->win->SetTitle(title);
 
 	//LOG("%u", last_frame_ms);
-	float wait_time = (1.f / fps_limit) * 1000.f;
-	wait_time -= last_frame_ms;
-
-	//double prev_delay_time = ptimer.ReadMs();
-	//SDL_Delay((Uint32)fabs(wait_time));
+	float wait_time = (1000.f / (float)fps_limit) - (float)last_frame_ms;
 	SDL_Delay(fabs(wait_time));
-	//double time_waited = ptimer.ReadMs() - prev_delay_time;
-	//LOG("Expected wait: %f ms  Time waited: %f ms Diff: %f ms", wait_time, time_waited, wait_time - time_waited);
 
 }
 
