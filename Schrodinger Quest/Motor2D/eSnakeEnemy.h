@@ -57,6 +57,9 @@ public:
 	////Move player to spawn
 	//void MoveToSpawn();
 
+	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
+	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
+
 
 };
 #endif // __ESNAKEENEMY_H__

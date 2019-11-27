@@ -52,7 +52,6 @@ public:
 	//List of colliders
 	p2List<Collider> collider_list;
 
-	Collider* allowClippingCollider;
 	bool typeColDetected;
 
 	//Function to move objects by collision prediction

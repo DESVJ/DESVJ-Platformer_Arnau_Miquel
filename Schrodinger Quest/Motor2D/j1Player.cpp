@@ -421,13 +421,13 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
 	{
 		//Allow the object to ignore down collisions (player jumping in top of platform)
-		if (App->colliders->allowClippingCollider != nullptr && collision_rect.y <= App->colliders->allowClippingCollider->collider_rect.y)
+		if (allowClippingCollider != nullptr && collision_rect.y <= allowClippingCollider->collider_rect.y)
 		{
-			App->colliders->allowClippingCollider = nullptr;
+			allowClippingCollider = nullptr;
 		}
 
 
-		if (in_collider != App->colliders->allowClippingCollider)
+		if (in_collider != allowClippingCollider)
 		{
 			//Is the collision inside x and x + w?
 			if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
@@ -459,12 +459,12 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 						if (player.col_state == player_colision_state::CLIMBING)
 						{
 							prev_res.y = false;
-							App->colliders->allowClippingCollider = in_collider;
+							allowClippingCollider = in_collider;
 						}
 
 						if (in_collider->canBeJumped)
 						{
-							App->colliders->allowClippingCollider = in_collider;
+							allowClippingCollider = in_collider;
 						}
 						else
 						{

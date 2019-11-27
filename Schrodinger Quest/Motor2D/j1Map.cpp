@@ -319,7 +319,7 @@ bool j1Map::Load(const char* file_name)
 				object_struct* object = set->objects[i];
 				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value_s == "snake")
 				{
-					object->rect.y += object->rect.h;
+					//object->rect.y -= 50;
 					App->entity_manager->CreateEntity(Types::enemy_ground)->position_rect = object->rect;
 				}
 

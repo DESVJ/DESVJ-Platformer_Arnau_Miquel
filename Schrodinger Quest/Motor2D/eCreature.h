@@ -64,7 +64,7 @@ public:
 		return true;
 	}
 
-	void PathFinding(SDL_Rect objective);
+	int PathFinding(SDL_Rect objective);
 
 	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>)
 	{
@@ -87,6 +87,7 @@ public:
 
 	//General collisions
 	bool typeColDetected;
+	Collider* allowClippingCollider;
 
 	//General gfx
 	SDL_Texture* spritesheet;
