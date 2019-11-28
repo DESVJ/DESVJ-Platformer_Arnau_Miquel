@@ -67,6 +67,9 @@
     <ClCompile Include="eEnemy.cpp">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="eBatEnemy.cpp">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -163,6 +166,9 @@
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStateMachine.h">
+      <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="eBatEnemy.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>
   </ItemGroup>

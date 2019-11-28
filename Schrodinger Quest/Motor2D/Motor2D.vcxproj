@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collision_Manager.cpp" />
+    <ClCompile Include="eBatEnemy.cpp" />
     <ClCompile Include="eCreature.cpp" />
     <ClCompile Include="eEnemy.cpp" />
     <ClCompile Include="EnemyStateMachine.cpp" />
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="eBatEnemy.h" />
     <ClInclude Include="eCreature.h" />
     <ClInclude Include="eEnemy.h" />
     <ClInclude Include="eGroundEnemy.h" />

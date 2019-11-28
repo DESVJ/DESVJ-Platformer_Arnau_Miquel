@@ -317,12 +317,19 @@ bool j1Map::Load(const char* file_name)
 			{
 
 				object_struct* object = set->objects[i];
-				if (object->properties[0]->name == "Type" && (p2SString)object->properties[0]->prop_value_s == "snake")
+				if (object->properties[0]->name == "Type")
 				{
-					//object->rect.y -= 50;
-					Entity* snake = App->entity_manager->CreateEntity(Types::enemy_ground);
-					snake->collision_rect.x = object->rect.x;
-					snake->collision_rect.y = object->rect.y;
+					Entity* obj_spawned = nullptr;
+					if ((p2SString)object->properties[0]->prop_value_s == "snake") 
+					{
+						obj_spawned = App->entity_manager->CreateEntity(Types::enemy_ground);
+					}
+					if ((p2SString)object->properties[0]->prop_value_s == "bat")
+					{
+						obj_spawned = App->entity_manager->CreateEntity(Types::enemy_air);
+					}
+					obj_spawned->collision_rect.x = object->rect.x;
+					obj_spawned->collision_rect.y = object->rect.y;
 				}
 
 			}

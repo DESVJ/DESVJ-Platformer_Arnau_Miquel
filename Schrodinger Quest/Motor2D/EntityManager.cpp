@@ -1,5 +1,6 @@
 #include "EntityManager.h"
-#include"eSnakeEnemy.h"
+#include "eSnakeEnemy.h"
+#include "eBatEnemy.h"
 
 EntityManager::EntityManager()
 {
@@ -100,6 +101,7 @@ Entity* EntityManager::CreateEntity(Types type)
 		ret = new eSnakeEnemy(Types::enemy_ground);
 		break;
 	case Types::enemy_air:
+		ret = new eBatEnemy(Types::enemy_air);
 		break;
 	}
 
@@ -107,7 +109,7 @@ Entity* EntityManager::CreateEntity(Types type)
 	{
 		entities.add(ret);
 		//ret->Awake();
-		if(type == Types::enemy_ground)
+		if(type == Types::enemy_ground || type == Types::enemy_air)
 			ret->Start();
 	}
 	return ret;
