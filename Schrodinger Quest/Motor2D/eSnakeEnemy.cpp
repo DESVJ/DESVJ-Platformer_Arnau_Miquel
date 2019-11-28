@@ -97,13 +97,16 @@ bool eSnakeEnemy::Update(float dt)
 
 
 		}
-		for (uint i = 0; i < path->Count(); ++i)
+		if (App->input->is_Debug_Mode) 
 		{
-			int x = path->At(i)->x;
-			int y = path->At(i)->y;
-			App->map->Translate_Coord(&x, &y);
-			iPoint pos = { x, y };
-			App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				int x = path->At(i)->x;
+				int y = path->At(i)->y;
+				App->map->Translate_Coord(&x, &y);
+				iPoint pos = { x, y };
+				App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+			}
 		}
 
 		App->pathfinding->ClearPath();
