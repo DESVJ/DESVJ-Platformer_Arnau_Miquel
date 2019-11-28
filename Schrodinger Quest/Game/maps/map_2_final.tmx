@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="104" nextobjectid="150">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="126" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="104" nextobjectid="154">
  <tileset firstgid="1" name="Background_Parallax_1" tilewidth="16" tileheight="16" tilecount="312" columns="24">
   <image source="Background_Parallax_1.png" width="384" height="216"/>
  </tileset>
@@ -59528,6 +59528,26 @@
    </properties>
   </object>
   <object id="149" name="Bat_Spawn" x="96" y="288" width="16" height="16">
+   <properties>
+    <property name="Type" value="bat"/>
+   </properties>
+  </object>
+  <object id="150" name="Bat_Spawn" x="496" y="208" width="16" height="16">
+   <properties>
+    <property name="Type" value="bat"/>
+   </properties>
+  </object>
+  <object id="151" name="Bat_Spawn" x="976" y="272" width="16" height="16">
+   <properties>
+    <property name="Type" value="bat"/>
+   </properties>
+  </object>
+  <object id="152" name="Bat_Spawn" x="1600" y="368" width="16" height="16">
+   <properties>
+    <property name="Type" value="bat"/>
+   </properties>
+  </object>
+  <object id="153" name="Bat_Spawn" x="1408" y="96" width="16" height="16">
    <properties>
     <property name="Type" value="bat"/>
    </properties>
