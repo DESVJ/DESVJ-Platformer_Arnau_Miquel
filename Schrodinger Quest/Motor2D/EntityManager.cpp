@@ -91,6 +91,8 @@ Entity* EntityManager::CreateEntity(Types type)
 {
 	static_assert(Types::unknown == (Types)4, "Types need update");
 	Entity* ret = nullptr;
+	pugi::xml_document	info_file;
+
 	switch (type)
 	{
 	case Types::player:
@@ -98,10 +100,13 @@ Entity* EntityManager::CreateEntity(Types type)
 		break;
 
 	case Types::enemy_ground:
-		ret = new eSnakeEnemy(Types::enemy_ground);
+		info_file.load_file("textures/Enemy_Sprites/snake.tmx");
+		ret = new eSnakeEnemy(Types::enemy_ground, info_file.child("map"));
 		break;
+
 	case Types::enemy_air:
-		ret = new eBatEnemy(Types::enemy_air);
+		info_file.load_file("textures/Enemy_Sprites/bat.tmx");
+		ret = new eBatEnemy(Types::enemy_air, info_file.child("map"));
 		break;
 	}
 
@@ -109,8 +114,8 @@ Entity* EntityManager::CreateEntity(Types type)
 	{
 		entities.add(ret);
 		//ret->Awake();
-		if(type == Types::enemy_ground || type == Types::enemy_air)
-			ret->Start();
+		if (type == Types::enemy_ground|| type == Types::enemy_air)
+			ret->Awake(ret->entity_node);
 	}
 	return ret;
 }

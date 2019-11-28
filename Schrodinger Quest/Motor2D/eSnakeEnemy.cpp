@@ -13,14 +13,6 @@ bool eSnakeEnemy::Awake(pugi::xml_node& config)
 	//pugi::xml_node player_node = player_info_file.child("map");
 
 	//LoadAnimationFromTMX(&player_node, &idle, "idle");
-
-	return true;
-}
-
-bool eSnakeEnemy::Start()
-{
-
-	//TODO THIS IS HARDCODED, CANT USE IT ON AWAKE BECASUSE ITS CALLED DURING RUNTIME, NEEDS TO BE FIXED
 	pugi::xml_document	player_info_file;
 	player_info_file.load_file("textures/Enemy_Sprites/snake.tmx");
 	pugi::xml_node player_node = player_info_file.child("map");
@@ -28,7 +20,7 @@ bool eSnakeEnemy::Start()
 	LoadAnimationFromTMX(&player_node, &idle, "idle");
 	LoadAnimationFromTMX(&player_node, &move, "move");
 	LoadAnimationFromTMX(&player_node, &death, "death");
-	
+
 	collision_rect.w = idle.GetCurrentFrameWithoutAnim().w;
 	collision_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
 
@@ -39,6 +31,31 @@ bool eSnakeEnemy::Start()
 	}
 
 	LOG("%i, %i", collision_rect.w, collision_rect.h);
+	return true;
+}
+
+bool eSnakeEnemy::Start()
+{
+
+	//TODO THIS IS HARDCODED, CANT USE IT ON AWAKE BECASUSE ITS CALLED DURING RUNTIME, NEEDS TO BE FIXED
+	//pugi::xml_document	player_info_file;
+	//player_info_file.load_file("textures/Enemy_Sprites/snake.tmx");
+	//pugi::xml_node player_node = player_info_file.child("map");
+
+	//LoadAnimationFromTMX(&player_node, &idle, "idle");
+	//LoadAnimationFromTMX(&player_node, &move, "move");
+	//LoadAnimationFromTMX(&player_node, &death, "death");
+	//
+	//collision_rect.w = idle.GetCurrentFrameWithoutAnim().w;
+	//collision_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
+
+	//if (!spritesheet)
+	//{
+	//	//Remove hardcode when tmx of enemy is created
+	//	spritesheet = App->tex->Load("textures/Enemy_Sprites/Cobra_Sprite_Sheet.png");
+	//}
+
+	//LOG("%i, %i", collision_rect.w, collision_rect.h);
 	return true;
 }
 

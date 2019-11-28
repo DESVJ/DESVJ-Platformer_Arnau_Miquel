@@ -16,9 +16,10 @@ class eSnakeEnemy : public eGroundEnemy
 
 public:
 
-	eSnakeEnemy(Types type) :eGroundEnemy(type) {
+	eSnakeEnemy(Types type, pugi::xml_node snake_node) :eGroundEnemy(type) {
 		name.create("enemy_info");
 		entity_type = type;
+		entity_node = snake_node;
 	}
 
 	// Destructor

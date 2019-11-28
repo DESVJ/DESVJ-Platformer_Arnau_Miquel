@@ -9,16 +9,17 @@
 #include"eGroundEnemy.h"
 
 
-class eGroundEnemy;
+class eEnemy;
 //Player class
-class eBatEnemy : public eGroundEnemy
+class eBatEnemy : public eEnemy
 {
 
 public:
 
-	eBatEnemy(Types type) :eGroundEnemy(type) {
+	eBatEnemy(Types type, pugi::xml_node bat_node) :eEnemy(type) {
 		name.create("enemy_info");
 		entity_type = type;
+		entity_node=bat_node;
 	}
 
 	// Destructor
