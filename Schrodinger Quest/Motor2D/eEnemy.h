@@ -32,10 +32,7 @@ public:
 
 	}
 
-	bool Awake(pugi::xml_node&)
-	{
-		return true;
-	}
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	virtual bool Start() {

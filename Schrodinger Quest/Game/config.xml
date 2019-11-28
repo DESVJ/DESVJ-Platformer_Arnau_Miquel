@@ -81,8 +81,8 @@
 
       <fly_enemy>
         <bat>
-          <load_file>textures/bat.tmx</load_file>
-          <texture_source>Bat_Sprite_Sheet.png</texture_source>
+          <load_file>textures/Enemy_Sprites/bat.tmx</load_file>
+          <texture_source>textures/Enemy_Sprites/Bat_Sprite_Sheet.png</texture_source>
           <detection_range value="1000"/>
           <life_points value="2"/>
                       
