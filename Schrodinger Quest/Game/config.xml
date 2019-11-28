@@ -73,6 +73,9 @@
         <snake>
           <load_file>textures/Enemy_Sprites/snake.tmx</load_file>
           <texture_source>textures/Enemy_Sprites/Cobra_Sprite_Sheet.png</texture_source>
+          <detection_range value="500"/>
+          <hit_points value="3"/>
+          
         </snake>
       </ground_enemy>
 
@@ -80,6 +83,9 @@
         <bat>
           <load_file>textures/bat.tmx</load_file>
           <texture_source>Bat_Sprite_Sheet.png</texture_source>
+          <detection_range value="1000"/>
+          <hit_points value="2"/>
+                      
         </bat>
       </fly_enemy>
 

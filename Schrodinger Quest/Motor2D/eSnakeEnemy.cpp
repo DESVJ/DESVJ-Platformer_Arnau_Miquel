@@ -29,6 +29,8 @@ bool eSnakeEnemy::Start()
 	LoadAnimationFromTMX(&player_node, &move, "move");
 	LoadAnimationFromTMX(&player_node, &death, "death");
 	
+	collision_rect.w = idle.GetCurrentFrameWithoutAnim().w;
+	collision_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
 
 	if (!spritesheet)
 	{
@@ -36,25 +38,20 @@ bool eSnakeEnemy::Start()
 		spritesheet = App->tex->Load("textures/Enemy_Sprites/Cobra_Sprite_Sheet.png");
 	}
 
-	return true;
-}
-
-bool eSnakeEnemy::PreUpdate() 
-{
-
+	LOG("%i, %i", collision_rect.w, collision_rect.h);
 	return true;
 }
 
 // Called each loop iteration
 bool eSnakeEnemy::Update(float dt)
 {
-	SDL_Rect rec = idle.GetCurrentFrame();
+	SDL_Rect current_frame = idle.GetCurrentFrame();
 
 	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
 	{
 		//NEED TO MOVE/USE COLLISION RECT AND NOT POSITION RECT
 		SDL_Rect target = App->entity_manager->Player->collision_rect;
-		if (target.x <= position_rect.x) 
+		if (target.x <= collision_rect.x) 
 		{
 			flip = SDL_FLIP_HORIZONTAL;
 		}
@@ -63,14 +60,10 @@ bool eSnakeEnemy::Update(float dt)
 			flip = SDL_FLIP_NONE;
 		}
 
-
-
-
-
 		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
 	}
 
-	App->colliders->MoveObject(&position_rect, {0, 1}, this);
+	App->colliders->MoveObject(&collision_rect, {0, 1}, this);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
@@ -80,11 +73,30 @@ bool eSnakeEnemy::Update(float dt)
 		int y = path->At(i)->y;
 		App->map->Translate_Coord(&x, &y);
 		iPoint pos = { x, y };
-		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 100);
+		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
 	}
 
+	//Calculate animation offset
+	int animation_created_mov = 0;
+	if (position_rect.w != 0)
+	{
+		animation_created_mov = collision_rect.w - current_frame.w;
+	}
+
+	//Update player rect
+	position_rect.w = current_frame.w;
+	position_rect.h = -current_frame.h;
+
+	position_rect.x = collision_rect.x + (animation_created_mov / 2);
+	position_rect.y = collision_rect.y;
+
 	//Render Enemy
-	App->render->Blit(spritesheet, position_rect.x, position_rect.y - rec.h, &rec, flip);
+	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
+
+	if (App->input->is_Debug_Mode)
+	{
+		App->render->DrawQuad(collision_rect, 255, 0, 0, 80);
+	}
 	return true;
 }
 
@@ -102,65 +114,65 @@ bool eSnakeEnemy::CleanUp()
 p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)
 {
 
-		//Allow the object to ignore down collisions (player jumping in top of platform)
-		if (allowClippingCollider != nullptr && position_rect.y <= allowClippingCollider->collider_rect.y)
-		{
-			allowClippingCollider = nullptr;
-		}
+	//Allow the object to ignore down collisions (player jumping in top of platform)
+	if (allowClippingCollider != nullptr && position_rect.y <= allowClippingCollider->collider_rect.y)
+	{
+		allowClippingCollider = nullptr;
+	}
 
 
-		if (in_collider != allowClippingCollider)
+	if (in_collider != allowClippingCollider)
+	{
+		//Is the collision inside x and x + w?
+		if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
 		{
-			//Is the collision inside x and x + w?
-			if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
+			//Correct movement or move object in a normal way
+			if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
 			{
-				//Correct movement or move object in a normal way
-				if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
+				prev_res.y = true;
+				if (dir == DOWN)
+				{
+					position_rect.y = block->y;
+				}
+			}
+			else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+			{
+				if (dir == UP)
 				{
 					prev_res.y = true;
-					if (dir == DOWN)
+
+					if (in_collider->canBeJumped)
 					{
-						position_rect.y = block->y;
+						allowClippingCollider = in_collider;
+					}
+					else
+					{
+						position_rect.y = block->y + block->h - prediction.h;
 					}
 				}
-				else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
-				{
-					if (dir == UP)
-					{
-						prev_res.y = true;
 
-						if (in_collider->canBeJumped)
-						{
-							allowClippingCollider = in_collider;
-						}
-						else
-						{
-							position_rect.y = block->y + block->h - prediction.h;
-						}
-					}
-
-				}
 			}
-			if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
+		}
+		if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
+		{
+			prev_res.x = true;
+			////Coliding with the sides of an object
+			if (prediction.x <= block->x + block->w)
 			{
-				prev_res.x = true;
-				////Coliding with the sides of an object
-				if (prediction.x <= block->x + block->w)
+				if (dir == LEFT)
 				{
-					if (dir == LEFT)
-					{
-						position_rect.x = block->x + block->w;
-					}
+					position_rect.x = block->x + block->w;
 				}
-				else if (prediction.x + prediction.w >= block->x)
-				{
-					if (dir == RIGHT)
-					{
-						position_rect.x = block->x - position_rect.w;
-					}
-				}
-
 			}
+			else if (prediction.x + prediction.w >= block->x)
+			{
+				if (dir == RIGHT)
+				{
+					position_rect.x = block->x - position_rect.w;
+				}
+			}
+
+		}
 	}
 
 	return prev_res;

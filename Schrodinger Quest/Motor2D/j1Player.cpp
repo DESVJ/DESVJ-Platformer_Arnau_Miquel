@@ -249,12 +249,11 @@ bool j1Player::Update(float dt)
 
 	//Render player GFX
 	App->render->Blit(player.player_spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
-	if (App->input->is_Debug_Mode)
-		App->render->DrawQuad(App->render->followMinRect, 255, 210, 78, 50);
 
 	//Render player colider in debug mode
 	if (App->input->is_Debug_Mode) 
 	{
+		App->render->DrawQuad(App->render->followMinRect, 255, 210, 78, 50);
 		App->render->DrawQuad(collision_rect, 0, 100, 0, 100);
 	}
 

@@ -89,6 +89,9 @@ public:
 	bool typeColDetected;
 	Collider* allowClippingCollider;
 
+	//General pathfinding
+	int detection_range;
+
 	//General gfx
 	SDL_Texture* spritesheet;
 	int PathNumber;

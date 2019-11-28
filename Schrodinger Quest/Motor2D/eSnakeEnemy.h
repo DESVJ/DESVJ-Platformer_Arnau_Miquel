@@ -33,7 +33,7 @@ public:
 	bool Start();
 
 	//// Called each loop iteration
-	bool PreUpdate();
+	//bool PreUpdate();
 	bool Update(float dt);
 
 	// Called before quitting
