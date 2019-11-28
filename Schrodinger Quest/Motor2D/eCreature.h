@@ -90,7 +90,7 @@ public:
 	Collider* allowClippingCollider;
 
 	//General pathfinding
-	int detection_range;
+	int detection_range = 500;
 
 	//General gfx
 	SDL_Texture* spritesheet;

@@ -251,3 +251,8 @@ void j1PathFinding::UpdatePathFindingMap()
 
 	RELEASE_ARRAY(data);
 }
+
+void j1PathFinding::ClearPath() 
+{
+	last_path.Clear();
+}

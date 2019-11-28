@@ -64,7 +64,7 @@ int eCreature::PathFinding(SDL_Rect objective)
 	p2Point<int> a = { objective.x, objective.y - 10 };
 	p2Point<int> b = { position_rect.x, position_rect.y - 10 };
 
-	if (a.DistanceNoSqrt(b) < 50 * App->map->data.tile_width) 
+	if (a.DistanceNoSqrt(b) < detection_range * App->map->data.tile_width) 
 	{
 		iPoint p = { objective.x, objective.y - 10 };
 		iPoint origin = { position_rect.x, position_rect.y - 10 };

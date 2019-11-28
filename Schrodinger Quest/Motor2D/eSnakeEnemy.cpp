@@ -49,21 +49,53 @@ bool eSnakeEnemy::Update(float dt)
 
 	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
 	{
-		//NEED TO MOVE/USE COLLISION RECT AND NOT POSITION RECT
-		SDL_Rect target = App->entity_manager->Player->collision_rect;
-		if (target.x <= collision_rect.x) 
-		{
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-		else
-		{
-			flip = SDL_FLIP_NONE;
-		}
 
 		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
+
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+		const iPoint* origin = path->At(0);
+		const iPoint* obj = path->At(1);
+ 		if (obj != NULL)
+		{
+
+			if (obj->x <= origin->x) 
+			{
+				collision_rect.x -= 1;
+			}
+			if(obj->x >= origin->x)
+			{
+				collision_rect.x += 1;
+			}
+
+
+			if (obj->y <= origin->y) 
+			{
+				collision_rect.y -= 1;
+			}
+			if(obj->y >= origin->y)
+			{
+				collision_rect.y += 1;
+			}
+
+
+		}
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			int x = path->At(i)->x;
+			int y = path->At(i)->y;
+			App->map->Translate_Coord(&x, &y);
+			iPoint pos = { x, y };
+			App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+		}
+
+		App->pathfinding->ClearPath();
+
+	}
+	else
+	{
+		App->colliders->MoveObject(&collision_rect, {0, 10}, this);
 	}
 
-	App->colliders->MoveObject(&collision_rect, {0, 1}, this);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 

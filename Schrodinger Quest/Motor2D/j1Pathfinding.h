@@ -39,6 +39,7 @@ public:
 	uchar GetTileAt(const iPoint& pos) const;
 
 	void UpdatePathFindingMap();
+	void ClearPath();
 
 private:
 
