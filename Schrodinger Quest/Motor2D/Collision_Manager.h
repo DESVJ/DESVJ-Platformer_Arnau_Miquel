@@ -20,7 +20,9 @@ enum Collider_Types
 	WALKEABLE, 
 	KILL, 
 	CLIMB, 
-	TANG
+	TANG,
+	PLAYER,
+	ENEMY
 };
 
 //Collider info
