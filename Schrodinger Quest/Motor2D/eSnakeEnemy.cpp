@@ -47,6 +47,8 @@ bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect current_frame = idle.GetCurrentFrame();
 
+	speed.x = 0;
+	speed.y = 2;
 	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
 	{
 
@@ -60,21 +62,21 @@ bool eSnakeEnemy::Update(float dt)
 
 			if (obj->x <= origin->x) 
 			{
-				collision_rect.x -= 1;
+				speed.x = -1;
 			}
 			if(obj->x >= origin->x)
 			{
-				collision_rect.x += 1;
+				speed.x = 1;
 			}
 
 
 			if (obj->y <= origin->y) 
 			{
-				collision_rect.y -= 1;
+				speed.y = -2;
 			}
 			if(obj->y >= origin->y)
 			{
-				collision_rect.y += 1;
+				speed.y = 2;
 			}
 
 
@@ -93,9 +95,12 @@ bool eSnakeEnemy::Update(float dt)
 	}
 	else
 	{
-		App->colliders->MoveObject(&collision_rect, {0, 10}, this);
+		speed.x = 0;
+		speed.y = 2;
 	}
 
+	App->colliders->MoveObject(&collision_rect, { (int)round(speed.x), 0}, this);
+	App->colliders->MoveObject(&collision_rect, { 0, (int)round(speed.y) }, this);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
@@ -147,7 +152,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 {
 
 	//Allow the object to ignore down collisions (player jumping in top of platform)
-	if (allowClippingCollider != nullptr && position_rect.y <= allowClippingCollider->collider_rect.y)
+	if (allowClippingCollider != nullptr && collision_rect.y <= allowClippingCollider->collider_rect.y)
 	{
 		allowClippingCollider = nullptr;
 	}
@@ -164,7 +169,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 				prev_res.y = true;
 				if (dir == DOWN)
 				{
-					position_rect.y = block->y;
+					collision_rect.y = block->y;
 				}
 			}
 			else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
@@ -179,7 +184,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 					}
 					else
 					{
-						position_rect.y = block->y + block->h - prediction.h;
+						collision_rect.y = block->y + block->h - prediction.h;
 					}
 				}
 
@@ -193,14 +198,14 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 			{
 				if (dir == LEFT)
 				{
-					position_rect.x = block->x + block->w;
+					collision_rect.x = block->x + block->w;
 				}
 			}
 			else if (prediction.x + prediction.w >= block->x)
 			{
 				if (dir == RIGHT)
 				{
-					position_rect.x = block->x - position_rect.w;
+					collision_rect.x = block->x - collision_rect.w;
 				}
 			}
 
@@ -215,11 +220,11 @@ void eSnakeEnemy::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, 
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (col_result.x == false)
 	{
-		position_rect.x = prediction.x;
+		collision_rect.x = prediction.x;
 	}
 	if (col_result.y == false)
 	{
-		position_rect.y = prediction.y;
+		collision_rect.y = prediction.y;
 	}
 }
 
