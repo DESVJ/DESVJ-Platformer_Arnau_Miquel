@@ -31,7 +31,7 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	//// Called before the first frame
-	//bool Start();
+	bool Start();
 
 	//// Called each loop iteration
 	//bool PreUpdate();

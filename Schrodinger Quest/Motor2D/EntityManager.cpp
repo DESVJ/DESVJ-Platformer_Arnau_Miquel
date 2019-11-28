@@ -92,6 +92,7 @@ Entity* EntityManager::CreateEntity(Types type)
 	static_assert(Types::unknown == (Types)4, "Types need update");
 	Entity* ret = nullptr;
 	pugi::xml_document	info_file;
+	pugi::xml_document info_file2;
 
 	switch (type)
 	{
@@ -109,13 +110,16 @@ Entity* EntityManager::CreateEntity(Types type)
 		ret = new eBatEnemy(Types::enemy_air, info_file.child("map"));
 		break;
 	}
-
+	info_file2.load_file("config.xml");
 	if (ret != nullptr)
 	{
 		entities.add(ret);
 		//ret->Awake();
-		if (type == Types::enemy_ground|| type == Types::enemy_air)
-			ret->Awake(ret->entity_node);
+		if (type == Types::enemy_ground)		
+			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("ground_enemy"));
+		else if(type == Types::enemy_air)
+			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("fly_enemy"));
+
 	}
 	return ret;
 }
