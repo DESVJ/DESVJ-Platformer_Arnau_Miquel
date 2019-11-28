@@ -47,8 +47,6 @@ bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect current_frame = idle.GetCurrentFrame();
 
-	speed.x = 0;
-	speed.y = 2;
 	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
 	{
 
@@ -59,14 +57,15 @@ bool eSnakeEnemy::Update(float dt)
 		const iPoint* obj = path->At(1);
  		if (obj != NULL)
 		{
-
 			if (obj->x < origin->x) 
 			{
 				speed.x = -1;
+				flip = SDL_FLIP_HORIZONTAL;
 			}
 			if(obj->x > origin->x)
 			{
 				speed.x = 1;
+				flip = SDL_FLIP_NONE;
 			}
 
 

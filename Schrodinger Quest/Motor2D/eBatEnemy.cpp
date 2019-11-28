@@ -57,14 +57,17 @@ bool eBatEnemy::Update(float dt)
 		const iPoint* obj = path->At(1);
 		if (obj != NULL)
 		{
-
+			speed.x = 0;
+			speed.y = 0;
 			if (obj->x < origin->x)
 			{
 				speed.x = -1;
+				flip = SDL_FLIP_HORIZONTAL;
 			}
 			if (obj->x > origin->x)
 			{
 				speed.x = 1;
+				flip = SDL_FLIP_NONE;
 			}
 
 
