@@ -58,21 +58,21 @@ bool eBatEnemy::Update(float dt)
 		if (obj != NULL)
 		{
 
-			if (obj->x <= origin->x)
+			if (obj->x < origin->x)
 			{
 				speed.x = -1;
 			}
-			if (obj->x >= origin->x)
+			if (obj->x > origin->x)
 			{
 				speed.x = 1;
 			}
 
 
-			if (obj->y <= origin->y)
+			if (obj->y < origin->y)
 			{
 				speed.y = -2;
 			}
-			if (obj->y >= origin->y)
+			if (obj->y > origin->y)
 			{
 				speed.y = 2;
 			}
