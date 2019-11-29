@@ -11,13 +11,6 @@ bool eBatEnemy::Awake(pugi::xml_node& config)
 }
 
 
-bool eBatEnemy::Start()
-{
-
-
-	return true;
-}
-
 // Called each loop iteration
 bool eBatEnemy::Update(float dt)
 {
@@ -79,24 +72,7 @@ bool eBatEnemy::Update(float dt)
 		speed.y = 0;
 	}
 
-	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0 }, this);
-	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+	MoveAndDraw();
 
-	//Calculate animation offset
-	int animation_created_mov = 0;
-	if (position_rect.w != 0)
-	{
-		animation_created_mov = collider->collider_rect.w - current_frame.w;
-	}
-
-	//Update player rect
-	position_rect.w = current_frame.w;
-	position_rect.h = -current_frame.h;
-
-	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
-	position_rect.y = collider->collider_rect.y;
-
-	//Render Enemy
-	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
 	return true;
 }

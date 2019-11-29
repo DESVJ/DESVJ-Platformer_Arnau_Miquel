@@ -531,7 +531,8 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
 	{
-		LOG("AAAAAAA");
+		Change_Col_State(player_colision_state::DYING);
+		typeColDetected = true;
 	}
 
 	return prev_res;

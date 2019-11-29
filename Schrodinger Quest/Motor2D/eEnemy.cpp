@@ -29,6 +29,31 @@ bool eEnemy::Awake(pugi::xml_node& config)
 	return true;
 }
 
+void eEnemy::MoveAndDraw() 
+{
+	SDL_Rect current_frame = idle.GetCurrentFrame();
+
+	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0 }, this);
+	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+
+	//Calculate animation offset
+	int animation_created_mov = 0;
+	if (position_rect.w != 0)
+	{
+		animation_created_mov = collider->collider_rect.w - current_frame.w;
+	}
+
+	//Update player rect
+	position_rect.w = current_frame.w;
+	position_rect.h = -current_frame.h;
+
+	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
+	position_rect.y = collider->collider_rect.y;
+
+	//Render Enemy
+	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
+}
+
 bool eEnemy::CleanUp()
 {
 	eCreature::CleanUp();
@@ -45,7 +70,7 @@ p2Point<bool> eEnemy::OnCollision(Collider* in_collider, SDL_Rect prediction, SD
 	}
 
 
-	if (in_collider != allowClippingCollider)
+	if (in_collider != allowClippingCollider && in_collider->collider_type != Collider_Types::ENEMY)
 	{
 		//Is the collision inside x and x + w?
 		if (prediction.x + prediction.w > block->x&& prediction.x < block->x + block->w)

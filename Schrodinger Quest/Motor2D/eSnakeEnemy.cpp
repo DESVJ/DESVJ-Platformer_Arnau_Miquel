@@ -10,36 +10,10 @@ bool eSnakeEnemy::Awake(pugi::xml_node& config)
 	return true;
 }
 
-bool eSnakeEnemy::Start()
-{
-
-	//TODO THIS IS HARDCODED, CANT USE IT ON AWAKE BECASUSE ITS CALLED DURING RUNTIME, NEEDS TO BE FIXED
-	//pugi::xml_document	player_info_file;
-	//player_info_file.load_file("textures/Enemy_Sprites/snake.tmx");
-	//pugi::xml_node player_node = player_info_file.child("map");
-
-	//LoadAnimationFromTMX(&player_node, &idle, "idle");
-	//LoadAnimationFromTMX(&player_node, &move, "move");
-	//LoadAnimationFromTMX(&player_node, &death, "death");
-	//
-	//collision_rect.w = idle.GetCurrentFrameWithoutAnim().w;
-	//collision_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
-
-	//if (!spritesheet)
-	//{
-	//	//Remove hardcode when tmx of enemy is created
-	//	spritesheet = App->tex->Load("textures/Enemy_Sprites/Cobra_Sprite_Sheet.png");
-	//}
-
-	//LOG("%i, %i", collision_rect.w, collision_rect.h);
-	return true;
-}
-
 // Called each loop iteration
 bool eSnakeEnemy::Update(float dt)
 {
-	SDL_Rect current_frame = idle.GetCurrentFrame();
-
+	
 	if (App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y) 
 	{
 		if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
@@ -102,25 +76,7 @@ bool eSnakeEnemy::Update(float dt)
 		speed.y = 2;
 	}
 	
-	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0}, this);
-	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
-
-	//Calculate animation offset
-	int animation_created_mov = 0;
-	if (position_rect.w != 0)
-	{
-		animation_created_mov = collider->collider_rect.w - current_frame.w;
-	}
-
-	//Update player rect
-	position_rect.w = current_frame.w;
-	position_rect.h = -current_frame.h;
-
-	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
-	position_rect.y = collider->collider_rect.y;
-
-	//Render Enemy
-	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
+	MoveAndDraw();
 
 	return true;
 }
