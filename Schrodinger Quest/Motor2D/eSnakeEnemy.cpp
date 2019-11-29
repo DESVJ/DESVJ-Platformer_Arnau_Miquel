@@ -40,10 +40,10 @@ bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect current_frame = idle.GetCurrentFrame();
 
-	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
+	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
 	{
 		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-		if (isGrounded && App->entity_manager->Player->collision_rect.y >= collision_rect.y) 
+		if (isGrounded && App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y)
 		{
 			const iPoint* origin = path->At(0);
 			const iPoint* obj = path->At(1);
@@ -93,8 +93,8 @@ bool eSnakeEnemy::Update(float dt)
 		speed.y = 2;
 	}
 
-	App->colliders->MoveObject(&collision_rect, { (int)round(speed.x), 0}, this);
-	App->colliders->MoveObject(&collision_rect, { 0, (int)round(speed.y) }, this);
+	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0}, this);
+	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
@@ -111,23 +111,19 @@ bool eSnakeEnemy::Update(float dt)
 	int animation_created_mov = 0;
 	if (position_rect.w != 0)
 	{
-		animation_created_mov = collision_rect.w - current_frame.w;
+		animation_created_mov = collider->collider_rect.w - current_frame.w;
 	}
 
 	//Update player rect
 	position_rect.w = current_frame.w;
 	position_rect.h = -current_frame.h;
 
-	position_rect.x = collision_rect.x + (animation_created_mov / 2);
-	position_rect.y = collision_rect.y;
+	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
+	position_rect.y = collider->collider_rect.y;
 
 	//Render Enemy
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
 
-	if (App->input->is_Debug_Mode)
-	{
-		App->render->DrawQuad(collision_rect, 255, 0, 0, 80);
-	}
 	return true;
 }
 
@@ -146,7 +142,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 {
 
 	//Allow the object to ignore down collisions (player jumping in top of platform)
-	if (allowClippingCollider != nullptr && collision_rect.y <= allowClippingCollider->collider_rect.y)
+	if (allowClippingCollider != nullptr && collider->collider_rect.y <= allowClippingCollider->collider_rect.y)
 	{
 		allowClippingCollider = nullptr;
 	}
@@ -163,11 +159,11 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 				prev_res.y = true;
 				if (dir == DOWN)
 				{
-					collision_rect.y = block->y;
+					collider->collider_rect.y = block->y;
 					isGrounded = true;
 				}
 			}
-			else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
+			else if (prediction.y + prediction.h < block->y + block->h && prediction.y >block->y + (block->h / 2))
 			{
 				if (dir == UP)
 				{
@@ -179,7 +175,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 					}
 					else
 					{
-						collision_rect.y = block->y + block->h - prediction.h;
+						collider->collider_rect.y = block->y + block->h - prediction.h;
 					}
 				}
 
@@ -193,19 +189,20 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 			{
 				if (dir == LEFT)
 				{
-					collision_rect.x = block->x + block->w;
+					collider->collider_rect.x = block->x + block->w;
 				}
 			}
 			else if (prediction.x + prediction.w >= block->x)
 			{
 				if (dir == RIGHT)
 				{
-					collision_rect.x = block->x - collision_rect.w;
+					collider->collider_rect.x = block->x - collider->collider_rect.w;
 				}
 			}
 
 		}
 	}
+
 
 	return prev_res;
 }
@@ -215,11 +212,11 @@ void eSnakeEnemy::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, 
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (col_result.x == false)
 	{
-		collision_rect.x = prediction.x;
+		collider->collider_rect.x = prediction.x;
 	}
 	if (col_result.y == false)
 	{
-		collision_rect.y = prediction.y;
+		collider->collider_rect.y = prediction.y;
 		isGrounded = false;
 	}
 }

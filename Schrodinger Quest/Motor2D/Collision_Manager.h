@@ -66,6 +66,9 @@ public:
 	//Check for rect collision
 	bool CheckCollision(const SDL_Rect& rect, const SDL_Rect& r);
 	bool CheckAbsoluteCollision(const SDL_Rect& rect, const SDL_Rect& r);
+
+	void DrawColliders();
+	void ClearColliders();
 };
 
 #endif // __j1COLLISION_H__

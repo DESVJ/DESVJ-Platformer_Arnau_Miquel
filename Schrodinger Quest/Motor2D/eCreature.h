@@ -64,6 +64,7 @@ public:
 	}
 
 	int PathFinding(SDL_Rect objective);
+	void CreateCollider(Collider_Types type);
 
 	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>)
 	{
@@ -79,7 +80,6 @@ public:
 	bool alive;
 	bool respawn;
 	bool isGrounded;
-	//Collider* collider;
 
 	//General animations
 	Animation idle;
@@ -89,6 +89,7 @@ public:
 	//General collisions
 	bool typeColDetected;
 	Collider* allowClippingCollider;
+	Collider* collider;
 
 	//General pathfinding
 	int detection_range;

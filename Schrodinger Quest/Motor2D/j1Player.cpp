@@ -32,6 +32,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node player_node = player_info_file.child("map");
 
+	CreateCollider(Collider_Types::PLAYER);
+
 	//player.player_spritesheet = App->tex->Load(player_node.child("imagelayer").child("image").attribute("source").as_string());
 
 	//Animation laoding 
@@ -74,8 +76,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	tangSwitchDeadCheck = config.child("tangSwitchDeadCheck").attribute("value").as_bool();
 	canJump = config.child("canJump").attribute("value").as_bool();
 
-	collision_rect.w = config.child("collider_rect").attribute("w").as_int();
-	collision_rect.h = config.child("collider_rect").attribute("h").as_int();
+	collider->collider_rect.w = config.child("collider_rect").attribute("w").as_int();
+	collider->collider_rect.h = config.child("collider_rect").attribute("h").as_int();
 
 	return true;
 }
@@ -94,13 +96,13 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_slide,player.stop_attack,inputs_out, speed.y, actual_state, input_in, input_out, player.col_state, collision_rect);
+	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_slide,player.stop_attack,inputs_out, speed.y, actual_state, input_in, input_out, player.col_state, collider->collider_rect);
 
 	if (respawn == true)
 		Start_F3();
 
 	//Move camera to new player position
-	App->render->MoveCameraToPointInsideLimits({ collision_rect.x + (collision_rect.w / 2), collision_rect.y });
+	App->render->MoveCameraToPointInsideLimits({ collider->collider_rect.x + (collider->collider_rect.w / 2), collider->collider_rect.y });
 
 	return true;
 }
@@ -184,7 +186,7 @@ bool j1Player::Update(float dt)
 	//Calculate animation offset
 	if (position_rect.w != 0) 
 	{
-		animation_created_mov = collision_rect.w - current_frame.w;
+		animation_created_mov = collider->collider_rect.w - current_frame.w;
 	}
 
 	//Update player rect
@@ -201,8 +203,8 @@ bool j1Player::Update(float dt)
 	//Move player
 	if (player.col_state != player_colision_state::DYING) 
 	{
-		App->colliders->MoveObject(&collision_rect, { (int)round(speed.x * 60 * dt) , 0}, this);
-		App->colliders->MoveObject(&collision_rect, { 0, (int)round(speed.y) }, this);
+		App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x * 60 * dt) , 0}, this);
+		App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
 	}
 
 
@@ -232,8 +234,8 @@ bool j1Player::Update(float dt)
 	}
 
 	//Update player graphics by collider position
-	position_rect.x = collision_rect.x + (animation_created_mov / 2);
-	position_rect.y = collision_rect.y;
+	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
+	position_rect.y = collider->collider_rect.y;
 
 
 	//Check if player is under the map and kill it
@@ -255,7 +257,6 @@ bool j1Player::Update(float dt)
 	if (App->input->is_Debug_Mode) 
 	{
 		App->render->DrawQuad(App->render->followMinRect, 255, 210, 78, 50);
-		App->render->DrawQuad(collision_rect, 0, 100, 0, 100);
 	}
 
 	//Clear output array
@@ -322,8 +323,8 @@ bool j1Player::Save(pugi::xml_node& data)const
 	//Save all vars to XML file
 	pugi::xml_node player_node = data.append_child("player_info");
 	player_node.append_child("position");
-	player_node.child("position").append_attribute("x") = collision_rect.x;
-	player_node.child("position").append_attribute("y") = collision_rect.y;
+	player_node.child("position").append_attribute("x") = collider->collider_rect.x;
+	player_node.child("position").append_attribute("y") = collider->collider_rect.y;
 	player_node.child("position").append_attribute("w") = position_rect.w;
 	player_node.child("position").append_attribute("h") = position_rect.h;
 	player_node.append_child("speed");
@@ -350,8 +351,8 @@ bool j1Player::Save(pugi::xml_node& data)const
 bool j1Player::Load(pugi::xml_node& data) 
 {
 	//Load all vars to xml file
-	collision_rect.x = data.child("player_info").child("position").attribute("x").as_int();
-	collision_rect.y = data.child("player_info").child("position").attribute("y").as_int();
+	collider->collider_rect.x = data.child("player_info").child("position").attribute("x").as_int();
+	collider->collider_rect.y = data.child("player_info").child("position").attribute("y").as_int();
 	position_rect.w = data.child("player_info").child("position").attribute("w").as_int();
 	position_rect.h = data.child("player_info").child("position").attribute("h").as_int();
 	speed.x = data.child("player_info").child("speed").attribute("x").as_float();
@@ -419,7 +420,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
 	{
 		//Allow the object to ignore down collisions (player jumping in top of platform)
-		if (allowClippingCollider != nullptr && collision_rect.y <= allowClippingCollider->collider_rect.y)
+		if (allowClippingCollider != nullptr && collider->collider_rect.y <= allowClippingCollider->collider_rect.y)
 		{
 			allowClippingCollider = nullptr;
 		}
@@ -436,7 +437,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					prev_res.y = true;
 					if (dir == DOWN)
 					{
-						collision_rect.y = block->y;
+						collider->collider_rect.y = block->y;
 
 						if (speed.y >= 8 && canJump == false && player.col_state == player_colision_state::NONE)
 							App->audio->PlayFx(jump_down_fx);
@@ -466,7 +467,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 						}
 						else
 						{
-							collision_rect.y = block->y + block->h - prediction.h;
+							collider->collider_rect.y = block->y + block->h - prediction.h;
 						}
 					}
 
@@ -481,7 +482,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					if (dir == LEFT)
 					{
 						if (player.col_state != player_colision_state::CLIMBING)
-							collision_rect.x = block->x + block->w;
+							collider->collider_rect.x = block->x + block->w;
 					}
 				}
 				else if (prediction.x + prediction.w >= block->x)
@@ -489,7 +490,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 					if (dir == RIGHT)
 					{
 						if (player.col_state != player_colision_state::CLIMBING)
-							collision_rect.x = block->x - collision_rect.w;
+							collider->collider_rect.x = block->x - collider->collider_rect.w;
 					}
 				}
 
@@ -535,11 +536,11 @@ void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2P
 	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
 	if (col_result.x == false)
 	{
-		collision_rect.x = prediction.x;
+		collider->collider_rect.x = prediction.x;
 	}
 	if (col_result.y == false)
 	{
-		collision_rect.y = prediction.y;
+		collider->collider_rect.y = prediction.y;
 		if (increment.y > 0)
 		{
 			canJump = false;

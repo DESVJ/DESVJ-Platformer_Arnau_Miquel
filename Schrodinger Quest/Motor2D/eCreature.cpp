@@ -74,3 +74,14 @@ int eCreature::PathFinding(SDL_Rect objective)
 		return App->pathfinding->CreatePath(origin, p);
 	}
 }
+
+void eCreature::CreateCollider(Collider_Types type) 
+{
+
+	Collider created;
+	created.collider_type = type;
+	created.enabled = true;
+
+
+	collider = &App->colliders->collider_list.add(created)->data;
+}

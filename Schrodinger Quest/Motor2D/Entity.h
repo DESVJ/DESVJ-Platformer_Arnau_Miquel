@@ -69,7 +69,6 @@ public:
 public:
 	Types entity_type;
 	SDL_Rect position_rect;
-	SDL_Rect collision_rect;
 
 	//Copy of node
 	pugi::xml_node entity_node;

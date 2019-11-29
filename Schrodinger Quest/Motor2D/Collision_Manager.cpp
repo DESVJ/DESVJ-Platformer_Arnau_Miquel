@@ -184,3 +184,56 @@ bool Collider_Manager::CheckAbsoluteCollision(const SDL_Rect& rect, const SDL_Re
 
 	return detectedX && detectedY;
 }
+
+void Collider_Manager::DrawColliders() 
+{
+	for (unsigned int i = 0; i < collider_list.count(); i++)
+	{
+		Collider* col = &App->colliders->collider_list[i];
+		SDL_Rect* rect = &col->collider_rect;
+		if (App->map->Culling_Check(rect->x, rect->y, *rect, 1))
+		{
+			SDL_Color color;
+			switch (col->collider_type)
+			{
+
+			case WALKEABLE:
+				color = { 0, 255, 0, 100 };
+				break;
+			case KILL:
+				color = { 255, 0, 0, 100 };
+				break;
+			case CLIMB:
+				color = { 0, 0, 255, 100 };
+				break;
+
+			case TANG:
+				color = { 0, 100, 200, 100 };
+				break;
+
+			case PLAYER:
+				color = { 0, 0, 255, 50 };
+				break;
+
+			case ENEMY:
+				color = { 255, 0, 0, 50 };
+				break;
+
+			}
+			App->render->DrawQuad(*rect, color.r, color.g, color.b, color.a);
+		}
+	}
+}
+
+void Collider_Manager::ClearColliders() 
+{
+	for (int i = collider_list.count() - 1; i >= 0; i--)
+	{
+		if (collider_list[i].collider_type != Collider_Types::PLAYER) 
+		{
+			collider_list.del(collider_list.At(i));
+		}
+	}
+
+	LOG("Colliders Left = %i", collider_list.count());
+}

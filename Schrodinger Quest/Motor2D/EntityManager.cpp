@@ -143,8 +143,8 @@ void EntityManager::RespawnCreatures()
 	for (int i = 0; i < entities.count(); i++)
 	{
 		eCreature* creature = (eCreature*)entities[i];
-		creature->collision_rect.x = creature->spawn.x;
-		creature->collision_rect.y = creature->spawn.y;
+		creature->collider->collider_rect.x = creature->spawn.x;
+		creature->collider->collider_rect.y = creature->spawn.y;
 	}
 
 
