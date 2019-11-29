@@ -46,9 +46,10 @@ public:
 	}
 
 	// Called before quitting
-	virtual bool CleanUp() {
-		return true;
-	}
+	bool CleanUp();
+
+	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
+	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
 
 public:
 	Enemy_State en_state;

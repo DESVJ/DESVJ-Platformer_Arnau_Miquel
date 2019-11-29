@@ -529,6 +529,11 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 	}
 
+	if (in_collider->collider_type == Collider_Types::ENEMY)
+	{
+		LOG("AAAAAAA");
+	}
+
 	return prev_res;
 }
 void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2Point<int> increment)

@@ -37,9 +37,6 @@ public:
 	//bool PreUpdate();
 	bool Update(float dt);
 
-	// Called before quitting
-	bool CleanUp();
-
 	////Start level again
 	//void Start_F3();
 
@@ -57,9 +54,6 @@ public:
 
 	////Move player to spawn
 	//void MoveToSpawn();
-
-	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
-	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
 
 
 };

@@ -40,51 +40,60 @@ bool eSnakeEnemy::Update(float dt)
 {
 	SDL_Rect current_frame = idle.GetCurrentFrame();
 
-	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
+	if (App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y) 
 	{
-		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-		if (isGrounded && App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y)
+		if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
 		{
-			const iPoint* origin = path->At(0);
-			const iPoint* obj = path->At(1);
-			if (obj != NULL)
+			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+			if (isGrounded)
 			{
-				if (obj->x < origin->x)
+				const iPoint* origin = path->At(0);
+				const iPoint* obj = path->At(1);
+				if (obj != NULL)
 				{
-					speed.x = -1;
-					flip = SDL_FLIP_HORIZONTAL;
-				}
-				if (obj->x > origin->x)
-				{
-					speed.x = 1;
-					flip = SDL_FLIP_NONE;
-				}
+					if (obj->x < origin->x)
+					{
+						speed.x = -1;
+						flip = SDL_FLIP_HORIZONTAL;
+					}
+					if (obj->x > origin->x)
+					{
+						speed.x = 1;
+						flip = SDL_FLIP_NONE;
+					}
 
 
-				if (obj->y < origin->y)
-				{
-					speed.y = -2;
-				}
-				if (obj->y > origin->y)
-				{
-					speed.y = 2;
+					if (obj->y < origin->y)
+					{
+						speed.y = -2;
+					}
+					if (obj->y > origin->y)
+					{
+						speed.y = 2;
+					}
 				}
 			}
-		}
 
-		if (App->input->is_Debug_Mode) 
-		{
-			for (uint i = 0; i < path->Count(); ++i)
+			if (App->input->is_Debug_Mode)
 			{
-				int x = path->At(i)->x;
-				int y = path->At(i)->y;
-				App->map->Translate_Coord(&x, &y);
-				iPoint pos = { x, y };
-				App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+				for (uint i = 0; i < path->Count(); ++i)
+				{
+					int x = path->At(i)->x;
+					int y = path->At(i)->y;
+					App->map->Translate_Coord(&x, &y);
+					iPoint pos = { x, y };
+					App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+				}
 			}
-		}
 
-		App->pathfinding->ClearPath();
+			App->pathfinding->ClearPath();
+
+		}
+		else
+		{
+			speed.x = 0;
+			speed.y = 2;
+		}
 
 	}
 	else
@@ -92,20 +101,9 @@ bool eSnakeEnemy::Update(float dt)
 		speed.x = 0;
 		speed.y = 2;
 	}
-
+	
 	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0}, this);
 	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
-
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		int x = path->At(i)->x;
-		int y = path->At(i)->y;
-		App->map->Translate_Coord(&x, &y);
-		iPoint pos = { x, y };
-		App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
-	}
 
 	//Calculate animation offset
 	int animation_created_mov = 0;
@@ -125,99 +123,5 @@ bool eSnakeEnemy::Update(float dt)
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
 
 	return true;
-}
-
-bool eSnakeEnemy::CleanUp()
-{
-
-	eCreature::CleanUp();
-
-
-
-	return true;
-}
-
-
-p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)
-{
-
-	//Allow the object to ignore down collisions (player jumping in top of platform)
-	if (allowClippingCollider != nullptr && collider->collider_rect.y <= allowClippingCollider->collider_rect.y)
-	{
-		allowClippingCollider = nullptr;
-	}
-
-
-	if (in_collider != allowClippingCollider)
-	{
-		//Is the collision inside x and x + w?
-		if (prediction.x + prediction.w > block->x && prediction.x < block->x + block->w)
-		{
-			//Correct movement or move object in a normal way
-			if (prediction.y >= block->y && prediction.y <= block->y + (block->h / 5) - prediction.h)
-			{
-				prev_res.y = true;
-				if (dir == DOWN)
-				{
-					collider->collider_rect.y = block->y;
-					isGrounded = true;
-				}
-			}
-			else if (prediction.y + prediction.h < block->y + block->h && prediction.y >block->y + (block->h / 2))
-			{
-				if (dir == UP)
-				{
-					prev_res.y = true;
-
-					if (in_collider->canBeJumped)
-					{
-						allowClippingCollider = in_collider;
-					}
-					else
-					{
-						collider->collider_rect.y = block->y + block->h - prediction.h;
-					}
-				}
-
-			}
-		}
-		if (prediction.y > block->y && prediction.y + prediction.h < block->y + block->h)
-		{
-			prev_res.x = true;
-			////Coliding with the sides of an object
-			if (prediction.x <= block->x + block->w)
-			{
-				if (dir == LEFT)
-				{
-					collider->collider_rect.x = block->x + block->w;
-				}
-			}
-			else if (prediction.x + prediction.w >= block->x)
-			{
-				if (dir == RIGHT)
-				{
-					collider->collider_rect.x = block->x - collider->collider_rect.w;
-				}
-			}
-
-		}
-	}
-
-
-	return prev_res;
-}
-
-void eSnakeEnemy::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2Point<int> increment)
-{
-	//If no movement correction is needed, therefore there is no collisions, just move the object to the predicted point
-	if (col_result.x == false)
-	{
-		collider->collider_rect.x = prediction.x;
-	}
-	if (col_result.y == false)
-	{
-		collider->collider_rect.y = prediction.y;
-		isGrounded = false;
-	}
 }
 
