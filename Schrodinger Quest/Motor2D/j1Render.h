@@ -51,6 +51,8 @@ public:
 	SDL_Rect		viewport;
 	SDL_Color		background;
 
+	p2SString vsync;
+
 	//Camera follow rect
 	SDL_Rect followMinRect = {0, 0, 50, 50};
 

@@ -213,8 +213,21 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame dt: %f ",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, dt);
+	//sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame dt: %f ",
+	//	avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, dt);
+
+	p2SString cap = "";
+	if (fps_limit == fps_min) 
+	{
+		cap = "ON";
+	}
+	else
+	{
+		cap = "OFF";
+	}
+
+	sprintf_s(title, 256, "FPS %i / average FPS %.2f / MS of the last frame %02u (Cap %s + Vsync %s)",
+		frames_on_last_update, avg_fps, last_frame_ms, cap.GetString(), App->render->vsync.GetString());
 	App->win->SetTitle(title);
 
 	//LOG("%u", last_frame_ms);
