@@ -44,6 +44,9 @@ public:
 	//Called when deleting a new Entity
 	bool DeleteEntity(Entity*);
 
+	//Respawn all creatures
+	void RespawnCreatures();
+
 public:
 	p2List <Entity*> entities;
 	j1Player* Player;

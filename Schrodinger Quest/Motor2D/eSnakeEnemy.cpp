@@ -42,37 +42,36 @@ bool eSnakeEnemy::Update(float dt)
 
 	if (PathFinding(App->entity_manager->Player->collision_rect) == 0)
 	{
-
-		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
-
 		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-		const iPoint* origin = path->At(0);
-		const iPoint* obj = path->At(1);
- 		if (obj != NULL)
+		if (isGrounded && App->entity_manager->Player->collision_rect.y >= collision_rect.y) 
 		{
-			if (obj->x < origin->x) 
+			const iPoint* origin = path->At(0);
+			const iPoint* obj = path->At(1);
+			if (obj != NULL)
 			{
-				speed.x = -1;
-				flip = SDL_FLIP_HORIZONTAL;
-			}
-			if(obj->x > origin->x)
-			{
-				speed.x = 1;
-				flip = SDL_FLIP_NONE;
-			}
+				if (obj->x < origin->x)
+				{
+					speed.x = -1;
+					flip = SDL_FLIP_HORIZONTAL;
+				}
+				if (obj->x > origin->x)
+				{
+					speed.x = 1;
+					flip = SDL_FLIP_NONE;
+				}
 
 
-			if (obj->y < origin->y) 
-			{
-				speed.y = -2;
+				if (obj->y < origin->y)
+				{
+					speed.y = -2;
+				}
+				if (obj->y > origin->y)
+				{
+					speed.y = 2;
+				}
 			}
-			if(obj->y > origin->y)
-			{
-				speed.y = 2;
-			}
-
-
 		}
+
 		if (App->input->is_Debug_Mode) 
 		{
 			for (uint i = 0; i < path->Count(); ++i)
@@ -165,6 +164,7 @@ p2Point<bool> eSnakeEnemy::OnCollision(Collider* in_collider, SDL_Rect predictio
 				if (dir == DOWN)
 				{
 					collision_rect.y = block->y;
+					isGrounded = true;
 				}
 			}
 			else if (prediction.y + prediction.h < block->y + block->h && prediction.y > block->y + (block->h / 2))
@@ -220,6 +220,7 @@ void eSnakeEnemy::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, 
 	if (col_result.y == false)
 	{
 		collision_rect.y = prediction.y;
+		isGrounded = false;
 	}
 }
 

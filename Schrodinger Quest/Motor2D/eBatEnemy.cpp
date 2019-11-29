@@ -14,25 +14,7 @@ bool eBatEnemy::Awake(pugi::xml_node& config)
 bool eBatEnemy::Start()
 {
 
-	//TODO THIS IS HARDCODED, CANT USE IT ON AWAKE BECASUSE ITS CALLED DURING RUNTIME, NEEDS TO BE FIXED
-	/*pugi::xml_document	player_info_file;
-	player_info_file.load_file("textures/Enemy_Sprites/bat.tmx");
-	pugi::xml_node player_node = player_info_file.child("map");
-	*/
-	//LoadAnimationFromTMX(&entity_node, &idle, "idle");
-	//LoadAnimationFromTMX(&entity_node, &move, "move");
-	//LoadAnimationFromTMX(&entity_node, &death, "death");
 
-	//collision_rect.w = idle.GetCurrentFrameWithoutAnim().w;
-	//collision_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
-
-	//if (!spritesheet)
-	//{
-	//	//Remove hardcode when tmx of enemy is created
-	//	spritesheet = App->tex->Load("textures/Enemy_Sprites/Bat_Sprite_Sheet.png");
-	//}
-
-	//LOG("%i, %i", collision_rect.w, collision_rect.h);
 	return true;
 }
 

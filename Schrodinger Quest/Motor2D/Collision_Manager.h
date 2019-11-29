@@ -10,10 +10,9 @@
 #include"p2SString.h"
 #include"p2List.h"
 #include"j1Render.h"
-#include"eCreature.h"
 #include"j1App.h"
 
-class eCreature;
+
 //Collide type
 enum Collider_Types
 {
@@ -33,6 +32,8 @@ struct Collider
 	bool canBeJumped = false;
 	Collider_Types collider_type;
 };
+
+class eCreature;
 
 //Movement direction
 enum Direction 

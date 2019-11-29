@@ -11,6 +11,7 @@
 #include "j1State_Machine.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
+#include "EntityManager.h"
 
 j1Player::j1Player(Types type) : eCreature(Types::player)
 {
@@ -393,11 +394,11 @@ void j1Player::LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, 
 
 void j1Player::MoveToSpawn()
 {
-	//Set position to spawn point
+	//Respawn all creatures
+	App->entity_manager->RespawnCreatures();
 
-	collision_rect.x = spawn.x;
-	collision_rect.y = spawn.y;
 
+	//Reload music
 	p2List_item<MapObjectGroup*>* objects_map;
 	objects_map = App->map->data.object_layers.start;
 	while (objects_map != NULL)
@@ -409,9 +410,7 @@ void j1Player::MoveToSpawn()
 			else App->map->PrepareMusicSource(objects_map, true);
 		}
 		objects_map = objects_map->next;
-	}
-
-	
+	}	
 }
 
 p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)

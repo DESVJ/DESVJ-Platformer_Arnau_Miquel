@@ -8,7 +8,6 @@
 #include "j1Textures.h"
 #include "j1Pathfinding.h"
 
-struct Collider;
 enum Direction;
 class eCreature : public Entity
 {
@@ -79,6 +78,8 @@ public:
 	bool flip;
 	bool alive;
 	bool respawn;
+	bool isGrounded;
+	//Collider* collider;
 
 	//General animations
 	Animation idle;

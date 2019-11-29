@@ -136,3 +136,17 @@ bool EntityManager::DeleteEntity(Entity* e)
 		return true;
 	}
 }
+
+void EntityManager::RespawnCreatures() 
+{
+
+	for (int i = 0; i < entities.count(); i++)
+	{
+		eCreature* creature = (eCreature*)entities[i];
+		creature->collision_rect.x = creature->spawn.x;
+		creature->collision_rect.y = creature->spawn.y;
+	}
+
+
+
+}
