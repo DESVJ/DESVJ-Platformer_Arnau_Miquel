@@ -9,7 +9,7 @@
 void CheckInputs(bool god_mode, bool& tang_mode, bool& jump_over, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, bool& stop_slide, bool& stop_attack, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect);
 
 //Execute states
-Animation* ExecuteState(p2Point<float>& speed, state actual, float dt, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide);
+Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide);
 
 //Check states
 bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT]);

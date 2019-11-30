@@ -112,7 +112,7 @@ bool j1Player::Update(float dt)
 {
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
-	Animation* current_animation = ExecuteState(speed, actual_state, dt, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip, player.stop_slide);
+	Animation* current_animation = ExecuteState(speed, actual_state, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip, player.stop_slide);
 	//Animation* current_animation = &slide;
 	if (reset_animation == true) 
 	{
@@ -204,7 +204,12 @@ bool j1Player::Update(float dt)
 	if (player.col_state != player_colision_state::DYING) 
 	{
 		App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x * 60 * dt) , 0}, this);
-		App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+		if(dt>0.5)App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+		else {
+			if (dt > 0.02 && player.player_god_mode == false)
+				App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y * 35 * dt) }, this);
+			App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y * 60 * dt) }, this);
+		}
 	}
 
 
@@ -225,14 +230,21 @@ bool j1Player::Update(float dt)
 	}
 
 	//----------------------------------------------------------------------//
-	//LOG("%", maximum_speed);// *dt * 60);
 	//Jump control check
-	if ((speed.y < -maximum_speed && player.player_god_mode == false)||player.spacebar_pushed==false) 
-	{
-		player.player_stop_jumping_up = true;
-		player.spacebar_pushed = false;
+	if (dt < 0.02f) {
+		if ((speed.y * 60 * dt < -maximum_speed * (60 * dt) && player.player_god_mode == false) || player.spacebar_pushed == false)
+		{
+			player.player_stop_jumping_up = true;
+			player.spacebar_pushed = false;
+		}
 	}
-
+	else {
+		if ((speed.y / (30 * dt) < -maximum_speed / (60 * dt) && player.player_god_mode == false) || player.spacebar_pushed == false)
+		{
+			player.player_stop_jumping_up = true;
+			player.spacebar_pushed = false;
+		}
+	}
 	//Update player graphics by collider position
 	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
 	position_rect.y = collider->collider_rect.y;

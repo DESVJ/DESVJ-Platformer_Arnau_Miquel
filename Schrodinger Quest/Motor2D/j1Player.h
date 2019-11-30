@@ -11,6 +11,8 @@
 #include "eCreature.h"
 #define MAX_INPUTS_OUT 8
 
+
+
 //Collision state enum
 enum player_colision_state 
 {
