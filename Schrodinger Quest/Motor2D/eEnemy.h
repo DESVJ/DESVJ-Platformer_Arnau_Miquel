@@ -48,7 +48,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void MoveAndDraw();
+	void MoveAndDraw(float dt);
 
 	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);

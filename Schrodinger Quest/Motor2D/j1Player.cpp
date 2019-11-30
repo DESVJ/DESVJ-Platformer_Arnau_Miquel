@@ -119,7 +119,7 @@ bool j1Player::Update(float dt)
 		current_animation->Reset();
 	}
 
-	SDL_Rect current_frame = current_animation->GetCurrentFrame();
+	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
 	// Check if player is dead and dead animation is finished
 	if (alive == false) 
 	{
@@ -320,7 +320,7 @@ void j1Player::Change_Col_State(player_colision_state state)
 bool j1Player::Save(pugi::xml_node& data)const 
 {
 
-	//Save all vars to XML file
+	//Save all vars to XML fileup
 	pugi::xml_node player_node = data.append_child("player_info");
 	player_node.append_child("position");
 	player_node.child("position").append_attribute("x") = collider->collider_rect.x;

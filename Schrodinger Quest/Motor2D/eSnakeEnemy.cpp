@@ -76,7 +76,7 @@ bool eSnakeEnemy::Update(float dt)
 		speed.y = 2;
 	}
 	
-	MoveAndDraw();
+	MoveAndDraw(dt);
 
 	return true;
 }

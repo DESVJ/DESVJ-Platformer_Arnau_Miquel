@@ -14,7 +14,7 @@ bool eBatEnemy::Awake(pugi::xml_node& config)
 // Called each loop iteration
 bool eBatEnemy::Update(float dt)
 {
-	SDL_Rect current_frame = idle.GetCurrentFrame();
+	SDL_Rect current_frame = idle.GetCurrentFrame(dt);
 
 	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
 	{
@@ -72,7 +72,7 @@ bool eBatEnemy::Update(float dt)
 		speed.y = 0;
 	}
 
-	MoveAndDraw();
+	MoveAndDraw(dt);
 
 	return true;
 }
