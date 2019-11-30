@@ -69,9 +69,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 	player.stop_attack = config.child("player_info").attribute("stop_attack").as_bool();
 	inputs_out = config.child("inputs_out").attribute("value").as_int();
 	actual_state = (state)config.child("actual_state").attribute("value").as_int();
-	gravity = config.child("gravity").attribute("value").as_int();
+	gravity = config.child("gravity").attribute("value").as_float();
 	player.texture_source = config.child("texture_source").child_value();
-	maximum_speed= config.child("maximum_speed").attribute("value").as_int();
+	maximum_speed= config.child("maximum_speed").attribute("value").as_float();
 	animation_created_mov = config.child("animation_created_mov").attribute("value").as_int();
 	tangSwitchDeadCheck = config.child("tangSwitchDeadCheck").attribute("value").as_bool();
 	canJump = config.child("canJump").attribute("value").as_bool();
@@ -225,7 +225,7 @@ bool j1Player::Update(float dt)
 	}
 
 	//----------------------------------------------------------------------//
-
+	//LOG("%", maximum_speed);// *dt * 60);
 	//Jump control check
 	if ((speed.y < -maximum_speed && player.player_god_mode == false)||player.spacebar_pushed==false) 
 	{

@@ -180,8 +180,8 @@ public:
 
 private:
 
-	int gravity;
-	int maximum_speed;
+	float gravity;
+	float maximum_speed;
 	int difference_y;
 	int inputs_out;
 	state actual_state;
