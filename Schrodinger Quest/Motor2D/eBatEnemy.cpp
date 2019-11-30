@@ -1,5 +1,6 @@
 #include"eBatEnemy.h"
 #include "EntityManager.h"
+#include "EnemyStateMachine.h"
 #include "j1Input.h"
 
 
@@ -10,15 +11,36 @@ bool eBatEnemy::Awake(pugi::xml_node& config)
 	return true;
 }
 
+bool eBatEnemy::PreUpdate()
+{
+	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)player_nearby = true;
+	else player_nearby = false;
+
+
+	CheckInputs(not_chase_tang_mode, 1, player_nearby, timer_idle, en_state, en_state_update);
+
+	return true;
+}
+
 
 // Called each loop iteration
 bool eBatEnemy::Update(float dt)
 {
-	SDL_Rect current_frame = idle.GetCurrentFrame(dt);
-
-	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
+	Animation* current_animation;
+	bool reset_animation = CheckState(timer_idle, en_state, en_state_update);
+	current_animation = ExecuteState(speed, flip, alive, timer_idle, en_state, &idle, &move, &death);
+	if (current_animation == &move)current_animation = &idle;
+	if (reset_animation == true)
 	{
+		current_animation->Reset();
+	}
 
+	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
+	LOG("RECT: %d, %d, %d, %d", current_frame.x, current_frame.y, current_frame.w, current_frame.h);
+
+	if (en_state == Enemy_State::chase)
+	{
+		PathFinding(App->entity_manager->Player->collider->collider_rect);
 		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
 
 		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
@@ -72,7 +94,7 @@ bool eBatEnemy::Update(float dt)
 		speed.y = 0;
 	}
 
-	MoveAndDraw(dt);
+	MoveAndDraw(dt, current_frame);
 
 	return true;
 }
@@ -93,6 +115,7 @@ bool eBatEnemy::Save(pugi::xml_node& data) const {
 	bat_node.child("speed").append_attribute("y") = speed.y;
 	bat_node.append_attribute("flip") = flip;;
 	bat_node.append_attribute("alive") = alive;
+	bat_node.append_attribute("player_nearby") = player_nearby;
 	bat_node.append_attribute("respawn") = respawn;
 	switch (en_state)
 	{
@@ -125,7 +148,7 @@ bool eBatEnemy::Save(pugi::xml_node& data) const {
 		break;
 	}
 	bat_node.append_attribute("not_chase_tang_mode") = not_chase_tang_mode;
-	bat_node.append_attribute("timer_idle") = timer_idle;
+	bat_node.append_attribute("timer_idle") = timer_idle.Get_Start();
 	
 	return true;
 }
@@ -143,9 +166,10 @@ bool eBatEnemy::Load(pugi::xml_node& data) {
 	speed.y = bat_node.child("speed").attribute("y").as_float();
 	flip = bat_node.attribute("flip").as_bool();
 	alive = bat_node.attribute("alive").as_bool();
+	player_nearby = bat_node.attribute("player_nearby").as_bool();
 	respawn = bat_node.attribute("respawn").as_bool();
 	not_chase_tang_mode = bat_node.attribute("not_chase_tang_mode").as_bool();
-	timer_idle= bat_node.attribute("timer_idle").as_bool();
+	timer_idle.Set_Start(bat_node.attribute("timer_idle").as_bool());
 	en_state = (Enemy_State)bat_node.attribute("en_state").as_int();
 	en_state_update = (Enemy_State)bat_node.attribute("en_state_update").as_int();
 

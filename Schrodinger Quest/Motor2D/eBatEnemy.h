@@ -31,7 +31,7 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	//// Called each loop iteration
-	//bool PreUpdate();
+	bool PreUpdate();
 	bool Update(float dt);
 
 	////Start level again

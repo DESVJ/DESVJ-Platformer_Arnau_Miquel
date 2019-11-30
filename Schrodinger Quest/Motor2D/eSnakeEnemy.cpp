@@ -1,6 +1,9 @@
 #include"eSnakeEnemy.h"
+#include "EnemyStateMachine.h"
 #include "EntityManager.h"
+#include "j1Player.h"
 #include "j1Input.h"
+#include "j1Timer.h"
 
 
 // Called before render is available
@@ -10,64 +13,79 @@ bool eSnakeEnemy::Awake(pugi::xml_node& config)
 	return true;
 }
 
+
+bool eSnakeEnemy::PreUpdate() 
+{
+	if (App->entity_manager->Player->player.player_tang_mode == true)not_chase_tang_mode = true;
+	else not_chase_tang_mode = false;
+	if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)player_nearby = true;
+	else player_nearby = false;
+
+
+	CheckInputs(not_chase_tang_mode, 1, player_nearby, timer_idle, en_state, en_state_update);
+
+	return true;
+}
+
+
 // Called each loop iteration
 bool eSnakeEnemy::Update(float dt)
 {
-	
-	if (App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y) 
+	Animation* current_animation;
+	bool reset_animation = CheckState(timer_idle, en_state, en_state_update);
+	current_animation = ExecuteState(speed, flip, alive, timer_idle, en_state, &idle, &move, &death);
+	if (reset_animation == true)
 	{
-		if (PathFinding(App->entity_manager->Player->collider->collider_rect) == 0)
+		current_animation->Reset();
+	}
+
+	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
+	if (en_state == Enemy_State::chase && App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y)
+	{
+		PathFinding(App->entity_manager->Player->collider->collider_rect);
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+		if (isGrounded)
 		{
-			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-			if (isGrounded)
+			const iPoint* origin = path->At(0);
+			const iPoint* obj = path->At(1);
+			if (obj != NULL)
 			{
-				const iPoint* origin = path->At(0);
-				const iPoint* obj = path->At(1);
-				if (obj != NULL)
+				if (obj->x < origin->x)
 				{
-					if (obj->x < origin->x)
-					{
-						speed.x = -1;
-						flip = SDL_FLIP_HORIZONTAL;
-					}
-					if (obj->x > origin->x)
-					{
-						speed.x = 1;
-						flip = SDL_FLIP_NONE;
-					}
+					speed.x = -1;
+					flip = SDL_FLIP_HORIZONTAL;
+				}
+				if (obj->x > origin->x)
+				{
+					speed.x = 1;
+					flip = SDL_FLIP_NONE;
+				}
 
 
-					if (obj->y < origin->y)
-					{
-						speed.y = -2;
-					}
-					if (obj->y > origin->y)
-					{
-						speed.y = 2;
-					}
+				if (obj->y < origin->y)
+				{
+					speed.y = -2;
+				}
+				if (obj->y > origin->y)
+				{
+					speed.y = 2;
 				}
 			}
-
-			if (App->input->is_Debug_Mode)
-			{
-				for (uint i = 0; i < path->Count(); ++i)
-				{
-					int x = path->At(i)->x;
-					int y = path->At(i)->y;
-					App->map->Translate_Coord(&x, &y);
-					iPoint pos = { x, y };
-					App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
-				}
-			}
-
-			App->pathfinding->ClearPath();
-
 		}
-		else
+
+		if (App->input->is_Debug_Mode)
 		{
-			speed.x = 0;
-			speed.y = 2;
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				int x = path->At(i)->x;
+				int y = path->At(i)->y;
+				App->map->Translate_Coord(&x, &y);
+				iPoint pos = { x, y };
+				App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+			}
 		}
+
+		App->pathfinding->ClearPath();
 
 	}
 	else
@@ -76,7 +94,7 @@ bool eSnakeEnemy::Update(float dt)
 		speed.y = 2;
 	}
 	
-	MoveAndDraw(dt);
+	MoveAndDraw(dt, current_frame);
 
 	return true;
 }
@@ -98,6 +116,7 @@ bool eSnakeEnemy::Save(pugi::xml_node& data) const {
 	snake_node.child("speed").append_attribute("y") = speed.y;
 	snake_node.append_attribute("flip") = flip;;
 	snake_node.append_attribute("alive") = alive;
+	snake_node.append_attribute("player_nearby") = player_nearby;
 	snake_node.append_attribute("respawn") = respawn;
 	switch (en_state)
 	{
@@ -130,7 +149,7 @@ bool eSnakeEnemy::Save(pugi::xml_node& data) const {
 		break;
 	}
 	snake_node.append_attribute("not_chase_tang_mode") = not_chase_tang_mode;
-	snake_node.append_attribute("timer_idle") = timer_idle;
+	snake_node.append_attribute("timer_idle") = timer_idle.Get_Start();
 
 	return true;
 }
@@ -148,9 +167,10 @@ bool eSnakeEnemy::Load(pugi::xml_node& data) {
 	speed.y = snake_node.child("speed").attribute("y").as_float();
 	flip = snake_node.attribute("flip").as_bool();
 	alive = snake_node.attribute("alive").as_bool();
+	player_nearby = snake_node.attribute("player_nearby").as_bool();
 	respawn = snake_node.attribute("respawn").as_bool();
 	not_chase_tang_mode = snake_node.attribute("not_chase_tang_mode").as_bool();
-	timer_idle = snake_node.attribute("timer_idle").as_bool();
+	timer_idle.Set_Start(snake_node.attribute("timer_idle").as_uint());
 	en_state = (Enemy_State)snake_node.attribute("en_state").as_int();
 	en_state_update = (Enemy_State)snake_node.attribute("en_state_update").as_int();
 

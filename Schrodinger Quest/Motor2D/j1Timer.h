@@ -13,6 +13,8 @@ public:
 	void Start();
 	uint32 Read() const;
 	float ReadSec() const;
+	uint32 Get_Start() const;
+	void Set_Start(uint32);
 
 private:
 	uint32	started_at;

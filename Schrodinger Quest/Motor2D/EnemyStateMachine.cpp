@@ -6,18 +6,19 @@
 //#include "j1Player.h"
 //#include "j1Audio.h"
 #include "EntityManager.h"
+#include "j1Timer.h"
 //#include "SDL/include/SDL.h"
 
-void CheckInputs(bool not_chase_tang_mode, int lives, float distance, float timer_idle, Enemy_State en_state, Enemy_State& en_state_update) {
+void CheckInputs(bool not_chase_tang_mode, int lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update) {
 	//Check if the enemy is dead
 	if (lives > 0)
 	{
 		//Check if the enemy is "seeing" the player
-		if (distance < 10 && not_chase_tang_mode == false)
+		if (distance == true && not_chase_tang_mode == false)
 		{
 			en_state_update = Enemy_State::chase;
 		}
-		else if (en_state == Enemy_State::chase || (en_state == Enemy_State::idle && timer_idle < 2.0f))
+		else if (en_state == Enemy_State::chase || (en_state == Enemy_State::idle && timer_idle.ReadSec() < 2.0f))
 		{
 			en_state_update = Enemy_State::idle;
 		}
@@ -31,7 +32,7 @@ void CheckInputs(bool not_chase_tang_mode, int lives, float distance, float time
 }
 
 
-Animation* ExecuteState(p2Point<float>& speed, bool flip, bool& alive, float& timer_idle, Enemy_State& en_state, Animation* idle, Animation* move, Animation* death) {
+Animation* ExecuteState(p2Point<float>& speed, bool flip, bool& alive, j1Timer& timer_idle, Enemy_State& en_state, Animation* idle, Animation* move, Animation* death) {
 	
 	bool left = false;
 	bool right = false;
@@ -41,8 +42,6 @@ Animation* ExecuteState(p2Point<float>& speed, bool flip, bool& alive, float& ti
 	switch (en_state)
 	{
 	case Enemy_State::idle:
-		//TODO!!!!!!!!!!!!!!!!! HERE WE NEED TO ADD THE TIME PASSED IN A FRAME
-		//timer_idle+=App.
 		current_animation = idle;
 		break;
 
@@ -111,7 +110,7 @@ Animation* ExecuteState(p2Point<float>& speed, bool flip, bool& alive, float& ti
 	return current_animation;
 }
 
-bool CheckState(float& timer_idle, Enemy_State& en_state, Enemy_State& en_state_update){
+bool CheckState(j1Timer& timer_idle, Enemy_State& en_state, Enemy_State& en_state_update){
 	bool reset_animation = false;
 	Enemy_State before_check = en_state;
 
@@ -152,7 +151,7 @@ bool CheckState(float& timer_idle, Enemy_State& en_state, Enemy_State& en_state_
 		{
 		case Enemy_State::idle:
 			en_state = Enemy_State::idle;
-			timer_idle = 0;
+			timer_idle.Start();
 			break;
 
 		case Enemy_State::dead:

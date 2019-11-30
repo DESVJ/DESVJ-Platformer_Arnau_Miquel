@@ -4,17 +4,18 @@
 bool eEnemy::Awake(pugi::xml_node& config) 
 {
 
-	pugi::xml_document	player_info_file;
-	player_info_file.load_file(config.child("load_file").child_value());
-	pugi::xml_node player_node = player_info_file.child("map");
+	pugi::xml_document	enemy_info_file;
+	enemy_info_file.load_file(config.child("load_file").child_value());
+	pugi::xml_node enemy_node = enemy_info_file.child("map");
 
 	CreateCollider(Collider_Types::ENEMY);
 
-	LoadAnimationFromTMX(&player_node, &idle, "idle");
-	LoadAnimationFromTMX(&player_node, &move, "move");
-	LoadAnimationFromTMX(&player_node, &death, "death");
+	LoadAnimationFromTMX(&enemy_node, &idle, "idle");
+	LoadAnimationFromTMX(&enemy_node, &move, "move");
+	LoadAnimationFromTMX(&enemy_node, &death, "death");
 
 	detection_range = config.child("detection_range").attribute("value").as_int();
+	en_state = (Enemy_State)config.child("en_state").attribute("value").as_int();
 
 	collider->collider_rect.w = idle.GetCurrentFrameWithoutAnim().w;
 	collider->collider_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
@@ -29,9 +30,9 @@ bool eEnemy::Awake(pugi::xml_node& config)
 	return true;
 }
 
-void eEnemy::MoveAndDraw(float dt) 
+void eEnemy::MoveAndDraw(float dt, SDL_Rect current_frame) 
 {
-	SDL_Rect current_frame = idle.GetCurrentFrame(dt);
+	//SDL_Rect current_frame = idle.GetCurrentFrame(dt);
 
 	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x), 0 }, this);
 	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);

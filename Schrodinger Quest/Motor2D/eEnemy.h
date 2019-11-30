@@ -6,6 +6,7 @@
 #include"p2SString.h"
 #include"p2List.h"
 #include"eCreature.h"
+#include "j1Timer.h"
 
 enum class Enemy_State
 {
@@ -16,6 +17,7 @@ enum class Enemy_State
 	dead
 };
 
+class SDL_Rect;
 
 //Player class
 class eEnemy : public eCreature
@@ -48,7 +50,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void MoveAndDraw(float dt);
+	void MoveAndDraw(float dt, SDL_Rect);
 
 	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
@@ -57,7 +59,8 @@ public:
 	Enemy_State en_state;
 	Enemy_State en_state_update;
 	bool not_chase_tang_mode;
-	float timer_idle;
+	bool player_nearby;
+	j1Timer timer_idle;
 
 };
 #endif // __EENEMY_H__
