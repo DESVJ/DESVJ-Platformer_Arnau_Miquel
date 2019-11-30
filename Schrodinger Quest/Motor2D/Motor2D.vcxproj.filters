@@ -150,9 +150,6 @@
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Game Core\Timers</Filter>
     </ClInclude>
-    <ClInclude Include="eGroundEnemy.h">
-      <Filter>Game Core\Modules\eEnemy</Filter>
-    </ClInclude>
     <ClInclude Include="eSnakeEnemy.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClInclude>

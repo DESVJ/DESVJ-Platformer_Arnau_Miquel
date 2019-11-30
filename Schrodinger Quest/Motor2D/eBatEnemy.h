@@ -6,7 +6,7 @@
 #include"p2SString.h"
 #include"p2List.h"
 #include"eCreature.h"
-#include"eGroundEnemy.h"
+#include "eEnemy.h"
 
 
 class eEnemy;
@@ -37,11 +37,11 @@ public:
 	////Start level again
 	//void Start_F3();
 
-	////Save
-	//bool Save(pugi::xml_node&) const;
+	//Save
+	bool Save(pugi::xml_node&) const;
 
-	////Load
-	//bool Load(pugi::xml_node&);
+	//Load
+	bool Load(pugi::xml_node&);
 
 	////Load animation pushbacks by name
 	//void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);

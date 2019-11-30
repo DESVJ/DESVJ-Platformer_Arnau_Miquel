@@ -69,9 +69,14 @@ bool EntityManager::CleanUp()
 //Called when loading the game
 bool EntityManager::Load(pugi::xml_node& n)
 {
+	pugi::xml_node n2 = n;
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
-		entities.At(i)->data->Load(n.child(entities.At(i)->data->name.GetString()));
+		n2 = n.child(entities.At(i)->data->name.GetString());
+		while (n2.attribute("id").as_int() != i) {
+			n2 = n2.next_sibling(entities.At(i)->data->name.GetString());
+		};
+		entities.At(i)->data->Load(n2);
 	}
 	return true;
 }
@@ -79,9 +84,12 @@ bool EntityManager::Load(pugi::xml_node& n)
 //Called when saving the game
 bool EntityManager::Save(pugi::xml_node& s) const
 {
+	pugi::xml_node s2 = s;
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
-		entities.At(i)->data->Save(s.append_child(entities.At(i)->data->name.GetString()));
+		s2 = s.append_child(entities.At(i)->data->name.GetString());
+		entities.At(i)->data->Save(s2);
+		s2.append_attribute("id") = i;
 	}
 	return true;
 }

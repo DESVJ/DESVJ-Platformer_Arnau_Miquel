@@ -105,7 +105,6 @@
     <ClInclude Include="eBatEnemy.h" />
     <ClInclude Include="eCreature.h" />
     <ClInclude Include="eEnemy.h" />
-    <ClInclude Include="eGroundEnemy.h" />
     <ClInclude Include="EnemyStateMachine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
