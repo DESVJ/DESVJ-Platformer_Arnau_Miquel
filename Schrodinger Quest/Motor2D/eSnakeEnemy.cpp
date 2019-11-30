@@ -88,6 +88,12 @@ bool eSnakeEnemy::Update(float dt)
 		App->pathfinding->ClearPath();
 
 	}
+	else if (en_state == Enemy_State::move)
+	{
+		//TODO INCLUDE CODE TO MOVE AROUND
+		speed.x = 0;
+		speed.y = 2;
+	}
 	else
 	{
 		speed.x = 0;

@@ -36,7 +36,6 @@ bool eBatEnemy::Update(float dt)
 	}
 
 	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
-	LOG("RECT: %d, %d, %d, %d", current_frame.x, current_frame.y, current_frame.w, current_frame.h);
 
 	if (en_state == Enemy_State::chase)
 	{
@@ -87,6 +86,12 @@ bool eBatEnemy::Update(float dt)
 
 		App->pathfinding->ClearPath();
 
+	}
+	else if (en_state == Enemy_State::move)
+	{
+		//TODO INCLUDE CODE TO MOVE AROUND, FOR EXAMPLE DRAWING A SQUARE
+		speed.x = 0;
+		speed.y = 0;
 	}
 	else
 	{
