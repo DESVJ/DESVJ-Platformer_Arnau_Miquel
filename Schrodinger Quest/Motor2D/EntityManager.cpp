@@ -75,6 +75,7 @@ bool EntityManager::Load(pugi::xml_node& n)
 		n2 = n.child(entities.At(i)->data->name.GetString());
 		while (n2.attribute("id").as_int() != i) {
 			n2 = n2.next_sibling(entities.At(i)->data->name.GetString());
+			assert(n2.attribute("id").as_int() != 0, "Load could not function properly");
 		};
 		entities.At(i)->data->Load(n2);
 	}
