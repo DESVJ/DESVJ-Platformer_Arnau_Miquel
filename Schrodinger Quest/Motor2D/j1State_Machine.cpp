@@ -278,7 +278,7 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 
 
-Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide)
+Animation* ExecuteState(p2Point<float>& speed, state actual, float dt, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide)
 {
 
 	Animation* current_animation;
@@ -320,7 +320,6 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 				slide_left = true;
 			}
 			current_animation = &App->entity_manager->Player->slide;
-			LOG("V:%f", speed.x);
 			break;
 
 		case S_DOWN_ATTACK:
@@ -449,28 +448,28 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 		if ((current_animation->current_frame == 0 || reset_animation == true) && in_air == false) 
 		{
 			speed.y = 0;
-			speed.y--;
+			speed.y--;// = 1 * 60 * dt;
   			stop_jumping_up = false;
 			App->audio->PlayFx(App->entity_manager->Player->jump_up_fx);
 			in_air = true;
 		}
 		else if (stop_jumping_up == false )
 		{
-			speed.y--;
+			speed.y--;// = 1 * 60 * dt;
 		}
 	}
 	else if (up == true) 
 	{
-		if (speed.y > -2)
+		if (speed.y > -2 * 60 * dt)
 		{
-			speed.y--;
+			speed.y-= 1 * 60 * dt;
 		}
 	}
 	else if (down == true) 
 	{
-		if (speed.y < 2)
+		if (speed.y < 2 * 60 * dt);
 		{
-			speed.y += 0.3f;
+			speed.y += 0.3f * 60 * dt;
 		}
 	}
 	else if (speed.y < 0) 

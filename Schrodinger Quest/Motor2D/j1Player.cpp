@@ -112,7 +112,7 @@ bool j1Player::Update(float dt)
 {
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
-	Animation* current_animation = ExecuteState(speed, actual_state, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip, player.stop_slide);
+	Animation* current_animation = ExecuteState(speed, actual_state, dt, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip, player.stop_slide);
 	//Animation* current_animation = &slide;
 	if (reset_animation == true) 
 	{
