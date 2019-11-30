@@ -63,14 +63,8 @@ bool eEnemy::CleanUp()
 p2Point<bool> eEnemy::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)
 {
 
-	//Allow the object to ignore down collisions (player jumping in top of platform)
-	if (allowClippingCollider != nullptr && collider->collider_rect.y <= allowClippingCollider->collider_rect.y)
-	{
-		allowClippingCollider = nullptr;
-	}
 
-
-	if (in_collider != allowClippingCollider && in_collider->collider_type != Collider_Types::ENEMY)
+	if (in_collider->collider_type != Collider_Types::ENEMY)
 	{
 		//Is the collision inside x and x + w?
 		if (prediction.x + prediction.w > block->x&& prediction.x < block->x + block->w)
@@ -90,15 +84,7 @@ p2Point<bool> eEnemy::OnCollision(Collider* in_collider, SDL_Rect prediction, SD
 				if (dir == UP)
 				{
 					prev_res.y = true;
-
-					if (in_collider->canBeJumped)
-					{
-						allowClippingCollider = in_collider;
-					}
-					else
-					{
-						collider->collider_rect.y = block->y + block->h - prediction.h;
-					}
+					collider->collider_rect.y = block->y + block->h - prediction.h;
 				}
 
 			}
