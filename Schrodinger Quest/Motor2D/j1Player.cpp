@@ -518,9 +518,9 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 	}
 
 	//If collider is type Climb, climb
-	if (in_collider->collider_type == CLIMB)
+	if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))
 	{
-		if (!player.player_tang_mode &&
+		if (in_collider->collider_type == CLIMB && !player.player_tang_mode &&
 			(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT ||
 			(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && position_rect.y > in_collider->collider_rect.y)) &&
 				(position_rect.x + (position_rect.w / 2) > in_collider->collider_rect.x
@@ -536,8 +536,14 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 		else
 		{
+			Change_Col_State(player_colision_state::NONE);
 			typeColDetected = false;
 		}
+	}
+	else if(in_collider->collider_type == CLIMB)
+	{
+		Change_Col_State(player_colision_state::NONE);
+		typeColDetected = false;
 	}
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
