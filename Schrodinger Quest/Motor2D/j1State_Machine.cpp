@@ -9,7 +9,7 @@
 #include "EntityManager.h"
 #include "SDL/include/SDL.h"
 
-void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, bool& stop_slide, bool& stop_attack, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
+void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spacebar_pushed, bool& canJump, bool& tangSwitchDeadCheck, bool& stop_attack, int& inputsouts, int speed_y, state actual, inputin& input_in, inputout input_out[MAX_INPUTS_OUT], player_colision_state collision_state, SDL_Rect& collider_rect)
 {
 	
 	//Check if the player is dead
@@ -90,18 +90,6 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 			}
 		}
 
-
-		//Check slide
-		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN && stop_slide == false)
-		{
-			input_in = I_SLIDE;
-		}
-		if (stop_slide == true)
-		{
-			input_out[inputsouts] = O_SLIDE;
-			inputsouts++;
-			stop_slide = false;
-		}
 
 		//Check down attack
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
@@ -278,16 +266,14 @@ void CheckInputs(bool god_mode, bool& tang_mode, bool& not_jumping, bool& spaceb
 
 
 
-Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip, bool& stop_slide)
+Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animation, bool& climbing, bool& alive, bool& god_mode, bool& in_air, bool& stop_jumping_up, bool flip)
 {
 
 	Animation* current_animation;
 	current_animation = &App->entity_manager->Player->idle;
 
 	bool right = false;
-	bool slide_right = false;
 	bool left = false;
-	bool slide_left = false;
 	bool up = false;
 	bool down = false;
 	bool jump = false;
@@ -308,18 +294,6 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 				right = true;
 			}
 			current_animation = &App->entity_manager->Player->move;
-			break;
-
-		case S_SLIDE:
-			if (flip == false)
-			{
-				slide_right = true;
-			}
-			else
-			{
-				slide_left = true;
-			}
-			current_animation = &App->entity_manager->Player->slide;
 			break;
 
 		case S_DOWN_ATTACK:
@@ -404,20 +378,12 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			speed.x += 0.2f;
 		}
 	}
-	else if (slide_right == true && speed.x <= 2)
-	{
-		speed.x = 5;
-	}
 	else if (left == true)
 	{
 		if (speed.x > -2)
 		{
 			speed.x -= 0.2f;
 		}
-	}
-	else if (slide_left == true && speed.x >= -2)
-	{
-		speed.x = -5;
 	}
 	else 
 	{
@@ -428,16 +394,12 @@ Animation* ExecuteState(p2Point<float>& speed, state actual, bool reset_animatio
 			speed.x -= 0.5f;
 			if (speed.x <= 0)
 				speed.x = 0;
-			else if (speed.x <= 2 && slide_right == true)
-				stop_slide = true;
 		}
 		else
 		{
 			speed.x += 0.5f;
 			if (speed.x >= 0)
 				speed.x = 0;
-			else if (speed.x >= -2 && slide_left == true)
-				stop_slide = true;
 		}
 
 
@@ -518,10 +480,6 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_LEFT;
 					break;
 
-				case I_SLIDE:
-					actual = S_SLIDE;
-					break;
-
 				case I_DOWN_ATTACK:
 					actual = S_DOWN_ATTACK;
 					break;
@@ -586,10 +544,6 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 					actual = S_JUMP_LEFT;
 					break;
 
-				case I_SLIDE:
-					actual = S_SLIDE;
-					break;
-
 				case I_DOWN_ATTACK:
 					actual = S_DOWN_ATTACK;
 					break;
@@ -650,10 +604,6 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 
 				case I_JUMP_RIGHT:
 					actual = S_JUMP_RIGHT; 
-					break;
-
-				case I_SLIDE:
-					actual = S_SLIDE;
 					break;
 
 				case I_DOWN_ATTACK:
@@ -1143,19 +1093,6 @@ bool CheckState(int &inputsouts, state& actual, inputin& input_in, inputout inpu
 						}
 						break;
 				}
-			}
-			break;
-
-		case S_SLIDE:
-			switch (input_in)
-			{
-			case I_DEAD:
-				actual = S_DEAD;
-				break;
-			}
-			for (int i = 0; i <= inputsouts; i++)if(input_out[i]==O_SLIDE)
-			{
-				actual = S_IDLE;
 			}
 			break;
 
