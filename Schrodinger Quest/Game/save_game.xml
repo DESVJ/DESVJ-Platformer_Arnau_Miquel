@@ -13,7 +13,7 @@
 	<scene />
 	<entity_manager>
 		<player id="0">
-			<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_slide="false" stop_attack="false" col_state="0" actual_state="1">
+			<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0" actual_state="1">
 				<position x="96" y="816" w="16" h="-20" />
 				<speed x="0" y="8" />
 			</player_info>
