@@ -66,11 +66,8 @@ public:
 	int PathFinding(SDL_Rect objective);
 	void CreateCollider(Collider_Types type);
 
-	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>)
-	{
-		return { false, false };
-	}
-	virtual void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>) {}
+	virtual p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>) = 0;
+	virtual void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>) = 0;
 
 public:
 	p2Point<float> speed;
@@ -87,7 +84,6 @@ public:
 	Animation move;
 
 	//General collisions
-	bool typeColDetected;
 	Collider* allowClippingCollider;
 	Collider* collider;
 

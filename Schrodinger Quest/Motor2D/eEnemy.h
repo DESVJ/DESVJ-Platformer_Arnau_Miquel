@@ -7,6 +7,8 @@
 #include"p2List.h"
 #include"eCreature.h"
 #include "j1Timer.h"
+#include "EntityManager.h"
+#include"j1Input.h"
 
 enum class Enemy_State
 {
@@ -54,6 +56,8 @@ public:
 
 	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
+
+	void DoPathFinding(iPoint, iPoint);
 
 public:
 	Enemy_State en_state;

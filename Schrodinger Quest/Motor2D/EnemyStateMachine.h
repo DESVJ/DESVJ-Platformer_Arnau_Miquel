@@ -7,7 +7,7 @@
 class j1Timer;
 
 //Check inputs
-void CheckInputs(bool not_chase_tang_mode, int lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update);
+void CheckInputs(bool not_chase_tang_mode, bool lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update);
 
 //Execute states
 Animation* ExecuteState(p2Point<float>& speed, bool flip, bool& alive, j1Timer& timer_idle, Enemy_State& en_state, Animation* idle, Animation* move, Animation* death);

@@ -179,6 +179,7 @@ public:
 	int killLimit;
 	bool tangSwitchDeadCheck;
 	bool canJump;
+	bool typeColDetected;
 
 private:
 

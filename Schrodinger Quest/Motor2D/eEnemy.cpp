@@ -3,7 +3,7 @@
 
 bool eEnemy::Awake(pugi::xml_node& config) 
 {
-
+	alive = true;
 	pugi::xml_document	enemy_info_file;
 	enemy_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node enemy_node = enemy_info_file.child("map");
@@ -45,14 +45,83 @@ void eEnemy::MoveAndDraw(float dt, SDL_Rect current_frame)
 	}
 
 	//Update player rect
-	position_rect.w = current_frame.w;
-	position_rect.h = -current_frame.h;
+	if (alive) 
+	{
+		position_rect.w = current_frame.w;
+		position_rect.h = -current_frame.h;
 
-	position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
-	position_rect.y = collider->collider_rect.y;
+		position_rect.x = collider->collider_rect.x + (animation_created_mov / 2);
+		position_rect.y = collider->collider_rect.y;
+	}
 
 	//Render Enemy
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
+}
+
+void eEnemy::DoPathFinding(iPoint speedIn, iPoint standarSpeed) 
+{
+	if (en_state == Enemy_State::chase)
+	{
+		PathFinding(App->entity_manager->Player->collider->collider_rect);
+		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
+
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+		const iPoint* origin = path->At(0);
+		const iPoint* obj = path->At(1);
+		if (obj != NULL)
+		{
+			speed.x = standarSpeed.x;
+			speed.y = standarSpeed.y;
+			if (obj->x < origin->x)
+			{
+				speed.x = -speedIn.x;
+				flip = SDL_FLIP_HORIZONTAL;
+			}
+			if (obj->x > origin->x)
+			{
+				speed.x = speedIn.x;
+				flip = SDL_FLIP_NONE;
+			}
+
+
+			if (obj->y < origin->y)
+			{
+				speed.y = -speedIn.y;
+			}
+			if (obj->y > origin->y)
+			{
+				speed.y = speedIn.y;
+			}
+
+
+		}
+		if (App->input->is_Debug_Mode)
+		{
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+				int x = path->At(i)->x;
+				int y = path->At(i)->y;
+				App->map->Translate_Coord(&x, &y);
+				iPoint pos = { x, y };
+				App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
+			}
+		}
+
+		App->pathfinding->ClearPath();
+
+	}
+	else if (en_state == Enemy_State::move)
+	{
+		//TODO INCLUDE CODE TO MOVE AROUND, FOR EXAMPLE DRAWING A SQUARE
+		speed.x = standarSpeed.x;
+		speed.y = standarSpeed.y;
+	}
+	else
+	{
+		speed.x = standarSpeed.x;
+		speed.y = standarSpeed.y;
+	}
+
 }
 
 bool eEnemy::CleanUp()

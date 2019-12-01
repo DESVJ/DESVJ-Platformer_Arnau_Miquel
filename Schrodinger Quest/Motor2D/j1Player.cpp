@@ -428,6 +428,7 @@ void j1Player::MoveToSpawn()
 
 p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, SDL_Rect* block, Direction dir, p2Point<bool> prev_res)
 {
+	typeColDetected = false;
 	//If there is a colision, look collider type
 	if ((in_collider->collider_type == WALKEABLE && !player.player_tang_mode) || (in_collider->collider_type == TANG && player.player_tang_mode))
 	{
@@ -545,7 +546,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 	{
 		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP) 
 		{
-			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x <= collider->collider_rect.x + collider->collider_rect.w))
+			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x + in_collider->collider_rect.w >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x - in_collider->collider_rect.w <= collider->collider_rect.x + collider->collider_rect.w))
 			{
 				for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
 				{
@@ -555,15 +556,15 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 						eCreature* creature = (eCreature*)App->entity_manager->entities[i];
 						if (creature->collider == in_collider) 
 						{
-							App->entity_manager->DeleteEntity(creature);
-							//Set dying animation
-							App->colliders->collider_list.del((p2List_item<Collider>*)in_collider);
+							in_collider->collider_rect.x = -100;
+							in_collider->collider_rect.y = -100;
+							creature->alive = false;
 						}
 					}
 				}
 			}
 		}
-		else if(!player.player_god_mode)
+		else if (!player.player_god_mode)
 		{
 			Change_Col_State(player_colision_state::DYING);
 			typeColDetected = true;
@@ -589,10 +590,13 @@ void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2P
 		}
 	}
 
-	//Reset typeColDetected state
-	if (!typeColDetected)
+	if (player.col_state != player_colision_state::DYING) 
 	{
-		Change_Col_State(player_colision_state::NONE);
+		//Reset typeColDetected state
+		if (typeColDetected == false && player.col_state != player_colision_state::NONE)
+		{
+			Change_Col_State(player_colision_state::NONE);
+		}
 	}
 }
 

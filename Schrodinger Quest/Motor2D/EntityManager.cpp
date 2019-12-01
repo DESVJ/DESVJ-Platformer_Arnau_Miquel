@@ -154,6 +154,7 @@ void EntityManager::RespawnCreatures()
 		eCreature* creature = (eCreature*)entities[i];
 		creature->collider->collider_rect.x = creature->spawn.x;
 		creature->collider->collider_rect.y = creature->spawn.y;
+		creature->alive = true;
 	}
 
 

@@ -17,7 +17,7 @@ bool eBatEnemy::PreUpdate()
 	else player_nearby = false;
 
 
-	CheckInputs(not_chase_tang_mode, 1, player_nearby, timer_idle, en_state, en_state_update);
+	CheckInputs(not_chase_tang_mode, alive, player_nearby, timer_idle, en_state, en_state_update);
 
 	return true;
 }
@@ -30,6 +30,7 @@ bool eBatEnemy::Update(float dt)
 	bool reset_animation = CheckState(timer_idle, en_state, en_state_update);
 	current_animation = ExecuteState(speed, flip, alive, timer_idle, en_state, &idle, &move, &death);
 	if (current_animation == &move)current_animation = &idle;
+
 	if (reset_animation == true)
 	{
 		current_animation->Reset();
@@ -37,70 +38,20 @@ bool eBatEnemy::Update(float dt)
 
 	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
 
-	if (en_state == Enemy_State::chase)
+	if (alive == false)
 	{
-		PathFinding(App->entity_manager->Player->collider->collider_rect);
-		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
-
-		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-		const iPoint* origin = path->At(0);
-		const iPoint* obj = path->At(1);
-		if (obj != NULL)
+		if (current_animation->GetFinished() == 1)
 		{
-			speed.x = 0;
-			speed.y = 0;
-			if (obj->x < origin->x)
-			{
-				speed.x = -1;
-				flip = SDL_FLIP_HORIZONTAL;
-			}
-			if (obj->x > origin->x)
-			{
-				speed.x = 1;
-				flip = SDL_FLIP_NONE;
-			}
-
-
-			if (obj->y < origin->y)
-			{
-				speed.y = -2;
-			}
-			if (obj->y > origin->y)
-			{
-				speed.y = 2;
-			}
-
-
+			alive = true;
 		}
-		if (App->input->is_Debug_Mode)
-		{
-			for (uint i = 0; i < path->Count(); ++i)
-			{
-				int x = path->At(i)->x;
-				int y = path->At(i)->y;
-				App->map->Translate_Coord(&x, &y);
-				iPoint pos = { x, y };
-				App->render->DrawQuad({ pos.x, pos.y, 16, 16 }, 0, 255, 0, 50);
-			}
-		}
-
-		App->pathfinding->ClearPath();
-
-	}
-	else if (en_state == Enemy_State::move)
-	{
-		//TODO INCLUDE CODE TO MOVE AROUND, FOR EXAMPLE DRAWING A SQUARE
-		speed.x = 0;
-		speed.y = 0;
 	}
 	else
 	{
-		speed.x = 0;
-		speed.y = 0;
+		DoPathFinding({ 1, 2 }, {0, 0});
 	}
 
 	MoveAndDraw(dt, current_frame);
-
+	
 	return true;
 }
 

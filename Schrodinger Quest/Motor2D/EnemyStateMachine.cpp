@@ -9,9 +9,9 @@
 #include "j1Timer.h"
 //#include "SDL/include/SDL.h"
 
-void CheckInputs(bool not_chase_tang_mode, int lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update) {
+void CheckInputs(bool not_chase_tang_mode, bool lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update) {
 	//Check if the enemy is dead
-	if (lives > 0)
+	if (lives == true)
 	{
 		//Check if the enemy is "seeing" the player
 		if (distance == true && not_chase_tang_mode == false)
@@ -27,8 +27,10 @@ void CheckInputs(bool not_chase_tang_mode, int lives, bool distance, j1Timer tim
 			en_state_update = Enemy_State::move;
 		}
 	}
-	else en_state_update = Enemy_State::dead;
-
+	else
+	{
+		en_state_update = Enemy_State::dead;
+	}
 }
 
 
