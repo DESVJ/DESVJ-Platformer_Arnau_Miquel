@@ -107,6 +107,16 @@ In order to make this game, we have used art not owned by us. Below we credit th
 
 	Downloaded from https://elthen.itch.io/pixel-art-adventurer-sprites
 
+* Sprites of the enemies (bat): Bat Sprite Pack by Elthen:
+    * https://elthen.itch.io/
+
+	Downloaded from https://elthen.itch.io/bat-sprite-pack
+
+* Sprites of the enemies (snake): 2D Pixel Art Cobra Sprites by Elthen:
+    * https://elthen.itch.io/
+
+	Downloaded from https://elthen.itch.io/2d-pixel-art-cobra-sprites
+
 * Music: Platformer Game Music Pack by CodeManu:
     * https://opengameart.org/users/codemanu
 
