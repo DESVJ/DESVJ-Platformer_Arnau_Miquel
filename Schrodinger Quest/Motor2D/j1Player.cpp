@@ -543,7 +543,27 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
 	{
-		if (!player.player_tang_mode && !player.player_god_mode)
+		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP) 
+		{
+			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x <= collider->collider_rect.x + collider->collider_rect.w))
+			{
+				for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
+				{
+					Entity* ent = App->entity_manager->entities[i];
+					if (ent->entity_type == Types::enemy_ground || ent->entity_type == Types::enemy_air)
+					{
+						eCreature* creature = (eCreature*)App->entity_manager->entities[i];
+						if (creature->collider == in_collider) 
+						{
+							App->entity_manager->DeleteEntity(creature);
+							//Set dying animation
+							App->colliders->collider_list.del((p2List_item<Collider>*)in_collider);
+						}
+					}
+				}
+			}
+		}
+		else if(!player.player_god_mode)
 		{
 			Change_Col_State(player_colision_state::DYING);
 			typeColDetected = true;

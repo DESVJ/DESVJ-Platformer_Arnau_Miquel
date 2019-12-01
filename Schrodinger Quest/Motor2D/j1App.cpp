@@ -95,7 +95,7 @@ bool j1App::Awake()
 		organization.create(app_config.child("organization").child_value());
 		fps_max = app_config.child("max_fps").first_attribute().as_uint();
 		fps_min = app_config.child("min_fps_cap").first_attribute().as_uint();
-		fps_limit = fps_max;
+		fps_limit = fps_min;
 	}
 
 	if(ret == true)

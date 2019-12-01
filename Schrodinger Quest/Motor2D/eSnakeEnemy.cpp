@@ -31,6 +31,7 @@ bool eSnakeEnemy::PreUpdate()
 // Called each loop iteration
 bool eSnakeEnemy::Update(float dt)
 {
+
 	Animation* current_animation;
 	bool reset_animation = CheckState(timer_idle, en_state, en_state_update);
 	current_animation = ExecuteState(speed, flip, alive, timer_idle, en_state, &idle, &move, &death);
