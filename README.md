@@ -12,6 +12,10 @@ This game is played using these keys in the keyboard and this button of the mous
 
 * Change tangibility with left click of mouse.
 
+* Attack with right click of mouse.
+
+* Slide with Left Control.
+
 * Change volume with +/-.
 
 * Exit the game with Escape.
@@ -28,9 +32,11 @@ Apart from these keys, there are some debug keys:
 
 * Load the previous state with F6.
 
-* Show colliders and logic with F9.
+* Show colliders and pathfinding with F9.
 
 * God Mode with F10.
+
+* Enable/Disable FPS cap to 30 with F11.
 
 ## Authors
 * Arnau Falgueras Garcia de Atocha
@@ -46,15 +52,9 @@ https://github.com/DESVJ/Schrodinger_Quest
 
 Here is a list with the innovations done in this delivery:
 
-* Ladders.
+* Use of right button mouse.
 
-* Change volume with +/-.
-
-* Animations and sounds loaded with Tiled.
-
-* Height of jump changes depending of time pushing spacebar.
-
-* Use of left button mouse
+* Animations of enemies loaded with Tiled.
 
 * Added game window/taskbar icon
 
@@ -62,21 +62,23 @@ Here is a list with the innovations done in this delivery:
 
 * Arnau Falgueras Garcia de Atocha
 
-  * State machine
+  * State machine of enemies
   
-  * Player
+  * Entity System
   
-  * Audio
+  * Brofiler
+  
+  * UML
 
 * Miquel Suau Gonzàlez
 
-  * Tiled related
+  * Tiled related with enemies
   
-  * Collisions
+  * Collisions with enemies
   
-  * Camera
+  * Dt
 
-  * Occlusion Culling
+  * Cap to 30 without vsync
 
 ## Credits
 
