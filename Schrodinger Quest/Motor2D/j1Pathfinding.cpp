@@ -1,4 +1,5 @@
 #include "p2Defs.h"
+#include "brofiler/Brofiler.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
@@ -166,7 +167,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
-{
+{BROFILER_CATEGORY("PathFinding", Profiler::Color::Brown)
 	// TODO 1: if origin or destination are not walkable, return -1
 	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
 		return -1;
