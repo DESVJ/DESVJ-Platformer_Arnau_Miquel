@@ -36,6 +36,14 @@ bool EntityManager::Start()
 // Called each loop iteration
 bool EntityManager::PreUpdate()
 {
+	if (Player->respawn == true) {
+		for (unsigned int i = 1; i < entities.count(); i++)
+		{
+			eEnemy* c = (eEnemy*)entities.At(i)->data;
+			c->alive = true;
+			c->en_state = Enemy_State::idle;
+		}
+	}
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->PreUpdate();
