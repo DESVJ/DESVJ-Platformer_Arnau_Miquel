@@ -1,4 +1,4 @@
-# Schrödinger Quest
+﻿# Schrödinger Quest
 
 Schrödinger Quest is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. Also, there are some enemies that will try to chase and kill the player when he is tangible (some even to the extent of chasing him when he becomes intangible). This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) using C++ in Visual Studio and with SDL and pugixml libraries, Tiled for the creation of the maps and Brofiler for checking the time spent in functions of the code. 
 
@@ -76,7 +76,9 @@ Here is a list with the innovations done in this delivery:
   
   * Dt
 
-  * Cap to 30 without vsync
+  * Cap to 30fps without vsync
+
+  * PathFinding
 
 ## Credits
 

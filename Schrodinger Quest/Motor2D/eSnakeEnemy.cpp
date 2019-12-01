@@ -44,7 +44,7 @@ bool eSnakeEnemy::Update(float dt)
 	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
 
 	speed.x = 0;
-	speed.y = 0;
+	speed.y = 2;
 	if (alive == false)
 	{
 		if (current_animation->GetFinished() == 1)

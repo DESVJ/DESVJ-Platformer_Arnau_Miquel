@@ -58,7 +58,7 @@ void eEnemy::MoveAndDraw(float dt, SDL_Rect current_frame)
 	App->render->Blit(spritesheet, position_rect.x, position_rect.y - current_frame.h, &current_frame, flip);
 }
 
-void eEnemy::DoPathFinding(iPoint speedIn, iPoint standarSpeed) 
+void eEnemy::DoPathFinding(p2Point<float> speedIn, p2Point<float> standarSpeed)
 {
 	if (en_state == Enemy_State::chase)
 	{

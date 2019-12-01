@@ -534,6 +534,10 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 			Change_Col_State(player_colision_state::CLIMBING);
 			LOG("CLIMB");
 		}
+		else
+		{
+			typeColDetected = false;
+		}
 	}
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
