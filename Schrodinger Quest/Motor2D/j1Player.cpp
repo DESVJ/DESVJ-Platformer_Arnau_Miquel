@@ -548,7 +548,8 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
 	{
-		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP) 
+		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP
+			|| (actual_state == state::S_IDLE && in_collider->collider_rect.y - in_collider->collider_rect.h >= collider->collider_rect.y)) 
 		{
 			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x + in_collider->collider_rect.w >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x - in_collider->collider_rect.w <= collider->collider_rect.x + collider->collider_rect.w))
 			{

@@ -293,11 +293,11 @@ bool j1Map::Load(const char* file_name)
 				if (object->properties[0]->name == "Type")
 				{
 					eCreature* obj_spawned = nullptr;
-					if ((p2SString)object->properties[0]->prop_value_s == "snake") 
+					if (object->properties[0]->prop_value_s == (p2SString)"snake") 
 					{
 						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::enemy_ground);
 					}
-					if ((p2SString)object->properties[0]->prop_value_s == "bat")
+					if (object->properties[0]->prop_value_s == (p2SString)"bat")
 					{
 						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::enemy_air);
 					}

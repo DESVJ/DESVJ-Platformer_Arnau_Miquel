@@ -84,14 +84,14 @@ public:
 	Animation move;
 
 	//General collisions
-	Collider* allowClippingCollider;
-	Collider* collider;
+	Collider* allowClippingCollider = nullptr;
+	Collider* collider = nullptr;
 
 	//General pathfinding
 	int detection_range;
 
 	//General gfx
-	SDL_Texture* spritesheet;
+	SDL_Texture* spritesheet = nullptr;
 	int PathNumber;
 
 };

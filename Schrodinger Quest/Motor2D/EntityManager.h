@@ -49,6 +49,6 @@ public:
 
 public:
 	p2List <Entity*> entities;
-	j1Player* Player;
+	j1Player* Player = nullptr;
 };
 #endif // !_ENTITYMANAGER_H

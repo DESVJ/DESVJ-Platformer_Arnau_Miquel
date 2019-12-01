@@ -35,7 +35,7 @@ struct Player_Info
 	bool spacebar_pushed;
 	bool stop_attack;
 	p2SString texture_source;
-	SDL_Texture* player_spritesheet;
+	SDL_Texture* player_spritesheet = nullptr;
 	player_colision_state col_state;
 
 	//Set to xml
