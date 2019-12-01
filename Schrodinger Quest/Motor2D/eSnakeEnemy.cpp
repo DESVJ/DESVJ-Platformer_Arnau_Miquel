@@ -43,6 +43,8 @@ bool eSnakeEnemy::Update(float dt)
 
 	SDL_Rect current_frame = current_animation->GetCurrentFrame(dt);
 
+	speed.x = 0;
+	speed.y = 0;
 	if (alive == false)
 	{
 		if (current_animation->GetFinished() == 1)
@@ -50,7 +52,7 @@ bool eSnakeEnemy::Update(float dt)
 			alive = true;
 		}
 	}
-	else
+	else if (App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y)
 	{
 		DoPathFinding({ 1, 2 }, { 0, 2});
 	}

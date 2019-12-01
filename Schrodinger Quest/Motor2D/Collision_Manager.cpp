@@ -124,6 +124,7 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 
 	//Init coollision bools
 	p2Point<bool> result = { false, false };
+	typeColDetected = false;
 
 	//Itinerate all collider objects
 	for (unsigned int i = 0; i < collider_list.count(); i++)
