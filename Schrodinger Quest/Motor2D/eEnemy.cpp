@@ -35,7 +35,8 @@ void eEnemy::MoveAndDraw(float dt, SDL_Rect current_frame)
 	//SDL_Rect current_frame = idle.GetCurrentFrame(dt);
 
 	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x*60*dt), 0 }, this);
-	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+	if (speed.y==1)	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
+	else App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y*60*dt) }, this);
 
 	//Calculate animation offset
 	int animation_created_mov = 0;

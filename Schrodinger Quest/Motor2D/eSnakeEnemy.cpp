@@ -54,7 +54,7 @@ bool eSnakeEnemy::Update(float dt)
 	}
 	else if (App->entity_manager->Player->collider->collider_rect.y >= collider->collider_rect.y)
 	{
-		DoPathFinding({ 1, 2 }, { 0, 2});
+		DoPathFinding({ 1, 2 }, { 0, 1});
 	}
 	MoveAndDraw(dt, current_frame);
 
