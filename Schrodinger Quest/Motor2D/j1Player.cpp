@@ -608,7 +608,6 @@ pugi::xml_node j1Player::LoadAnimationFromTMX(pugi::xml_node* animation_node, An
 {
 	pugi::xml_node res = eCreature::LoadAnimationFromTMX(animation_node, anim, name);
 
-	//TODO: Remove this from here, needs to be player only
 	if (player.minPlayerHeight == 0)
 	{
 		player.minPlayerHeight = -res.attribute("height").as_int();

@@ -135,10 +135,6 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 			//Is the collider enabled?
 			if (collider_list[i].enabled)
 			{
-				//if (s_mod->collider->collider_type == ENEMY && collider_list[i].collider_type == PLAYER)
-				//{
-				//	LOG("%i", CheckCollision(prediction, *block));
-				//}
 				//If it is, check for collisions between it and the object
 				if (CheckCollision(prediction, *block))
 				{

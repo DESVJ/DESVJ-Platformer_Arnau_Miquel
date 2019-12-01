@@ -183,8 +183,6 @@ private:
 	bool				map_loaded;
 	p2SString*			maps;
 
-	//TODO: Temporal, needs to be fixed, creates error if used as local
-	////pugi::xml_document map_file;
 };
 
 #endif // __j1MAP_H__

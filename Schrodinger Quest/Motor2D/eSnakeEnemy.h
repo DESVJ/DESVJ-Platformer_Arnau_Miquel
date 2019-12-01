@@ -10,7 +10,7 @@
 
 
 class eEnemy;
-//Player class
+//Snake class
 class eSnakeEnemy : public eEnemy
 {
 
@@ -34,25 +34,11 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 
-	////Start level again
-	//void Start_F3();
-
 	//Save
 	bool Save(pugi::xml_node&) const;
 
 	//Load
 	bool Load(pugi::xml_node&);
-
-	////Load animation pushbacks by name
-	//void LoadAnimationFromTMX(pugi::xml_node* animation_node, Animation* anim, const char* name);
-
-	////Load sound by TMX
-	//void LoadSoundFXFromTMX(pugi::xml_node* sound_node, unsigned int& fx, const char* name);
-
-	////Move player to spawn
-	//void MoveToSpawn();
-
-
 };
 #endif // __ESNAKEENEMY_H__
 

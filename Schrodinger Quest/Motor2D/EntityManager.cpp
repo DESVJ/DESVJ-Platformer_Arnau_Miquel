@@ -6,7 +6,6 @@ EntityManager::EntityManager()
 {
 	name.create("entity_manager");
 	Player = (j1Player*)CreateEntity(Types::player);
-	//CreateEntity(Types::enemy_ground);
 }
 
 //Destructor
@@ -57,7 +56,6 @@ bool EntityManager::Update(float dt)
 	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		entities.At(i)->data->Update(dt);
-		//LOG("%i", entities.count());
 	}
 	return true;
 }
@@ -131,7 +129,6 @@ Entity* EntityManager::CreateEntity(Types type)
 	if (ret != nullptr)
 	{
 		entities.add(ret);
-		//ret->Awake();
 		if (type == Types::enemy_ground)		
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("ground_enemy"));
 		else if(type == Types::enemy_air)

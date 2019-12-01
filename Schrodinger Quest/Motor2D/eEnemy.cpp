@@ -32,7 +32,6 @@ bool eEnemy::Awake(pugi::xml_node& config)
 
 void eEnemy::MoveAndDraw(float dt, SDL_Rect current_frame) 
 {
-	//SDL_Rect current_frame = idle.GetCurrentFrame(dt);
 
 	App->colliders->MoveObject(&collider->collider_rect, { (int)round(speed.x*60*dt), 0 }, this);
 	if (speed.y==1)	App->colliders->MoveObject(&collider->collider_rect, { 0, (int)round(speed.y) }, this);
@@ -64,7 +63,6 @@ void eEnemy::DoPathFinding(p2Point<float> speedIn, p2Point<float> standarSpeed)
 	if (en_state == Enemy_State::chase)
 	{
 		PathFinding(App->entity_manager->Player->collider->collider_rect);
-		//App->colliders->MoveObject(&position_rect, {0, -5}, this);
 
 		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 		const iPoint* origin = path->At(0);
@@ -113,7 +111,6 @@ void eEnemy::DoPathFinding(p2Point<float> speedIn, p2Point<float> standarSpeed)
 	}
 	else if (en_state == Enemy_State::move)
 	{
-		//TODO INCLUDE CODE TO MOVE AROUND, FOR EXAMPLE DRAWING A SQUARE
 		speed.x = standarSpeed.x;
 		speed.y = standarSpeed.y;
 	}

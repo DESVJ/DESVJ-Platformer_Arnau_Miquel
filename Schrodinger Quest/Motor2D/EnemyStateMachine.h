@@ -3,7 +3,6 @@
 
 #include "p2Defs.h"
 #include "eEnemy.h"
-//#include "j1Module.h"
 class j1Timer;
 
 //Check inputs

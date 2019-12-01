@@ -168,11 +168,9 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {BROFILER_CATEGORY("PathFinding", Profiler::Color::Brown)
-	// TODO 1: if origin or destination are not walkable, return -1
 	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
 		return -1;
 	}
-	// TODO 2: Create two lists: open, close
 
 	last_path.Clear();
 
@@ -187,12 +185,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	{
 		current_node = new PathNode(open.GetNodeLowestScore()->data);
 		trash_list.add(current_node);
-		// TODO 3: Move the lowest score cell from open list to the closed list
 		closed.list.add(*current_node);
 		open.list.del(open.Find(current_node->pos));
-		// TODO 4: If we just added the destination, we are done!
-		// Backtrack to create the final path
-		// Use the Pathnode::parent and Flip() the path when you are finish... ¿ed?
 		if (current_node->pos == destination) {
 
 			PathNode* iterator = current_node;
@@ -213,10 +207,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		}
 
-		// TODO 5: Fill a list of all adjancent nodes
 		PathList Adjacent_list;
 		uint limit = current_node->FindWalkableAdjacents(Adjacent_list);
-		// TODO 6: Iterate adjancent nodes:
 		for (uint i = 0; i < limit; i++) {
 			// ignore nodes in the closed list <======> do things only if we didnt find them
 			if ((closed.Find(Adjacent_list.list[i].pos)) == NULL) {

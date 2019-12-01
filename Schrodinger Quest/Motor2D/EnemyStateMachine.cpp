@@ -1,13 +1,8 @@
 #include "p2Defs.h"
-//#include "j1App.h"
 #include "j1State_Machine.h"
 #include "eEnemy.h"
-//#include "j1Input.h"
-//#include "j1Player.h"
-//#include "j1Audio.h"
 #include "EntityManager.h"
 #include "j1Timer.h"
-//#include "SDL/include/SDL.h"
 
 void CheckInputs(bool not_chase_tang_mode, bool lives, bool distance, j1Timer timer_idle, Enemy_State en_state, Enemy_State& en_state_update) {
 	//Check if the enemy is dead
