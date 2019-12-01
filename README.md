@@ -56,6 +56,8 @@ Here is a list with the innovations done in this delivery:
 
 * Added game window/taskbar icon
 
+* Enemy spawn points loaded from tiled
+
 ## Work by members
 
 * Arnau Falgueras Garcia de Atocha
