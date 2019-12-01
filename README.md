@@ -14,8 +14,6 @@ This game is played using these keys in the keyboard and this button of the mous
 
 * Attack with right click of mouse.
 
-* Slide with Left Control.
-
 * Change volume with +/-.
 
 * Exit the game with Escape.
