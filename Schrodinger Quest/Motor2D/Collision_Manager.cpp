@@ -149,18 +149,10 @@ void Collider_Manager::MoveObject(SDL_Rect* currentPoint, p2Point<int> increment
 
 bool Collider_Manager::CheckCollision(const SDL_Rect& rect, const SDL_Rect& r)
 {
-	bool detectedX = true;
-	bool detectedY = true;
 
-	if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x)
-	{
-		detectedX = false;
-	}
+	bool detectedX = !((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x);
+	bool detectedY = !(rect.y < r.y || (rect.y + rect.h) > r.y + r.h);
 
-	if (rect.y < r.y || (rect.y + rect.h) > r.y + r.h)
-	{
-		detectedY = false;
-	}
 
 	return detectedX && detectedY;
 }
