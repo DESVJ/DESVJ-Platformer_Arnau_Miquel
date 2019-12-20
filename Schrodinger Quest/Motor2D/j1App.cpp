@@ -184,6 +184,12 @@ void j1App::PrepareUpdate()
 
 	dt = frame_time.ReadSec();
 
+	if (dt >= 1.0f) 
+	{
+		dt = 1.0f;
+	}
+
+
 	frame_time.Start();
 }
 
