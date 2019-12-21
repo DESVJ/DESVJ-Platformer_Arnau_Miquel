@@ -154,7 +154,7 @@ bool EntityManager::DeleteEntity(Entity* e)
 void EntityManager::RespawnCreatures() 
 {
 
-	for (int i = 0; i < entities.count(); i++)
+	for (unsigned int i = 0; i < entities.count(); i++)
 	{
 		eCreature* creature = (eCreature*)entities[i];
 		creature->collider->collider_rect.x = creature->spawn.x;

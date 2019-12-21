@@ -19,7 +19,7 @@ enum class Enemy_State
 	dead
 };
 
-class SDL_Rect;
+struct SDL_Rect;
 
 //Player class
 class eEnemy : public eCreature

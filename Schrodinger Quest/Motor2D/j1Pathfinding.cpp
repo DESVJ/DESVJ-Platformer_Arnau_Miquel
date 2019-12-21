@@ -168,7 +168,9 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {BROFILER_CATEGORY("PathFinding", Profiler::Color::Brown)
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
+
+	if (IsWalkable(origin) == false || IsWalkable(destination) == false) 
+	{
 		return -1;
 	}
 
@@ -181,12 +183,14 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	PathNode* current_node = nullptr;
 	p2List<PathNode*> trash_list;
+
 	while (open.GetNodeLowestScore() != NULL)
 	{
 		current_node = new PathNode(open.GetNodeLowestScore()->data);
 		trash_list.add(current_node);
 		closed.list.add(*current_node);
 		open.list.del(open.Find(current_node->pos));
+
 		if (current_node->pos == destination) {
 
 			PathNode* iterator = current_node;
@@ -197,7 +201,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			}
 			last_path.PushBack(origin);
 
-			for (int i = 0; i < trash_list.count(); i++)
+			for (unsigned int i = 0; i < trash_list.count(); i++)
 			{
 				delete trash_list[i];
 			}
@@ -209,19 +213,23 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		PathList Adjacent_list;
 		uint limit = current_node->FindWalkableAdjacents(Adjacent_list);
-		for (uint i = 0; i < limit; i++) {
+		for (uint i = 0; i < limit; i++) 
+		{
 			// ignore nodes in the closed list <======> do things only if we didnt find them
-			if ((closed.Find(Adjacent_list.list[i].pos)) == NULL) {
+			if ((closed.Find(Adjacent_list.list[i].pos)) == NULL) 
+			{
 				// If it is NOT found, calculate its F and add it to the open list
-				if ((open.Find(Adjacent_list.list[i].pos)) == NULL) {
+				if ((open.Find(Adjacent_list.list[i].pos)) == NULL) 
+				{
 					Adjacent_list.list[i].CalculateF(destination);
 					open.list.add(Adjacent_list.list[i]);
 				}
-				else { // If it is already in the open list, check if it is a better path (compare G)
+				else 
+				{ // If it is already in the open list, check if it is a better path (compare G)
 					Adjacent_list.list[i].CalculateF(destination);
-					if (Adjacent_list.list[i].g < open.Find(Adjacent_list.list[i].pos)->data.g) {
+					if (Adjacent_list.list[i].g < open.Find(Adjacent_list.list[i].pos)->data.g) 
+					{
 						// If it is a better path, Update the parent
-						//open.Find(Adjacent_list.list[i].pos)->data.parent = Adjacent_list.list[i].parent;
 						open.list.del(open.Find(Adjacent_list.list[i].pos));
 						open.list.add(Adjacent_list.list[i]);
 
