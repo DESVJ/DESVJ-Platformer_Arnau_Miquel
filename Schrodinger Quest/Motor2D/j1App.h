@@ -19,6 +19,8 @@ class j1Map;
 class EntityManager;
 class Collider_Manager;
 class j1PathFinding;
+class j1Fonts;
+class j1Gui;
 
 //Application class
 class j1App
@@ -94,6 +96,8 @@ public:
 	j1Map*				map;
 	EntityManager*		entity_manager;
 	j1PathFinding*		pathfinding;
+	j1Fonts*			font;
+	j1Gui*				gui;
 
 	//Collider manager 
 	Collider_Manager*	colliders;

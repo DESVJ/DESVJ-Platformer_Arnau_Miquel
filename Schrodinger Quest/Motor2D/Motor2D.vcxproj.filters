@@ -70,6 +70,12 @@
     <ClCompile Include="eBatEnemy.cpp">
       <Filter>Game Core\Modules\eEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -167,6 +173,12 @@
     </ClInclude>
     <ClInclude Include="eBatEnemy.h">
       <Filter>Game Core\Modules\eEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Game Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
