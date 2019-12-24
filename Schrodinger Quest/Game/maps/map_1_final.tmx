@@ -32662,11 +32662,11 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="88" name="SpawnPoint" locked="1">
+ <objectgroup id="88" name="SpawnPoint">
   <properties>
    <property name="isSpawn" type="bool" value="true"/>
   </properties>
-  <object id="74" x="96" y="784" width="32" height="32"/>
+  <object id="74" x="96" y="767" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="108" name="EndPoint" locked="1">
   <properties>

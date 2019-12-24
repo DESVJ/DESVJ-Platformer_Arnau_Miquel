@@ -16,6 +16,7 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+	isMainMenu = true;
 }
 
 // Destructor
@@ -34,13 +35,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//Load map 1 && collisions on game start
-	App->map->Load(App->map->GetSourceFromID(App->map->map_id).GetString());
-	App->colliders->LoadColliders();
-	App->render->SetMapLimitsWithTMX();
 
-	//Create pathfinding map
-	App->pathfinding->UpdatePathFindingMap();
+	main_menu_background = App->tex->Load("maps/main_menu.png");
 
 	return true;
 }
@@ -48,36 +44,39 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
+	//if (!isMainMenu) 
+	//{
+	//	// debug pathfing ------------------
+	//	static iPoint origin;
+	//	static bool origin_selected = false;
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	App->map->Translate_Coord(&x, &y);
+	//	int x, y;
+	//	App->input->GetMousePosition(x, y);
+	//	App->map->Translate_Coord(&x, &y);
 
-	iPoint p = { x, y };
-	
-	//PathFinding with	E
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-	{
-		if (origin_selected == true)
-		{
-			App->map->WorldToMap(&origin.x, &origin.y);
+	//	iPoint p = { x, y };
 
-			p.x = App->entity_manager->Player->collider->collider_rect.x;
-			p.y = App->entity_manager->Player->collider->collider_rect.y + (App->entity_manager->Player->collider->collider_rect.h / 2);
+	//	//PathFinding with	E
+	//	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	//	{
+	//		if (origin_selected == true)
+	//		{
+	//			App->map->WorldToMap(&origin.x, &origin.y);
 
-			App->map->WorldToMap(&p.x, &p.y);
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
+	//			p.x = App->entity_manager->Player->collider->collider_rect.x;
+	//			p.y = App->entity_manager->Player->collider->collider_rect.y + (App->entity_manager->Player->collider->collider_rect.h / 2);
+
+	//			App->map->WorldToMap(&p.x, &p.y);
+	//			App->pathfinding->CreatePath(origin, p);
+	//			origin_selected = false;
+	//		}
+	//		else
+	//		{
+	//			origin = p;
+	//			origin_selected = true;
+	//		}
+	//	}
+	//}
 
 	return true;
 }
@@ -134,27 +133,28 @@ bool j1Scene::Update(float dt)
 	}
 
 	//Draw map
-	App->map->Draw();
+	if (!isMainMenu) 
+	{
+		App->map->Draw();
+	}
+	else
+	{
+		App->render->BlitBackgroud(main_menu_background);
+	}
 
 	return true;
-}
-
-// Called each loop iteration
-bool j1Scene::PostUpdate()
-{
-	bool ret = true;
-
-	//Close game
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	return ret;
 }
 
 // Called before quitting
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	if (main_menu_background) 
+	{
+		App->tex->UnLoad(main_menu_background);
+	}
+
 
 	return true;
 }
@@ -163,6 +163,10 @@ bool j1Scene::CleanUp()
 //Load map by name
 void j1Scene::Load_Map_By_Name(const char* name)
 {
+	isMainMenu = false;
+	App->map->active = true;
+	App->entity_manager->active = true;
+
 	App->colliders->ClearColliders();
 	App->map->CleanUp();
 

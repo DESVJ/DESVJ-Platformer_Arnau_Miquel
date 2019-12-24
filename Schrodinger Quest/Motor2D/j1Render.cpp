@@ -169,6 +169,26 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	return ret;
 }
 
+void j1Render::BlitBackgroud(SDL_Texture* texture) 
+{
+
+	SDL_Point p = {0, 0};
+	SDL_Rect rect = {0, 0, 0, 0};
+
+	SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+
+	float old_w = rect.w;
+	float old_h = rect.h;
+	float new_h = App->win->height;
+	float new_w = new_h * old_w / old_h;
+
+	rect.h = new_h;
+	rect.w = new_w;
+	rect.x = -(new_w / 2 - App->win->width / 2);
+
+	SDL_RenderCopyEx(renderer, texture, NULL, &rect, 0, &p, SDL_FLIP_NONE);
+}
+
 bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;

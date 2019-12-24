@@ -18,6 +18,7 @@
   </audio>
 
   <window>
+    <!--<resolution width="960" height="540" scale="3"/>-->
     <resolution width="1024" height="768" scale="3"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
@@ -32,6 +33,13 @@
     <path>data.zip</path>
   </file_system>
 
+  <gui>
+
+    <atlas source="maps/ui_atlas.png"/>
+  
+    
+  </gui>
+    
   <map>
     <folder>maps/</folder>
     <maps>

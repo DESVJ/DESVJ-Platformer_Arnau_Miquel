@@ -26,14 +26,17 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	// Called before all Updates
-	bool PostUpdate();
+	//// Called before all Updates
+	//bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
 	//Load map
 	void Load_Map_By_Name(const char*);
+
+	bool isMainMenu;
+	SDL_Texture* main_menu_background;
 
 };
 

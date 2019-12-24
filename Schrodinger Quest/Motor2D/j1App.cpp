@@ -55,6 +55,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// render last to swap buffer
 	AddModule(render);
 
+	map->active = false;
+	entity_manager->active = false;
+	
+
 	PERF_PEEK(ptimer);
 }
 
