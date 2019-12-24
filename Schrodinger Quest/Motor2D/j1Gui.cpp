@@ -124,6 +124,12 @@ bool j1Gui::DeleteUIElement(UI* ui) {
 	}
 }
 
+void j1Gui::ChangeDebug() {
+	for (int i = 0; i < UIs.count(); i++) {
+		UIs.At(i)->data->debug = !UIs.At(i)->data->debug;
+	}
+}
+
 UI::UI(Type type, SDL_Rect r, UI* p, bool d) {
 	name.create("UI");
 	drageable = d;
@@ -136,6 +142,7 @@ UI::UI(Type type, SDL_Rect r, UI* p, bool d) {
 		local_rect = screen_rect;
 	}
 	mask_rect = screen_rect;
+	debug = false;
 }
 
 bool UI::PreUpdate() {
@@ -184,6 +191,13 @@ bool UI::PreUpdate() {
 		else if (mask_rect.y + mask_rect.h > win_y) {
 			mask_rect.h -= mask_rect.y + mask_rect.h - win_y;
 		}
+	}
+	return true;
+}
+
+bool UI::PostUpdate() {
+	if (debug == true) {
+		App->render->DrawQuad(screen_rect, 255, 0, 0, 255, false, false);
 	}
 	return true;
 }
@@ -258,6 +272,7 @@ bool ImageUI::PostUpdate() {
 	SDL_Rect a = { GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y , quad.w, quad.h};
 
 	App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, a);
+	UI::PostUpdate();
 	return true;
 }
 
@@ -270,6 +285,7 @@ bool WindowUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	UI::PostUpdate();
 	return true;
 }
 
@@ -285,6 +301,7 @@ bool TextUI::PostUpdate() {
 	SDL_QueryTexture(App->font->Print(stri.GetString()), NULL, NULL, &rect.w, &rect.h);
 	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
 	App->render->Blit(App->font->Print(stri.GetString()), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	UI::PostUpdate();
 	return true;
 }
 
@@ -310,6 +327,7 @@ bool ButtonUI::PostUpdate() {
 		sprite = UI::Check_Printable_Rect(sprite3, dif_sprite);
 	}
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	UI::PostUpdate();
 	return true;
 }
 

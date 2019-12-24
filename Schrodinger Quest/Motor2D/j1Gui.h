@@ -34,7 +34,7 @@ public:
 	virtual bool PreUpdate();
 
 	// Called after all Updates
-	virtual bool PostUpdate() { return true; }
+	virtual bool PostUpdate();
 
 	// Called before quitting
 	virtual bool CleanUp() { return true; }
@@ -52,6 +52,7 @@ public:
 public:
 	SDL_Rect sprite1;
 	SDL_Rect quad;
+	bool debug;
 private:
 	SDL_Rect screen_rect;
 	SDL_Rect local_rect;
@@ -155,6 +156,7 @@ public:
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 });
 	bool DeleteUIElement(UI*);
 
+	void ChangeDebug();
 
 	const SDL_Texture* GetAtlas() const;
 

@@ -130,6 +130,10 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 	
+	//Debug UI
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->gui->ChangeDebug();
+
 	//Enable and disable 30fps cap
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
 	{
