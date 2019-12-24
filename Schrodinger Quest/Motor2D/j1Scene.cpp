@@ -147,6 +147,9 @@ bool j1Scene::Update(float dt)
 		}
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+		App->gui->ChangeFocus();
+
 	//Draw map
 	if (!isMainMenu) 
 	{

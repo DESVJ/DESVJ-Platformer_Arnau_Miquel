@@ -97,16 +97,16 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 	switch (type)
 	{
 	case Type::BUTTON:
-		ui = new ButtonUI(Type::BUTTON, p, r, sprite, sprite2, sprite3, true);
+		ui = new ButtonUI(Type::BUTTON, p, r, sprite, sprite2, sprite3, true, true);
 		break;
 	case Type::IMAGE:
-		ui = new ImageUI(Type::IMAGE, p, r, sprite, true);
+		ui = new ImageUI(Type::IMAGE, p, r, sprite, true, false);
 		break;
 	case Type::WINDOW:
-		ui = new WindowUI(Type::WINDOW, p, r, sprite, true);
+		ui = new WindowUI(Type::WINDOW, p, r, sprite, true, false);
 		break;
 	case Type::TEXT:
-		ui = new TextUI(Type::TEXT, p, r, str, false);
+		ui = new TextUI(Type::TEXT, p, r, str, false, false);
 		break;
 	}
 	UIs.add(ui);
@@ -130,9 +130,39 @@ void j1Gui::ChangeDebug() {
 	}
 }
 
-UI::UI(Type type, SDL_Rect r, UI* p, bool d) {
+void j1Gui::ChangeFocus() {
+	bool exit = false;
+	bool focus = false;
+	int count = 0;
+	for (int i = 0; i < UIs.count() && exit == false; i++) {
+		bool focusable = UIs.At(i)->data->CheckFocusable();
+		if (focusable == true) {
+			count++;
+			if (focus == true) {
+				UIs.At(i)->data->focus = true;
+				exit = true;
+			}
+			else {
+				focus = UIs.At(i)->data->focus;
+				UIs.At(i)->data->focus = false;
+			}
+		}
+	}
+	if (count > 0 && exit == false) {
+		for (int i = 0; i < UIs.count() && exit == false; i++) {
+			bool focusable = UIs.At(i)->data->CheckFocusable();
+			if (focusable == true) {
+				UIs.At(i)->data->focus = true;
+				exit = true;
+			}
+		}
+	}
+}
+
+UI::UI(Type type, SDL_Rect r, UI* p, bool d, bool f) {
 	name.create("UI");
 	drageable = d;
+	focusable = f;
 	screen_rect = { r.x,r.y,r.w,r.h };
 	parent = p;
 	if (parent != nullptr) {
@@ -143,6 +173,7 @@ UI::UI(Type type, SDL_Rect r, UI* p, bool d) {
 	}
 	mask_rect = screen_rect;
 	debug = false;
+	focus = false;
 }
 
 bool UI::PreUpdate() {
@@ -260,7 +291,7 @@ SDL_Rect UI::Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite) {
 	return sprite;
 }
 
-ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d) :UI(type, r, p, d) {
+ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("ImageUI");
 	sprite1 = sprite;
 	quad = r;
@@ -276,7 +307,7 @@ bool ImageUI::PostUpdate() {
 	return true;
 }
 
-WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d) :UI(type, r, p, d) {
+WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("WindowUI");
 	sprite1 = sprite;
 }
@@ -289,7 +320,7 @@ bool WindowUI::PostUpdate() {
 	return true;
 }
 
-TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d) :UI(type, r, p, d) {
+TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("TextUI");
 	stri = str;
 	int w, h;
@@ -305,7 +336,7 @@ bool TextUI::PostUpdate() {
 	return true;
 }
 
-ButtonUI::ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d) :UI(type, r, p, d) {
+ButtonUI::ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("ButtonUI");
 	sprite1 = sprite;
 	sprite2 = spriten2;
@@ -334,11 +365,11 @@ bool ButtonUI::PostUpdate() {
 bool ButtonUI::PreUpdate() {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	if (x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h)
+	if ((x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h) || focus == true)
 		over = true;
 	else over = false;
 	bool button = false;
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	if (App->input->GetMouseButtonDown(1) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RETURN))
 		button = true;
 	if (over == true && button == true)
 		pushed = true;

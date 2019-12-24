@@ -19,7 +19,7 @@ enum class Type
 class UI :public j1Module
 {
 public:
-	UI(Type type, SDL_Rect r, UI* p, bool d);
+	UI(Type type, SDL_Rect r, UI* p, bool d, bool f);
 
 	// Destructor
 	virtual ~UI() {}
@@ -47,23 +47,26 @@ public:
 	iPoint GetLocalPos();
 	void SetLocalPos(iPoint pos);
 	bool CheckMouse();
+	bool CheckFocusable() { return focusable; }
 	SDL_Rect Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite);
 
 public:
 	SDL_Rect sprite1;
 	SDL_Rect quad;
 	bool debug;
+	bool focus;
 private:
 	SDL_Rect screen_rect;
 	SDL_Rect local_rect;
 	SDL_Rect mask_rect;
 	UI* parent;
 	bool drageable;
+	bool focusable;
 };
 class ImageUI :public UI
 {
 public:
-	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d);
+	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f);
 
 	// Destructor
 	virtual ~ImageUI() {}
@@ -74,7 +77,7 @@ public:
 class WindowUI :public UI
 {
 public:
-	WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d);
+	WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f);
 
 	// Destructor
 	virtual ~WindowUI() {}
@@ -85,7 +88,7 @@ public:
 class TextUI :public UI
 {
 public:
-	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d);
+	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f);
 
 	// Destructor
 	virtual ~TextUI() {}
@@ -101,7 +104,7 @@ class ButtonUI :public UI
 {
 public:
 
-	ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d);
+	ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d, bool f);
 
 	// Destructor
 	virtual ~ButtonUI() {}
@@ -157,6 +160,8 @@ public:
 	bool DeleteUIElement(UI*);
 
 	void ChangeDebug();
+
+	void ChangeFocus();
 
 	const SDL_Texture* GetAtlas() const;
 
