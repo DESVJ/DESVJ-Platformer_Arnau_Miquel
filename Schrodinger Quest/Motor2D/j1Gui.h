@@ -51,6 +51,7 @@ public:
 
 public:
 	SDL_Rect sprite1;
+	SDL_Rect quad;
 private:
 	SDL_Rect screen_rect;
 	SDL_Rect local_rect;

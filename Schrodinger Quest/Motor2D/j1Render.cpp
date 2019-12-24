@@ -189,6 +189,12 @@ void j1Render::BlitBackgroud(SDL_Texture* texture)
 	SDL_RenderCopyEx(renderer, texture, NULL, &rect, 0, &p, SDL_FLIP_NONE);
 }
 
+void j1Render::BlitInsideQuad(SDL_Texture* texture, SDL_Rect sprite, SDL_Rect quad)
+{
+	SDL_Point p = { 0, 0 };
+	SDL_RenderCopyEx(renderer, texture, &sprite, &quad, 0, &p, SDL_FLIP_NONE);
+}
+
 bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;

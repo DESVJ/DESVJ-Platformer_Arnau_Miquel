@@ -23,7 +23,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	atlas_file_name = conf.child("atlas").attribute("source").as_string("");
 
 	return ret;
 }
@@ -76,6 +76,10 @@ bool j1Gui::CleanUp()
 		UIs.del(UIs.At(i));
 	}
 	UIs.clear();
+	if (atlas) 
+	{
+		App->tex->UnLoad(atlas);
+	}
 	return true;
 }
 
@@ -245,12 +249,15 @@ SDL_Rect UI::Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite) {
 ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d) :UI(type, r, p, d) {
 	name.create("ImageUI");
 	sprite1 = sprite;
+	quad = r;
 }
 
 bool ImageUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	SDL_Rect a = { GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y , quad.w, quad.h};
+
+	App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, a);
 	return true;
 }
 

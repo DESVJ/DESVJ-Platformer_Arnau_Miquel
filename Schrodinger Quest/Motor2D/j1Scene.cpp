@@ -38,6 +38,17 @@ bool j1Scene::Start()
 
 	main_menu_background = App->tex->Load("maps/main_menu.png");
 
+
+	App->gui->CreateUIElement(Type::WINDOW, nullptr, { (int)App->win->width / 2 - (334), 75, 334 * 2, 300 }, {0, 0, 0, 0})->active = false;
+
+	App->gui->CreateUIElement(Type::IMAGE, menu_window, { (int)App->win->width / 2 - (334), 75, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 });
+
+
+	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 80, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 90, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 100, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	//App->gui->CreateUIElement(Type::BUTTON, test, { 0, 0, 100, 100 }, {0, 0, 0, 0}, "PLAY", { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
+
 	return true;
 }
 

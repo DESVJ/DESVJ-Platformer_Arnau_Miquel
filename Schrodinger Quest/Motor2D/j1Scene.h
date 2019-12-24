@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1Gui.h"
 
 struct SDL_Texture;
 
@@ -37,6 +38,12 @@ public:
 
 	bool isMainMenu;
 	SDL_Texture* main_menu_background;
+
+	WindowUI* menu_window;
+	ButtonUI* menu_buttons[3];
+	ImageUI* menu_text;
+
+
 
 };
 
