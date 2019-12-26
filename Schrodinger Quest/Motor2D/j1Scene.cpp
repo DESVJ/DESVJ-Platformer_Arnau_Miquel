@@ -39,17 +39,6 @@ bool j1Scene::Start()
 	main_menu_background = App->tex->Load("maps/main_menu.png");
 	App->audio->PlayMusic("audio/music/Desert_Theme.ogg");
 
-	//App->gui->CreateUIElement(Type::WINDOW, nullptr, { (int)App->win->width / 2 - (334), 75, 334 * 2, 300 }, { 0, 0, 0, 0 })->active = false;
-
-	//App->gui->CreateUIElement(Type::IMAGE, menu_window, { (int)App->win->width / 2 - (334), 75, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 });
-
-
-	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 80, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 90, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 100, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	////App->gui->CreateUIElement(Type::BUTTON, test, { 0, 0, 100, 100 }, {0, 0, 0, 0}, "PLAY", { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
-
-
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) as a UI element
 	//App->gui->CreateUIElement(Type::IMAGE, { 485,829,328,103 });
 	// TODO 4: Create the text "Hello World" as a UI element
@@ -59,7 +48,8 @@ bool j1Scene::Start()
 	//Parents are not working
 	UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 15, 550, ((int)App->win->height - 30) });
 	App->gui->CreateUIElement(Type::TEXT, nullptr, { 0, 0, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
-	UI* button = App->gui->CreateUIElement(Type::BUTTON, nullptr, { 0, 200, 229, 69 }, { 0, 0, 0, 0 }, "PLAY", { 0,0,0,0 }, { 0,0,0,0 }, this);
+	UI* button = App->gui->CreateUIElement(Type::BUTTON, nullptr, { 20, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB",  { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, this);
 	//App->font->CalcSize("Button", w, h);
 	//App->gui->CreateUIElement(Type::TEXT, button, { 0, 0, w, h }, { 0, 0, 0, 0 }, "Button");
 
@@ -199,15 +189,16 @@ void j1Scene::OnClick(UI* element)
 	{
 
 	case Type::BUTTON:
-		LOG("%s", element->name.GetString());
 
 		if (element->name == (p2SString)"PLAY")
 		{
 			App->gui->ClearUI();
 			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 		}
-
-
+		else if(element->name == (p2SString)"GITHUB")
+		{
+			ShellExecuteA(NULL, "open", "https://github.com/DESVJ/Schrodinger_Quest", NULL, NULL, SW_SHOWNORMAL);
+		}
 		break;
 
 

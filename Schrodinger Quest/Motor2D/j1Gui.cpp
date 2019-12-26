@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Gui.h"
+#include "j1Audio.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -32,6 +33,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+	click_sfx = App->audio->LoadFx("audio/fx/button_click.wav");
 
 	return true;
 }
@@ -265,6 +267,9 @@ SDL_Rect UI::GetLocalRect() {
 iPoint UI::GetScreenPos() {
 	return { screen_rect.x,screen_rect.y};
 }
+iPoint UI::GetScreenToWorldPos() {
+	return { screen_rect.x / (int)App->win->scale,screen_rect.y / (int)App->win->scale };
+}
 iPoint UI::GetLocalPos() {
 	return { local_rect.x,local_rect.y };
 }
@@ -279,7 +284,7 @@ void UI::SetLocalPos(iPoint pos) {
 bool UI::CheckMouse() {
 	if (drageable == true) {
 		int x, y;
-		App->input->GetMousePosition(x, y);
+		App->input->GetMouseScreenPosition(x, y);
 		if (x >= screen_rect.x && x <= screen_rect.x + screen_rect.w && y >= screen_rect.y && y <= screen_rect.y + screen_rect.h)
 			return true;
 	}
@@ -323,9 +328,10 @@ ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f) 
 bool ImageUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	SDL_Rect a = { GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y , quad.w, quad.h};
+	quad.x = GetScreenPos().x + dif_sprite.x;
+	quad.y = GetScreenPos().y + dif_sprite.y;
 
-	App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, a);
+	App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
 	UI::PostUpdate();
 	return true;
 }
@@ -333,6 +339,7 @@ bool ImageUI::PostUpdate() {
 WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("WindowUI");
 	sprite1 = sprite;
+	quad = r;
 }
 
 bool WindowUI::PostUpdate() {
@@ -346,7 +353,7 @@ bool WindowUI::PostUpdate() {
 TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f) :UI(type, r, p, d, f) {
 	name.create("TextUI");
 	stri = str;
-	int w, h;
+	quad = r;
 }
 
 bool TextUI::PostUpdate() {
@@ -374,6 +381,7 @@ ButtonUI::ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect sprit
 	sprite3 = spriten3;
 	over = false;
 	pushed = false;
+	quad = r;
 }
 
 bool ButtonUI::PostUpdate() {
@@ -388,7 +396,12 @@ bool ButtonUI::PostUpdate() {
 	else {
 		sprite = UI::Check_Printable_Rect(sprite3, dif_sprite);
 	}
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
+	//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, 0.f);
+
+	quad.x = GetScreenPos().x + dif_sprite.x;
+	quad.y = GetScreenPos().y + dif_sprite.y;
+	App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
+
 	UI::PostUpdate();
 	return true;
 }
@@ -409,6 +422,7 @@ bool ButtonUI::PreUpdate() {
 
 	if (pushed)
 	{
+		App->audio->PlayFx(App->gui->click_sfx);
 		//Button clicked
 		if (listener) 
 		{

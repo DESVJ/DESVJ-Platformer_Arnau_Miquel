@@ -45,6 +45,7 @@ public:
 	SDL_Rect GetScreenRect();
 	SDL_Rect GetLocalRect();
 	iPoint GetScreenPos();
+	iPoint GetScreenToWorldPos();
 	iPoint GetLocalPos();
 	void SetLocalPos(iPoint pos);
 	bool CheckMouse();
@@ -176,6 +177,12 @@ private:
 	p2List <UI*> UIs;
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
+
+public:
+
+	//Audio
+	int click_sfx;
+
 };
 
 #endif // __j1GUI_H__
