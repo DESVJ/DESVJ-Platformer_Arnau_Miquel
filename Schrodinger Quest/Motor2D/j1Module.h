@@ -11,6 +11,7 @@
 #include "SDL/include/SDL.h"
 
 class j1App;
+class UI;
 
 class j1Module
 {
@@ -71,6 +72,11 @@ public:
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
+	}
+
+	virtual void OnClick(UI* element) 
+	{
+
 	}
 
 	//virtual void OnCollision(/*Collider_Types type*/) {};

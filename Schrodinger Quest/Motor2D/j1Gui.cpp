@@ -91,9 +91,9 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3)
+UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, j1Module* s_listener)
 {
-	UI* ui;
+	UI* ui = nullptr;
 	switch (type)
 	{
 	case Type::BUTTON:
@@ -109,8 +109,23 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 		ui = new TextUI(Type::TEXT, p, r, str, false, false);
 		break;
 	}
-	UIs.add(ui);
-	return ui;
+
+	
+	ui->name = str;
+
+	if (s_listener)
+	{ 
+		ui->listener = s_listener; 
+	}
+	else
+	{
+		ui->listener = nullptr;
+	}
+
+
+	//UIs.add(ui);
+
+	return UIs.add(ui)->data;
 }
 
 bool j1Gui::DeleteUIElement(UI* ui) {
@@ -159,8 +174,15 @@ void j1Gui::ChangeFocus() {
 	}
 }
 
-UI::UI(Type type, SDL_Rect r, UI* p, bool d, bool f) {
+void j1Gui::ClearUI() 
+{
+	UIs.clear();
+}
+
+UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f) 
+{
 	name.create("UI");
+	type = s_type;
 	drageable = d;
 	focusable = f;
 	screen_rect = { r.x,r.y,r.w,r.h };
@@ -233,14 +255,15 @@ bool UI::PostUpdate() {
 	return true;
 }
 
-SDL_Rect UI::GetScreenRect() {
+SDL_Rect UI::GetScreenRect() 
+{
 	return screen_rect;
 }
 SDL_Rect UI::GetLocalRect() {
 	return local_rect;
 }
 iPoint UI::GetScreenPos() {
-	return { screen_rect.x,screen_rect.y };
+	return { screen_rect.x,screen_rect.y};
 }
 iPoint UI::GetLocalPos() {
 	return { local_rect.x,local_rect.y };
@@ -329,10 +352,18 @@ TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f) :UI(
 bool TextUI::PostUpdate() {
 	SDL_Rect rect = { 0,0,0,0 };
 	iPoint dif_sprite = { 0,0 };
-	SDL_QueryTexture(App->font->Print(stri.GetString()), NULL, NULL, &rect.w, &rect.h);
+
+	SDL_Texture* text = App->font->Print(stri.GetString());
+
+	SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
+
+
 	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
-	App->render->Blit(App->font->Print(stri.GetString()), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	App->render->Blit(text, GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
 	UI::PostUpdate();
+
+	App->tex->UnLoad(text);
+
 	return true;
 }
 
@@ -364,16 +395,29 @@ bool ButtonUI::PostUpdate() {
 
 bool ButtonUI::PreUpdate() {
 	int x, y;
-	App->input->GetMousePosition(x, y);
+	App->input->GetMouseScreenPosition(x, y);
+
 	if ((x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h) || focus == true)
 		over = true;
 	else over = false;
 	bool button = false;
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RETURN))
+	if (App->input->GetMouseButtonDown(1) == KEY_UP || App->input->GetKey(SDL_SCANCODE_RETURN))
 		button = true;
 	if (over == true && button == true)
 		pushed = true;
 	else pushed = false;
+
+	if (pushed)
+	{
+		//Button clicked
+		if (listener) 
+		{
+			listener->OnClick(this);
+		}
+		LOG("Click");
+	}
+
 	UI::PreUpdate();
+
 	return true;
 }

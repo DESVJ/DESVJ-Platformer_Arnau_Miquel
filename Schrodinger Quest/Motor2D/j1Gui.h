@@ -16,10 +16,11 @@ enum class Type
 	TEXT,
 	UNKNOWN
 };
+
 class UI :public j1Module
 {
 public:
-	UI(Type type, SDL_Rect r, UI* p, bool d, bool f);
+	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f);
 
 	// Destructor
 	virtual ~UI() {}
@@ -55,6 +56,9 @@ public:
 	SDL_Rect quad;
 	bool debug;
 	bool focus;
+	j1Module* listener;
+	Type type;
+
 private:
 	SDL_Rect screen_rect;
 	SDL_Rect local_rect;
@@ -156,7 +160,7 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 });
+	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, j1Module* s_listener = nullptr);
 	bool DeleteUIElement(UI*);
 
 	void ChangeDebug();
@@ -164,6 +168,8 @@ public:
 	void ChangeFocus();
 
 	const SDL_Texture* GetAtlas() const;
+
+	void ClearUI();
 
 private:
 

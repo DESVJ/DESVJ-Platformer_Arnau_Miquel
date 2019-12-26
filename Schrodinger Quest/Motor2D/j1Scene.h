@@ -36,6 +36,7 @@ public:
 
 	//Load map
 	void Load_Map_By_Name(const char*);
+	void OnClick(UI* element);
 
 	bool isMainMenu;
 	SDL_Texture* main_menu_background;

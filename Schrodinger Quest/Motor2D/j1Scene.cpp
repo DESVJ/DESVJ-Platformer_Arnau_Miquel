@@ -37,6 +37,7 @@ bool j1Scene::Start()
 {
 
 	main_menu_background = App->tex->Load("maps/main_menu.png");
+	App->audio->PlayMusic("audio/music/Desert_Theme.ogg");
 
 	//App->gui->CreateUIElement(Type::WINDOW, nullptr, { (int)App->win->width / 2 - (334), 75, 334 * 2, 300 }, { 0, 0, 0, 0 })->active = false;
 
@@ -55,9 +56,10 @@ bool j1Scene::Start()
 
 	int w, h;
 	App->font->CalcSize("Schrodinger Quest", w, h);
-	//UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 450 / 2, 10, 450, ((int)App->win->height - 30) });
-	//App->gui->CreateUIElement(Type::TEXT, window, { 0, 10, w, h }, { 0, 0, 229, 69 }, "Schrodinger Quest");
-	//UI* button = App->gui->CreateUIElement(Type::BUTTON, window, { 0, 0, 229, 69 }, { 0, 0, 0, 0 }, "", { 0,0,0,0 }, { 0,0,0,0 });
+	//Parents are not working
+	UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 15, 550, ((int)App->win->height - 30) });
+	App->gui->CreateUIElement(Type::TEXT, nullptr, { 0, 0, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
+	UI* button = App->gui->CreateUIElement(Type::BUTTON, nullptr, { 0, 200, 229, 69 }, { 0, 0, 0, 0 }, "PLAY", { 0,0,0,0 }, { 0,0,0,0 }, this);
 	//App->font->CalcSize("Button", w, h);
 	//App->gui->CreateUIElement(Type::TEXT, button, { 0, 0, w, h }, { 0, 0, 0, 0 }, "Button");
 
@@ -143,7 +145,7 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();
 	
 	//Debug UI
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 		App->gui->ChangeDebug();
 
 	//Enable and disable 30fps cap
@@ -189,11 +191,40 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
+void j1Scene::OnClick(UI* element) 
+{
+
+	const char* a = element->name.GetString();
+	switch (element->type)
+	{
+
+	case Type::BUTTON:
+		LOG("%s", element->name.GetString());
+
+		if (element->name == (p2SString)"PLAY")
+		{
+			App->gui->ClearUI();
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
+
+
+		break;
+
+
+	default:
+		break;
+	}
+
+
+}
 
 //Load map by name
 void j1Scene::Load_Map_By_Name(const char* name)
 {
 	isMainMenu = false;
+
+
+
 	App->map->active = true;
 	App->entity_manager->active = true;
 
