@@ -38,16 +38,28 @@ bool j1Scene::Start()
 
 	main_menu_background = App->tex->Load("maps/main_menu.png");
 
+	//App->gui->CreateUIElement(Type::WINDOW, nullptr, { (int)App->win->width / 2 - (334), 75, 334 * 2, 300 }, { 0, 0, 0, 0 })->active = false;
 
-	App->gui->CreateUIElement(Type::WINDOW, nullptr, { (int)App->win->width / 2 - (334), 75, 334 * 2, 300 }, {0, 0, 0, 0})->active = false;
-
-	App->gui->CreateUIElement(Type::IMAGE, menu_window, { (int)App->win->width / 2 - (334), 75, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 });
+	//App->gui->CreateUIElement(Type::IMAGE, menu_window, { (int)App->win->width / 2 - (334), 75, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 });
 
 
-	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 80, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 90, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 100, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
-	//App->gui->CreateUIElement(Type::BUTTON, test, { 0, 0, 100, 100 }, {0, 0, 0, 0}, "PLAY", { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
+	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 80, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 90, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	//App->gui->CreateUIElement(Type::BUTTON, menu_window, { (int)App->win->width / 2 - (334), 100, 334 * 2, 29 * 2 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 }, { 0, 0, 334, 29 });
+	////App->gui->CreateUIElement(Type::BUTTON, test, { 0, 0, 100, 100 }, {0, 0, 0, 0}, "PLAY", { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
+
+
+	// TODO 3: Create the banner (rect {485, 829, 328, 103}) as a UI element
+	//App->gui->CreateUIElement(Type::IMAGE, { 485,829,328,103 });
+	// TODO 4: Create the text "Hello World" as a UI element
+
+	int w, h;
+	App->font->CalcSize("Schrodinger Quest", w, h);
+	//UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 450 / 2, 10, 450, ((int)App->win->height - 30) });
+	//App->gui->CreateUIElement(Type::TEXT, window, { 0, 10, w, h }, { 0, 0, 229, 69 }, "Schrodinger Quest");
+	//UI* button = App->gui->CreateUIElement(Type::BUTTON, window, { 0, 0, 229, 69 }, { 0, 0, 0, 0 }, "", { 0,0,0,0 }, { 0,0,0,0 });
+	//App->font->CalcSize("Button", w, h);
+	//App->gui->CreateUIElement(Type::TEXT, button, { 0, 0, w, h }, { 0, 0, 0, 0 }, "Button");
 
 	return true;
 }

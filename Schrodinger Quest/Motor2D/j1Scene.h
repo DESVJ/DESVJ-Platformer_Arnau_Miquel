@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1Gui.h"
+#include "j1Fonts.h"
 
 struct SDL_Texture;
 
