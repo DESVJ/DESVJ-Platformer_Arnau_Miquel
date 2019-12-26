@@ -338,7 +338,7 @@ WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f
 bool WindowUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
 	UI::PostUpdate();
 	return true;
 }
@@ -359,7 +359,7 @@ bool TextUI::PostUpdate() {
 
 
 	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
-	App->render->Blit(text, GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	App->render->Blit(text, GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
 	UI::PostUpdate();
 
 	App->tex->UnLoad(text);
@@ -388,7 +388,7 @@ bool ButtonUI::PostUpdate() {
 	else {
 		sprite = UI::Check_Printable_Rect(sprite3, dif_sprite);
 	}
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite);
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
 	UI::PostUpdate();
 	return true;
 }
