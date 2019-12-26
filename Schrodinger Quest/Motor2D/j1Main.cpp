@@ -29,6 +29,7 @@ enum MainState
 
 //Pointer to application
 j1App* App = NULL;
+bool exitGame = false;
 
 
 //Main game function
@@ -92,7 +93,7 @@ int main(int argc, char* args[])
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
 			{BROFILER_FRAME("FRAME");
-			if (App->Update() == false)
+			if (App->Update() == false || exitGame)
 				state = CLEAN;
 			break;
 			}

@@ -7,83 +7,109 @@
 		<music volume="128" />
 	</audio>
 	<map>
-		<map_info name="map_1_final.tmx" />
+		<map_info name="map_2_final.tmx" />
 	</map>
 	<pathfinding />
 	<scene />
 	<entity_manager>
 		<player id="0">
-			<player_info flip="false" not_jumping="false" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0" actual_state="1">
-				<position x="465" y="601" w="19" h="-21" />
+			<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0" actual_state="1">
+				<position x="32" y="400" w="16" h="-20" />
 				<speed x="0" y="8" />
 			</player_info>
 		</player>
 		<enemy_info id="1">
-			<fly_enemy>
-				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="0">
-					<position x="293" y="724" w="16" h="-6" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3924">
+					<position x="416" y="304" w="16" h="-13" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="2">
-			<fly_enemy>
-				<bat flip="false" alive="false" player_nearby="false" respawn="false" en_state="4" en_state_update="4" not_chase_tang_mode="false" timer_idle="0">
-					<position x="465" y="601" w="16" h="-9" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3926">
+					<position x="752" y="160" w="16" h="-13" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="3">
-			<fly_enemy>
-				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="0">
-					<position x="227" y="383" w="16" h="-6" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3928">
+					<position x="592" y="272" w="16" h="-13" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="4">
-			<fly_enemy>
-				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="0">
-					<position x="312" y="99" w="16" h="-6" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3930">
+					<position x="913" y="400" w="16" h="-13" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="5">
 			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="7633">
-					<position x="416" y="1184" w="16" h="-13" />
-					<speed x="0" y="2" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3932">
+					<position x="1104" y="176" w="16" h="-13" />
+					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="6">
 			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="7635">
-					<position x="656" y="656" w="16" h="-13" />
-					<speed x="0" y="2" />
-				</snake>
-			</ground_enemy>
-		</enemy_info>
-		<enemy_info id="7">
-			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="7637">
-					<position x="224" y="816" w="16" h="-13" />
-					<speed x="0" y="2" />
-				</snake>
-			</ground_enemy>
-		</enemy_info>
-		<enemy_info id="8">
-			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="7639">
-					<position x="592" y="176" w="16" h="-13" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3933">
+					<position x="1280" y="240" w="16" h="-13" />
 					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
+		<enemy_info id="7">
+			<fly_enemy>
+				<bat flip="true" alive="true" player_nearby="true" respawn="false" en_state="3" en_state_update="3" not_chase_tang_mode="false" timer_idle="5549">
+					<position x="62" y="374" w="11" h="-10" />
+					<speed x="0" y="2" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="8">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3936">
+					<position x="496" y="208" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="9">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3937">
+					<position x="976" y="272" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="10">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3937">
+					<position x="1600" y="368" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="11">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3938">
+					<position x="1408" y="96" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
 	</entity_manager>
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="-826" y="-1281" />
+		<camera x="0" y="-756" />
 	</renderer>
 </game_state>

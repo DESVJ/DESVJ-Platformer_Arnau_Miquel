@@ -47,11 +47,20 @@ bool j1Scene::Start()
 	App->font->CalcSize("Schrodinger Quest", w, h);
 	//Parents are not working
 	UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 15, 550, ((int)App->win->height - 30) });
-	App->gui->CreateUIElement(Type::TEXT, nullptr, { 0, 0, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
-	UI* button = App->gui->CreateUIElement(Type::BUTTON, nullptr, { 20, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+
+	//Game title
+	App->gui->CreateUIElement(Type::TEXT, window, { ((int)App->win->width / 2) - w * 3 / 2, 100, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
+
+	//Main buttons
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 300, 229, 69 }, { 114, 0, 114, 35 }, "CONTINUE", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 400, 229, 69 }, { 114, 0, 114, 35 }, "SETTINGS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 500, 229, 69 }, { 114, 0, 114, 35 }, "CREDITS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 600, 229, 69 }, { 114, 0, 114, 35 }, "EXIT", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+
+	//Github button
 	App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB",  { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, this);
-	//App->font->CalcSize("Button", w, h);
-	//App->gui->CreateUIElement(Type::TEXT, button, { 0, 0, w, h }, { 0, 0, 0, 0 }, "Button");
+
 
 	return true;
 }
@@ -192,8 +201,19 @@ void j1Scene::OnClick(UI* element)
 
 		if (element->name == (p2SString)"PLAY")
 		{
-			App->gui->ClearUI();
 			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
+		else if (element->name == (p2SString)"CONTINUE")
+		{
+			//TODO: Only load if there is a saved file
+			//Load game does not work
+			//App->LoadGame();
+
+		}		
+		else if (element->name == (p2SString)"EXIT")
+		{
+			//Exit game
+			exitGame = true;
 		}
 		else if(element->name == (p2SString)"GITHUB")
 		{
@@ -212,7 +232,12 @@ void j1Scene::OnClick(UI* element)
 //Load map by name
 void j1Scene::Load_Map_By_Name(const char* name)
 {
-	isMainMenu = false;
+
+	if (isMainMenu) {
+		App->gui->ClearUI();
+		isMainMenu = false;
+	}
+
 
 
 

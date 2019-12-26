@@ -139,5 +139,6 @@ public:
 };
 
 extern j1App* App;
+extern bool exitGame;
 
 #endif

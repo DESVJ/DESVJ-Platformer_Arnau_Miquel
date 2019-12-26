@@ -362,7 +362,11 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame()
 {
-
+	if (scene->isMainMenu) 
+	{
+		scene->isMainMenu = false;
+		App->gui->ClearUI();
+	}
 	want_to_load = true;
 }
 
