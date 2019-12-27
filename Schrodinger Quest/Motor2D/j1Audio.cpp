@@ -219,7 +219,7 @@ void j1Audio::ChangeVolumeMusic(float volume) {
 	Mix_VolumeMusic(volume_int);
 }
 
-void j1Audio::ChangeVolumeMusic(float volume) {
+void j1Audio::ChangeVolumeFx(float volume) {
 	int volume_int = volume * 128;
 	Mix_Volume(-1, volume_int);
 }
