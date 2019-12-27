@@ -213,3 +213,13 @@ void j1Audio::ChangeVolume(bool plus)
 	document_save.child("game_state").child("audio").child("music").attribute("volume").set_value(volume);
 	document_save.save_file(source.GetString());
 }
+
+void j1Audio::ChangeVolumeMusic(float volume) {
+	int volume_int = volume * 128;
+	Mix_VolumeMusic(volume_int);
+}
+
+void j1Audio::ChangeVolumeMusic(float volume) {
+	int volume_int = volume * 128;
+	Mix_Volume(-1, volume_int);
+}

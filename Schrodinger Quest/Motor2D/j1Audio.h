@@ -37,6 +37,9 @@ public:
 	//Change volume with +/-
 	void ChangeVolume(bool plus);
 
+	void ChangeVolumeMusic(float volume);
+	void ChangeVolumeFx(float volume);
+
 	
 	bool Save(pugi::xml_node&) const;
 
