@@ -174,6 +174,9 @@ public:
 	bool canJump;
 	bool typeColDetected;
 
+	//int current_lives;
+	//int max_lives;
+
 private:
 
 	float gravity;

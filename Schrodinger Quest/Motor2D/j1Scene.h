@@ -7,6 +7,13 @@
 
 struct SDL_Texture;
 
+enum class MenuType {
+	MAINMENU,
+	SETTINGS,
+	CREDITS,
+	PLAYERHUD
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -37,6 +44,10 @@ public:
 	//Load map
 	void Load_Map_By_Name(const char*);
 	void OnClick(UI* element);
+
+	//UI creation
+	void CreateMenu(MenuType type);
+
 
 	bool isMainMenu;
 	SDL_Texture* main_menu_background;

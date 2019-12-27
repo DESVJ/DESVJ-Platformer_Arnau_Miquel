@@ -43,24 +43,7 @@ bool j1Scene::Start()
 	//App->gui->CreateUIElement(Type::IMAGE, { 485,829,328,103 });
 	// TODO 4: Create the text "Hello World" as a UI element
 
-	int w, h;
-	App->font->CalcSize("Schrodinger Quest", w, h);
-	//Parents are not working
-	UI* window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 15, 550, ((int)App->win->height - 30) });
-
-	//Game title
-	App->gui->CreateUIElement(Type::TEXT, window, { ((int)App->win->width / 2) - w * 3 / 2, 100, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
-
-	//Main buttons
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 300, 229, 69 }, { 114, 0, 114, 35 }, "CONTINUE", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 400, 229, 69 }, { 114, 0, 114, 35 }, "SETTINGS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 500, 229, 69 }, { 114, 0, 114, 35 }, "CREDITS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 600, 229, 69 }, { 114, 0, 114, 35 }, "EXIT", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
-
-	//Github button
-	App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB",  { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, false, { 0,0,0,0 }, this);
-
+	CreateMenu(MenuType::MAINMENU);
 
 	return true;
 }
@@ -190,7 +173,7 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::OnClick(UI* element) 
+void j1Scene::OnClick(UI* element)
 {
 
 	const char* a = element->name.GetString();
@@ -202,20 +185,30 @@ void j1Scene::OnClick(UI* element)
 		if (element->name == (p2SString)"PLAY")
 		{
 			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+			CreateMenu(MenuType::PLAYERHUD);
 		}
 		else if (element->name == (p2SString)"CONTINUE")
 		{
 			//TODO: Only load if there is a saved file
 			//Load game does not work
+			//Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 			//App->LoadGame();
 
-		}		
+		}
+		else if (element->name == (p2SString)"SETTINGS")
+		{
+			CreateMenu(MenuType::SETTINGS);
+		}
+		else if (element->name == (p2SString)"CREDITS")
+		{
+			CreateMenu(MenuType::CREDITS);
+		}
 		else if (element->name == (p2SString)"EXIT")
 		{
 			//Exit game
 			exitGame = true;
 		}
-		else if(element->name == (p2SString)"GITHUB")
+		else if (element->name == (p2SString)"GITHUB")
 		{
 			ShellExecuteA(NULL, "open", "https://github.com/DESVJ/Schrodinger_Quest", NULL, NULL, SW_SHOWNORMAL);
 		}
@@ -227,6 +220,42 @@ void j1Scene::OnClick(UI* element)
 	}
 
 
+}
+
+void j1Scene::CreateMenu(MenuType type) 
+{
+	App->gui->ClearUI();
+	UI* window = nullptr;
+	switch (type)
+	{
+	case MenuType::MAINMENU:
+
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 15, 550, ((int)App->win->height - 30) });
+		//Game title
+		App->gui->CreateUIElement(Type::IMAGE, window, { ((int)App->win->width / 2) - 238 * 2 / 2, 75, 238 * 2, 23 * 2 }, { 228, 0, 238, 23 }, "Schrodinger Quest");
+		//Main buttons
+		App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 300, 229, 69 }, { 114, 0, 114, 35 }, "CONTINUE", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 400, 229, 69 }, { 114, 0, 114, 35 }, "SETTINGS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 500, 229, 69 }, { 114, 0, 114, 35 }, "CREDITS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 600, 229, 69 }, { 114, 0, 114, 35 }, "EXIT", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+		//Github button
+		App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB", { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, false, { 0,0,0,0 }, this);
+		
+		break;
+	case MenuType::SETTINGS:
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 25, 550, ((int)App->win->height - 50) });
+
+		break;
+	case MenuType::CREDITS:
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { ((int)App->win->width / 2) - 550 / 2, 25, 550, ((int)App->win->height - 50) });
+
+		break;
+	case MenuType::PLAYERHUD:
+		App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 350, 70 });
+		App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 60, 10, 50, 50 }, { 0, 165, 61, 60 }, "PAUSE", { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, this);
+		break;
+	}
 }
 
 //Load map by name
