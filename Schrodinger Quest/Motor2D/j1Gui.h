@@ -20,7 +20,7 @@ enum class Type
 class UI :public j1Module
 {
 public:
-	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f);
+	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~UI() {}
@@ -50,6 +50,7 @@ public:
 	void SetLocalPos(iPoint pos);
 	bool CheckMouse();
 	bool CheckFocusable() { return focusable; }
+	SDL_Rect GetDragArea() { return drag_area; }
 	SDL_Rect Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite);
 
 public:
@@ -67,22 +68,32 @@ private:
 	UI* parent;
 	bool drageable;
 	bool focusable;
+	SDL_Rect drag_area;
 };
 class ImageUI :public UI
 {
 public:
-	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f);
+	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~ImageUI() {}
 
+	// Called before all Updates
+	bool PreUpdate();
+
 	// Called after all Updates
 	bool PostUpdate();
+
+	fPoint GetDragPositionNormalized();
+
+public:
+	iPoint drag_position_0;
+	iPoint drag_position_1;
 };
 class WindowUI :public UI
 {
 public:
-	WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f);
+	WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~WindowUI() {}
@@ -93,7 +104,7 @@ public:
 class TextUI :public UI
 {
 public:
-	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f);
+	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~TextUI() {}
@@ -109,7 +120,7 @@ class ButtonUI :public UI
 {
 public:
 
-	ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d, bool f);
+	ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~ButtonUI() {}
@@ -161,12 +172,15 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, j1Module* s_listener = nullptr);
+	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, bool drageable = false,
+		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
 	bool DeleteUIElement(UI*);
 
 	void ChangeDebug();
 
 	void ChangeFocus();
+
+	void DeleteFocus();
 
 	const SDL_Texture* GetAtlas() const;
 

@@ -52,14 +52,14 @@ bool j1Scene::Start()
 	App->gui->CreateUIElement(Type::TEXT, window, { ((int)App->win->width / 2) - w * 3 / 2, 100, w * 3, h * 3 }, { 0, 0, 229, 69 }, "Schrodinger Quest");
 
 	//Main buttons
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 300, 229, 69 }, { 114, 0, 114, 35 }, "CONTINUE", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 400, 229, 69 }, { 114, 0, 114, 35 }, "SETTINGS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 500, 229, 69 }, { 114, 0, 114, 35 }, "CREDITS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
-	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 600, 229, 69 }, { 114, 0, 114, 35 }, "EXIT", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 200, 229, 69 }, { 114, 0, 114, 35 }, "PLAY", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 300, 229, 69 }, { 114, 0, 114, 35 }, "CONTINUE", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 400, 229, 69 }, { 114, 0, 114, 35 }, "SETTINGS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 500, 229, 69 }, { 114, 0, 114, 35 }, "CREDITS", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, window, { ((int)App->win->width / 2) - 229 / 2, 600, 229, 69 }, { 114, 0, 114, 35 }, "EXIT", { 0, 0, 114, 35 }, { 0, 35, 114, 35 }, false, { 0,0,0,0 }, this);
 
 	//Github button
-	App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB",  { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, this);
+	App->gui->CreateUIElement(Type::BUTTON, nullptr, { 10, (int)App->win->height - 80, 70, 70 }, { 0, 165, 61, 60 }, "GITHUB",  { 61, 105, 61, 60 }, { 0, 105, 61, 60 }, false, { 0,0,0,0 }, this);
 
 
 	return true;
