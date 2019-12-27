@@ -1,11 +1,9 @@
-# Schrödinger Quest
+﻿# Schrödinger Quest
 
-<p align="center">
 Schrödinger Quest is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. Also, there are some enemies that will try to chase and kill the player when he is tangible (some even to the extent of chasing him when he becomes intangible), to kill them the player will have to either jump onto them or use his sword. This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) using C++ in Visual Studio and with SDL and pugixml libraries, Tiled for the creation of the maps and Brofiler for checking the time spent in functions of the code. 
 
 ## Usage
 
-<p align="center">
 This game is played using these keys in the keyboard and this button of the mouse:
 
 * Movement with WASD.
@@ -39,7 +37,6 @@ Apart from these keys, there are some debug keys:
 * Enable/Disable FPS cap to 30 with F11.
 
 ## Authors
-<p align="center">
 * Arnau Falgueras Garcia de Atocha
     * Github account: Arnau77(https://github.com/Arnau77)
 
@@ -47,12 +44,10 @@ Apart from these keys, there are some debug keys:
     * Github account: MayKoder(https://github.com/MayKoder)
 
 ## Github link
-<p align="center">
 https://github.com/DESVJ/Schrodinger_Quest
 
 ## Innovations
 
-<p align="center">
 Here is a list with the innovations done in this delivery:
 
 * Use of right button mouse.
@@ -65,7 +60,6 @@ Here is a list with the innovations done in this delivery:
 
 ## Work by members
 
-<p align="center">
 * Arnau Falgueras Garcia de Atocha
 
   * State machine of enemies
@@ -90,7 +84,6 @@ Here is a list with the innovations done in this delivery:
 
 ## Credits
 
-<p align="center">
 In order to make this game, we have used art not owned by us. Below we credit the authors of this art:
 
 * Background & Tilesets:
@@ -140,7 +133,6 @@ In order to make this game, we have used art not owned by us. Below we credit th
 
 ## License
 
-<p align="center">
 MIT License
 
 Copyright (c) [2019] [Arnau Falgueras Garcia de Atocha, Miquel Suau Gonzàlez]
