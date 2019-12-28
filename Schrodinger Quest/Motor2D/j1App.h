@@ -143,5 +143,6 @@ public:
 
 extern j1App* App;
 extern bool exitGame;
+extern bool existSaveFile;
 
 #endif

@@ -153,6 +153,7 @@ public:
 	SDL_Rect sprite3;
 	bool pushed;
 	bool over;
+	bool isLocked;
 };
 
 class TextInputUI :public UI

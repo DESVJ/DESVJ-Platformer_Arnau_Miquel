@@ -494,12 +494,13 @@ ButtonUI::ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect sprit
 	over = false;
 	pushed = false;
 	quad = r;
+	isLocked = false;
 }
 
 bool ButtonUI::PostUpdate() {
 	SDL_Rect sprite;
 	iPoint dif_sprite = { 0,0 };
-	if (pushed == true) {
+	if (pushed == true || isLocked) {
 		sprite = UI::Check_Printable_Rect(sprite2, dif_sprite);
 	}
 	else if (over == true) {
@@ -532,7 +533,7 @@ bool ButtonUI::PreUpdate() {
 		pushed = true;
 	else pushed = false;
 
-	if (pushed && !App->gui->lockClick)
+	if (pushed && !App->gui->lockClick && !isLocked)
 	{
 		App->audio->PlayFx(App->gui->click_sfx);
 		//Button clicked

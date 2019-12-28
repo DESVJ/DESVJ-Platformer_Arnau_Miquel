@@ -272,6 +272,7 @@ void j1Scene::CreateMenu(MenuType type)
 	App->gui->ClearUI();
 	UI* window = nullptr;
 	UI* playButton = nullptr;
+	ButtonUI* cont = nullptr;
 	iPoint midPoint = App->win->GetScreenMidPoint();
 
 	switch (type)
@@ -288,6 +289,12 @@ void j1Scene::CreateMenu(MenuType type)
 
 		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 229 / 2, 370, 229, 88 }, { 201, 225, 201, 88 }, "CONTINUE", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 175 / 2, 390, 175, 40 }, { 114, 72, 291, 35 });
+		cont = (ButtonUI*)playButton;
+		if (!existSaveFile)
+		{
+			cont->isLocked = true;
+		}
+
 
 		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 229 / 2, 470, 229, 88 }, { 201, 225, 201, 88 }, "CREDITS", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 175 / 2, 490, 175, 40 }, { 420, 35, 238, 35 });
