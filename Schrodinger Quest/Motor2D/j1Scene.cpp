@@ -313,7 +313,12 @@ void j1Scene::CreateMenu(MenuType type)
 
 		break;
 	case MenuType::PLAYERHUD:
-		App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 350, 70 });
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 250, 60 });
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { 40,  20, 35, 38 }, {228, 0, 10, 12});
+		App->gui->CreateUIElement(Type::IMAGE, window, { 100, 20, 35, 38 }, {228, 0, 10, 12});
+		App->gui->CreateUIElement(Type::IMAGE, window, { 160, 20, 35, 38 }, {228, 0, 10, 12});
+
 		App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, {0, 0, 0, 0}, "SCORE: 0000");
 
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
