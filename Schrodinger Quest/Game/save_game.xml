@@ -4,7 +4,7 @@
 	<window />
 	<textures />
 	<audio>
-		<music volume="101" />
+		<music volume="98" />
 	</audio>
 	<map>
 		<map_info name="map_2_final.tmx" />

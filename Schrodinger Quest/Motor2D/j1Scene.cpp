@@ -163,7 +163,7 @@ bool j1Scene::Update(float dt)
 
 bool j1Scene::PostUpdate()
 {
-	if (transitionState == 1)
+	if (transitionState == 1 || transitionState == 3)
 	{
 		if (transition.h + 200 * App->GetDT() <= App->win->height / (int)App->win->GetScale())
 		{
@@ -172,7 +172,16 @@ bool j1Scene::PostUpdate()
 		else
 		{
 			transition.h = App->win->height * 2;
-			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+
+			if (transitionState == 1)
+			{
+				Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+			}
+			else
+			{
+				App->LoadGame();
+			}
+
 			CreateMenu(MenuType::PLAYERHUD);
 			transitionState = 2;
 		}
@@ -220,7 +229,6 @@ bool j1Scene::CleanUp()
 void j1Scene::OnClick(UI* element)
 {
 
-	const char* a = element->name.GetString();
 	switch (element->type)
 	{
 
@@ -232,10 +240,7 @@ void j1Scene::OnClick(UI* element)
 		}
 		else if (element->name == (p2SString)"CONTINUE")
 		{
-			//TODO: Only load if there is a saved file
-			//Load game does not work
-			//transitionState = 1;
-			App->LoadGame();
+			transitionState = 3;
 		}
 		else if (element->name == (p2SString)"SETTINGS")
 		{
