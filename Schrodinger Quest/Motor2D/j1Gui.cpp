@@ -640,7 +640,22 @@ bool TextInputUI::PostUpdate() {
 }
 
 void TextInputUI::ChangeLabel(p2SString text) {
-	label += text.GetString();
+	p2SString label_part_2, label_part_1;
+	label_part_1 = label_part_2 = label;
+	for (int i = position; i < label.Length(); i++) {
+		label_part_1 = label_part_1.Supr(position);
+	}
+	if (strcmp(label.GetString(), label_part_1.GetString())) {
+		for (int i = 0; i < position; i++) {
+			label_part_2 = label_part_2.Supr(0);
+		}
+	}
+	else {
+		label_part_2 = "";
+	}
+	label_part_1+= text.GetString();
+	label_part_1 += label_part_2;
+	label = label_part_1;
 	position++;
 }
 
