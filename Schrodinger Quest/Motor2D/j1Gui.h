@@ -14,6 +14,7 @@ enum class Type
 	IMAGE,
 	WINDOW,
 	TEXT,
+	INPUT,
 	UNKNOWN
 };
 
@@ -153,6 +154,35 @@ public:
 	bool pushed;
 	bool over;
 };
+
+class TextInputUI :public UI
+{
+public:
+	TextInputUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, p2SString str, bool d, bool f, SDL_Rect d_area);
+
+	// Destructor
+	virtual ~TextInputUI() {}
+
+	// Called after all Updates
+	bool PreUpdate();
+	bool PostUpdate();
+
+	void ChangeLabel(p2SString text);
+
+	void SetLabel(p2SString text);
+
+	p2SString GetLabel() { return label; }
+
+private:
+	p2SString label;
+	bool text_input;
+	int position;
+	bool square;
+	int red;
+	int green;
+	int blue;
+	int alpha;
+};
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -195,6 +225,8 @@ public:
 	void ClearUI();
 
 	void ReturnConsole();
+
+	void WorkWithTextInput(p2SString text);
 
 private:
 

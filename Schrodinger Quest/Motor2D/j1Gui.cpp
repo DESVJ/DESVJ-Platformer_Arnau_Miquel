@@ -138,7 +138,10 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, 
 	switch (type)
 	{
 	case Type::IMAGE:
-		ui = new ImageUI(Type::IMAGE, p, r, re,g,b,a, drageable, drageable, drag_area);
+		ui = new ImageUI(Type::IMAGE, p, r, re, g, b, a, drageable, drageable, drag_area);
+		break;
+	case Type::INPUT:
+		ui = new TextInputUI(Type::INPUT, p, r, re, g, b, a, "", drageable, true, drag_area);
 		break;
 	}
 
@@ -220,6 +223,16 @@ void j1Gui::ClearUI()
 void j1Gui::ReturnConsole() {
 	if (App->console->console_active == true) {
 		App->console->ActivateConsole();
+	}
+}
+
+void j1Gui::WorkWithTextInput(p2SString text) {
+	bool exit = false;
+	for (int i = 0; i < UIs.count() && exit == false; i++) {
+		if (UIs.At(i)->data->type == Type::INPUT && UIs.At(i)->data->focus == true) {
+			TextInputUI* text_ui = (TextInputUI*)UIs.At(i)->data;
+			text_ui->ChangeLabel(text);
+		}
 	}
 }
 
@@ -534,4 +547,105 @@ bool ButtonUI::PreUpdate() {
 	UI::PreUpdate();
 
 	return true;
+}
+
+
+TextInputUI::TextInputUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, p2SString str, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area, true) {
+	name.create("TextInputUI");
+	sprite1 = { 0,0,0,0 };
+	quad = r;
+	label = str;
+	text_input = false;
+	position = 0;
+	square = true;
+	red = re;
+	green = g;
+	blue = b;
+	alpha = a;
+}
+
+bool TextInputUI::PreUpdate() {
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	if ((x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h)) {
+		if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
+			App->gui->DeleteFocus();
+			focus = true;
+		}
+	}
+	if (focus == true && text_input == false) {
+		SDL_StartTextInput();
+		text_input = true;
+	}
+	else if (focus == false && text_input == true) {
+		SDL_StopTextInput();
+		text_input = false;
+	}
+	if (focus == true) {
+		if (App->input->special_keys == specialkeys::Backspace) {
+			label = label.Backspace(position);
+			if (position > 0)
+				position--;
+		}
+		else if (App->input->special_keys == specialkeys::Left) {
+			if (position > 0)
+				position--;
+		}
+		else if (App->input->special_keys == specialkeys::Right) {
+			if (position < label.GetCapacity())
+				position++;
+		}
+		else if (App->input->special_keys == specialkeys::Supr) {
+			label = label.Supr(position);
+		}
+		else if (App->input->special_keys == specialkeys::Home) {
+			position = 0;
+		}
+		else if (App->input->special_keys == specialkeys::End) {
+			position = label.GetCapacity();
+		}
+
+	}
+	UI::PreUpdate();
+	return true;
+}
+
+bool TextInputUI::PostUpdate() {
+	iPoint dif_sprite = { 0,0 };
+	if (this->active) {
+		App->render->DrawQuad(quad, red, green, blue, alpha, true, false);
+	}
+
+	SDL_Rect rect = { 0,0,0,0 };
+	if (strcmp(label.GetString(), "")) {
+		SDL_Texture* text = App->font->Print(label.GetString());
+		SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
+		SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
+		if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y, &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
+		App->tex->UnLoad(text);
+	}
+
+	if (focus == true) {
+		p2SString label_from_position = label.StrFromPosition(position);
+		int w, h;
+		App->font->CalcSize(label_from_position.GetString(), w, h);
+		App->render->DrawLine(quad.x + w, quad.y, quad.x + w, quad.y + quad.h, 0, 255, 255, 255, false, false);
+	}
+	UI::PostUpdate();
+
+	
+
+	return true;
+}
+
+void TextInputUI::ChangeLabel(p2SString text) {
+	label += text.GetString();
+	position++;
+}
+
+void TextInputUI::SetLabel(p2SString text) {
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) != KEY_DOWN) {
+		label = text.GetString();
+		position += label.GetCapacity();
+	}
 }

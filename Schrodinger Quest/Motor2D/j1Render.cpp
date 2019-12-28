@@ -127,15 +127,21 @@ void j1Render::ResetViewPort()
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, fPoint speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, fPoint speed, double angle, int pivot_x, int pivot_y, bool get_scale) const
 {
 	bool ret = true;
 	SDL_RendererFlip flip_render = SDL_FLIP_NONE;
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed.x) + x * scale;
-	rect.y = (int)(camera.y * speed.y) + y * scale;
+	if (get_scale == true) {
+		rect.x = (int)(camera.x * speed.x) + x * scale;
+		rect.y = (int)(camera.y * speed.y) + y * scale;
+	}
+	else {
+		rect.x = (int)(camera.x * speed.x) + x;
+		rect.y = (int)(camera.y * speed.y) + y;
+	}
 
 	if (section != NULL)
 	{
@@ -147,8 +153,10 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= scale;
-	rect.h *= scale;
+	if (get_scale == true) {
+		rect.w *= scale;
+		rect.h *= scale;
+	}
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
@@ -223,7 +231,7 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	return ret;
 }
 
-bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
+bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera, bool use_scale) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -235,8 +243,10 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 
 	if (use_camera)
 		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
-	else
+	else if(use_scale)
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
+	else
+		result = SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 
 	if (result != 0)
 	{

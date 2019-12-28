@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
+#include "j1Gui.h"
 #include "j1Window.h"
 
 
@@ -87,6 +88,8 @@ bool j1Input::PreUpdate()
 	mouse_y = (int)(-App->render->camera.y + mouse_y) / scale;
 	App->map->WorldToMap(&mouse_x, &mouse_y);
 
+	special_keys = specialkeys::None;
+
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -124,6 +127,32 @@ bool j1Input::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
+
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_BACKSPACE) {
+					special_keys = specialkeys::Backspace;
+				}
+				else if (event.key.keysym.sym == SDLK_DELETE) {
+					special_keys = specialkeys::Supr;
+				}
+				else if (event.key.keysym.sym == SDLK_LEFT) {
+					special_keys = specialkeys::Left;
+				}
+				else if (event.key.keysym.sym == SDLK_RIGHT) {
+					special_keys = specialkeys::Right;
+				}
+				else if (event.key.keysym.sym == SDLK_HOME) {
+					special_keys = specialkeys::Home;
+				}
+				else if (event.key.keysym.sym == SDLK_END) {
+					special_keys = specialkeys::End;
+				}
+
+				break;
+
+			case SDL_TEXTINPUT:
+				App->gui->WorkWithTextInput(event.text.text);
+				break;
 
 			case SDL_MOUSEMOTION:
 				//int scale = App->win->GetScale();

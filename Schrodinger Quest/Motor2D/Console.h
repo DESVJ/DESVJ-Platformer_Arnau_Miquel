@@ -4,6 +4,7 @@
 #include "j1Module.h"
 
 class ImageUI;
+class TextInputUI;
 
 class Console :public j1Module {
 public:
@@ -27,6 +28,7 @@ public:
 
 public:
 	ImageUI* console_background;
+	TextInputUI* console_input;
 	bool console_active;
 private:
 	SDL_Rect background_pos;
@@ -34,6 +36,12 @@ private:
 	int background_green;
 	int background_blue;
 	int background_alpha;
+	SDL_Rect input_pos;
+	int input_red;
+	int input_green;
+	int input_blue;
+	int input_alpha;
+	p2SString label;
 };
 
 #endif

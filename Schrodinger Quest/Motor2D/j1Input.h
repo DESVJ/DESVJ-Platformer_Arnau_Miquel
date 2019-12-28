@@ -23,6 +23,16 @@ enum j1KeyState
 	KEY_UP
 };
 
+enum class specialkeys {
+	None,
+	Backspace,
+	Supr,
+	Left,
+	Right,
+	Home,
+	End
+};
+
 class j1Input : public j1Module
 {
 
@@ -68,6 +78,8 @@ public:
 	void GetMouseScreenPosition(int& x, int& y);
 	void GetMouseMotion(int& x, int& y);
 
+public:
+	specialkeys special_keys;
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
