@@ -21,7 +21,8 @@ enum Collider_Types
 	CLIMB, 
 	TANG,
 	PLAYER,
-	ENEMY
+	ENEMY,
+	PICKUP
 };
 
 //Collider info

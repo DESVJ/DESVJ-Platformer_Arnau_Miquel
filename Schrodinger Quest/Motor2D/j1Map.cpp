@@ -301,10 +301,18 @@ bool j1Map::Load(const char* file_name)
 					{
 						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::enemy_air);
 					}
-					obj_spawned->collider->collider_rect.x = object->rect.x;
-					obj_spawned->collider->collider_rect.y = object->rect.y;
+					if (object->properties[0]->prop_value_s == (p2SString)"heal") 
+					{
+						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::healing_potion);
+					}
 
-					obj_spawned->spawn = {object->rect.x, object->rect.y};
+					if (obj_spawned) 
+					{
+						obj_spawned->collider->collider_rect.x = object->rect.x;
+						obj_spawned->collider->collider_rect.y = object->rect.y;
+
+						obj_spawned->spawn = { object->rect.x, object->rect.y };
+					}
 
 				}
 

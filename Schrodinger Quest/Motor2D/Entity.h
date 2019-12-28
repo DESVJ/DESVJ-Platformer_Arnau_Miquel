@@ -9,6 +9,7 @@ enum class Types
 	player,
 	enemy_ground,
 	enemy_air,
+	healing_potion,
 	unknown
 };
 

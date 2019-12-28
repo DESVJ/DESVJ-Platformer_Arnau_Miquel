@@ -104,7 +104,7 @@ bool EntityManager::Save(pugi::xml_node& s) const
 //Called when creating a new Entity
 Entity* EntityManager::CreateEntity(Types type) 
 {
-	static_assert(Types::unknown == (Types)4, "Types need update");
+	static_assert(Types::unknown == (Types)5, "Types need update");
 	Entity* ret = nullptr;
 	pugi::xml_document	info_file;
 	pugi::xml_document info_file2;
@@ -124,6 +124,11 @@ Entity* EntityManager::CreateEntity(Types type)
 		info_file.load_file("textures/Enemy_Sprites/bat.tmx");
 		ret = new eBatEnemy(Types::enemy_air, info_file.child("map"));
 		break;
+
+	case Types::healing_potion:
+		//load healing potion
+		break;
+
 	}
 	info_file2.load_file("config.xml");
 	if (ret != nullptr)
