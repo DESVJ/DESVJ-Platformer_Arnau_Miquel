@@ -6,11 +6,12 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
-#include"j1Player.h"
-#include"j1Window.h"
-#include"j1Input.h"
+#include "j1Player.h"
+#include "j1Window.h"
+#include "j1Input.h"
 #include "j1Audio.h"
 #include "EntityManager.h"
+#include "j1Scene.h"
 #include "eCreature.h"
 #include <math.h>
 #include "brofiler/Brofiler.h"
@@ -619,10 +620,13 @@ bool j1Map::Save(pugi::xml_node& data)const
 
 bool j1Map::Load(pugi::xml_node& data) 
 {
-	App->colliders->collider_list.clear();
-	App->map->CleanUp();
-	App->map->Load(data.child("map_info").attribute("name").as_string());
-	App->colliders->LoadColliders();
+	//App->colliders->collider_list.clear();
+	//App->map->CleanUp();
+
+	App->scene->Load_Map_By_Name(data.child("map_info").attribute("name").as_string());
+
+	//App->map->Load(data.child("map_info").attribute("name").as_string());
+	//App->colliders->LoadColliders();
 	return true;
 }
 

@@ -234,7 +234,8 @@ void j1Scene::OnClick(UI* element)
 		{
 			//TODO: Only load if there is a saved file
 			//Load game does not work
-			//App->LoadGame();
+			//transitionState = 1;
+			App->LoadGame();
 		}
 		else if (element->name == (p2SString)"SETTINGS")
 		{
