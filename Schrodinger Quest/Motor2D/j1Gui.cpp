@@ -410,7 +410,7 @@ bool TextUI::PostUpdate() {
 
 
 	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
-	App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, 0.f);
+	App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, {0.f, 0.f});
 	UI::PostUpdate();
 
 	App->tex->UnLoad(text);

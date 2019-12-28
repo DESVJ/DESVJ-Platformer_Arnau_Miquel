@@ -103,6 +103,7 @@ public:
 	Collider_Manager*	colliders;
 
 	mutable p2SString	save_game;
+	double GetDT();
 
 
 

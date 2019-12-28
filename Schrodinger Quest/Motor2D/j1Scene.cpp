@@ -17,6 +17,7 @@ j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
 	isMainMenu = true;
+	transitionState = 0;
 }
 
 // Destructor
@@ -44,6 +45,11 @@ bool j1Scene::Start()
 	// TODO 4: Create the text "Hello World" as a UI element
 
 	CreateMenu(MenuType::MAINMENU);
+
+
+	uint w, h;
+	App->win->GetWindowSize(w, h);
+	transition = { 0, 0, (int)w, 0 };
 
 	return true;
 }
@@ -159,6 +165,48 @@ bool j1Scene::Update(float dt)
 	return true;
 }
 
+bool j1Scene::PostUpdate()
+{
+	if (transitionState == 1)
+	{
+		if (transition.h + 200 * App->GetDT() <= App->win->height / (int)App->win->GetScale())
+		{
+			transition.h += 200 * App->GetDT();
+		}
+		else
+		{
+			transition.h = App->win->height * 2;
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+			CreateMenu(MenuType::PLAYERHUD);
+			transitionState = 2;
+		}
+
+
+
+		App->render->DrawQuad(transition, 0, 0, 0);
+		//LOG("%i, %i, %i, %i", transition.x, transition.y, transition.w, transition.h);
+	}
+	if (transitionState == 2) 
+	{
+		if (transition.h - 400 * App->GetDT() >= 0)
+		{
+			transition.h -= 400 * App->GetDT();
+		}
+		else
+		{
+			transition.h = 0;
+			transitionState = 0;
+		}
+
+
+
+		App->render->DrawQuad(transition, 0, 0, 0, 255, true, false);
+	}
+
+
+	return true;
+}
+
 // Called before quitting
 bool j1Scene::CleanUp()
 {
@@ -184,16 +232,13 @@ void j1Scene::OnClick(UI* element)
 
 		if (element->name == (p2SString)"PLAY")
 		{
-			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
-			CreateMenu(MenuType::PLAYERHUD);
+			transitionState = 1;
 		}
 		else if (element->name == (p2SString)"CONTINUE")
 		{
 			//TODO: Only load if there is a saved file
 			//Load game does not work
-			//Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 			//App->LoadGame();
-
 		}
 		else if (element->name == (p2SString)"SETTINGS")
 		{
@@ -269,7 +314,9 @@ void j1Scene::CreateMenu(MenuType type)
 		break;
 	case MenuType::PLAYERHUD:
 		App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 350, 70 });
-		App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
+		App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, {0, 0, 0, 0}, "SCORE: 0000");
+
+		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;
 	}
 }
@@ -282,9 +329,6 @@ void j1Scene::Load_Map_By_Name(const char* name)
 		App->gui->ClearUI();
 		isMainMenu = false;
 	}
-
-
-
 
 	App->map->active = true;
 	App->entity_manager->active = true;

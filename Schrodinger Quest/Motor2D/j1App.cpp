@@ -47,10 +47,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
+	AddModule(gui);
 	AddModule(scene);
 	AddModule(entity_manager);
 	AddModule(font);
-	AddModule(gui);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -60,6 +60,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	
 
 	PERF_PEEK(ptimer);
+}
+
+double j1App::GetDT() {
+	return dt;
 }
 
 // Destructor
