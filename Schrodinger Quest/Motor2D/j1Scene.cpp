@@ -259,10 +259,12 @@ void j1Scene::CreateMenu(MenuType type)
 		break;
 	case MenuType::SETTINGS:
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) });
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 470, 60, 60 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
 
 		break;
 	case MenuType::CREDITS:
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) });
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 470, 60, 60 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
 
 		break;
 	case MenuType::PLAYERHUD:

@@ -196,6 +196,7 @@ public:
 
 	//Audio
 	int click_sfx;
+	bool lockClick;
 
 };
 

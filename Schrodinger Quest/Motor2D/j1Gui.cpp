@@ -42,6 +42,7 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	bool mouse = false;
+	lockClick = false;
 	int count = 0;
 	if (App->input->GetMouseButtonDown(1) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_REPEAT) {
 		for (int i = UIs.count() - 1; i >= 0 && mouse == false; i--) {
@@ -52,7 +53,8 @@ bool j1Gui::PreUpdate()
 	if (mouse == true) {
 		UIs.At(count)->data->Move();
 	}
-	for (int i = 0; i < UIs.count(); i++) {
+	for (int i = 0; i < UIs.count(); i++) 
+	{
 		UIs.At(i)->data->PreUpdate();
 	}
 	return true;
@@ -462,7 +464,7 @@ bool ButtonUI::PreUpdate() {
 		pushed = true;
 	else pushed = false;
 
-	if (pushed)
+	if (pushed && !App->gui->lockClick)
 	{
 		App->audio->PlayFx(App->gui->click_sfx);
 		//Button clicked
@@ -470,6 +472,7 @@ bool ButtonUI::PreUpdate() {
 		{
 			listener->OnClick(this);
 		}
+		App->gui->lockClick = true;
 		LOG("Click");
 	}
 
