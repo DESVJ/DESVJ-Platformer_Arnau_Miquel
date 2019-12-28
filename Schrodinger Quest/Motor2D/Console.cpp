@@ -29,6 +29,11 @@ bool Console::Awake(pugi::xml_node& node) {
 	input_blue = node.child("input").attribute("blue").as_int();
 	input_alpha = node.child("input").attribute("alpha").as_int();
 
+	output_pos = { node.child("output").attribute("position_x").as_int(),node.child("output").attribute("position_y").as_int(),node.child("output").attribute("position_w").as_int(),
+	node.child("output").attribute("position_h").as_int() };
+	output_drag_area = { node.child("output").attribute("d_area_x").as_int(),node.child("output").attribute("d_area_y").as_int(),node.child("output").attribute("d_area_w").as_int(),
+	node.child("output").attribute("d_area_h").as_int() };
+
 	label = "";
 	return true;
 }
@@ -41,6 +46,7 @@ bool Console::PreUpdate() {
 			ActivateConsole();
 		}
 		else {
+			App->gui->DeleteUIElement(console_log);
 			App->gui->DeleteUIElement(console_background);
 			App->gui->DeleteUIElement(console_input);
 		}
@@ -59,6 +65,8 @@ bool Console::PreUpdate() {
 
 void Console::ActivateConsole() {
 	console_background = (ImageUI*)App->gui->CreateUIElement(Type::IMAGE, nullptr, background_pos, "", background_red, background_green, background_blue, background_alpha);
+	console_log = (TextUI*)App->gui->CreateUIElement(Type::TEXT, console_background, output_pos, { 0,0,0,0 }, App->logs.At(0)->data.GetString(), { 0,0,0,0 }, { 0,0,0,0 }, true,
+		output_drag_area, nullptr, true);
 	console_input = (TextInputUI*)App->gui->CreateUIElement(Type::INPUT, nullptr, input_pos, "", input_red, input_green, input_blue, input_alpha);
 	console_input->SetLabel(label.GetString());
 }

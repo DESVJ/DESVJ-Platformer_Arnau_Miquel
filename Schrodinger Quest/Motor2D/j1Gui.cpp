@@ -96,7 +96,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener)
+UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener, bool console)
 {
 	UI* ui = nullptr;
 	switch (type)
@@ -111,7 +111,7 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 		ui = new WindowUI(Type::WINDOW, p, r, sprite, drageable, drageable, drag_area);
 		break;
 	case Type::TEXT:
-		ui = new TextUI(Type::TEXT, p, r, str, drageable, drageable, drag_area);
+		ui = new TextUI(Type::TEXT, p, r, str, drageable, drageable, drag_area, console);
 		break;
 	}
 
@@ -236,7 +236,7 @@ void j1Gui::WorkWithTextInput(p2SString text) {
 	}
 }
 
-UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool console)
+UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool consol)
 {
 	name.create("UI");
 	type = s_type;
@@ -254,7 +254,7 @@ UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool con
 	debug = false;
 	focus = false;
 	drag_area = d_area;
-	console = console;
+	console = consol;
 }
 
 bool UI::PreUpdate() {
@@ -462,7 +462,7 @@ bool WindowUI::PostUpdate() {
 	return true;
 }
 
-TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area) {
+TextUI::TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area, bool console) :UI(type, r, p, d, f, d_area, console) {
 	name.create("TextUI");
 	stri = str;
 	quad = r;
@@ -478,7 +478,8 @@ bool TextUI::PostUpdate() {
 
 
 	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
-	if (this->active)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, {0.f, 0.f});
+	if (this->active && this->GetConsole()==false)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, {0.f, 0.f});
+	else if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y, &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
 	UI::PostUpdate();
 
 	App->tex->UnLoad(text);

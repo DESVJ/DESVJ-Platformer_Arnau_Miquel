@@ -5,6 +5,7 @@
 
 class ImageUI;
 class TextInputUI;
+class TextUI;
 
 enum class commands {
 	none,
@@ -39,6 +40,7 @@ public:
 	void ExecuteCommand(p2SString argument);
 
 public:
+	TextUI* console_log;
 	ImageUI* console_background;
 	TextInputUI* console_input;
 	bool console_active;
@@ -53,6 +55,8 @@ private:
 	int input_green;
 	int input_blue;
 	int input_alpha;
+	SDL_Rect output_pos;
+	SDL_Rect output_drag_area;
 	p2SString label;
 	commands command;
 };

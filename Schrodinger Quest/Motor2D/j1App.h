@@ -138,7 +138,8 @@ public:
 	uint64				fps_limit = 0;
 	uint64				fps_max = 0;
 	uint64				fps_min = 0;
-
+	p2List<p2SString>	logs;
+	int					num_logs = 0;
 };
 
 extern j1App* App;

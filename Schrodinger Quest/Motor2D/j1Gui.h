@@ -21,7 +21,7 @@ enum class Type
 class UI :public j1Module
 {
 public:
-	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool console = false);
+	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool consol = false);
 
 	// Destructor
 	virtual ~UI() {}
@@ -53,6 +53,7 @@ public:
 	bool CheckFocusable() { return focusable; }
 	SDL_Rect GetDragArea() { return drag_area; }
 	SDL_Rect Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite);
+	bool GetConsole() { return console; }
 
 public:
 	SDL_Rect sprite1;
@@ -112,7 +113,7 @@ public:
 class TextUI :public UI
 {
 public:
-	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area);
+	TextUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area, bool console);
 
 	// Destructor
 	virtual ~TextUI() {}
@@ -211,7 +212,7 @@ public:
 
 	// Gui creation functions
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, bool drageable = false,
-		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
+		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr, bool console = false);
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable = false, SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
 	bool DeleteUIElement(UI*);
 
