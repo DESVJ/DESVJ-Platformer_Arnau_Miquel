@@ -35,7 +35,8 @@ public:
 	// Called before quitting
 	bool CleanUp() { return true; };
 
-	int CheckCommand();
+	void CheckCommand();
+	void ExecuteCommand();
 
 public:
 	ImageUI* console_background;
@@ -53,6 +54,7 @@ private:
 	int input_blue;
 	int input_alpha;
 	p2SString label;
+	commands command;
 };
 
 #endif

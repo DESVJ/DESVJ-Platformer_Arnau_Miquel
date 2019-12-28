@@ -40,10 +40,6 @@ bool j1Scene::Start()
 	main_menu_background = App->tex->Load("maps/main_menu.png");
 	App->audio->PlayMusic("audio/music/Desert_Theme.ogg");
 
-	// TODO 3: Create the banner (rect {485, 829, 328, 103}) as a UI element
-	//App->gui->CreateUIElement(Type::IMAGE, { 485,829,328,103 });
-	// TODO 4: Create the text "Hello World" as a UI element
-
 	CreateMenu(MenuType::MAINMENU);
 
 

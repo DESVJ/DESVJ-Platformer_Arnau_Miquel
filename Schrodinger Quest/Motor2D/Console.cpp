@@ -2,7 +2,9 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "Console.h"
+#include "j1Player.h"
 #include "j1Gui.h"
+#include "EntityManager.h"
 #include "j1Input.h"
 
 Console::Console() {
@@ -45,10 +47,8 @@ bool Console::PreUpdate() {
 	if (console_active == true) {
 		console_input->focus = true;
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-			int num = CheckCommand();
-			if (num == 0) {
-				LOG("Command not found");
-			}
+			CheckCommand();
+			ExecuteCommand();
 			console_input->SetLabel("");
 		}
 		label = console_input->GetLabel();
@@ -62,21 +62,51 @@ void Console::ActivateConsole() {
 	console_input->SetLabel(label.GetString());
 }
 
-int Console::CheckCommand() {
-	int num_command;
-	const char* command = console_input->GetLabel().GetString();
-	if (!strcmp(command, "list"))
-		num_command = 1;
-	else if (!strcmp(command, "god_mode") || !strcmp(command, "god mode") || !strcmp(command, "godmode"))
-		num_command = 2;
-	else if (!strcmp(command, "quit"))
-		num_command = 3;
-	else if (!strcmp(command, "FPS"))
-		num_command = 4;
-	else if (!strcmp(command, "map"))
-		num_command = 5;
+void Console::CheckCommand() {
+	const char* command_text = console_input->GetLabel().GetString();
+	if (!strcmp(command_text, "list"))
+		command = commands::list;
+	else if (!strcmp(command_text, "god_mode") || !strcmp(command_text, "god mode") || !strcmp(command_text, "godmode"))
+		command = commands::god_mode;
+	else if (!strcmp(command_text, "quit"))
+		command = commands::quit;
+	else if (!strcmp(command_text, "FPS") || !strcmp(command_text, "Fps") || !strcmp(command_text, "fps"))
+		command = commands::FPS;
+	else if (!strcmp(command_text, "map"))
+		command = commands::map;
 	else 
-		num_command = 0;
+		command = commands::none;
+}
 
-	return num_command;
+void Console::ExecuteCommand() {
+	switch (command) {
+	case commands::list:
+		LOG("Commands available: list, god_mode, quit, FPS, map");
+		break;
+
+	case commands::god_mode:
+		if (App->entity_manager->Player != NULL) {
+			App->entity_manager->Player->player.player_god_mode = !App->entity_manager->Player->player.player_god_mode;
+			App->entity_manager->Player->player.player_not_jumping = true;
+			App->entity_manager->Player->player.spacebar_pushed = false;
+		}
+		else {
+			LOG("You cannot go to god_mode because you are not playing");
+		}
+		break;
+
+	case commands::quit:
+		exitGame = true;
+		break;
+
+	case commands::FPS:
+		break;
+
+	case commands::map:
+		break;
+
+	case commands::none:
+		LOG("Command not found");
+		break;
+	}
 }
