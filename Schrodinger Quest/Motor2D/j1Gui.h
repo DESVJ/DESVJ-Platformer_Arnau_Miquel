@@ -194,6 +194,8 @@ public:
 
 	void ClearUI();
 
+	void ReturnConsole();
+
 private:
 
 	p2List <UI*> UIs;

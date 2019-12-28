@@ -324,6 +324,7 @@ void j1Scene::CreateMenu(MenuType type)
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;
 	}
+	App->gui->ReturnConsole();
 }
 
 //Load map by name
@@ -332,6 +333,7 @@ void j1Scene::Load_Map_By_Name(const char* name)
 
 	if (isMainMenu) {
 		App->gui->ClearUI();
+		App->gui->ReturnConsole();
 		isMainMenu = false;
 	}
 

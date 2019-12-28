@@ -373,6 +373,7 @@ void j1App::LoadGame()
 	{
 		scene->isMainMenu = false;
 		App->gui->ClearUI();
+		App->gui->ReturnConsole();
 	}
 	want_to_load = true;
 }

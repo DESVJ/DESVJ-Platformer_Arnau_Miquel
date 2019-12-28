@@ -215,6 +215,9 @@ void j1Gui::DeleteFocus() {
 void j1Gui::ClearUI() 
 {
 	UIs.clear();
+}
+
+void j1Gui::ReturnConsole() {
 	if (App->console->console_active == true) {
 		App->console->ActivateConsole();
 	}
