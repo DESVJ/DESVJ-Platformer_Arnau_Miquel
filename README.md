@@ -131,7 +131,7 @@ In order to make this game, we have used art not owned by us. Below we credit th
 
 	Downloaded from: https://www.sounds-resource.com/genesis_32x_scd/sonicthehedgehog2/sound/2628/
 
-## License
+# License
 
 MIT License
 
