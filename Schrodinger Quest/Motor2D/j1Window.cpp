@@ -108,6 +108,10 @@ bool j1Window::CleanUp()
 	return true;
 }
 
+iPoint j1Window::GetScreenMidPoint() {
+	return {(int)width / 2, (int)height / 2};
+}
+
 // Set new window title
 void j1Window::SetTitle(const char* new_title)
 {
