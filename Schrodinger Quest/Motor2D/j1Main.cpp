@@ -30,6 +30,7 @@ enum MainState
 //Pointer to application
 j1App* App = NULL;
 bool exitGame = false;
+bool existSaveFile = false;
 
 
 //Main game function

@@ -128,6 +128,12 @@ bool j1App::Awake()
 	}
 	load_game = save_game = app_config.child("save_game_source").child_value();
 
+	pugi::xml_document result;
+	if (result.load_file(load_game.GetString()))
+	{
+		existSaveFile = true;
+	}
+
 	PERF_PEEK(ptimer);
 
 	return ret;
@@ -432,7 +438,7 @@ bool j1App::SavegameNow() const
 	// xml object were we will store all data
 	pugi::xml_document data;
 	pugi::xml_node root;
-	
+
 	root = data.append_child("game_state");
 
 	p2List_item<j1Module*>* item = modules.start;
