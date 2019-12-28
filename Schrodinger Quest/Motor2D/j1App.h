@@ -21,6 +21,7 @@ class Collider_Manager;
 class j1PathFinding;
 class j1Fonts;
 class j1Gui;
+class Console;
 
 //Application class
 class j1App
@@ -98,6 +99,7 @@ public:
 	j1PathFinding*		pathfinding;
 	j1Fonts*			font;
 	j1Gui*				gui;
+	Console*			console;
 
 	//Collider manager 
 	Collider_Manager*	colliders;

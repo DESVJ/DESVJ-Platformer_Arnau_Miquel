@@ -20,7 +20,7 @@ enum class Type
 class UI :public j1Module
 {
 public:
-	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area);
+	UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool console = false);
 
 	// Destructor
 	virtual ~UI() {}
@@ -69,11 +69,13 @@ private:
 	bool drageable;
 	bool focusable;
 	SDL_Rect drag_area;
+	bool console;
 };
 class ImageUI :public UI
 {
 public:
 	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area);
+	ImageUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
 	virtual ~ImageUI() {}
@@ -89,6 +91,11 @@ public:
 public:
 	iPoint drag_position_0;
 	iPoint drag_position_1;
+	bool square;
+	int red;
+	int green;
+	int blue;
+	int alpha;
 };
 class WindowUI :public UI
 {
@@ -174,6 +181,7 @@ public:
 	// Gui creation functions
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, bool drageable = false,
 		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
+	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable = false, SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
 	bool DeleteUIElement(UI*);
 
 	void ChangeDebug();

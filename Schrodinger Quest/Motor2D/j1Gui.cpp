@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Gui.h"
+#include "Console.h"
 #include "j1Audio.h"
 
 j1Gui::j1Gui() : j1Module()
@@ -132,6 +133,33 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 	return UIs.add(ui)->data;
 }
 
+UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable, SDL_Rect drag_area, j1Module* s_listener) {
+	UI* ui = nullptr;
+	switch (type)
+	{
+	case Type::IMAGE:
+		ui = new ImageUI(Type::IMAGE, p, r, re,g,b,a, drageable, drageable, drag_area);
+		break;
+	}
+
+	ui->active = true;
+	ui->name = str;
+
+	if (s_listener)
+	{
+		ui->listener = s_listener;
+	}
+	else
+	{
+		ui->listener = nullptr;
+	}
+
+
+	//UIs.add(ui);
+
+	return UIs.add(ui)->data;
+}
+
 bool j1Gui::DeleteUIElement(UI* ui) {
 	int n = UIs.find(ui);
 	if (n == -1)return false;
@@ -187,9 +215,12 @@ void j1Gui::DeleteFocus() {
 void j1Gui::ClearUI() 
 {
 	UIs.clear();
+	if (App->console->console_active == true) {
+		App->console->ActivateConsole();
+	}
 }
 
-UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area)
+UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area, bool console)
 {
 	name.create("UI");
 	type = s_type;
@@ -207,6 +238,7 @@ UI::UI(Type s_type, SDL_Rect r, UI* p, bool d, bool f, SDL_Rect d_area)
 	debug = false;
 	focus = false;
 	drag_area = d_area;
+	console = console;
 }
 
 bool UI::PreUpdate() {
@@ -337,6 +369,22 @@ ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, 
 	SDL_Rect drag_area = GetDragArea();
 	drag_position_0 = { drag_area.x, drag_area.y };
 	drag_position_1 = { drag_area.w + drag_area.x - GetLocalRect().w,drag_area.h + drag_area.y - GetLocalRect().h };
+	square = false;
+	red = green = blue = alpha = 0;
+}
+
+ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area, true) {
+	name.create("ImageUI");
+	sprite1 = { 0,0,0,0 };
+	quad = r;
+	SDL_Rect drag_area = GetDragArea();
+	drag_position_0 = { drag_area.x, drag_area.y };
+	drag_position_1 = { drag_area.w + drag_area.x - GetLocalRect().w,drag_area.h + drag_area.y - GetLocalRect().h };
+	square = true;
+	red = re;
+	green = g;
+	blue = b;
+	alpha = a;
 }
 
 bool ImageUI::PreUpdate() {
@@ -362,11 +410,15 @@ bool ImageUI::PreUpdate() {
 
 bool ImageUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
-	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	quad.x = GetScreenPos().x + dif_sprite.x;
-	quad.y = GetScreenPos().y + dif_sprite.y;
-
-	if(this->active) App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
+	if (square == false) {
+		SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
+		quad.x = GetScreenPos().x + dif_sprite.x;
+		quad.y = GetScreenPos().y + dif_sprite.y;
+		if (this->active) App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
+	}
+	else if(this->active){
+		App->render->DrawQuad(quad, red, green, blue, alpha, true, false);
+	}
 	UI::PostUpdate();
 	return true;
 }

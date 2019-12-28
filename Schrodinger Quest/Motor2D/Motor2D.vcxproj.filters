@@ -76,6 +76,9 @@
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Game Core\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -178,6 +181,9 @@
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Fonts.h">
+      <Filter>Game Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
   </ItemGroup>
