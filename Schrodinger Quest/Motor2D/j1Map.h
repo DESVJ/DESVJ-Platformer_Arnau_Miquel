@@ -179,9 +179,10 @@ public:
 	int map_id;
 	int fullscreen_Correction;
 
+	p2SString			folder;
+
 private:
 
-	p2SString			folder;
 	p2SString			map_name;
 	bool				map_loaded;
 	p2SString*			maps = nullptr;

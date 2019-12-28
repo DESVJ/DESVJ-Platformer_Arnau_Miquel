@@ -290,8 +290,8 @@ void j1Scene::CreateMenu(MenuType type)
 		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 500 / 2, 60, 500, 154}, { 124, 110, 319, 104 }, "Schrodinger Quest");
 		
 		//Main buttons
-		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 229 / 2, 270, 229, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
-		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 175 / 2, 290, 175, 40 }, { 114, 35, 306, 35 });
+		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 240 / 2, 290, 240, 40 }, { 114, 35, 306, 35 });
 
 		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 229 / 2, 370, 229, 88 }, { 201, 225, 201, 88 }, "CONTINUE", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 175 / 2, 390, 175, 40 }, { 114, 72, 291, 35 });
@@ -340,22 +340,29 @@ void j1Scene::CreateMenu(MenuType type)
 void j1Scene::Load_Map_By_Name(const char* name)
 {
 
-	if (isMainMenu) {
-		App->gui->ClearUI();
-		App->gui->ReturnConsole();
-		isMainMenu = false;
+	p2SString tmp("%s%s", App->map->folder.GetString(), name);
+	pugi::xml_document map_file;
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+
+	if (result != NULL)
+	{
+		if (isMainMenu) {
+			App->gui->ClearUI();
+			App->gui->ReturnConsole();
+			isMainMenu = false;
+		}
+
+		App->map->active = true;
+		App->entity_manager->active = true;
+
+		App->colliders->ClearColliders();
+		App->map->CleanUp();
+
+		App->map->Load(name);
+		App->pathfinding->UpdatePathFindingMap();
+
+		App->colliders->LoadColliders();
+		App->render->SetMapLimitsWithTMX();
+		App->entity_manager->Player->Start_F3();
 	}
-
-	App->map->active = true;
-	App->entity_manager->active = true;
-
-	App->colliders->ClearColliders();
-	App->map->CleanUp();
-
-	App->map->Load(name);
-	App->pathfinding->UpdatePathFindingMap();
-
-	App->colliders->LoadColliders();
-	App->render->SetMapLimitsWithTMX();
-	App->entity_manager->Player->Start_F3();
 }
