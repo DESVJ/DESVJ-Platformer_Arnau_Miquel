@@ -6,6 +6,15 @@
 class ImageUI;
 class TextInputUI;
 
+enum class commands {
+	none,
+	list,
+	god_mode,
+	quit,
+	FPS,
+	map
+};
+
 class Console :public j1Module {
 public:
 	Console();
@@ -25,6 +34,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp() { return true; };
+
+	int CheckCommand();
 
 public:
 	ImageUI* console_background;
