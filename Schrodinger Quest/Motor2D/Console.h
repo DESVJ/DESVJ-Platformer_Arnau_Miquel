@@ -35,8 +35,8 @@ public:
 	// Called before quitting
 	bool CleanUp() { return true; };
 
-	void CheckCommand();
-	void ExecuteCommand();
+	p2SString CheckCommand();
+	void ExecuteCommand(p2SString argument);
 
 public:
 	ImageUI* console_background;

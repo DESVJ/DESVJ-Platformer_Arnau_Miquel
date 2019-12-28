@@ -6,6 +6,7 @@
 #include "j1Gui.h"
 #include "EntityManager.h"
 #include "j1Input.h"
+#include "j1Scene.h"
 
 Console::Console() {
 	name.create("console");
@@ -47,8 +48,8 @@ bool Console::PreUpdate() {
 	if (console_active == true) {
 		console_input->focus = true;
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-			CheckCommand();
-			ExecuteCommand();
+			p2SString argument=CheckCommand();
+			ExecuteCommand(argument);
 			console_input->SetLabel("");
 		}
 		label = console_input->GetLabel();
@@ -62,7 +63,8 @@ void Console::ActivateConsole() {
 	console_input->SetLabel(label.GetString());
 }
 
-void Console::CheckCommand() {
+p2SString Console::CheckCommand() {
+	p2SString argument = "";
 	const char* command_text = console_input->GetLabel().GetString();
 	if (!strcmp(command_text, "list"))
 		command = commands::list;
@@ -74,25 +76,36 @@ void Console::CheckCommand() {
 		command = commands::FPS;
 	else if (!strcmp(command_text, "map"))
 		command = commands::map;
-	else 
-		command = commands::none;
+	else {
+		p2SString three_letters_command = argument = console_input->GetLabel();
+		int num_of_letters = three_letters_command.Length();
+		for (int i = 3; i < num_of_letters; i++) {
+			three_letters_command= three_letters_command.Supr(3);
+		}
+		for (int i = 0; i < 4; i++) {
+			argument = argument.Supr(0);
+		}
+		if (!strcmp(three_letters_command.GetString(), "FPS") || !strcmp(three_letters_command.GetString(), "Fps") || !strcmp(three_letters_command.GetString(), "fps"))
+			command = commands::FPS;
+		else if (!strcmp(three_letters_command.GetString(), "map"))
+			command = commands::map;
+		else
+			command = commands::none;
+	}
+	return argument;
 }
 
-void Console::ExecuteCommand() {
+void Console::ExecuteCommand(p2SString argument) {
+	int fps = 0;
 	switch (command) {
 	case commands::list:
 		LOG("Commands available: list, god_mode, quit, FPS, map");
 		break;
 
 	case commands::god_mode:
-		if (App->entity_manager->Player != NULL) {
-			App->entity_manager->Player->player.player_god_mode = !App->entity_manager->Player->player.player_god_mode;
-			App->entity_manager->Player->player.player_not_jumping = true;
-			App->entity_manager->Player->player.spacebar_pushed = false;
-		}
-		else {
-			LOG("You cannot go to god_mode because you are not playing");
-		}
+		App->entity_manager->Player->player.player_god_mode = !App->entity_manager->Player->player.player_god_mode;
+		App->entity_manager->Player->player.player_not_jumping = true;
+		App->entity_manager->Player->player.spacebar_pushed = false;
 		break;
 
 	case commands::quit:
@@ -100,9 +113,16 @@ void Console::ExecuteCommand() {
 		break;
 
 	case commands::FPS:
+		if(strcmp(argument.GetString(),""))
+			fps = std::stoul(argument.GetString());
+		if (fps >= 30 && fps <= 120)
+			App->fps_limit = fps;
+		else
+			LOG("Please, write as argument a number that goes between 30 and 120");
 		break;
 
 	case commands::map:
+		App->scene->Load_Map_By_Name(argument.GetString());
 		break;
 
 	case commands::none:
