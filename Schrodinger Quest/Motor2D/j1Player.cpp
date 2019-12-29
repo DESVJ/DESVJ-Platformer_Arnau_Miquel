@@ -307,6 +307,13 @@ void j1Player::Start_F3()
 	Change_Col_State(player_colision_state::NONE);
 
 	//Restart player vars
+	current_lives = max_lives;
+	for (int i = 0; i < max_lives; i++)
+	{
+		if(live_gfx[i])
+			live_gfx[i]->active = true;
+	}
+
 	flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
@@ -347,9 +354,12 @@ void j1Player::TakeDamage()
 		current_lives--;
 		live_gfx[current_lives]->active = false;
 	}
-	else
+	else if(current_lives - 1 == 0)
 	{
 		//Die
+		current_lives--;
+		live_gfx[current_lives]->active = false;
+		Change_Col_State(player_colision_state::DYING);
 	}
 
 
@@ -381,6 +391,7 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("stop_attack") = player.stop_attack;
 	player_node.append_attribute("col_state") = player.col_state;
 	player_node.append_attribute("actual_state") = actual_state;
+	player_node.append_attribute("current_lives") = current_lives;
 
 	return true;
 }
@@ -407,6 +418,17 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.stop_attack = data.child("player_info").attribute("stop_attack").as_bool();
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
+	current_lives = data.child("player_info").attribute("current_lives").as_int();
+	for (int i = 0; i < max_lives; i++)
+	{
+		if (i < current_lives && live_gfx[i]) {
+			live_gfx[i]->active = true;
+		}
+		else
+		{
+			live_gfx[i]->active = false;
+		}
+	}
 
 	return true;
 }
