@@ -155,6 +155,7 @@ public:
 
 	p2Point<bool> OnCollision(Collider*, SDL_Rect, SDL_Rect*, Direction, p2Point<bool>);
 	void AfterCollision(p2Point<bool>, SDL_Rect, p2Point<int>);
+	void TakeDamage();
 
 
 public:
@@ -174,9 +175,11 @@ public:
 	bool canJump;
 	bool typeColDetected;
 
-	//int current_lives;
-	//int max_lives;
+	int current_lives;
+	int max_lives;
 	UI* live_gfx[3];
+	bool canTakeDamage;
+	float damageCooldown;
 
 private:
 

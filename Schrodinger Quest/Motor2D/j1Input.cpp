@@ -168,8 +168,8 @@ bool j1Input::PreUpdate()
 	}
 
 	//Close game
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		exitGame = true;
+	//if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	//	exitGame = true;
 
 	return true;
 }

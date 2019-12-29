@@ -16,6 +16,10 @@
 j1Player::j1Player(Types type) : eCreature(Types::player)
 {
 	name.create("player");
+	max_lives = 3;
+	current_lives = max_lives;
+	canTakeDamage = true;
+	damageCooldown = 0.f;
 }
 
 // Destructor
@@ -108,6 +112,18 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+
+	if (!canTakeDamage) 
+	{
+		damageCooldown = LerpNum(damageCooldown, 3.5f, dt);
+		if (damageCooldown >= 3.f) 
+		{
+			canTakeDamage = true;
+			damageCooldown = 0.f;
+		}
+	}
+
+
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
 	Animation* current_animation = ExecuteState(speed, actual_state, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip);
@@ -305,6 +321,13 @@ void j1Player::Start_F3()
 	Change_Col_State(player_colision_state::NONE);
 
 	//Restart player vars
+	current_lives = max_lives;
+	for (int i = 0; i < max_lives; i++)
+	{
+		if(live_gfx[i])
+			live_gfx[i]->active = true;
+	}
+
 	flip = false;
 	player.player_not_jumping = true;
 	player.player_god_mode = false;
@@ -324,6 +347,38 @@ void j1Player::Start_F3()
 void j1Player::Change_Col_State(player_colision_state state)
 {
 	player.col_state = state;
+}
+
+void j1Player::TakeDamage() 
+{
+
+	if (canTakeDamage) 
+	{
+		canTakeDamage = false;
+		if (flip == SDL_FLIP_NONE)
+		{
+			speed.x = -5;
+		}
+		else
+		{
+			speed.x = 5;
+		}
+
+		speed.y = -5;
+		if (current_lives - 1 > 0)
+		{
+			//Remove live
+			current_lives--;
+			live_gfx[current_lives]->active = false;
+		}
+		else if (current_lives - 1 == 0)
+		{
+			//Die
+			current_lives--;
+			live_gfx[current_lives]->active = false;
+			Change_Col_State(player_colision_state::DYING);
+		}
+	}
 }
 
 bool j1Player::Save(pugi::xml_node& data)const 
@@ -352,6 +407,7 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("stop_attack") = player.stop_attack;
 	player_node.append_attribute("col_state") = player.col_state;
 	player_node.append_attribute("actual_state") = actual_state;
+	player_node.append_attribute("current_lives") = current_lives;
 
 	return true;
 }
@@ -378,6 +434,17 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.stop_attack = data.child("player_info").attribute("stop_attack").as_bool();
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
+	current_lives = data.child("player_info").attribute("current_lives").as_int();
+	for (int i = 0; i < max_lives; i++)
+	{
+		if (i < current_lives && live_gfx[i]) {
+			live_gfx[i]->active = true;
+		}
+		else
+		{
+			live_gfx[i]->active = false;
+		}
+	}
 
 	return true;
 }
@@ -548,8 +615,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
 	{
-		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP
-			|| (actual_state == state::S_IDLE && in_collider->collider_rect.y - in_collider->collider_rect.h >= collider->collider_rect.y)) 
+		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP) 
 		{
 			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x + in_collider->collider_rect.w >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x - in_collider->collider_rect.w <= collider->collider_rect.x + collider->collider_rect.w))
 			{
@@ -571,9 +637,10 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 		else if (!player.player_god_mode)
 		{
-			Change_Col_State(player_colision_state::DYING);
-			typeColDetected = true;
-			LOG("KILL");
+			//Change_Col_State(player_colision_state::DYING);
+			//typeColDetected = true;
+			//LOG("KILL");
+			TakeDamage();
 		}
 	}
 
