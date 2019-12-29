@@ -450,6 +450,8 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("current_lives") = current_lives;
 	player_node.append_attribute("score") = score;
 	player_node.append_attribute("time") = time;
+	player_node.append_attribute("coins") = coinsCollected;
+
 
 	return true;
 }
@@ -477,6 +479,7 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
 	current_lives = data.child("player_info").attribute("current_lives").as_int();
+	coinsCollected = data.child("player_info").attribute("coins").as_int();
 	for (int i = 0; i < max_lives; i++)
 	{
 		if (i < current_lives && live_gfx[i]) {
@@ -692,6 +695,32 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 			//typeColDetected = true;
 			//LOG("KILL");
 			TakeDamage();
+		}
+	}
+
+	if (in_collider->collider_type == Collider_Types::PICKUP)
+	{
+		if (current_lives < max_lives)
+		{
+			current_lives++;
+			for (int i = 0; i < current_lives; i++)
+			{
+				live_gfx[i]->active = true;
+			}
+			for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
+			{
+				Entity* ent = App->entity_manager->entities[i];
+				if (ent->entity_type == Types::healing_potion)
+				{
+					eCreature* creature = (eCreature*)App->entity_manager->entities[i];
+					if (creature->collider == in_collider)
+					{
+						in_collider->collider_rect.x = -100;
+						in_collider->collider_rect.y = -100;
+						creature->alive = false;
+					}
+				}
+			}
 		}
 	}
 

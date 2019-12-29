@@ -1,6 +1,8 @@
 #include "EntityManager.h"
 #include "eSnakeEnemy.h"
 #include "eBatEnemy.h"
+#include"ePotion.h"
+#include"eCoin.h"
 
 EntityManager::EntityManager()
 {
@@ -104,7 +106,7 @@ bool EntityManager::Save(pugi::xml_node& s) const
 //Called when creating a new Entity
 Entity* EntityManager::CreateEntity(Types type) 
 {
-	static_assert(Types::unknown == (Types)5, "Types need update");
+	static_assert(Types::unknown == (Types)6, "Types need update");
 	Entity* ret = nullptr;
 	pugi::xml_document	info_file;
 	pugi::xml_document info_file2;
@@ -127,6 +129,11 @@ Entity* EntityManager::CreateEntity(Types type)
 
 	case Types::healing_potion:
 		//load healing potion
+		ret = new ePotion(Types::healing_potion, info_file.child("map"));
+		break;
+
+	case Types::coins:
+		ret = new eCoins(Types::healing_potion, info_file.child("map"));
 		break;
 
 	}
@@ -138,6 +145,11 @@ Entity* EntityManager::CreateEntity(Types type)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("ground_enemy"));
 		else if(type == Types::enemy_air)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("fly_enemy"));
+		else if (type == Types::healing_potion) 
+			ret->Awake(info_file2.child("config").child("entity_manager").child("pickups").child("potion"));
+		else if (type == Types::coins)
+			ret->Awake(info_file2.child("config").child("entity_manager").child("pickups").child("coins"));
+	
 
 	}
 	return ret;

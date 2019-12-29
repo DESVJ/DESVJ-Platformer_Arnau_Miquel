@@ -10,6 +10,7 @@ enum class Types
 	enemy_ground,
 	enemy_air,
 	healing_potion,
+	coins,
 	unknown
 };
 

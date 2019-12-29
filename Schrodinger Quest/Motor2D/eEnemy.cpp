@@ -3,12 +3,21 @@
 
 bool eEnemy::Awake(pugi::xml_node& config) 
 {
+
 	alive = true;
 	pugi::xml_document	enemy_info_file;
 	enemy_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node enemy_node = enemy_info_file.child("map");
 
-	CreateCollider(Collider_Types::ENEMY);
+
+	if (config.child("isPickup").attribute("value").as_bool() == true) 
+	{
+		CreateCollider(Collider_Types::PICKUP);
+	}
+	else
+	{
+		CreateCollider(Collider_Types::ENEMY);
+	}
 
 	LoadAnimationFromTMX(&enemy_node, &idle, "idle");
 	LoadAnimationFromTMX(&enemy_node, &move, "move");

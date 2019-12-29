@@ -117,17 +117,20 @@ bool j1Scene::Update(float dt)
 		App->audio->ChangeVolume(false);
 
 	//Start from the first level
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	if (!isMainMenu)
 	{
-		App->map->map_id = 1;
-		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
-	}
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			App->map->map_id = 1;
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
 
-	//Start from the second level
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
-	{
-		App->map->map_id = 2;
-		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		//Start from the second level
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			App->map->map_id = 2;
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
 	}
 
 	//Start from the beginning of the current level
@@ -190,9 +193,9 @@ bool j1Scene::PostUpdate()
 {
 	if (transitionState == 1 || transitionState == 3 || transitionState == 4)
 	{
-		if (transition.h + 200 * App->GetDT() <= App->win->height)
+		if (transition.h + 500 * App->GetDT() <= App->win->height)
 		{
-			transition.h += 200 * App->GetDT();
+			transition.h += 500 * App->GetDT();
 		}
 		else
 		{
@@ -229,9 +232,9 @@ bool j1Scene::PostUpdate()
 	}
 	if (transitionState == 2) 
 	{
-		if (transition.h - 400 * App->GetDT() >= 0)
+		if (transition.h - 500 * App->GetDT() >= 0)
 		{
-			transition.h -= 400 * App->GetDT();
+			transition.h -= 500 * App->GetDT();
 		}
 		else
 		{
@@ -389,7 +392,7 @@ void j1Scene::CreateMenu(MenuType type)
 		break;
 	case MenuType::PLAYERHUD:
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 250, 60 });
-		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
+		//playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 
 		x = 40;
 		for (int i = 0; i < App->entity_manager->Player->current_lives; i++)
@@ -397,6 +400,7 @@ void j1Scene::CreateMenu(MenuType type)
 			App->entity_manager->Player->live_gfx[i] = App->gui->CreateUIElement(Type::IMAGE, window, { x,  20, 35, 38 }, { 228, 0, 10, 12 });
 			x += 60;
 		}
+		App->gui->CreateUIElement(Type::IMAGE, nullptr, { 10 , ((int)App->win->height - 54), 32 *2, 44 }, { 238, 0, 32, 22 });
 
 		score_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "SCORE: 0000");
 

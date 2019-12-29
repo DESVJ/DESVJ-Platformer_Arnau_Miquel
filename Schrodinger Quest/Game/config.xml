@@ -91,8 +91,7 @@
           <texture_source>textures/Enemy_Sprites/Cobra_Sprite_Sheet.png</texture_source>
           <detection_range value="500"/>
           <life_points value="3"/>
-	  <en_state value="1"/>
-          
+	        <en_state value="1"/>
         </snake>
       </ground_enemy>
 
@@ -108,6 +107,21 @@
       </fly_enemy>
 
     </enemy_info>
+
+    <pickups>
+
+      <potion>
+        <texture_source>textures/Enemy_Sprites/potion.png</texture_source>
+        <isPickup value="true">true</isPickup>
+      </potion>
+      <coins>
+        <texture_source>textures/Enemy_Sprites/coins.png</texture_source>
+        <isPickup value="true">true</isPickup>
+      </coins>
+      
+      
+    </pickups>
+    
     
   </entity_manager>
   

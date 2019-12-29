@@ -306,6 +306,10 @@ bool j1Map::Load(const char* file_name)
 					{
 						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::healing_potion);
 					}
+					if (object->properties[0]->prop_value_s == (p2SString)"coins")
+					{
+						obj_spawned = (eCreature*)App->entity_manager->CreateEntity(Types::coins);
+					}
 
 					if (obj_spawned) 
 					{
