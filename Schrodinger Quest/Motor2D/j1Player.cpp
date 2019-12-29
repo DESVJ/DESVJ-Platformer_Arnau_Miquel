@@ -21,6 +21,7 @@ j1Player::j1Player(Types type) : eCreature(Types::player)
 	current_lives = max_lives;
 	canTakeDamage = true;
 	damageCooldown = 0.f;
+	coinsCollected = 0;
 
 	for (int i = 0; i < max_lives; i++)
 	{
@@ -698,19 +699,17 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 	}
 
+	
 	if (in_collider->collider_type == Collider_Types::PICKUP)
 	{
-		if (current_lives < max_lives)
+
+		for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
 		{
-			current_lives++;
-			for (int i = 0; i < current_lives; i++)
+
+			Entity* ent = App->entity_manager->entities[i];
+			if (ent->entity_type == Types::healing_potion)
 			{
-				live_gfx[i]->active = true;
-			}
-			for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
-			{
-				Entity* ent = App->entity_manager->entities[i];
-				if (ent->entity_type == Types::healing_potion)
+				if (current_lives < max_lives)
 				{
 					eCreature* creature = (eCreature*)App->entity_manager->entities[i];
 					if (creature->collider == in_collider)
@@ -718,10 +717,30 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 						in_collider->collider_rect.x = -100;
 						in_collider->collider_rect.y = -100;
 						creature->alive = false;
+						
+						current_lives++;
+						for (int i = 0; i < current_lives; i++)
+						{
+							live_gfx[i]->active = true;
+						}
+						break;
 					}
 				}
 			}
+			if (ent->entity_type == Types::coins) 
+			{
+				eCreature* creature = (eCreature*)App->entity_manager->entities[i];
+				if (creature->collider == in_collider)
+				{
+					coinsCollected += 1;
+					in_collider->collider_rect.x = -100;
+					in_collider->collider_rect.y = -100;
+					creature->alive = false;
+					break;
+				}
+			}
 		}
+		
 	}
 
 	return prev_res;

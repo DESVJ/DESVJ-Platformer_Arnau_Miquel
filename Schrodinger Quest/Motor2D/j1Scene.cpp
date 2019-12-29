@@ -184,6 +184,10 @@ bool j1Scene::Update(float dt)
 		p2SString time;
 		time.create("%s %.2f", "Time: ", App->entity_manager->Player->time);
 		time_text->SetString(time);
+
+		p2SString coins;
+		coins.create("%s %i", "x ", App->entity_manager->Player->coinsCollected);
+		coins_text->SetString(coins);
 	}
 
 	return true;
@@ -400,7 +404,10 @@ void j1Scene::CreateMenu(MenuType type)
 			App->entity_manager->Player->live_gfx[i] = App->gui->CreateUIElement(Type::IMAGE, window, { x,  20, 35, 38 }, { 228, 0, 10, 12 });
 			x += 60;
 		}
+
 		App->gui->CreateUIElement(Type::IMAGE, nullptr, { 10 , ((int)App->win->height - 54), 32 *2, 44 }, { 238, 0, 32, 22 });
+		coins_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { 84 , ((int)App->win->height - 54), 32 * 2, 44 }, { 0, 0, 0, 0 }, "x 0");
+
 
 		score_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "SCORE: 0000");
 
@@ -443,11 +450,13 @@ bool j1Scene::Load_Map_By_Name(const char* name)
 
 	if (result != NULL)
 	{
-		if (isMainMenu) {
+		if (isMainMenu) 
+		{
 			App->gui->ClearUI();
 			App->gui->ReturnConsole();
 			isMainMenu = false;
 		}
+
 
 		App->map->active = true;
 		App->entity_manager->active = true;

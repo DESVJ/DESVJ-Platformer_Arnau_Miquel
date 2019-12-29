@@ -133,7 +133,7 @@ Entity* EntityManager::CreateEntity(Types type)
 		break;
 
 	case Types::coins:
-		ret = new eCoins(Types::healing_potion, info_file.child("map"));
+		ret = new eCoins(Types::coins, info_file.child("map"));
 		break;
 
 	}
