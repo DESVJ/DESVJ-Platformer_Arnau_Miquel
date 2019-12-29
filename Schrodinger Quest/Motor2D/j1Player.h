@@ -137,6 +137,9 @@ public:
 	//Start level again
 	void Start_F3();
 
+	//Restart all lives
+	void RestartLives();
+
 	//Save
 	bool Save(pugi::xml_node&) const;
 
@@ -183,6 +186,7 @@ public:
 	bool canTakeDamage;
 	float damageCooldown;
 	int score;
+	bool creating_player;
 
 private:
 

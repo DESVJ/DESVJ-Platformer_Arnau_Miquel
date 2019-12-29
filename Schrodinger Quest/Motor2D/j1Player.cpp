@@ -89,6 +89,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	score = time = 0;
 	timer.Start();
 	pause_time = true;
+	creating_player = true;
 
 	return true;
 }
@@ -149,7 +150,22 @@ bool j1Player::Update(float dt)
 	{
 		if (current_animation->GetFinished() == 1) 
 		{
-			respawn = true;
+			if (current_lives - 1 > 0)
+			{
+				//Remove live
+				current_lives--;
+				if (score > 150)
+					score -= 150;
+				else score = 0;
+				live_gfx[current_lives]->active = false;
+				respawn = true;
+			}
+			else if (current_lives - 1 == 0)
+			{
+				//Die
+				current_lives--;
+				live_gfx[current_lives]->active = false;
+			}
 		}
 	}
 
@@ -345,13 +361,10 @@ void j1Player::Start_F3()
 	MoveToSpawn();
 	if (input_in == I_DEAD)input_in = I_NONE;
 	Change_Col_State(player_colision_state::NONE);
-
-	//Restart player vars
-	current_lives = max_lives;
-	for (int i = 0; i < max_lives; i++)
-	{
-		if(live_gfx[i])
-			live_gfx[i]->active = true;
+	
+	if (creating_player == true) {
+		RestartLives();
+		creating_player = false;
 	}
 
 	flip = false;
@@ -368,6 +381,15 @@ void j1Player::Start_F3()
 
 	//Restart camera position
 	//App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });
+}
+
+void j1Player::RestartLives() {
+	current_lives = max_lives;
+	for (int i = 0; i < max_lives; i++)
+	{
+		if (live_gfx[i])
+			live_gfx[i]->active = true;
+	}
 }
 
 void j1Player::Change_Col_State(player_colision_state state)
@@ -391,22 +413,7 @@ void j1Player::TakeDamage()
 		}
 
 		speed.y = -5;
-		if (current_lives - 1 > 0)
-		{
-			//Remove live
-			current_lives--;
-			if (score > 150)
-				score -= 150;
-			else score = 0;
-			live_gfx[current_lives]->active = false;
-		}
-		else if (current_lives - 1 == 0)
-		{
-			//Die
-			current_lives--;
-			live_gfx[current_lives]->active = false;
-			Change_Col_State(player_colision_state::DYING);
-		}
+		Change_Col_State(player_colision_state::DYING);
 	}
 }
 
