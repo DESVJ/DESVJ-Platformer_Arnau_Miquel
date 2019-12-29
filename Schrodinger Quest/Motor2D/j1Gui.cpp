@@ -366,7 +366,7 @@ bool UI::CheckMouse() {
 	if (drageable == true) {
 		int x, y;
 		App->input->GetMouseScreenPosition(x, y);
-		if (x >= screen_rect.x && x <= screen_rect.x + screen_rect.w && y >= screen_rect.y && y <= screen_rect.y + screen_rect.h || focus == true)
+		if ((x >= screen_rect.x && x <= screen_rect.x + screen_rect.w && y >= screen_rect.y && y <= screen_rect.y + screen_rect.h) || focus == true)
 			return true;
 	}
 	return false;
@@ -377,11 +377,9 @@ bool UI::Move() {
 	App->input->GetMouseMotion(x, y);
 	x *= App->win->scale;
 	y *= App->win->scale;
-	LOG("%d", x);
 	if (screen_rect.x + x >= drag_area.x && screen_rect.x + screen_rect.w + x <= drag_area.x + drag_area.w) {
 		local_rect.x += x;
 		quad.x += x;
-		LOG("MVING %d", x);
 	}
 	else if (screen_rect.y + y >= drag_area.y && screen_rect.y + screen_rect.h + y <= drag_area.y + drag_area.h) {
 		local_rect.y += y;
@@ -465,6 +463,10 @@ bool ImageUI::PreUpdate() {
 	int x, y;
 	iPoint initial_position = GetScreenPos();
 	App->input->GetMousePosition(x, y);
+	x *= App->win->scale;
+	y *= App->win->scale;
+	if (CheckFocusable() == true)
+		LOG("%d, %d, %d, %d, %d, %d", x, y, GetScreenPos().x, GetScreenPos().y, quad.x, quad.y);
 	if (CheckFocusable() == true && (x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h)) {
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
 			App->gui->DeleteFocus();
