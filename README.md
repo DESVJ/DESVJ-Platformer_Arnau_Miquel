@@ -62,8 +62,14 @@ Apart from these keys and debug keys you can open and close the console with º 
 * Miquel Suau Gonzàlez
     * Github account: MayKoder(https://github.com/MayKoder)
 
+## Video of the gameplay
+[![Video of the gameplay](https://www.youtube.com/watch?v=G2wOtbUd-Ko)](https://www.youtube.com/watch?v=G2wOtbUd-Ko)
+
 ## Github link
 https://github.com/DESVJ/Schrodinger_Quest
+
+## Latest Release
+https://github.com/DESVJ/Schrodinger_Quest/releases/tag/v1.0
 
 ## Website link
 https://desvj.github.io/Schrodinger_Quest/
