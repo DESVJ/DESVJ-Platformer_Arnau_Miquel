@@ -68,17 +68,13 @@ https://github.com/DESVJ/Schrodinger_Quest
 ## Website link
 https://desvj.github.io/Schrodinger_Quest/
 
-## Innovations //////////CHANGE LATER
+## Innovations
 
 Here is a list with the innovations done in this delivery:
 
-* Use of right button mouse.
+* There are potions that get you a live.
 
-* Animations of enemies loaded with Tiled.
-
-* Added game window/taskbar icon
-
-* Enemy spawn points loaded from tiled
+* Input text enables to delete and backspace and also change position of cursor.
 
 ## Work by members
 
@@ -94,7 +90,7 @@ Here is a list with the innovations done in this delivery:
   
   * Scroll bars
   
-  * UML///////
+  * UML
 
 * Miquel Suau Gonzàlez
 
@@ -105,6 +101,8 @@ Here is a list with the innovations done in this delivery:
   * Lives
 
   * Transitions
+  
+  * Coins and potions
 
 ## Credits
 
