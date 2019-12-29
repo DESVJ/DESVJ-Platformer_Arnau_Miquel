@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="3" height="3" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="141">
+ <imagelayer id="2" name="spritesheet">
+  <image source="Bat_Sprite_Sheet.png" width="80" height="72"/>
+ </imagelayer>
+ <objectgroup id="3" name="idle">
+  <properties>
+   <property name="animation_name" value="idle"/>
+   <property name="speed" type="float" value="0.1"/>
+  </properties>
+  <object id="1" x="1" y="27" width="13" height="8">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="3" x="18" y="27" width="12" height="9">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="4" x="34" y="28" width="11" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="5" x="50" y="27" width="11" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="6" x="64" y="28" width="16" height="6">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="death">
+  <properties>
+   <property name="animation_name" value="death"/>
+   <property name="speed" type="float" value="0.05"/>
+  </properties>
+  <object id="125" x="0" y="52" width="16" height="9">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="126" x="18" y="52" width="10" height="11">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="127" x="35" y="56" width="8" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="128" x="50" y="61" width="9" height="9">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="129" x="64" y="66" width="15" height="5">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="attack">
+  <properties>
+   <property name="animation_name" value="attack"/>
+   <property name="speed" type="float" value="0.5"/>
+  </properties>
+  <object id="131" x="1" y="3" width="13" height="8">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="132" x="18" y="3" width="12" height="9">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="133" x="35" y="4" width="10" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="134" x="51" y="3" width="10" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="135" x="64" y="4" width="16" height="6">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

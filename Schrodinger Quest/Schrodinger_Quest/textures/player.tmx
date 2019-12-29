@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="13" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="117">
+ <imagelayer id="2" name="spritesheet" locked="1">
+  <image source="Player_SpriteSheet.png" width="416" height="512"/>
+ </imagelayer>
+ <objectgroup id="3" name="idle" locked="1">
+  <properties>
+   <property name="animation_name" value="idle"/>
+   <property name="speed" type="float" value="0.2"/>
+  </properties>
+  <object id="1" x="6" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="3" x="37" y="10" width="19" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="4" x="69" y="10" width="19" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="5" x="101" y="10" width="19" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="6" x="134" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="7" x="166" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="8" x="198" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="9" x="230" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="10" x="262" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="11" x="294" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="12" x="326" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="13" x="358" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="14" x="390" y="11" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="move" locked="1">
+  <properties>
+   <property name="animation_name" value="move"/>
+   <property name="speed" type="float" value="0.2"/>
+  </properties>
+  <object id="41" x="5" y="42" width="18" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="42" x="37" y="41" width="18" height="18">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="43" x="69" y="42" width="18" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="44" x="103" y="43" width="14" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="45" x="136" y="42" width="12" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="46" x="168" y="41" width="12" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="47" x="200" y="42" width="12" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="48" x="231" y="43" width="14" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="idle_ladder" locked="1">
+  <properties>
+   <property name="animation_name" value="idle_ladder"/>
+   <property name="speed" type="float" value="1"/>
+  </properties>
+  <object id="67" x="262" y="42" width="15" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="movement_ladder" locked="1">
+  <properties>
+   <property name="animation_name" value="movement_ladder"/>
+   <property name="speed" type="float" value="0.1"/>
+  </properties>
+  <object id="68" x="293" y="42" width="14" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="97" x="328" y="42" width="14" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="jump" locked="1">
+  <properties>
+   <property name="animation_name" value="jump"/>
+   <property name="speed" type="float" value="0.1"/>
+  </properties>
+  <object id="54" x="6" y="171" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" x="36" y="172" width="19" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="56" x="69" y="169" width="18" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="57" x="102" y="167" width="18" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="58" x="133" y="167" width="18" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="59" x="164" y="172" width="19" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="death" locked="1">
+  <properties>
+   <property name="animation_name" value="death"/>
+   <property name="speed" type="float" value="0.05"/>
+  </properties>
+  <object id="60" x="6" y="235" width="16" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="61" x="36" y="236" width="20" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="62" x="65" y="233" width="25" height="22">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="63" x="100" y="241" width="20" height="14">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="64" x="133" y="246" width="21" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="65" x="166" y="245" width="21" height="11">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="66" x="198" y="246" width="21" height="10">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="slide">
+  <properties>
+   <property name="animation_name" value="slide"/>
+   <property name="speed" type="float" value="0.1"/>
+  </properties>
+  <object id="106" x="167" y="204" width="21" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="107" x="199" y="204" width="22" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="down_attack">
+  <properties>
+   <property name="animation_name" value="down_attack"/>
+   <property name="speed" type="float" value="0.5"/>
+  </properties>
+  <object id="112" x="37" y="75" width="24" height="19">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="113" x="69" y="73" width="27" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="114" x="101" y="72" width="27" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="115" x="133" y="73" width="26" height="21">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="116" x="165" y="75" width="25" height="20">
+   <properties>
+    <property name="collider" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="Player_FXS" locked="1">
+  <properties>
+   <property name="death" value="audio/fx/death.wav"/>
+   <property name="jump_down" value="audio/fx/jump_down.wav"/>
+   <property name="jump_up" value="audio/fx/jump_up.wav"/>
+   <property name="switch" value="audio/fx/switch.wav"/>
+  </properties>
+ </objectgroup>
+</map>

@@ -1,0 +1,116 @@
+<!-- Config file for the game -->
+
+<config>
+  <app>
+    <title>Schrödinger Quest</title>
+    <organization>UPC</organization>
+    <save_game_source>save_game.xml</save_game_source>
+    <max_fps value ="60"/>
+    <min_fps_cap value ="30"/>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+  </renderer>
+
+  <audio>
+    <difference value="80"/>
+  </audio>
+
+  <window>
+    <!--<resolution width="960" height="540" scale="3"/>-->
+    <resolution width="1024" height="768" scale="3"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+    <scale_Correction value ="1.6"/>
+    <scale_No_Correction value ="1"/>
+    <correction value ="2"/>
+  </window>
+
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <gui>
+
+    <atlas source="maps/ui_atlas.png"/>
+  
+    
+  </gui>
+    
+
+  <console>
+    <input position_x="0" position_y="300" position_w="1024" position_h="21" red="0" blue="100" green="0" alpha="255"/>
+    <background position_x="0" position_y="0" position_w="1024" position_h="300" red="0" blue="0" green="0" alpha="255"/>
+    <output position_x="0" position_y="0" position_w="1024" position_h="18" d_area_x="0" d_area_y="-100000" d_area_w="0" d_area_h="200000"/>
+  </console>
+
+  <map>
+    <folder>maps/</folder>
+    <maps>
+      <!--<map id="0" source="main_menu.tmx"/>-->
+	    <map id="1" source="map_1_final.tmx"/>
+	    <map id="2" source="map_2_final.tmx"/>
+    </maps>
+      
+    <culling_offset value="0" />
+    
+    
+  </map>
+
+
+  <entity_manager>
+    <player>
+   	 <!--Everything reletad to player movement-->    
+    	<movement gravity="1" />
+    	<load_file>textures/player.tmx</load_file>
+    	<difference_y value="256"/>
+    	<inputs_out value="0"/>
+    	<actual_state value="1"/>
+    	<gravity value="1"/>
+    	<maximum_speed value="8"/>
+    	<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="true" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0">
+		  <position x="104" y="816" w="16" h="-20" />
+		  <speed x="0" y="1" />
+   	 </player_info>
+   	 <texture_source>textures/Player_SpriteSheet.png</texture_source>
+
+    	<animation_created_mov value="0" />
+   	 <tangSwitchDeadCheck value="false" />
+    	<canJump value="false" />
+    	<collider_rect w="15" h="-20" />
+     </player>
+
+    <enemy_info>
+
+      <ground_enemy>
+        <snake>
+          <load_file>textures/Enemy_Sprites/snake.tmx</load_file>
+          <texture_source>textures/Enemy_Sprites/Cobra_Sprite_Sheet.png</texture_source>
+          <detection_range value="500"/>
+          <life_points value="3"/>
+	  <en_state value="1"/>
+          
+        </snake>
+      </ground_enemy>
+
+      <fly_enemy>
+        <bat>
+          <load_file>textures/Enemy_Sprites/bat.tmx</load_file>
+          <texture_source>textures/Enemy_Sprites/Bat_Sprite_Sheet.png</texture_source>
+          <detection_range value="1000"/>
+          <life_points value="2"/>
+	  <en_state value="1"/>
+                      
+        </bat>
+      </fly_enemy>
+
+    </enemy_info>
+    
+  </entity_manager>
+  
+  
+  
+</config>
