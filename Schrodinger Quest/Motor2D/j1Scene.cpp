@@ -172,6 +172,13 @@ bool j1Scene::Update(float dt)
 		App->render->BlitBackgroud(main_menu_background);
 	}
 
+	//Update Score
+	if (!isMainMenu) {
+		p2SString score;
+		score.create("%s %i", "Score: ", App->entity_manager->Player->score);
+		score_text->SetString(score);
+	}
+
 	return true;
 }
 
@@ -199,7 +206,7 @@ bool j1Scene::PostUpdate()
 			{
 				isMainMenu = true;
 				App->stop_game = false;
-				App->entity_manager->CleanUp();
+				//App->entity_manager->CleanUp();
 				CreateMenu(MenuType::MAINMENU);
 			}
 
@@ -376,7 +383,7 @@ void j1Scene::CreateMenu(MenuType type)
 			x += 60;
 		}
 
-		App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, {0, 0, 0, 0}, "SCORE: 0000");
+		score_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "SCORE: 0000");
 
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;

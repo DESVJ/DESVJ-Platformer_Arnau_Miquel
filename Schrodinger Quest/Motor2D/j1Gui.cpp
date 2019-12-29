@@ -546,6 +546,10 @@ bool TextUI::PostUpdate() {
 	return true;
 }
 
+void TextUI::SetString(p2SString new_string) {
+	stri = new_string;
+}
+
 ListTextsUI::ListTextsUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area, bool console) :UI(type, r, p, d, f, d_area, console) {
 	name.create("ListTextsUI");
 	stri.add(str);

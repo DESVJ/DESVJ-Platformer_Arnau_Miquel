@@ -126,6 +126,8 @@ public:
 	// Called after all Updates
 	bool PostUpdate();
 
+	void SetString(p2SString);
+
 public:
 
 	p2SString stri;

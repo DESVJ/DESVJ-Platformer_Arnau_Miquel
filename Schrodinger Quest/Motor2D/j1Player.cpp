@@ -297,8 +297,11 @@ bool j1Player::Update(float dt)
 	if (App->colliders->CheckCollision(position_rect, App->map->end_point) == true) 
 	{
 		App->map->map_id++;
-		if (App->map->map_id > MAX_NUMBER_MAPS)
+		if (App->map->map_id > MAX_NUMBER_MAPS) {
 			App->map->map_id = 1;
+			score += 1000;
+		}
+		else score += 500;
 		App->scene->Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 	}
 
@@ -370,6 +373,9 @@ void j1Player::TakeDamage()
 		{
 			//Remove live
 			current_lives--;
+			if (score > 150)
+				score -= 150;
+			else score = 0;
 			live_gfx[current_lives]->active = false;
 		}
 		else if (current_lives - 1 == 0)
@@ -633,6 +639,10 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 							in_collider->collider_rect.x = -100;
 							in_collider->collider_rect.y = -100;
 							creature->alive = false;
+							if (creature->entity_type == Types::enemy_air)
+								score += 200;
+							else if (creature->entity_type == Types::enemy_ground)
+								score += 100;
 						}
 					}
 				}
