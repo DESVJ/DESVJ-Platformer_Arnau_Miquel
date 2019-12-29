@@ -21,6 +21,11 @@ j1Player::j1Player(Types type) : eCreature(Types::player)
 	current_lives = max_lives;
 	canTakeDamage = true;
 	damageCooldown = 0.f;
+
+	for (int i = 0; i < max_lives; i++)
+	{
+		live_gfx[i] = nullptr;
+	}
 }
 
 // Destructor

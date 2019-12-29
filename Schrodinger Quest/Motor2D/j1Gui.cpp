@@ -525,7 +525,10 @@ WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f
 bool WindowUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	if (this->active)App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
+	quad.x = GetScreenPos().x + dif_sprite.x;
+	quad.y = GetScreenPos().y + dif_sprite.y;
+	if (this->active)App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
+
 	UI::PostUpdate();
 	return true;
 }
