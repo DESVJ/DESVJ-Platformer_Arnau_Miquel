@@ -206,11 +206,12 @@ bool j1Scene::PostUpdate()
 			{
 				App->LoadGame();
 			}
-			else
+			else if(transitionState == 4)
 			{
 				isMainMenu = true;
 				App->stop_game = false;
-				//App->entity_manager->CleanUp();
+				App->entity_manager->active = false;
+				App->map->active = false;
 				CreateMenu(MenuType::MAINMENU);
 			}
 
@@ -281,7 +282,8 @@ void j1Scene::OnClick(UI* element, float argument)
 		}
 		else if (element->name == (p2SString)"RETURN")
 		{
-			if (App->stop_game == true) {
+			if (App->stop_game == true) 
+			{
 				transitionState = 4;
 			}
 			else
