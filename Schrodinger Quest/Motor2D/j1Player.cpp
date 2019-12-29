@@ -18,6 +18,8 @@ j1Player::j1Player(Types type) : eCreature(Types::player)
 	name.create("player");
 	max_lives = 3;
 	current_lives = max_lives;
+	canTakeDamage = true;
+	damageCooldown = 0.f;
 }
 
 // Destructor
@@ -110,6 +112,18 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+
+	if (!canTakeDamage) 
+	{
+		damageCooldown = LerpNum(damageCooldown, 3.5f, dt);
+		if (damageCooldown >= 3.f) 
+		{
+			canTakeDamage = true;
+			damageCooldown = 0.f;
+		}
+	}
+
+
 	player.player_climbing = false;
 	bool reset_animation = CheckState(inputs_out, actual_state, input_in, input_out);
 	Animation* current_animation = ExecuteState(speed, actual_state, reset_animation, player.player_climbing, alive, player.player_god_mode, player.player_in_air, player.player_stop_jumping_up, flip);
@@ -338,31 +352,33 @@ void j1Player::Change_Col_State(player_colision_state state)
 void j1Player::TakeDamage() 
 {
 
-	if (flip == SDL_FLIP_NONE) 
+	if (canTakeDamage) 
 	{
-		speed.x = -5;
-	}
-	else
-	{
-		speed.x = 5;
-	}
+		canTakeDamage = false;
+		if (flip == SDL_FLIP_NONE)
+		{
+			speed.x = -5;
+		}
+		else
+		{
+			speed.x = 5;
+		}
 
-	speed.y = -5;
-	if (current_lives - 1 > 0) 
-	{
-		//Remove live
-		current_lives--;
-		live_gfx[current_lives]->active = false;
+		speed.y = -5;
+		if (current_lives - 1 > 0)
+		{
+			//Remove live
+			current_lives--;
+			live_gfx[current_lives]->active = false;
+		}
+		else if (current_lives - 1 == 0)
+		{
+			//Die
+			current_lives--;
+			live_gfx[current_lives]->active = false;
+			Change_Col_State(player_colision_state::DYING);
+		}
 	}
-	else if(current_lives - 1 == 0)
-	{
-		//Die
-		current_lives--;
-		live_gfx[current_lives]->active = false;
-		Change_Col_State(player_colision_state::DYING);
-	}
-
-
 }
 
 bool j1Player::Save(pugi::xml_node& data)const 

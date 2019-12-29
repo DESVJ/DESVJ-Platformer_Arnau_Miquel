@@ -178,6 +178,8 @@ public:
 	int current_lives;
 	int max_lives;
 	UI* live_gfx[3];
+	bool canTakeDamage;
+	float damageCooldown;
 
 private:
 

@@ -10,6 +10,11 @@
 #endif
 #define NULL  0
 
+static float LerpNum(float a, float b, float t)
+{
+	return a + (b - a) * t;
+}
+
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \
