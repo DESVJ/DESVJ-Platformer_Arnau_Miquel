@@ -57,11 +57,11 @@ bool Console::PreUpdate() {
 			p2SString argument=CheckCommand();
 			ExecuteCommand(argument);
 			console_input->SetLabel("");
+			console_input->SetPositionToZero();
 		}
 		label = console_input->GetLabel();
 		for (int i = console_log->GetNumberOfStrings(); i < App->num_logs; i++)
 			console_log->SetListOfStrings(App->logs.At(i)->data.GetString(), i);
-		output_pos = console_log->GetScreenRect();
 	}
 	return true;
 }

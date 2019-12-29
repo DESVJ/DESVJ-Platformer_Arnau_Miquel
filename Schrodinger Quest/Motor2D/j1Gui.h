@@ -199,6 +199,8 @@ public:
 
 	void SetLabel(p2SString text);
 
+	void SetPositionToZero();
+
 	p2SString GetLabel() { return label; }
 
 private:

@@ -497,10 +497,7 @@ WindowUI::WindowUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f
 bool WindowUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 	SDL_Rect sprite = UI::Check_Printable_Rect(sprite1, dif_sprite);
-	quad.x = GetScreenPos().x + dif_sprite.x;
-	quad.y = GetScreenPos().y + dif_sprite.y;
-	if (this->active) App->render->BlitInsideQuad((SDL_Texture*)App->gui->GetAtlas(), sprite, quad);
-
+	if (this->active)App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), GetScreenPos().x + dif_sprite.x, GetScreenPos().y + dif_sprite.y, &sprite, 0.f);
 	UI::PostUpdate();
 	return true;
 }
@@ -545,6 +542,8 @@ bool ListTextsUI::PostUpdate() {
 	iPoint dif_sprite = { 0,0 };
 
 	for (int i = 0; i < number_of_stri; i++) {
+		dif_sprite = { 0,0 };
+
 		SDL_Texture* text = App->font->Print(stri.At(i)->data.GetString());
 
 		SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
@@ -751,4 +750,8 @@ void TextInputUI::SetLabel(p2SString text) {
 		label = text.GetString();
 		position += label.GetCapacity();
 	}
+}
+
+void TextInputUI::SetPositionToZero() {
+	position = 0;
 }
