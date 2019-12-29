@@ -1,6 +1,6 @@
-<mxfile host="www.draw.io" modified="2019-12-29T19:55:04.716Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="H1Ywe-EFpy3MrvBibSuM" version="12.4.7" type="github">
+<mxfile host="www.draw.io" modified="2019-12-29T19:58:03.576Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="osXUDii2Sd2Dp4uQ_vNd" version="12.4.7" type="github">
   <diagram id="9TCni8zkd9GzKKKIGCB6" name="Page-1">
-    <mxGraphModel dx="865" dy="483" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2595" dy="1450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -173,25 +173,25 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-48" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="1460" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-49" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="1190" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="1190" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-50" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="950" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="950" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-51" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="710" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="710" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-52" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="480" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="480" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-53" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
-          <mxGeometry x="174.5" y="640" width="40" height="20" as="geometry"/>
+          <mxGeometry x="174.5" y="637" width="40" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="NNJdT-l5_N1uOXzTAoso-56" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;Assumptions&lt;/font&gt;:&lt;/b&gt; All the functions that only return true or create a name won&#39;t appear in this UML (because they&#39;re not important to understand the code). The console isn&#39;t relevant to the UI and it&#39;s manager so it won&#39;t appear here There is an enum that is listed here: Type (with all the different types of UI: none, button, image, window, text, listtexts, input and unknown)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="390" width="210" height="170" as="geometry"/>
+          <mxGeometry x="30" y="390" width="210" height="180" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
