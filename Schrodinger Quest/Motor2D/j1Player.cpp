@@ -408,6 +408,7 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("col_state") = player.col_state;
 	player_node.append_attribute("actual_state") = actual_state;
 	player_node.append_attribute("current_lives") = current_lives;
+	player_node.append_attribute("score") = score;
 
 	return true;
 }
@@ -445,6 +446,7 @@ bool j1Player::Load(pugi::xml_node& data)
 			live_gfx[i]->active = false;
 		}
 	}
+	score = data.child("player_info").attribute("score").as_int();
 
 	return true;
 }

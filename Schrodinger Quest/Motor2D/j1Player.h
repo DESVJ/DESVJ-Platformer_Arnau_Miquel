@@ -180,6 +180,7 @@ public:
 	UI* live_gfx[3];
 	bool canTakeDamage;
 	float damageCooldown;
+	int score;
 
 private:
 
