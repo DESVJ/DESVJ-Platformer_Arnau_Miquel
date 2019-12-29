@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="60" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="124" nextobjectid="122">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="60" height="54" tilewidth="16" tileheight="16" infinite="0" nextlayerid="124" nextobjectid="125">
  <tileset firstgid="1" name="map_2_Tileset" tilewidth="16" tileheight="16" tilecount="1984" columns="62">
   <image source="map_2_Tileset_2.png" width="1001" height="512"/>
  </tileset>
@@ -32725,6 +32725,21 @@
   <object id="119" name="Health spawn" x="256" y="176" width="16" height="16">
    <properties>
     <property name="Type" value="heal"/>
+   </properties>
+  </object>
+  <object id="122" x="128" y="124" width="16" height="16">
+   <properties>
+    <property name="Type" value="coins"/>
+   </properties>
+  </object>
+  <object id="123" x="640" y="156" width="16" height="16">
+   <properties>
+    <property name="Type" value="coins"/>
+   </properties>
+  </object>
+  <object id="124" x="544" y="556" width="16" height="16">
+   <properties>
+    <property name="Type" value="coins"/>
    </properties>
   </object>
  </objectgroup>

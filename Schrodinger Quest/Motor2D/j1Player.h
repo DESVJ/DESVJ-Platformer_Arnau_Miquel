@@ -187,6 +187,7 @@ public:
 	float damageCooldown;
 	int score;
 	bool creating_player;
+	int coinsCollected;
 
 private:
 

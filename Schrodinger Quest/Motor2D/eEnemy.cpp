@@ -9,8 +9,8 @@ bool eEnemy::Awake(pugi::xml_node& config)
 	enemy_info_file.load_file(config.child("load_file").child_value());
 	pugi::xml_node enemy_node = enemy_info_file.child("map");
 
-	LOG("%s", config.child("isPotion").child_value());
-	if (config.child("isPotion").attribute("value").as_bool() == true) 
+
+	if (config.child("isPickup").attribute("value").as_bool() == true) 
 	{
 		CreateCollider(Collider_Types::PICKUP);
 	}

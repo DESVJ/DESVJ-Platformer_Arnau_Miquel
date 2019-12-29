@@ -117,17 +117,20 @@ bool j1Scene::Update(float dt)
 		App->audio->ChangeVolume(false);
 
 	//Start from the first level
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	if (!isMainMenu)
 	{
-		App->map->map_id = 1;
-		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
-	}
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			App->map->map_id = 1;
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
 
-	//Start from the second level
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
-	{
-		App->map->map_id = 2;
-		Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		//Start from the second level
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			App->map->map_id = 2;
+			Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
+		}
 	}
 
 	//Start from the beginning of the current level
@@ -397,6 +400,7 @@ void j1Scene::CreateMenu(MenuType type)
 			App->entity_manager->Player->live_gfx[i] = App->gui->CreateUIElement(Type::IMAGE, window, { x,  20, 35, 38 }, { 228, 0, 10, 12 });
 			x += 60;
 		}
+		App->gui->CreateUIElement(Type::IMAGE, nullptr, { 10 , ((int)App->win->height - 54), 32 *2, 44 }, { 238, 0, 32, 22 });
 
 		score_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "SCORE: 0000");
 

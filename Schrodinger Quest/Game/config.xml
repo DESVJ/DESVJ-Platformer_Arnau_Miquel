@@ -112,10 +112,11 @@
 
       <potion>
         <texture_source>textures/Enemy_Sprites/potion.png</texture_source>
-        <isPotion value="true">true</isPotion>
+        <isPickup value="true">true</isPickup>
       </potion>
       <coins>
-        <texture_source>textures/coins.png</texture_source>
+        <texture_source>textures/Enemy_Sprites/coins.png</texture_source>
+        <isPickup value="true">true</isPickup>
       </coins>
       
       

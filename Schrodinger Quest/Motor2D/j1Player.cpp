@@ -450,6 +450,8 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("current_lives") = current_lives;
 	player_node.append_attribute("score") = score;
 	player_node.append_attribute("time") = time;
+	player_node.append_attribute("coins") = coinsCollected;
+
 
 	return true;
 }
@@ -477,6 +479,7 @@ bool j1Player::Load(pugi::xml_node& data)
 	player.col_state = (player_colision_state)data.child("player_info").attribute("col_state").as_int();
 	actual_state = (state)data.child("player_info").attribute("actual_state").as_int();
 	current_lives = data.child("player_info").attribute("current_lives").as_int();
+	coinsCollected = data.child("player_info").attribute("coins").as_int();
 	for (int i = 0; i < max_lives; i++)
 	{
 		if (i < current_lives && live_gfx[i]) {
