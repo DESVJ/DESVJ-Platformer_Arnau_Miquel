@@ -65,6 +65,9 @@ Apart from these keys and debug keys you can open and close the console with º 
 ## Github link
 https://github.com/DESVJ/Schrodinger_Quest
 
+## Latest Release
+https://github.com/DESVJ/Schrodinger_Quest/releases/tag/v1.0
+
 ## Website link
 https://desvj.github.io/Schrodinger_Quest/
 
