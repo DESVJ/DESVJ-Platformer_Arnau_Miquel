@@ -79,6 +79,12 @@
     <ClCompile Include="Console.cpp">
       <Filter>Game Core\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ePotion.cpp">
+      <Filter>Game Core\Modules\PickUps</Filter>
+    </ClCompile>
+    <ClCompile Include="eCoin.cpp">
+      <Filter>Game Core\Modules\PickUps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -186,6 +192,12 @@
     <ClInclude Include="Console.h">
       <Filter>Game Core\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ePotion.h">
+      <Filter>Game Core\Modules\PickUps</Filter>
+    </ClInclude>
+    <ClInclude Include="eCoin.h">
+      <Filter>Game Core\Modules\PickUps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Core">
@@ -211,6 +223,9 @@
     </Filter>
     <Filter Include="Game Core\Modules\eEnemy">
       <UniqueIdentifier>{3b8f66d6-34a2-4395-9855-df1499bef2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Core\Modules\PickUps">
+      <UniqueIdentifier>{dbd0ef43-10bf-4b89-a52a-1dd7e2898863}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

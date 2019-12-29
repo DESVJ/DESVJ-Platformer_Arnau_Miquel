@@ -79,10 +79,12 @@
     <ClCompile Include="Collision_Manager.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="eBatEnemy.cpp" />
+    <ClCompile Include="eCoin.cpp" />
     <ClCompile Include="eCreature.cpp" />
     <ClCompile Include="eEnemy.cpp" />
     <ClCompile Include="EnemyStateMachine.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="ePotion.cpp" />
     <ClCompile Include="eSnakeEnemy.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -107,11 +109,13 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="eBatEnemy.h" />
+    <ClInclude Include="eCoin.h" />
     <ClInclude Include="eCreature.h" />
     <ClInclude Include="eEnemy.h" />
     <ClInclude Include="EnemyStateMachine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="ePotion.h" />
     <ClInclude Include="eSnakeEnemy.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />

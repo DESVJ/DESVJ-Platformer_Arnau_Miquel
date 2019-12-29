@@ -190,7 +190,7 @@ bool j1Scene::PostUpdate()
 {
 	if (transitionState == 1 || transitionState == 3 || transitionState == 4)
 	{
-		if (transition.h + 200 * App->GetDT() <= App->win->height / (int)App->win->GetScale())
+		if (transition.h + 200 * App->GetDT() <= App->win->height)
 		{
 			transition.h += 200 * App->GetDT();
 		}
@@ -222,7 +222,8 @@ bool j1Scene::PostUpdate()
 
 
 
-		App->render->DrawQuad(transition, 0, 0, 0);
+
+		App->render->DrawQuad(transition, 0, 0, 0, 255, true, false);
 		//LOG("%i, %i, %i, %i", transition.x, transition.y, transition.w, transition.h);
 	}
 	if (transitionState == 2) 
