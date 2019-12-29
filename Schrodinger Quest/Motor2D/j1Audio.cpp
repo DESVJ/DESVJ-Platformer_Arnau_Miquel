@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 #include "j1App.h"
+#include "j1Gui.h"
 #include "p2List.h"
 
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -222,4 +223,38 @@ void j1Audio::ChangeVolumeMusic(float volume) {
 void j1Audio::ChangeVolumeFx(float volume) {
 	int volume_int = volume * 128;
 	Mix_Volume(-1, volume_int);
+}
+
+int j1Audio::GetVolumeMusic() {
+	return Mix_VolumeMusic(-1);
+}
+
+int j1Audio::GetVolumeFx() {
+	return Mix_Volume(-1,-1);
+}
+
+void j1Audio::OnClick(UI* element, float volume)
+{
+
+	switch (element->type)
+	{
+
+	case Type::IMAGE:
+
+		if (element->name == (p2SString)"VOLUME_CONTROL")
+		{
+			ChangeVolumeMusic(volume);
+		}
+		else if (element->name == (p2SString)"FX_CONTROL")
+		{
+			ChangeVolumeFx(volume);
+		}
+		break;
+
+
+	default:
+		break;
+	}
+
+
 }

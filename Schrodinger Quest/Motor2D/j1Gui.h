@@ -52,6 +52,7 @@ public:
 	iPoint GetLocalPos();
 	void SetLocalPos(iPoint pos);
 	void SetScreenRect(SDL_Rect rect);
+	void UpdateLocalRect();
 	bool CheckMouse();
 	bool CheckFocusable() { return focusable; }
 	SDL_Rect GetDragArea() { return drag_area; }
@@ -80,7 +81,7 @@ private:
 class ImageUI :public UI
 {
 public:
-	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area);
+	ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area, float drag_position_scroll_bar);
 	ImageUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, bool d, bool f, SDL_Rect d_area);
 
 	// Destructor
@@ -240,7 +241,7 @@ public:
 
 	// Gui creation functions
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite = { 0,0,0,0 }, p2SString str = "", SDL_Rect sprite2 = { 0,0,0,0 }, SDL_Rect sprite3 = { 0,0,0,0 }, bool drageable = false,
-		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr, bool console = false);
+		SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr, bool console = false, float drag_position_scroll_bar = -1);
 	UI* CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable = false, SDL_Rect drag_area = { 0,0,0,0 }, j1Module* s_listener = nullptr);
 	bool DeleteUIElement(UI*);
 

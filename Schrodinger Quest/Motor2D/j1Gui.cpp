@@ -97,7 +97,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 // class Gui ---------------------------------------------------
 
 UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener,
-	bool console)
+	bool console, float drag_position_scroll_bar)
 {
 	UI* ui = nullptr;
 	switch (type)
@@ -106,7 +106,7 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 		ui = new ButtonUI(Type::BUTTON, p, r, sprite, sprite2, sprite3, true, true, drag_area);
 		break;
 	case Type::IMAGE:
-		ui = new ImageUI(Type::IMAGE, p, r, sprite, drageable, drageable, drag_area);
+		ui = new ImageUI(Type::IMAGE, p, r, sprite, drageable, drageable, drag_area, drag_position_scroll_bar);
 		break;
 	case Type::WINDOW:
 		ui = new WindowUI(Type::WINDOW, p, r, sprite, drageable, drageable, drag_area);
@@ -353,6 +353,15 @@ void UI::SetScreenRect(SDL_Rect rect) {
 	screen_rect = rect;
 }
 
+void UI::UpdateLocalRect() {
+	if (parent != nullptr) {
+		local_rect = { screen_rect.x - parent->screen_rect.x, screen_rect.y - parent->screen_rect.y, screen_rect.w, screen_rect.h };
+	}
+	else {
+		local_rect = screen_rect;
+	}
+}
+
 bool UI::CheckMouse() {
 	if (drageable == true) {
 		int x, y;
@@ -418,7 +427,7 @@ SDL_Rect UI::Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite, SDL_Rect 
 	return sprite;
 }
 
-ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area) {
+ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, SDL_Rect d_area, float drag_position_scroll_bar) :UI(type, r, p, d, f, d_area) {
 	name.create("ImageUI");
 	sprite1 = sprite;
 	quad = r;
@@ -427,6 +436,11 @@ ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, bool d, bool f, 
 	drag_position_1 = { drag_area.w + drag_area.x - GetLocalRect().w,drag_area.h + drag_area.y - GetLocalRect().h };
 	square = false;
 	red = green = blue = alpha = 0;
+	if (drag_position_scroll_bar != -1) {
+		quad.x = drag_position_0.x + (drag_position_scroll_bar * (drag_position_1.x-drag_position_0.x));
+		SetScreenRect(quad);
+		UpdateLocalRect();
+	}
 }
 
 ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area, true) {
@@ -459,7 +473,10 @@ bool ImageUI::PreUpdate() {
 	UI::PreUpdate();
 	if (initial_position != GetScreenPos()) {
 		fPoint drag_position = GetDragPositionNormalized();
-		/////HERE LISTENER WITH DRAG POSITION
+		if (listener)
+		{
+			listener->OnClick(this,drag_position.x);
+		}
 	}
 	return true;
 }

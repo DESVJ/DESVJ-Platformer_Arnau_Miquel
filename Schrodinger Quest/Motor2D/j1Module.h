@@ -74,7 +74,7 @@ public:
 		return true;
 	}
 
-	virtual void OnClick(UI* element) 
+	virtual void OnClick(UI* element, float argument = -1)
 	{
 
 	}

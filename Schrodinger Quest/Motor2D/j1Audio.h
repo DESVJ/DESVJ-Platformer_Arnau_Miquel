@@ -39,8 +39,11 @@ public:
 
 	void ChangeVolumeMusic(float volume);
 	void ChangeVolumeFx(float volume);
+	int GetVolumeMusic();
+	int GetVolumeFx();
 
-	
+	void OnClick(UI* element, float volume);
+
 	bool Save(pugi::xml_node&) const;
 
 private:

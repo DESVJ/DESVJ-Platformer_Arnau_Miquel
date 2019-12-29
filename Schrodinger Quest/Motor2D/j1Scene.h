@@ -44,7 +44,7 @@ public:
 
 	//Load map
 	void Load_Map_By_Name(const char*);
-	void OnClick(UI* element);
+	void OnClick(UI* element, float argument=0);
 
 	//UI creation
 	void CreateMenu(MenuType type);
