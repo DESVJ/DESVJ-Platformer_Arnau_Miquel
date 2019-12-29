@@ -183,7 +183,7 @@ void EntityManager::RespawnCreatures()
 
 }
 
-void EntityManager::Deactivate(){
+void EntityManager::Deactivate(bool deactivate_player_and_module){
 	for (int i = entities.count() - 1; i >= 0; i--)
 	{
 		if (entities.At(i)->data != Player) {
@@ -191,6 +191,8 @@ void EntityManager::Deactivate(){
 			entities.del(entities.At(i));
 		}
 	}
-	Player->creating_player = true;
-	active = false;
+	if (deactivate_player_and_module == true) {
+		Player->creating_player = true;
+		active = false;
+	}
 }

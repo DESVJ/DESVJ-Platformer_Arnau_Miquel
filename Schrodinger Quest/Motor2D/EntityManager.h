@@ -48,7 +48,7 @@ public:
 	void RespawnCreatures();
 
 	//Delete all enemies and deactivate player
-	void Deactivate();
+	void Deactivate(bool deactivate_player_and_module = true);
 
 public:
 	p2List <Entity*> entities;
