@@ -396,20 +396,26 @@ void j1Scene::CreateMenu(MenuType type)
 		score_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x - 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "SCORE: 0000");
 
 
-		time_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { midPoint.x + 250 / 2, 10, 250, 60 }, { 0, 0, 0, 0 }, "TIME: 0000");
+		time_text = (TextUI*)App->gui->CreateUIElement(Type::TEXT, nullptr, { (int)App->win->width - 250, 10, 250, 60 }, { 0, 0, 0, 0 }, "TIME: 0000");
 
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;
 
 	case MenuType::INGAMEMENU:
-		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 50, 550, ((int)App->win->height - 100) });
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 500 / 2, 50, 500, ((int)App->win->height - 125) }, { 454 , 124, 90, 90 });
 
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 75, 325, 60 }, { 405, 72, 272, 36 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,200,286,22 }, { 0,1121,858,68 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,192,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,192,264,0 }, App->audio, false, ((float)App->audio->GetVolumeMusic() / (float)128));
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 90, 325, 60 }, { 405, 72, 272, 36 });
 
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,400,286,22 }, { 0,1121,858,68 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,392,36,36 }, { 0,1006,108,115 }, "FX_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,392,264,0 }, App->audio, false, ((float)App->audio->GetVolumeFx() / (float)128));
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 286 / 2,300,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,292,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,192,264,0 }, App->audio, false, ((float)App->audio->GetVolumeMusic() / (float)128));
+
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 215 / 2, 220, 215, 50 }, { 113, 1017, 194, 38 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 150 / 2, 410, 150, 60 }, { 115, 1058, 109, 38 });
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 286 / 2,500,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,492,36,36 }, { 0,1006,108,115 }, "FX_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,392,264,0 }, App->audio, false, ((float)App->audio->GetVolumeFx() / (float)128));
 
 		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 220 / 2, 570, 80, 80 }, { 108, 544, 108, 116 }, "RESUME", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 570, 80, 80 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
