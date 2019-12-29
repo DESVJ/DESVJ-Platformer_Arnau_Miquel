@@ -55,7 +55,7 @@ Apart from these keys and debug keys you can open and close the console with º 
 * map <name of map> - that will change the map to the one given.
 
 ## Authors
-![alt text](https://github.com/DESVJ/Schrodinger_Quest/blob/master/Schrodinger%20Quest/Team_Photo.PNG)
+![photo_team](https://github.com/DESVJ/Schrodinger_Quest/blob/master/Schrodinger%20Quest/Team_Photo.PNG)
 * Arnau Falgueras Garcia de Atocha
     * Github account: Arnau77(https://github.com/Arnau77)
 
