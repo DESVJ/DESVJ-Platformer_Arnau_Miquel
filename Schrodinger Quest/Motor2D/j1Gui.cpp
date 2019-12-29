@@ -375,9 +375,13 @@ bool UI::CheckMouse() {
 bool UI::Move() {
 	int x, y;
 	App->input->GetMouseMotion(x, y);
+	x *= App->win->scale;
+	y *= App->win->scale;
+	LOG("%d", x);
 	if (screen_rect.x + x >= drag_area.x && screen_rect.x + screen_rect.w + x <= drag_area.x + drag_area.w) {
 		local_rect.x += x;
 		quad.x += x;
+		LOG("MVING %d", x);
 	}
 	else if (screen_rect.y + y >= drag_area.y && screen_rect.y + screen_rect.h + y <= drag_area.y + drag_area.h) {
 		local_rect.y += y;
@@ -586,6 +590,7 @@ void ListTextsUI::SetListOfStrings(p2SString string, int position) {
 		screen_rect.h += quad.h;
 		quad.y = screen_rect.y = (parent_screen_rect.y + parent_screen_rect.h) - screen_rect.h;
 		SetScreenRect(screen_rect);
+		UpdateLocalRect();
 	}
 }
 
