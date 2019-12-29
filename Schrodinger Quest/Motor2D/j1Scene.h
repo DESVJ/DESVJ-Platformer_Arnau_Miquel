@@ -11,7 +11,8 @@ enum class MenuType {
 	MAINMENU,
 	SETTINGS,
 	CREDITS,
-	PLAYERHUD
+	PLAYERHUD,
+	INGAMEMENU
 };
 
 class j1Scene : public j1Module

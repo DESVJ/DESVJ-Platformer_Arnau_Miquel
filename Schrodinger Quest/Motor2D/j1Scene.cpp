@@ -354,6 +354,10 @@ void j1Scene::CreateMenu(MenuType type)
 
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;
+
+	case MenuType::INGAMEMENU:
+		//in game menu here
+		break;
 	}
 	App->gui->ReturnConsole();
 }
