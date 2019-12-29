@@ -351,10 +351,14 @@ bool UI::CheckMouse() {
 bool UI::Move() {
 	int x, y;
 	App->input->GetMouseMotion(x, y);
-	if (screen_rect.x + x >= drag_area.x && screen_rect.x + screen_rect.w + x <= drag_area.x + drag_area.w)
+	if (screen_rect.x + x >= drag_area.x && screen_rect.x + screen_rect.w + x <= drag_area.x + drag_area.w) {
 		local_rect.x += x;
-	else if (screen_rect.y + y >= drag_area.y && screen_rect.y + screen_rect.h + y <= drag_area.y + drag_area.h)
+		quad.x += x;
+	}
+	else if (screen_rect.y + y >= drag_area.y && screen_rect.y + screen_rect.h + y <= drag_area.y + drag_area.h) {
 		local_rect.y += y;
+		quad.y += y;
+	}
 	return true;
 }
 

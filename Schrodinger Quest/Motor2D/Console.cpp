@@ -59,6 +59,7 @@ bool Console::PreUpdate() {
 			console_input->SetLabel("");
 		}
 		label = console_input->GetLabel();
+		output_pos = console_log->GetScreenRect();
 	}
 	return true;
 }
