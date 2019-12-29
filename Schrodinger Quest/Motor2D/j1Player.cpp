@@ -16,6 +16,8 @@
 j1Player::j1Player(Types type) : eCreature(Types::player)
 {
 	name.create("player");
+	max_lives = 3;
+	current_lives = max_lives;
 }
 
 // Destructor
@@ -326,6 +328,33 @@ void j1Player::Change_Col_State(player_colision_state state)
 	player.col_state = state;
 }
 
+void j1Player::TakeDamage() 
+{
+
+	if (flip == SDL_FLIP_NONE) 
+	{
+		speed.x = -5;
+	}
+	else
+	{
+		speed.x = 5;
+	}
+
+	speed.y = -5;
+	if (current_lives - 1 > 0) 
+	{
+		//Remove live
+		current_lives--;
+		live_gfx[current_lives]->active = false;
+	}
+	else
+	{
+		//Die
+	}
+
+
+}
+
 bool j1Player::Save(pugi::xml_node& data)const 
 {
 
@@ -548,8 +577,7 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 
 	if (in_collider->collider_type == Collider_Types::ENEMY)
 	{
-		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP
-			|| (actual_state == state::S_IDLE && in_collider->collider_rect.y - in_collider->collider_rect.h >= collider->collider_rect.y)) 
+		if (actual_state == state::S_DOWN_ATTACK || actual_state == state::S_DOWN_ATTACK_JUMP) 
 		{
 			if ((flip == SDL_FLIP_NONE && in_collider->collider_rect.x + in_collider->collider_rect.w >= collider->collider_rect.x) || (flip == SDL_FLIP_HORIZONTAL && in_collider->collider_rect.x - in_collider->collider_rect.w <= collider->collider_rect.x + collider->collider_rect.w))
 			{
@@ -571,9 +599,10 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 		else if (!player.player_god_mode)
 		{
-			Change_Col_State(player_colision_state::DYING);
-			typeColDetected = true;
-			LOG("KILL");
+			//Change_Col_State(player_colision_state::DYING);
+			//typeColDetected = true;
+			//LOG("KILL");
+			TakeDamage();
 		}
 	}
 
