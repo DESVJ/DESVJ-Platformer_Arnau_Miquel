@@ -45,6 +45,7 @@ public:
 	bool Move();
 
 	SDL_Rect GetScreenRect();
+	SDL_Rect GetParentScreenRect();
 	SDL_Rect GetLocalRect();
 	iPoint GetScreenPos();
 	iPoint GetScreenToWorldPos();
@@ -55,6 +56,7 @@ public:
 	bool CheckFocusable() { return focusable; }
 	SDL_Rect GetDragArea() { return drag_area; }
 	SDL_Rect Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite);
+	SDL_Rect Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite, SDL_Rect quad);
 	bool GetConsole() { return console; }
 
 public:

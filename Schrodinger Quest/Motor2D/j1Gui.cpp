@@ -322,6 +322,13 @@ SDL_Rect UI::GetScreenRect()
 {
 	return screen_rect;
 }
+SDL_Rect UI::GetParentScreenRect()
+{
+	if (parent != nullptr)
+		return parent->screen_rect;
+	else
+		return { 0,0,(int)App->win->width,(int)App->win->height };
+}
 SDL_Rect UI::GetLocalRect() {
 	return local_rect;
 }
@@ -386,6 +393,27 @@ SDL_Rect UI::Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite) {
 	}
 	else if (mask_rect.h < screen_rect.h) {
 		sprite.h -= screen_rect.h - mask_rect.h;
+	}
+	return sprite;
+}
+
+SDL_Rect UI::Check_Printable_Rect(SDL_Rect sprite, iPoint& dif_sprite, SDL_Rect quad) {
+	SDL_Rect parent_screen_rect = GetParentScreenRect();
+	if (mask_rect.x > quad.x) {
+		dif_sprite.x = mask_rect.x - quad.x;
+		sprite.x += dif_sprite.x;
+		sprite.w -= dif_sprite.x;
+	}
+	else if (mask_rect.w < quad.w) {
+		sprite.w -= quad.w - mask_rect.w;
+	}
+	if (parent_screen_rect.y > quad.y) {
+		dif_sprite.y = parent_screen_rect.y - quad.y;
+		sprite.y += dif_sprite.y;
+		sprite.h -= dif_sprite.y;
+	}
+	else if (parent_screen_rect.y+parent_screen_rect.h < quad.y+quad.h) {
+		sprite.h -= quad.y + quad.h - parent_screen_rect.y - parent_screen_rect.h;
 	}
 	return sprite;
 }
@@ -510,7 +538,6 @@ ListTextsUI::ListTextsUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bo
 
 bool ListTextsUI::PostUpdate() {
 
-	
 	SDL_Rect rect = { 0,0,0,0 };
 	iPoint dif_sprite = { 0,0 };
 
@@ -520,29 +547,13 @@ bool ListTextsUI::PostUpdate() {
 		SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
 
 
-		SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
+		SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite, { quad.x,quad.y + (quad.h * i),quad.w,quad.h});
 		if (this->active && this->GetConsole() == false)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, { 0.f, 0.f });
 		else if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y + (i * quad.h), &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
 
 		App->tex->UnLoad(text);
 	}
-
-	SDL_Rect screen_rect = GetScreenRect();
-	screen_rect.h = quad.h * number_of_stri;
-	SetScreenRect(screen_rect);
 	UI::PostUpdate();
-
-	/*SDL_Texture* text = App->font->Print(stri.GetString());
-
-	SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
-
-
-	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
-	if (this->active && this->GetConsole() == false)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, { 0.f, 0.f });
-	else if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y, &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
-	UI::PostUpdate();
-
-	App->tex->UnLoad(text);*/
 
 	return true;
 }
@@ -551,6 +562,11 @@ void ListTextsUI::SetListOfStrings(p2SString string, int position) {
 	if (position > number_of_stri) {
 		stri.add(string);
 		number_of_stri++;
+		SDL_Rect screen_rect = GetScreenRect();
+		SDL_Rect parent_screen_rect = GetParentScreenRect();
+		screen_rect.h += quad.h;
+		quad.y = screen_rect.y = (parent_screen_rect.y + parent_screen_rect.h) - screen_rect.h;
+		SetScreenRect(screen_rect);
 	}
 }
 
