@@ -94,6 +94,19 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
+	{
+		if (isMainMenu) 
+		{
+			exitGame = true;
+		}
+		else
+		{
+			//Trigger in game settings menu
+		}
+	}
+
+
 	//Volume change +
 	if (App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_REPEAT)
 		App->audio->ChangeVolume(true);
@@ -287,14 +300,14 @@ void j1Scene::CreateMenu(MenuType type)
 
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 15, 550, ((int)App->win->height - 30) });
 		//Game title
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 500 / 2, 60, 500, 154}, { 124, 110, 319, 104 }, "Schrodinger Quest");
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 500 / 2, 65, 500, 154}, { 124, 110, 319, 104 }, "Schrodinger Quest");
 		
 		//Main buttons
 		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 240 / 2, 290, 240, 40 }, { 114, 35, 306, 35 });
 
-		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 229 / 2, 370, 229, 88 }, { 201, 225, 201, 88 }, "CONTINUE", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
-		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 175 / 2, 390, 175, 40 }, { 114, 72, 291, 35 });
+		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 260 / 2, 370, 260, 88 }, { 201, 225, 201, 88 }, "CONTINUE", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::IMAGE, playButton, { midPoint.x - 210 / 2, 390, 210, 40 }, { 114, 72, 291, 35 });
 		cont = (ButtonUI*)playButton;
 		if (!existSaveFile)
 		{
@@ -312,13 +325,19 @@ void j1Scene::CreateMenu(MenuType type)
 		
 		break;
 	case MenuType::SETTINGS:
-		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) });
-		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 470, 60, 60 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 50, 550, ((int)App->win->height - 100) });
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 75, 325, 60 }, { 405, 72, 272, 36 });
+
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 130), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
 
 		break;
 	case MenuType::CREDITS:
+
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) });
-		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 470, 60, 60 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 50, 325, 60 }, { 420, 35, 238, 35 });
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 92), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 500 / 2, 145, 500, ((int)App->win->height - 250) }, { 683, 0, 769, 730 });
 
 		break;
 	case MenuType::PLAYERHUD:
