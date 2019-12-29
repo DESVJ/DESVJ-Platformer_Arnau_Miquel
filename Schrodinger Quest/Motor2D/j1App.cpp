@@ -66,7 +66,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 }
 
 double j1App::GetDT() {
-	return dt;
+	if (dt != 0)
+		return dt;
+	else
+		return dt_when_paused;
 }
 
 // Destructor
@@ -211,7 +214,10 @@ void j1App::PrepareUpdate()
 	{
 		dt = 1.0f;
 	}
-	if (stop_game == true)dt = 0.0f;
+	if (stop_game == true) {
+		dt_when_paused = dt;
+		dt = 0.0f;
+	}
 
 	frame_time.Start();
 }

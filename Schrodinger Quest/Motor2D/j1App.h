@@ -105,7 +105,7 @@ public:
 	Collider_Manager*	colliders;
 
 	mutable p2SString	save_game;
-	double GetDT();
+	double				GetDT();
 	bool				stop_game = false;
 
 
@@ -115,6 +115,7 @@ private:
 	p2List<j1Module*>	modules;
 	uint				frames;
 	double				dt;
+	double				dt_when_paused;
 	int					argc;
 	char**				args;
 

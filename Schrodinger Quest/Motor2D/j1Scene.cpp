@@ -177,7 +177,7 @@ bool j1Scene::Update(float dt)
 
 bool j1Scene::PostUpdate()
 {
-	if (transitionState == 1 || transitionState == 3)
+	if (transitionState == 1 || transitionState == 3 || transitionState == 4)
 	{
 		if (transition.h + 200 * App->GetDT() <= App->win->height / (int)App->win->GetScale())
 		{
@@ -191,12 +191,20 @@ bool j1Scene::PostUpdate()
 			{
 				Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 			}
-			else
+			else if(transitionState==3)
 			{
 				App->LoadGame();
 			}
+			else
+			{
+				isMainMenu = true;
+				App->stop_game = false;
+				App->entity_manager->CleanUp();
+				CreateMenu(MenuType::MAINMENU);
+			}
 
-			CreateMenu(MenuType::PLAYERHUD);
+			if(transitionState!=4)
+				CreateMenu(MenuType::PLAYERHUD);
 			transitionState = 2;
 		}
 
@@ -262,7 +270,11 @@ void j1Scene::OnClick(UI* element, float argument)
 		}
 		else if (element->name == (p2SString)"RETURN")
 		{
-			CreateMenu(MenuType::MAINMENU);
+			if (App->stop_game == true) {
+				transitionState = 4;
+			}
+			else
+				CreateMenu(MenuType::MAINMENU);
 		}
 		else if (element->name == (p2SString)"CREDITS")
 		{
@@ -270,7 +282,6 @@ void j1Scene::OnClick(UI* element, float argument)
 		}
 		else if (element->name == (p2SString)"EXIT")
 		{
-			App->stop_game = false;
 			//Exit game
 			exitGame = true;
 		}
