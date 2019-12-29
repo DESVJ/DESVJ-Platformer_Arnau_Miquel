@@ -165,6 +165,7 @@ bool j1Player::Update(float dt)
 				//Die
 				current_lives--;
 				live_gfx[current_lives]->active = false;
+				App->scene->transitionState = 4;
 			}
 		}
 	}
