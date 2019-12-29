@@ -9,6 +9,7 @@
 #include "j1Gui.h"
 #include "Console.h"
 #include "j1Audio.h"
+#include "brofiler/Brofiler.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -21,7 +22,8 @@ j1Gui::~j1Gui()
 
 // Called before render is available
 bool j1Gui::Awake(pugi::xml_node& conf)
-{
+{BROFILER_CATEGORY("Awake_UI", Profiler::Color::MediumPurple)
+
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
@@ -32,7 +34,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 // Called before the first frame
 bool j1Gui::Start()
-{
+{BROFILER_CATEGORY("Start_UI", Profiler::Color::Purple)
+
 	atlas = App->tex->Load(atlas_file_name.GetString());
 	click_sfx = App->audio->LoadFx("audio/fx/button_click.wav");
 
@@ -41,7 +44,8 @@ bool j1Gui::Start()
 
 // Update all guis
 bool j1Gui::PreUpdate()
-{
+{BROFILER_CATEGORY("PreUpdate_UI", Profiler::Color::Beige)
+
 	bool mouse = false;
 	lockClick = false;
 	int count = 0;
@@ -63,7 +67,8 @@ bool j1Gui::PreUpdate()
 
 // Called after all Updates
 bool j1Gui::PostUpdate()
-{
+{BROFILER_CATEGORY("PostUpdate_UI", Profiler::Color::Green)
+
 	for (int i = 0; i < UIs.count(); i++) {
 		UIs.At(i)->data->PostUpdate();
 	}
@@ -72,7 +77,8 @@ bool j1Gui::PostUpdate()
 
 // Called before quitting
 bool j1Gui::CleanUp()
-{
+{BROFILER_CATEGORY("CleanUp_UI", Profiler::Color::Pink)
+
 	LOG("Freeing GUI");
 
 	for (int i = UIs.count() - 1; i >= 0; i--)
@@ -98,7 +104,8 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener,
 	bool console, float drag_position_scroll_bar)
-{
+{BROFILER_CATEGORY("Create_UI_with_sprite", Profiler::Color::Yellow)
+
 	UI* ui = nullptr;
 	switch (type)
 	{
@@ -137,7 +144,9 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 	return UIs.add(ui)->data;
 }
 
-UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable, SDL_Rect drag_area, j1Module* s_listener) {
+UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, p2SString str, int re, int g, int b, int a, bool drageable, SDL_Rect drag_area, j1Module* s_listener) 
+{BROFILER_CATEGORY("Create_UI_with_color_to_draw_quad", Profiler::Color::YellowGreen)
+
 	UI* ui = nullptr;
 	switch (type)
 	{
