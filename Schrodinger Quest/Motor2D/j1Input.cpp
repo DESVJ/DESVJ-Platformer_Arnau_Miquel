@@ -89,6 +89,8 @@ bool j1Input::PreUpdate()
 	App->map->WorldToMap(&mouse_x, &mouse_y);
 
 	special_keys = specialkeys::None;
+	mouse_motion_x = mouse_motion_y = 0;
+
 
 	while(SDL_PollEvent(&event) != 0)
 	{
