@@ -170,3 +170,15 @@ void EntityManager::RespawnCreatures()
 
 
 }
+
+void EntityManager::Deactivate(){
+	for (int i = entities.count() - 1; i >= 0; i--)
+	{
+		if (entities.At(i)->data != Player) {
+			entities.At(i)->data->CleanUp();
+			entities.del(entities.At(i));
+		}
+	}
+	Player->creating_player = true;
+	active = false;
+}

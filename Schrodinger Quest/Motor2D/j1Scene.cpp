@@ -210,7 +210,7 @@ bool j1Scene::PostUpdate()
 			{
 				isMainMenu = true;
 				App->stop_game = false;
-				App->entity_manager->active = false;
+				App->entity_manager->Deactivate();
 				App->map->active = false;
 				CreateMenu(MenuType::MAINMENU);
 			}

@@ -364,7 +364,7 @@ void j1Player::Start_F3()
 	Change_Col_State(player_colision_state::NONE);
 	
 	if (creating_player == true) {
-		RestartLives();
+		RestartPlayer();
 		creating_player = false;
 	}
 
@@ -384,13 +384,16 @@ void j1Player::Start_F3()
 	//App->render->MoveCameraToPointInsideLimits({ player.player_rect.x + (player.player_rect.w / 2), player.player_rect.y });
 }
 
-void j1Player::RestartLives() {
+void j1Player::RestartPlayer() {
 	current_lives = max_lives;
 	for (int i = 0; i < max_lives; i++)
 	{
 		if (live_gfx[i])
 			live_gfx[i]->active = true;
 	}
+	time = 0;
+	score = 0;
+	pause_time = true;
 }
 
 void j1Player::Change_Col_State(player_colision_state state)

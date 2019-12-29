@@ -137,8 +137,8 @@ public:
 	//Start level again
 	void Start_F3();
 
-	//Restart all lives
-	void RestartLives();
+	//Restart all lives, score and time
+	void RestartPlayer();
 
 	//Save
 	bool Save(pugi::xml_node&) const;

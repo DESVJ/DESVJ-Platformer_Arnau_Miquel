@@ -47,6 +47,9 @@ public:
 	//Respawn all creatures
 	void RespawnCreatures();
 
+	//Delete all enemies and deactivate player
+	void Deactivate();
+
 public:
 	p2List <Entity*> entities;
 	j1Player* Player = nullptr;
