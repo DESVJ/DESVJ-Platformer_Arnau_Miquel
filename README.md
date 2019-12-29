@@ -1,6 +1,6 @@
 ﻿# Schrödinger Quest
 
-Schrödinger Quest is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. Also, there are some enemies that will try to chase and kill the player when he is tangible (some even to the extent of chasing him when he becomes intangible), to kill them the player will have to either jump onto them or use his sword. This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) using C++ in Visual Studio and with SDL and pugixml libraries, Tiled for the creation of the maps and Brofiler for checking the time spent in functions of the code. 
+Schrödinger Quest is a platformer game consisting of two levels where the player (apart from moving and jumping like any other platform game) can become intangible being able to pass through most platforms like a ghost. However, there are some platforms specifically designed to counter this ability, becoming only tangible when the player is intangible. Also, there are some enemies that will try to chase and kill the player when he is tangible (some even to the extent of chasing him when he becomes intangible), to kill them the player will have to either jump onto them or use his sword. This game has been made by two second year students of the Design and Development of Videogames degree in CITM Terrassa (UPC) for the subject Game Development using C++ in Visual Studio and with SDL and pugixml libraries, Tiled for the creation of the maps and Brofiler for checking the time spent in functions of the code. 
 
 ## Usage
 
@@ -10,13 +10,17 @@ This game is played using these keys in the keyboard and this button of the mous
 
 * Jump with spacebar.
 
-* Change tangibility with left click of mouse.
+* Change tangibility (playing) or get focus ou a UI element (menus) with left click of mouse.
 
 * Attack with right click of mouse.
 
 * Change volume with +/-.
 
-* Exit the game with Escape.
+* Exit the game (main menu) or activate the in-game menu (playing) with Escape.
+
+* Change the focus of UI elements with Tab.
+
+* Activate a button focused with Enter.
 
 Apart from these keys, there are some debug keys:
 
@@ -30,11 +34,25 @@ Apart from these keys, there are some debug keys:
 
 * Load the previous state with F6.
 
+* Show Debui UI with F8.
+
 * Show colliders and pathfinding with F9.
 
 * God Mode with F10.
 
 * Enable/Disable FPS cap to 30 with F11.
+
+Apart from these keys and debug keys you can open and close the console with º and use these commands:
+
+* list - that will show you all the available commands.
+
+* god_mode - (also godmode or god mode) - that will activate or deactivate god mode.
+
+* quit - that will quit the game.
+
+* FPS <integer between 30 and 120> - (also fps or Fps) - that will change the limit FPS cap to that number.
+
+* map <name of map> - that will change the map to the one given.
 
 ## Authors
 * Arnau Falgueras Garcia de Atocha
@@ -46,7 +64,10 @@ Apart from these keys, there are some debug keys:
 ## Github link
 https://github.com/DESVJ/Schrodinger_Quest
 
-## Innovations
+## Website link
+
+
+## Innovations //////////CHANGE LATER
 
 Here is a list with the innovations done in this delivery:
 
@@ -62,25 +83,27 @@ Here is a list with the innovations done in this delivery:
 
 * Arnau Falgueras Garcia de Atocha
 
-  * State machine of enemies
+  * Skeleton of UI and GUI
   
-  * Entity System
+  * Console
   
   * Brofiler
   
-  * UML
+  * Score and timer
+  
+  * Scroll bars
+  
+  * UML///////
 
 * Miquel Suau Gonzàlez
 
-  * Tiled related with enemies
+  * Menus
   
-  * Collisions with enemies
+  * HUD
   
-  * Dt
+  * Lives
 
-  * Cap to 30fps without vsync
-
-  * PathFinding
+  * Transitions
 
 ## Credits
 
@@ -103,6 +126,10 @@ In order to make this game, we have used art not owned by us. Below we credit th
 		
 		Downloaded from https://opengameart.org/content/living-tissue-background
 
+* Sprites of UI: Free Medieval Game Button Pack by Zuhria Alfitra:
+    * https://www.gameart2d.com/
+    
+    	Downloaded from https://www.gameart2d.com/free-medieval-game-button-pack.html
 
 * Sprites of the player: Pixel Art Adventurer Sprites by Elthen:
     * https://elthen.itch.io/
