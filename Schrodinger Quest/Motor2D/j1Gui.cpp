@@ -465,8 +465,6 @@ bool ImageUI::PreUpdate() {
 	App->input->GetMousePosition(x, y);
 	x *= App->win->scale;
 	y *= App->win->scale;
-	if (CheckFocusable() == true)
-		LOG("%d, %d, %d, %d, %d, %d", x, y, GetScreenPos().x, GetScreenPos().y, quad.x, quad.y);
 	if (CheckFocusable() == true && (x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h)) {
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
 			App->gui->DeleteFocus();
