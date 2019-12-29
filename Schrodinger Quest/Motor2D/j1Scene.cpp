@@ -357,23 +357,29 @@ void j1Scene::CreateMenu(MenuType type)
 		
 		break;
 	case MenuType::SETTINGS:
-		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 50, 550, ((int)App->win->height - 100) });
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 500 / 2, 50, 500, ((int)App->win->height - 150) }, { 454 , 124, 90, 90});
 
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 75, 325, 60 }, { 405, 72, 272, 36 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,200,286,22 }, { 0,1121,858,68 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,192,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,192,264,0 }, App->audio, false, ((float)App->audio->GetVolumeMusic()/(float)128));
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 90, 325, 60 }, { 405, 72, 272, 36 });
 
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,400,286,22 }, { 0,1121,858,68 });
-		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,392,36,36 }, { 0,1006,108,115 }, "FX_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,392,264,0 }, App->audio, false, ((float)App->audio->GetVolumeFx() / (float)128));
 
-		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 130), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 286 / 2,300,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,292,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,192,264,0 }, App->audio, false, ((float)App->audio->GetVolumeMusic()/(float)128));
+
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 215 / 2, 220, 215, 50 }, { 113, 1017, 194, 38 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 150 / 2, 410, 150, 60 }, { 115, 1058, 109, 38 });
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 286 / 2,500,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,492,36,36 }, { 0,1006,108,115 }, "FX_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,392,264,0 }, App->audio, false, ((float)App->audio->GetVolumeFx() / (float)128));
+
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 50, ((int)App->win->height - 180), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
 
 		break;
 	case MenuType::CREDITS:
 
-		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) });
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 25, 550, ((int)App->win->height - 50) }, { 454 , 124, 90, 90 });
 		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 50, 325, 60 }, { 420, 35, 238, 35 });
-		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 92), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 100), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
 		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 500 / 2, 145, 500, ((int)App->win->height - 250) }, { 683, 0, 769, 730 });
 
 		break;
