@@ -695,6 +695,32 @@ p2Point<bool> j1Player::OnCollision(Collider* in_collider, SDL_Rect prediction, 
 		}
 	}
 
+	if (in_collider->collider_type == Collider_Types::PICKUP)
+	{
+		if (current_lives < max_lives)
+		{
+			current_lives++;
+			for (int i = 0; i < current_lives; i++)
+			{
+				live_gfx[i]->active = true;
+			}
+			for (unsigned int i = 0; i < App->entity_manager->entities.count(); i++)
+			{
+				Entity* ent = App->entity_manager->entities[i];
+				if (ent->entity_type == Types::healing_potion)
+				{
+					eCreature* creature = (eCreature*)App->entity_manager->entities[i];
+					if (creature->collider == in_collider)
+					{
+						in_collider->collider_rect.x = -100;
+						in_collider->collider_rect.y = -100;
+						creature->alive = false;
+					}
+				}
+			}
+		}
+	}
+
 	return prev_res;
 }
 void j1Player::AfterCollision(p2Point<bool> col_result, SDL_Rect prediction, p2Point<int> increment)

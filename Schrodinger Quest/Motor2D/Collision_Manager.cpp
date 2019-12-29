@@ -211,6 +211,10 @@ void Collider_Manager::DrawColliders()
 				color = { 255, 0, 0, 50 };
 				break;
 
+			case PICKUP:
+				color = { 255, 255, 255, 50 };
+				break;
+
 			}
 			App->render->DrawQuad(*rect, color.r, color.g, color.b, color.a);
 		}

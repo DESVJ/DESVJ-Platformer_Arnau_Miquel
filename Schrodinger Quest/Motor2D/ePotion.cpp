@@ -7,7 +7,7 @@
 // Called before render is available
 bool ePotion::Awake(pugi::xml_node& config)
 {
-	eEnemy::Awake(config.child("potion"));
+	eEnemy::Awake(config);
 	return true;
 }
 
@@ -17,7 +17,7 @@ bool ePotion::Update(float dt)
 {
 
 	//Render Enemy
-	App->render->Blit(spritesheet, position_rect.x, position_rect.y);
+	App->render->Blit(spritesheet, collider->collider_rect.x, collider->collider_rect.y);
 
 	return true;
 }

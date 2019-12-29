@@ -389,7 +389,7 @@ void j1Scene::CreateMenu(MenuType type)
 		break;
 	case MenuType::PLAYERHUD:
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 250, 60 });
-		playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
+		//playButton = App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 300 / 2, 270, 300, 88 }, { 201, 225, 201, 88 }, "PLAY", { 402, 225, 201, 88 }, { 0, 225, 201, 88 }, false, { 0,0,0,0 }, this);
 
 		x = 40;
 		for (int i = 0; i < App->entity_manager->Player->current_lives; i++)

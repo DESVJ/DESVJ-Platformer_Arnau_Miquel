@@ -140,8 +140,11 @@ Entity* EntityManager::CreateEntity(Types type)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("ground_enemy"));
 		else if(type == Types::enemy_air)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("fly_enemy"));
-		else if (type == Types::healing_potion)
+		else if (type == Types::healing_potion) 
+		{
+			pugi::xml_node a = info_file2.child("config").child("entity_manager").child("pickups").child("potion");
 			ret->Awake(info_file2.child("config").child("entity_manager").child("pickups").child("potion"));
+		}
 
 	}
 	return ret;
