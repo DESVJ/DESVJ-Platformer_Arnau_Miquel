@@ -13,21 +13,22 @@ bool eEnemy::Awake(pugi::xml_node& config)
 	if (config.child("isPickup").attribute("value").as_bool() == true) 
 	{
 		CreateCollider(Collider_Types::PICKUP);
+		collider->collider_rect.w = 20;
+		collider->collider_rect.h = 20;
 	}
 	else
 	{
 		CreateCollider(Collider_Types::ENEMY);
+		LoadAnimationFromTMX(&enemy_node, &idle, "idle");
+		LoadAnimationFromTMX(&enemy_node, &move, "move");
+		LoadAnimationFromTMX(&enemy_node, &death, "death");
+
+		detection_range = config.child("detection_range").attribute("value").as_int();
+		en_state = (Enemy_State)config.child("en_state").attribute("value").as_int();
+
+		collider->collider_rect.w = idle.GetCurrentFrameWithoutAnim().w;
+		collider->collider_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
 	}
-
-	LoadAnimationFromTMX(&enemy_node, &idle, "idle");
-	LoadAnimationFromTMX(&enemy_node, &move, "move");
-	LoadAnimationFromTMX(&enemy_node, &death, "death");
-
-	detection_range = config.child("detection_range").attribute("value").as_int();
-	en_state = (Enemy_State)config.child("en_state").attribute("value").as_int();
-
-	collider->collider_rect.w = idle.GetCurrentFrameWithoutAnim().w;
-	collider->collider_rect.h = -idle.GetCurrentFrameWithoutAnim().h;
 
 	if (!spritesheet)
 	{

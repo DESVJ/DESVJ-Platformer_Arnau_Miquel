@@ -58,6 +58,7 @@ public:
 	ImageUI* menu_text;
 	TextUI* score_text;
 	TextUI* time_text;
+	TextUI* coins_text;
 
 	int transitionState;
 	SDL_Rect transition;
