@@ -7,7 +7,7 @@
 		<music volume="128" />
 	</audio>
 	<map>
-		<map_info name="map_1_final.tmx" />
+		<map_info name="map_2_final.tmx" />
 	</map>
 	<pathfinding />
 	<gui />
@@ -15,85 +15,179 @@
 	<scene />
 	<entity_manager>
 		<player id="0">
-			<player_info flip="true" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0" actual_state="1" current_lives="3" score="400" time="16.1819992">
-				<position x="221" y="192" w="16" h="-20" />
+			<player_info flip="false" not_jumping="true" stop_jumping_up="true" in_air="false" spacebar_pushed="false" god_mode="false" tang_mode="false" alive="true" respawn="false" climbing="false" stop_attack="false" col_state="0" actual_state="1" current_lives="3" score="200" time="7.26599979" coins="0">
+				<position x="349" y="400" w="16" h="-20" />
 				<speed x="0" y="8" />
 			</player_info>
 		</player>
-		<enemy_info id="1">
-			<fly_enemy>
-				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3775">
-					<position x="293" y="724" w="12" h="-9" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
-		</enemy_info>
-		<enemy_info id="2">
-			<fly_enemy>
-				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3776">
-					<position x="456" y="487" w="12" h="-9" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
-		</enemy_info>
-		<enemy_info id="3">
-			<fly_enemy>
-				<bat flip="true" alive="false" player_nearby="false" respawn="false" en_state="4" en_state_update="4" not_chase_tang_mode="false" timer_idle="3777">
-					<position x="-103" y="-100" w="16" h="-9" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
-		</enemy_info>
-		<enemy_info id="4">
-			<fly_enemy>
-				<bat flip="false" alive="false" player_nearby="false" respawn="false" en_state="4" en_state_update="4" not_chase_tang_mode="false" timer_idle="3778">
-					<position x="-97" y="-100" w="16" h="-9" />
-					<speed x="0" y="0" />
-				</bat>
-			</fly_enemy>
-		</enemy_info>
+		<pickups id="1">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="256" y="176" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="2">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="128" y="124" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="3">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="640" y="156" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="4">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="544" y="556" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
 		<enemy_info id="5">
 			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3778">
-					<position x="416" y="800" w="16" h="-14" />
-					<speed x="0" y="2" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6975">
+					<position x="416" y="304" w="17" h="-14" />
+					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="6">
 			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3780">
-					<position x="656" y="576" w="16" h="-14" />
-					<speed x="0" y="2" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6977">
+					<position x="752" y="160" w="17" h="-14" />
+					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="7">
 			<ground_enemy>
-				<snake flip="true" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="13933">
-					<position x="204" y="512" w="16" h="-14" />
-					<speed x="0" y="2" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6979">
+					<position x="592" y="272" w="17" h="-14" />
+					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
 		<enemy_info id="8">
 			<ground_enemy>
-				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="3784">
-					<position x="592" y="176" w="16" h="-14" />
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6981">
+					<position x="913" y="400" w="17" h="-14" />
 					<speed x="0" y="1" />
 				</snake>
 			</ground_enemy>
 		</enemy_info>
-		<pickups id="9">
+		<enemy_info id="9">
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6982">
+					<position x="1104" y="176" w="17" h="-14" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
+		</enemy_info>
+		<enemy_info id="10">
+			<ground_enemy>
+				<snake flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6984">
+					<position x="1280" y="240" w="17" h="-14" />
+					<speed x="0" y="1" />
+				</snake>
+			</ground_enemy>
+		</enemy_info>
+		<enemy_info id="11">
+			<fly_enemy>
+				<bat flip="false" alive="false" player_nearby="false" respawn="false" en_state="4" en_state_update="4" not_chase_tang_mode="false" timer_idle="6986">
+					<position x="-100" y="120" w="16" h="-9" />
+					<speed x="0" y="2" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="12">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6987">
+					<position x="496" y="208" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="13">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6988">
+					<position x="976" y="272" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="14">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6989">
+					<position x="1600" y="368" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<enemy_info id="15">
+			<fly_enemy>
+				<bat flip="false" alive="true" player_nearby="false" respawn="false" en_state="2" en_state_update="2" not_chase_tang_mode="false" timer_idle="6990">
+					<position x="1408" y="96" w="11" h="-10" />
+					<speed x="0" y="0" />
+				</bat>
+			</fly_enemy>
+		</enemy_info>
+		<pickups id="16">
 			<pickup>
-				<potion flip="false" alive="false" respawn="false">
-					<position x="-100" y="-100" w="0" h="0" />
+				<potion flip="false" alive="true" respawn="false">
+					<position x="1056" y="384" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="17">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="1616" y="160" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="18">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="288" y="316" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="19">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="560" y="380" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="20">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="960" y="92" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="21">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="1488" y="476" w="0" h="0" />
+				</potion>
+			</pickup>
+		</pickups>
+		<pickups id="22">
+			<pickup>
+				<potion flip="false" alive="true" respawn="false">
+					<position x="1656" y="28" w="0" h="0" />
 				</potion>
 			</pickup>
 		</pickups>
 	</entity_manager>
 	<fonts />
 	<renderer>
-		<camera x="-238" y="-132" />
+		<camera x="-481" y="-828" />
 	</renderer>
 </game_state>

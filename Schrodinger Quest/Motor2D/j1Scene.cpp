@@ -457,6 +457,7 @@ bool j1Scene::Load_Map_By_Name(const char* name)
 			isMainMenu = false;
 		}
 
+		App->entity_manager->Deactivate(false);
 
 		App->map->active = true;
 		App->entity_manager->active = true;
