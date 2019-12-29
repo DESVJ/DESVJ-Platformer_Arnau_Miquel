@@ -328,6 +328,8 @@ void j1Scene::CreateMenu(MenuType type)
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 50, 550, ((int)App->win->height - 100) });
 
 		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 75, 325, 60 }, { 405, 72, 272, 36 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,400,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x -50,392,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 550,375,550,0 });
 
 		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 275 + 25, ((int)App->win->height - 130), 60, 60 }, { 108, 544, 108, 116 }, "RETURN", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
 
