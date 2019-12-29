@@ -96,7 +96,8 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener, bool console)
+UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SString str, SDL_Rect sprite2, SDL_Rect sprite3, bool drageable, SDL_Rect drag_area, j1Module* s_listener,
+	bool console)
 {
 	UI* ui = nullptr;
 	switch (type)
@@ -112,6 +113,9 @@ UI* j1Gui::CreateUIElement(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, p2SStr
 		break;
 	case Type::TEXT:
 		ui = new TextUI(Type::TEXT, p, r, str, drageable, drageable, drag_area, console);
+		break;
+	case Type::LISTTEXTS:
+		ui = new ListTextsUI(Type::LISTTEXTS, p, r, str, drageable, drageable, drag_area, console);
 		break;
 	}
 
@@ -338,6 +342,10 @@ void UI::SetLocalPos(iPoint pos) {
 	screen_rect.y += r.y;
 }
 
+void UI::SetScreenRect(SDL_Rect rect) {
+	screen_rect = rect;
+}
+
 bool UI::CheckMouse() {
 	if (drageable == true) {
 		int x, y;
@@ -489,6 +497,61 @@ bool TextUI::PostUpdate() {
 	App->tex->UnLoad(text);
 
 	return true;
+}
+
+ListTextsUI::ListTextsUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area, bool console) :UI(type, r, p, d, f, d_area, console) {
+	name.create("ListTextsUI");
+	stri.add(str);
+	number_of_stri = stri.count();
+	quad = r;
+}
+
+
+
+bool ListTextsUI::PostUpdate() {
+
+	
+	SDL_Rect rect = { 0,0,0,0 };
+	iPoint dif_sprite = { 0,0 };
+
+	for (int i = 0; i < number_of_stri; i++) {
+		SDL_Texture* text = App->font->Print(stri.At(i)->data.GetString());
+
+		SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
+
+
+		SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
+		if (this->active && this->GetConsole() == false)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, { 0.f, 0.f });
+		else if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y + (i * quad.h), &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
+
+		App->tex->UnLoad(text);
+	}
+
+	SDL_Rect screen_rect = GetScreenRect();
+	screen_rect.h = quad.h * number_of_stri;
+	SetScreenRect(screen_rect);
+	UI::PostUpdate();
+
+	/*SDL_Texture* text = App->font->Print(stri.GetString());
+
+	SDL_QueryTexture(text, NULL, NULL, &rect.w, &rect.h);
+
+
+	SDL_Rect sprite = UI::Check_Printable_Rect(rect, dif_sprite);
+	if (this->active && this->GetConsole() == false)App->render->Blit(text, GetScreenToWorldPos().x + dif_sprite.x, GetScreenToWorldPos().y + dif_sprite.y, &sprite, false, { 0.f, 0.f });
+	else if (this->active) App->render->Blit(text, quad.x + dif_sprite.x, quad.y + dif_sprite.y, &sprite, false, { 0.f,0.f }, (0.0), 2147483647, 2147483647, false);
+	UI::PostUpdate();
+
+	App->tex->UnLoad(text);*/
+
+	return true;
+}
+
+void ListTextsUI::SetListOfStrings(p2SString string, int position) {
+	if (position > number_of_stri) {
+		stri.add(string);
+		number_of_stri++;
+	}
 }
 
 ButtonUI::ButtonUI(Type type, UI* p, SDL_Rect r, SDL_Rect sprite, SDL_Rect spriten2, SDL_Rect spriten3, bool d, bool f, SDL_Rect d_area) :UI(type, r, p, d, f, d_area) {

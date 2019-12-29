@@ -5,7 +5,7 @@
 
 class ImageUI;
 class TextInputUI;
-class TextUI;
+class ListTextsUI;
 
 enum class commands {
 	none,
@@ -40,7 +40,7 @@ public:
 	void ExecuteCommand(p2SString argument);
 
 public:
-	TextUI* console_log;
+	ListTextsUI* console_log;
 	ImageUI* console_background;
 	TextInputUI* console_input;
 	bool console_active;

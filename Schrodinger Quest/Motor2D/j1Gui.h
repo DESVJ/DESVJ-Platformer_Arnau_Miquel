@@ -14,6 +14,7 @@ enum class Type
 	IMAGE,
 	WINDOW,
 	TEXT,
+	LISTTEXTS,
 	INPUT,
 	UNKNOWN
 };
@@ -49,6 +50,7 @@ public:
 	iPoint GetScreenToWorldPos();
 	iPoint GetLocalPos();
 	void SetLocalPos(iPoint pos);
+	void SetScreenRect(SDL_Rect rect);
 	bool CheckMouse();
 	bool CheckFocusable() { return focusable; }
 	SDL_Rect GetDragArea() { return drag_area; }
@@ -125,6 +127,28 @@ public:
 
 	p2SString stri;
 };
+
+class ListTextsUI :public UI
+{
+public:
+	ListTextsUI(Type type, UI* p, SDL_Rect r, p2SString str, bool d, bool f, SDL_Rect d_area, bool console);
+
+	// Destructor
+	virtual ~ListTextsUI() {}
+
+	// Called after all Updates
+	bool PostUpdate();
+
+	void SetListOfStrings(p2SString string, int position);
+
+	int GetNumberOfStrings() { return number_of_stri; }
+
+private:
+
+	p2List<p2SString> stri;
+	int number_of_stri;
+};
+
 class ButtonUI :public UI
 {
 public:
