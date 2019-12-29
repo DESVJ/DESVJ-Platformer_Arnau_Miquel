@@ -11,6 +11,7 @@
 #include "j1State_Machine.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
+#include "j1Timer.h"
 #include "EntityManager.h"
 
 j1Player::j1Player(Types type) : eCreature(Types::player)
@@ -80,6 +81,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	collider->collider_rect.w = config.child("collider_rect").attribute("w").as_int();
 	collider->collider_rect.h = config.child("collider_rect").attribute("h").as_int();
+	score = time = 0;
+	timer.Start();
+	pause_time = true;
 
 	return true;
 }
@@ -304,6 +308,19 @@ bool j1Player::Update(float dt)
 		else score += 500;
 		App->scene->Load_Map_By_Name(App->map->GetSourceFromID(App->map->map_id).GetString());
 	}
+	if (dt > 0 && App->scene->transitionState == 0) {
+		if (pause_time == true) {
+			timer.Start();
+			uint32 initial_time = timer.Get_Start();
+			initial_time -= time * 1000;
+			timer.Set_Start(initial_time);
+			pause_time = false;
+		}
+		time = timer.ReadSec();
+	}
+	else {
+		pause_time = true;
+	}
 
 	return true;
 }
@@ -416,6 +433,7 @@ bool j1Player::Save(pugi::xml_node& data)const
 	player_node.append_attribute("actual_state") = actual_state;
 	player_node.append_attribute("current_lives") = current_lives;
 	player_node.append_attribute("score") = score;
+	player_node.append_attribute("time") = time;
 
 	return true;
 }
@@ -454,7 +472,11 @@ bool j1Player::Load(pugi::xml_node& data)
 		}
 	}
 	score = data.child("player_info").attribute("score").as_int();
-
+	time = data.child("player_info").attribute("time").as_float();
+	timer.Start();
+	uint32 initial_time=timer.Get_Start();
+	initial_time -= time * 1000;
+	timer.Set_Start(initial_time);
 	return true;
 }
 

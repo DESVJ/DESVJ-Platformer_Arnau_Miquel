@@ -174,7 +174,9 @@ public:
 	bool tangSwitchDeadCheck;
 	bool canJump;
 	bool typeColDetected;
-
+	float time;
+	j1Timer timer;
+	bool pause_time;
 	int current_lives;
 	int max_lives;
 	UI* live_gfx[3];

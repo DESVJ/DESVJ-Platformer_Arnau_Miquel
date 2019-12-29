@@ -57,6 +57,7 @@ public:
 	ButtonUI* menu_buttons[3];
 	ImageUI* menu_text;
 	TextUI* score_text;
+	TextUI* time_text;
 
 	int transitionState;
 	SDL_Rect transition;
