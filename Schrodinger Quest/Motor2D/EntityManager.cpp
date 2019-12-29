@@ -1,6 +1,7 @@
 #include "EntityManager.h"
 #include "eSnakeEnemy.h"
 #include "eBatEnemy.h"
+#include"ePotion.h"
 
 EntityManager::EntityManager()
 {
@@ -127,6 +128,7 @@ Entity* EntityManager::CreateEntity(Types type)
 
 	case Types::healing_potion:
 		//load healing potion
+		ret = new ePotion(Types::healing_potion, info_file.child("map"));
 		break;
 
 	}
@@ -138,6 +140,8 @@ Entity* EntityManager::CreateEntity(Types type)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("ground_enemy"));
 		else if(type == Types::enemy_air)
 			ret->Awake(info_file2.child("config").child("entity_manager").child("enemy_info").child("fly_enemy"));
+		else if (type == Types::healing_potion)
+			ret->Awake(info_file2.child("config").child("entity_manager").child("pickups").child("potion"));
 
 	}
 	return ret;

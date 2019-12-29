@@ -190,9 +190,9 @@ bool j1Scene::PostUpdate()
 {
 	if (transitionState == 1 || transitionState == 3 || transitionState == 4)
 	{
-		if (transition.h + 200 * App->GetDT() <= App->win->height)
+		if (transition.h + 500 * App->GetDT() <= App->win->height)
 		{
-			transition.h += 200 * App->GetDT();
+			transition.h += 500 * App->GetDT();
 		}
 		else
 		{
@@ -229,9 +229,9 @@ bool j1Scene::PostUpdate()
 	}
 	if (transitionState == 2) 
 	{
-		if (transition.h - 400 * App->GetDT() >= 0)
+		if (transition.h - 500 * App->GetDT() >= 0)
 		{
-			transition.h -= 400 * App->GetDT();
+			transition.h -= 500 * App->GetDT();
 		}
 		else
 		{

@@ -108,6 +108,19 @@
       </fly_enemy>
 
     </enemy_info>
+
+    <pickups>
+
+      <potion>
+        <texture_source>textures/potion.png</texture_source>
+      </potion>
+      <coins>
+        <texture_source>textures/coins.png</texture_source>
+      </coins>
+      
+      
+    </pickups>
+    
     
   </entity_manager>
   
