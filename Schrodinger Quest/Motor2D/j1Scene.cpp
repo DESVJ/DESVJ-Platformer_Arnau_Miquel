@@ -102,10 +102,11 @@ bool j1Scene::Update(float dt)
 		}
 		else
 		{
-			//Trigger in game settings menu
+			if(App->stop_game==false)
+				CreateMenu(MenuType::INGAMEMENU);
+			App->stop_game = true;
 		}
 	}
-
 
 	//Volume change +
 	if (App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHTBRACKET) == KEY_REPEAT)
@@ -269,8 +270,15 @@ void j1Scene::OnClick(UI* element, float argument)
 		}
 		else if (element->name == (p2SString)"EXIT")
 		{
+			App->stop_game = false;
 			//Exit game
 			exitGame = true;
+		}
+		else if (element->name == (p2SString)"RESUME")
+		{
+			App->stop_game = false;
+			CreateMenu(MenuType::PLAYERHUD);
+			transitionState = 2;
 		}
 		else if (element->name == (p2SString)"GITHUB")
 		{
@@ -293,6 +301,8 @@ void j1Scene::CreateMenu(MenuType type)
 	UI* playButton = nullptr;
 	ButtonUI* cont = nullptr;
 	iPoint midPoint = App->win->GetScreenMidPoint();
+
+	int x;
 
 	switch (type)
 	{
@@ -348,7 +358,7 @@ void j1Scene::CreateMenu(MenuType type)
 	case MenuType::PLAYERHUD:
 		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { 10, 10, 250, 60 });
 
-		int x = 40;
+		x = 40;
 		for (int i = 0; i < App->entity_manager->Player->current_lives; i++)
 		{
 			App->entity_manager->Player->live_gfx[i] = App->gui->CreateUIElement(Type::IMAGE, window, { x,  20, 35, 38 }, { 228, 0, 10, 12 });
@@ -360,9 +370,19 @@ void j1Scene::CreateMenu(MenuType type)
 		//App->gui->CreateUIElement(Type::BUTTON, nullptr, { (int)App->win->width - 50, 10, 40, 40 }, { 433, 777, 109, 116 }, "PAUSE", { 542, 777, 108, 116 } , { 325, 777, 108, 116 }, this);
 		break;
 
-	/*case MenuType::INGAMEMENU:
-		//in game menu here
-		break;*/
+	case MenuType::INGAMEMENU:
+		window = App->gui->CreateUIElement(Type::WINDOW, nullptr, { midPoint.x - 550 / 2, 50, 550, ((int)App->win->height - 100) });
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 325 / 2, 75, 325, 60 }, { 405, 72, 272, 36 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,200,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,192,36,36 }, { 0,1006,108,115 }, "VOLUME_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,192,264,0 }, App->audio, false, ((float)App->audio->GetVolumeMusic() / (float)128));
+
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 160,400,286,22 }, { 0,1121,858,68 });
+		App->gui->CreateUIElement(Type::IMAGE, window, { midPoint.x - 50,392,36,36 }, { 0,1006,108,115 }, "FX_CONTROL", { 0,0,0,0 }, { 0,0,0,0 }, true, { midPoint.x - 149,392,264,0 }, App->audio, false, ((float)App->audio->GetVolumeFx() / (float)128));
+
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x - 220 / 2, 570, 80, 80 }, { 108, 544, 108, 116 }, "RESUME", { 216, 544, 108, 116 }, { 0, 544, 108, 116 }, false, { 0,0,0,0 }, this);
+		App->gui->CreateUIElement(Type::BUTTON, window, { midPoint.x + 30, 570, 80, 80 }, { 432, 893, 108, 116 }, "RETURN", { 540, 893, 108, 116 }, { 324, 893, 108, 116 }, false, { 0,0,0,0 }, this);
+		break;
 	}
 	App->gui->ReturnConsole();
 }

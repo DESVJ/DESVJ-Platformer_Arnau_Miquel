@@ -98,7 +98,8 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_attack,inputs_out, speed.y, actual_state, input_in, input_out, player.col_state, collider->collider_rect);
+	if(App->stop_game==false)
+		CheckInputs(player.player_god_mode, player.player_tang_mode, player.player_not_jumping, player.spacebar_pushed, canJump, tangSwitchDeadCheck,player.stop_attack,inputs_out, speed.y, actual_state, input_in, input_out, player.col_state, collider->collider_rect);
 
 	if (respawn == true)
 		Start_F3();

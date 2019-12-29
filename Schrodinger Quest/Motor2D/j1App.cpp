@@ -211,7 +211,7 @@ void j1App::PrepareUpdate()
 	{
 		dt = 1.0f;
 	}
-
+	if (stop_game == true)dt = 0.0f;
 
 	frame_time.Start();
 }

@@ -462,9 +462,7 @@ ImageUI::ImageUI(Type type, UI* p, SDL_Rect r, int re, int g, int b, int a, bool
 bool ImageUI::PreUpdate() {
 	int x, y;
 	iPoint initial_position = GetScreenPos();
-	App->input->GetMousePosition(x, y);
-	x *= App->win->scale;
-	y *= App->win->scale;
+	App->input->GetMouseScreenPosition(x, y);
 	if (CheckFocusable() == true && (x >= GetScreenPos().x && x <= GetScreenPos().x + GetScreenRect().w && y >= GetScreenPos().y && y <= GetScreenPos().y + GetScreenRect().h)) {
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
 			App->gui->DeleteFocus();

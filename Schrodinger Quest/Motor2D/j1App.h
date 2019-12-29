@@ -106,6 +106,7 @@ public:
 
 	mutable p2SString	save_game;
 	double GetDT();
+	bool				stop_game = false;
 
 
 
