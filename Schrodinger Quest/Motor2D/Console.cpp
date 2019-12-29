@@ -117,23 +117,33 @@ void Console::ExecuteCommand(p2SString argument) {
 		App->entity_manager->Player->player.player_god_mode = !App->entity_manager->Player->player.player_god_mode;
 		App->entity_manager->Player->player.player_not_jumping = true;
 		App->entity_manager->Player->player.spacebar_pushed = false;
+		if(App->entity_manager->Player->player.player_god_mode==true)
+			LOG("God_mode activated");
+		else
+			LOG("God_mode deactivated");
 		break;
 
 	case commands::quit:
+		LOG("Exiting game");
 		exitGame = true;
 		break;
 
 	case commands::FPS:
 		if(strcmp(argument.GetString(),""))
 			fps = std::stoul(argument.GetString());
-		if (fps >= 30 && fps <= 120)
+		if (fps >= 30 && fps <= 120) {
 			App->fps_limit = fps;
+			LOG("Changing FPS limit to %d", fps);
+		}
 		else
 			LOG("Please, write as argument a number that goes between 30 and 120");
 		break;
 
 	case commands::map:
-		App->scene->Load_Map_By_Name(argument.GetString());
+		if (App->scene->Load_Map_By_Name(argument.GetString()) == true)
+			LOG("Changing scene to map: %s", argument.GetString());
+		else
+			LOG("Could not change scene to map %s", argument.GetString());
 		break;
 
 	case commands::none:

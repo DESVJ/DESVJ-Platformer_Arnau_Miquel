@@ -413,9 +413,9 @@ void j1Scene::CreateMenu(MenuType type)
 }
 
 //Load map by name
-void j1Scene::Load_Map_By_Name(const char* name)
+bool j1Scene::Load_Map_By_Name(const char* name)
 {
-
+	bool ret = false;
 	p2SString tmp("%s%s", App->map->folder.GetString(), name);
 	pugi::xml_document map_file;
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
@@ -432,7 +432,7 @@ void j1Scene::Load_Map_By_Name(const char* name)
 		App->entity_manager->active = true;
 
 		App->colliders->ClearColliders();
-		App->map->CleanUp();
+		ret = App->map->CleanUp();
 
 		App->map->Load(name);
 		App->pathfinding->UpdatePathFindingMap();
@@ -441,4 +441,5 @@ void j1Scene::Load_Map_By_Name(const char* name)
 		App->render->SetMapLimitsWithTMX();
 		App->entity_manager->Player->Start_F3();
 	}
+	return ret;
 }

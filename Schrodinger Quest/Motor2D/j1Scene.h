@@ -43,7 +43,7 @@ public:
 	bool CleanUp();
 
 	//Load map
-	void Load_Map_By_Name(const char*);
+	bool Load_Map_By_Name(const char*);
 	void OnClick(UI* element, float argument=0);
 
 	//UI creation
