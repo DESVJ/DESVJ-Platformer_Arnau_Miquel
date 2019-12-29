@@ -1,1 +1,199 @@
-<mxfile host="www.draw.io" modified="2019-12-21T16:47:41.028Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="yHevyk4jyZBfxTTbcKk6" version="12.4.3" type="device" pages="1"><diagram id="9TCni8zkd9GzKKKIGCB6" name="Page-1">7Vldb5swFP01SO2kTWAHQl6T0KVS201Ko368TC64wGZw5JgE+utnggkQ9yOT0jkPPAUf+9q+5/je64ABJ0n+naFldE0DTAxgBrkBpwYAlmUC8VMiRYXYrgRCFgdyUAPM4xcsQVOiWRzgVWcgp5TweNkFfZqm2OcdDDFGN91hz5R0V12iECvA3EdERe/igEcV6oJhg89wHEb1ypYzqnoSVA+WnqwiFNBNC4KeASeMUl49JfkEk5K8mpfK7uKN3t3GGE75IQZre7GeOfeTm9kAAu/uZfE4u/4K5d54UTuMA+G/bFLGIxrSFBGvQceMZmmAy1lN0WrGXFG6FKAlwN+Y80KKiTJOBRTxhMhenMf8vjT/ZsvWQ6tnmsuZt42ibqScFS2jsvnQ7mvMtq3arvKvdOpN2iS0ohnz8Ttc1ccPsRDzd8aBnbgiKjBNsNiPsGOYIB6vu/tA8niGu3GNguJBivgPgsp514hkcqXFpaJxV8FNFHM8X6Kt8xsRxl215ISYcZy/z6HqszSAtjxnRTe4N01EWXWYRK1ocszPYqk/94efe3DguR9oPfeDXtGjK2rrVBS8mslM78q79m5uDeAQsfXxExNPId/ys488iYtCSVmKnohQWek/W3Hhh2/Ai3MxbD69+nWLc54x/KX0hxPhkvbMCe29zPlK6rSHaup0Py112n2gHRxogwMDbag1dQ57RY+uqGVqlXTUS3p0SV2dig6UajivipeoiAQnpdO6a5UFzU6tAq/Vqv96zd8dgT4MPg4D+8AwGGm9FIJe0aMr6mhVtP/jdnxFAdQpqa3UqmmRoqRbrD7++7amYhVg/kgnJPb/nJ1rL3C2e2oFzlGYHmec01Q7Vc4+VSPdVA0Vqn6itPxYoYupk2HGVZiZoHR9Ai8/9i+U0NVN1Uih6jJdZiKbmc8xJoF2xgYjcGJhV7/qb1FWvmTTzhQYnlqCAlBhau4zujUcI6adsf3q95nRKJrNh9FtX+vzMvT+Ag==</diagram></mxfile>
+<mxfile host="www.draw.io" modified="2019-12-29T19:55:04.716Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="H1Ywe-EFpy3MrvBibSuM" version="12.4.7" type="github">
+  <diagram id="9TCni8zkd9GzKKKIGCB6" name="Page-1">
+    <mxGraphModel dx="865" dy="483" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-7" value="&lt;b&gt;Game&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="84" y="125" width="50" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-8" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-8" value="&lt;b&gt;j1Gui&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;p2List &amp;lt;UI*&amp;gt; UIs&lt;/div&gt;&lt;div&gt;SDL_Texture* atlas&lt;/div&gt;&lt;div&gt;p2SString atlas_file_name&lt;/div&gt;&lt;div&gt;&lt;div&gt;int click_sfx&lt;/div&gt;&lt;div&gt;bool lockClick&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;bool Awake(pugi::xml_node&amp;amp;)&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool Start()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool PreUpdate()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool Update(float dt)&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool CleanUp()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;div&gt;UI* CreateUIElement(Type, UI*, SDL_Rect, SDL_Rect, p2SString, SDL_Rect, SDL_Rect, bool,&lt;span style=&quot;white-space: pre&quot;&gt;	&lt;/span&gt;S&lt;span&gt;DL_Rect, j1Module*, bool, float)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;UI* CreateUIElement(Type, UI*, SDL_Rect, p2SString, int, int, int, int, bool, SDL_Rect, j1Module*)&lt;/div&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;bool DeleteUIElement(UI*)&lt;/div&gt;&lt;div&gt;&lt;span&gt;void ChangeDebug()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;void ChangeFocus()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;void DeleteFocus()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;const SDL_Texture* GetAtlas() const&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;void ClearUI()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;void ReturnConsole()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;void WorkWithTextInput(p2SString text)&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="204" y="10" width="356" height="350" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-9" value="" style="endArrow=none;dashed=1;html=1;exitX=0.003;exitY=0.08;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.999;entryY=0.078;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-8" target="NNJdT-l5_N1uOXzTAoso-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="80" as="sourcePoint"/>
+            <mxPoint x="420" y="81" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-10" value="" style="endArrow=none;dashed=1;html=1;entryX=0.997;entryY=0.316;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="NNJdT-l5_N1uOXzTAoso-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="204" y="119.5" as="sourcePoint"/>
+            <mxPoint x="421" y="120" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="315" y="119.5"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-11" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.001;entryY=0.359;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-7" target="NNJdT-l5_N1uOXzTAoso-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="84" y="230" as="sourcePoint"/>
+            <mxPoint x="140" y="150" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-12" value="&lt;font style=&quot;font-size: 18px&quot;&gt;1&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="174.5" y="110" width="30" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-14" value="&lt;b&gt;UI&lt;br&gt;&lt;/b&gt;&lt;br&gt;&lt;div&gt;SDL_Rect sprite1&lt;/div&gt;&lt;div&gt;SDL_Rect quad&lt;/div&gt;&lt;div&gt;bool debug&lt;/div&gt;&lt;div&gt;bool focus&lt;/div&gt;&lt;div&gt;j1Module* listener&lt;/div&gt;&lt;div&gt;Type type&lt;/div&gt;&lt;div&gt;&lt;span&gt;SDL_Rect screen_rect&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SDL_Rect local_rect&lt;/div&gt;&lt;div&gt;SDL_Rect mask_rect&lt;/div&gt;&lt;div&gt;UI* parent&lt;/div&gt;&lt;div&gt;bool drageable&lt;/div&gt;&lt;div&gt;bool focusable&lt;/div&gt;&lt;div&gt;SDL_Rect drag_area&lt;/div&gt;&lt;div&gt;bool console&lt;/div&gt;&lt;br&gt;UI(Type, SDL_Rect, UI*, bool, bool, SDL_Rect, bool)&lt;br&gt;&lt;div&gt;virtual bool PreUpdate()&lt;/div&gt;&lt;div&gt;virtual bool PostUpdate()&lt;/div&gt;&lt;div&gt;&lt;div&gt;bool Move()&lt;/div&gt;&lt;div&gt;&lt;span&gt;SDL_Rect GetScreenRect()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SDL_Rect GetParentScreenRect()&lt;/div&gt;&lt;div&gt;SDL_Rect GetLocalRect()&lt;/div&gt;&lt;div&gt;iPoint GetScreenPos()&lt;/div&gt;&lt;div&gt;iPoint GetScreenToWorldPos()&lt;/div&gt;&lt;div&gt;iPoint GetLocalPos()&lt;/div&gt;&lt;div&gt;void SetLocalPos(iPoint)&lt;/div&gt;&lt;div&gt;void SetScreenRect(SDL_Rect)&lt;/div&gt;&lt;div&gt;void UpdateLocalRect()&lt;/div&gt;&lt;div&gt;bool CheckMouse()&lt;/div&gt;&lt;div&gt;bool CheckFocusable()&lt;/div&gt;&lt;div&gt;SDL_Rect GetDragArea()&lt;/div&gt;&lt;div&gt;SDL_Rect Check_Printable_Rect(SDL_Rect, iPoint&amp;amp;)&lt;/div&gt;&lt;div&gt;SDL_Rect Check_Printable_Rect(SDL_Rect, iPoint&amp;amp;, SDL_Rect)&lt;/div&gt;&lt;div&gt;bool GetConsole()&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="800" y="40" width="288.5" height="530" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-15" value="" style="endArrow=none;dashed=1;html=1;exitX=0.004;exitY=0.047;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="796" y="75" as="sourcePoint"/>
+            <mxPoint x="1089" y="65" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-16" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="770" y="280" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-20" value="" style="endArrow=none;dashed=1;html=1;exitX=0.004;exitY=0.047;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800.004" y="281.44000000000005" as="sourcePoint"/>
+            <mxPoint x="1087.8499999999997" y="280" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.054;entryY=1.01;entryDx=0;entryDy=0;endArrow=block;endFill=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-21" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-21" value="&lt;b&gt;ImageUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;div&gt;iPoint drag_position_0&lt;/div&gt;&lt;div&gt;iPoint drag_position_1&lt;/div&gt;&lt;div&gt;bool square&lt;/div&gt;&lt;div&gt;int red&lt;/div&gt;&lt;div&gt;int green&lt;/div&gt;&lt;div&gt;int blue&lt;/div&gt;&lt;div&gt;int alpha&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;ImageUI(Type, UI*, SDL_Rect, SDL_Rect, bool, bool, SDL_Rect, float)&lt;/div&gt;&lt;div&gt;ImageUI(Type, UI*, SDL_Rect, int, int, int, int, bool, bool f, SDL_Rect)&lt;/div&gt;&lt;div&gt;&lt;div&gt;bool PreUpdate()&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;div&gt;fPoint GetDragPositionNormalized()&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="10" y="660" width="390" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-22" value="" style="endArrow=none;dashed=1;html=1;entryX=1.003;entryY=0.085;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.093;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-21" target="NNJdT-l5_N1uOXzTAoso-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="421.5" y="660.5" as="sourcePoint"/>
+            <mxPoint x="538.5" y="660.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-23" value="" style="endArrow=none;dashed=1;html=1;entryX=0.999;entryY=0.627;entryDx=0;entryDy=0;exitX=0.001;exitY=0.633;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-21" target="NNJdT-l5_N1uOXzTAoso-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="15" y="807" as="sourcePoint"/>
+            <mxPoint x="542.5" y="880.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.137;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-25" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="630"/>
+              <mxPoint x="840" y="630"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-25" value="&lt;b&gt;WindowUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;WindowUI(Type, UI*, SDL_Rect, SDL_Rect, bool, bool, SDL_Rect)&lt;/div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="410" y="660" width="210" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-26" value="" style="endArrow=none;dashed=1;html=1;exitX=0.001;exitY=0.392;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.998;entryY=0.385;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-25" target="NNJdT-l5_N1uOXzTAoso-25">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="821.5" y="680.5" as="sourcePoint"/>
+            <mxPoint x="801" y="714" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.395;entryY=0.999;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-28" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="745" y="640"/>
+              <mxPoint x="914" y="640"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-28" value="&lt;b&gt;TextUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;p2SString stri&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;TextUI(Type, UI*, SDL_Rect, p2SString, bool, bool, SDL_Rect, bool)&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;div&gt;void SetString(p2SString)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="630" y="660" width="230" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-29" value="" style="endArrow=none;dashed=1;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-28" target="NNJdT-l5_N1uOXzTAoso-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1251.5" y="540.5" as="sourcePoint"/>
+            <mxPoint x="1368.5" y="540.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-30" value="" style="endArrow=none;dashed=1;html=1;entryX=0.999;entryY=0.428;entryDx=0;entryDy=0;exitX=0;exitY=0.428;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-28" target="NNJdT-l5_N1uOXzTAoso-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="845" y="687" as="sourcePoint"/>
+            <mxPoint x="1372.5" y="760.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-32" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-32" value="&lt;b&gt;ListTextsUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;p2List&amp;lt;p2SString&amp;gt; stri&lt;br&gt;&lt;/div&gt;&lt;div&gt;int number_of_stri&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;ListTextsUi(Type, UI*, SDL_Rect, p2SString, bool, bool, SDL_Rect, bool)&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;div&gt;void SetListOfStrings(p2SString, int)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;int GetNumberOfStrings()&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="870" y="660" width="230" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-33" value="" style="endArrow=none;dashed=1;html=1;entryX=0.999;entryY=0.147;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.147;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-32" target="NNJdT-l5_N1uOXzTAoso-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1491.5" y="570.5" as="sourcePoint"/>
+            <mxPoint x="1608.5" y="570.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-34" value="" style="endArrow=none;dashed=1;html=1;entryX=0.999;entryY=0.428;entryDx=0;entryDy=0;exitX=0;exitY=0.428;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-32" target="NNJdT-l5_N1uOXzTAoso-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1085" y="717" as="sourcePoint"/>
+            <mxPoint x="1612.5" y="790.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-35" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1225" y="630"/>
+              <mxPoint x="1016" y="630"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-35" value="&lt;b&gt;ButtonUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;div&gt;SDL_Rect sprite2&lt;/div&gt;&lt;div&gt;SDL_Rect sprite3&lt;/div&gt;&lt;div&gt;bool pushed&lt;/div&gt;&lt;div&gt;bool over&lt;/div&gt;&lt;div&gt;bool isLocked&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;ButtonUI(Type, UI*, SDL_Rect, SDL_Rect, SDL_Rect, SDL_Rect, bool, bool, SDL_Rect)&lt;/div&gt;&lt;div&gt;bool PreUpdate()&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="660" width="230" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-36" value="" style="endArrow=none;dashed=1;html=1;entryX=0.999;entryY=0.147;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0;exitY=0.147;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-35" target="NNJdT-l5_N1uOXzTAoso-35">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1731.5" y="570.5" as="sourcePoint"/>
+            <mxPoint x="1848.5" y="570.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-37" value="" style="endArrow=none;dashed=1;html=1;entryX=0.995;entryY=0.593;entryDx=0;entryDy=0;exitX=0.002;exitY=0.595;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-35" target="NNJdT-l5_N1uOXzTAoso-35">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1325" y="717" as="sourcePoint"/>
+            <mxPoint x="1852.5" y="790.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.95;entryY=1.002;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=block;endFill=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-38" target="NNJdT-l5_N1uOXzTAoso-14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-38" value="&lt;b&gt;TextInputUI&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;div&gt;p2SString label&lt;/div&gt;&lt;div&gt;bool text_input&lt;/div&gt;&lt;div&gt;int position&lt;/div&gt;&lt;div&gt;bool square&lt;/div&gt;&lt;div&gt;int red&lt;/div&gt;&lt;div&gt;int green&lt;/div&gt;&lt;div&gt;int blue&lt;/div&gt;&lt;div&gt;int alpha&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;div&gt;TextInputUI(Type, UI*, SDL_Rect, int, int, int, int, p2SString, bool, bool, SDL_Rect)&lt;/div&gt;&lt;div&gt;bool PreUpdate()&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span&gt;bool PostUpdate()&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;div&gt;void ChangeLabel(p2SString)&lt;/div&gt;&lt;div&gt;&lt;span&gt;void SetLabel(p2SString)&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;void SetPositionToZero()&lt;/div&gt;&lt;div&gt;p2SString GetLabel()&lt;/div&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="660" width="290" height="280" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-39" value="" style="endArrow=none;dashed=1;html=1;entryX=0.998;entryY=0.087;entryDx=0;entryDy=0;entryPerimeter=0;exitX=-0.001;exitY=0.095;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-38" target="NNJdT-l5_N1uOXzTAoso-38">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1991.5" y="570.5" as="sourcePoint"/>
+            <mxPoint x="2108.5" y="570.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-40" value="" style="endArrow=none;dashed=1;html=1;entryX=1.001;entryY=0.565;entryDx=0;entryDy=0;exitX=-0.003;exitY=0.565;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="NNJdT-l5_N1uOXzTAoso-38" target="NNJdT-l5_N1uOXzTAoso-38">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1585" y="717" as="sourcePoint"/>
+            <mxPoint x="2112.5" y="790.5" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-48" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-49" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-50" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="950" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-51" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="710" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-52" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="480" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-53" value="&lt;font style=&quot;font-size: 18px&quot;&gt;0..*&lt;/font&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;" vertex="1" parent="1">
+          <mxGeometry x="174.5" y="640" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="NNJdT-l5_N1uOXzTAoso-56" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px&quot;&gt;Assumptions&lt;/font&gt;:&lt;/b&gt; All the functions that only return true or create a name won&#39;t appear in this UML (because they&#39;re not important to understand the code). The console isn&#39;t relevant to the UI and it&#39;s manager so it won&#39;t appear here There is an enum that is listed here: Type (with all the different types of UI: none, button, image, window, text, listtexts, input and unknown)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="390" width="210" height="170" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
